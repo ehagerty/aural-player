@@ -537,6 +537,9 @@
 		3E82888224ADD11B0032D0CE /* RichUITrackInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82888124ADD11B0032D0CE /* RichUITrackInfoViewController.swift */; };
 		3E82888524ADD18D0032D0CE /* RichUIPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E82888424ADD18D0032D0CE /* RichUIPlayer.xib */; };
 		3E82888724ADD19D0032D0CE /* RichUIPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82888624ADD19D0032D0CE /* RichUIPlayerViewController.swift */; };
+		3E82888A24AE04C20032D0CE /* Sidebar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E82888924AE04C20032D0CE /* Sidebar.xib */; };
+		3E82888C24AE051B0032D0CE /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82888B24AE051B0032D0CE /* SidebarViewController.swift */; };
+		3E82888E24AE075E0032D0CE /* SidebarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82888D24AE075E0032D0CE /* SidebarItems.swift */; };
 		3E84F83F1F5FBB260010BCDA /* PlaybackDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84F83E1F5FBB260010BCDA /* PlaybackDelegateProtocol.swift */; };
 		3E84F8481F5FC58D0010BCDA /* PlaybackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84F8471F5FC58D0010BCDA /* PlaybackDelegate.swift */; };
 		3E850D521FB441800017CD02 /* WindowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E850D511FB441800017CD02 /* WindowFactory.swift */; };
@@ -1176,6 +1179,9 @@
 		3E82888124ADD11B0032D0CE /* RichUITrackInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUITrackInfoViewController.swift; sourceTree = "<group>"; };
 		3E82888424ADD18D0032D0CE /* RichUIPlayer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUIPlayer.xib; sourceTree = "<group>"; };
 		3E82888624ADD19D0032D0CE /* RichUIPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUIPlayerViewController.swift; sourceTree = "<group>"; };
+		3E82888924AE04C20032D0CE /* Sidebar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Sidebar.xib; sourceTree = "<group>"; };
+		3E82888B24AE051B0032D0CE /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		3E82888D24AE075E0032D0CE /* SidebarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarItems.swift; sourceTree = "<group>"; };
 		3E84F83E1F5FBB260010BCDA /* PlaybackDelegateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackDelegateProtocol.swift; sourceTree = "<group>"; };
 		3E84F8471F5FC58D0010BCDA /* PlaybackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackDelegate.swift; sourceTree = "<group>"; };
 		3E850D511FB441800017CD02 /* WindowFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowFactory.swift; sourceTree = "<group>"; };
@@ -2780,6 +2786,16 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		3E82888824AE04B00032D0CE /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				3E82888924AE04C20032D0CE /* Sidebar.xib */,
+				3E82888B24AE051B0032D0CE /* SidebarViewController.swift */,
+				3E82888D24AE075E0032D0CE /* SidebarItems.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
 		3E85F24D1EFA78D6007BE830 = {
 			isa = PBXGroup;
 			children = (
@@ -2924,6 +2940,7 @@
 				3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */,
 				3E82887E24ADD03C0032D0CE /* TrackInfo */,
 				3E82888324ADD17D0032D0CE /* Player */,
+				3E82888824AE04B00032D0CE /* Sidebar */,
 			);
 			path = RichUI;
 			sourceTree = "<group>";
@@ -3145,6 +3162,7 @@
 				3E176603217DE43D001C6CF9 /* TracksPlaylistSort.xib in Resources */,
 				3EF18478217C8EFF00D24F39 /* Visualizer.xib in Resources */,
 				3E850D571FB4461E0017CD02 /* PlaylistSortDialog.xib in Resources */,
+				3E82888A24AE04C20032D0CE /* Sidebar.xib in Resources */,
 				3EE4D43E21D6E2F0000110FC /* Alerts.xib in Resources */,
 				3EBF7EF721589E54007869EC /* FavoritesEditor.xib in Resources */,
 				3E5E1E5021DB539D007C62B7 /* AboutDialog.xib in Resources */,
@@ -3271,6 +3289,7 @@
 				3E1DA6F8244D6D4A00FFF59E /* ColorScheme.swift in Sources */,
 				3E4193DC24336D1B00F43162 /* SeekTimerTaskQueue.swift in Sources */,
 				3E633C491F14C9110040ECBC /* ParametricEQNode.swift in Sources */,
+				3E82888E24AE075E0032D0CE /* SidebarItems.swift in Sources */,
 				3E8103D9244DDAB800ACCFA1 /* TintedImageView.swift in Sources */,
 				3E59A3771F9959C10087198C /* GroupingPlaylistDataSources.swift in Sources */,
 				3E688AC521E462C400164E84 /* CommonAVAssetParser.swift in Sources */,
@@ -3346,6 +3365,7 @@
 				3EE7D723244EBF5A005D76FA /* ColorSchemePreset.swift in Sources */,
 				3E3DCAC0244B31F100563AE4 /* PlayerViewState.swift in Sources */,
 				3E357B521F9C79E900C8F7B1 /* GroupingPlaylistProtocols.swift in Sources */,
+				3E82888C24AE051B0032D0CE /* SidebarViewController.swift in Sources */,
 				3E94E8622154D69000C57AD8 /* WindowManager.swift in Sources */,
 				3E50DC982193A3B500D42373 /* FXUnit.swift in Sources */,
 				3E154D7B21DCC21F006DBD22 /* FileSystemDataSource.swift in Sources */,
