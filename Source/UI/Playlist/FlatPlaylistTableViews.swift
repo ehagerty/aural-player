@@ -107,7 +107,7 @@ class BasicFlatPlaylistCellView: NSTableCellView {
     Custom view for a single NSTableView cell. Customizes the look and feel of cells (in selected rows) - font and text color.
  */
 @IBDesignable
-class TrackNameCellView: BasicFlatPlaylistCellView {
+class TextCellView: BasicFlatPlaylistCellView {
     
     var gapImage: NSImage!
     
@@ -143,22 +143,22 @@ class DurationCellView: BasicFlatPlaylistCellView {
         textField?.textColor = isSelectedRow ? Colors.Playlist.indexDurationSelectedTextColor : Colors.Playlist.indexDurationTextColor
         textField?.font = Fonts.Playlist.indexFont
         
-        gapBeforeTextField.textColor = isSelectedRow ? Colors.Playlist.indexDurationSelectedTextColor : Colors.Playlist.indexDurationTextColor
-        gapBeforeTextField.font = Fonts.Playlist.indexFont
-        
-        gapAfterTextField.textColor = isSelectedRow ? Colors.Playlist.indexDurationSelectedTextColor : Colors.Playlist.indexDurationTextColor
-        gapAfterTextField.font = Fonts.Playlist.indexFont
+//        gapBeforeTextField.textColor = isSelectedRow ? Colors.Playlist.indexDurationSelectedTextColor : Colors.Playlist.indexDurationTextColor
+//        gapBeforeTextField.font = Fonts.Playlist.indexFont
+//
+//        gapAfterTextField.textColor = isSelectedRow ? Colors.Playlist.indexDurationSelectedTextColor : Colors.Playlist.indexDurationTextColor
+//        gapAfterTextField.font = Fonts.Playlist.indexFont
     }
     
     func updateForGaps(_ gapBeforeTrack: Bool, _ gapAfterTrack: Bool, _ gapBeforeDuration: Double?, _ gapAfterDuration: Double?) {
         
-        gapBeforeTextField.showIf(gapBeforeTrack)
-        gapBeforeTextField.stringValue = gapBeforeTrack ? ValueFormatter.formatSecondsToHMS(gapBeforeDuration!) : ""
-        
-        gapAfterTextField.showIf(gapAfterTrack)
-        gapAfterTextField.stringValue = gapAfterTrack ? ValueFormatter.formatSecondsToHMS(gapAfterDuration!) : ""
-        
-        gapBeforeTrack ? placeTextFieldBelowView(gapBeforeTextField) : placeTextFieldOnTop()
+//        gapBeforeTextField.showIf(gapBeforeTrack)
+//        gapBeforeTextField.stringValue = gapBeforeTrack ? ValueFormatter.formatSecondsToHMS(gapBeforeDuration!) : ""
+//
+//        gapAfterTextField.showIf(gapAfterTrack)
+//        gapAfterTextField.stringValue = gapAfterTrack ? ValueFormatter.formatSecondsToHMS(gapAfterDuration!) : ""
+//
+//        gapBeforeTrack ? placeTextFieldBelowView(gapBeforeTextField) : placeTextFieldOnTop()
     }
 }
 

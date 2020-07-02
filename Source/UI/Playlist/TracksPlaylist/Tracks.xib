@@ -40,7 +40,7 @@
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="38P-ht-K0t">
-                                            <font key="font" metaFont="label" size="13"/>
+                                            <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -90,13 +90,13 @@
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" title="Text Cell" id="qhS-1y-U6v">
-                                            <font key="font" metaFont="label" size="13"/>
+                                            <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView focusRingType="none" id="Aqb-5g-rsj" customClass="TrackNameCellView" customModule="Aural" customModuleProvider="target">
+                                            <tableCellView focusRingType="none" id="Aqb-5g-rsj" customClass="TextCellView" customModule="Aural" customModuleProvider="target">
                                                 <rect key="frame" x="39" y="2" width="395" height="61"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -151,7 +151,7 @@
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="ERh-ei-fti">
-                                            <font key="font" metaFont="label" size="13"/>
+                                            <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -167,7 +167,7 @@
                                                             <constraint firstAttribute="height" constant="18" id="n7n-dc-Z4V"/>
                                                         </constraints>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" id="hJJ-Oc-yTH">
-                                                            <font key="font" metaFont="label" size="13"/>
+                                                            <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </textFieldCell>
@@ -189,7 +189,7 @@
                                                             <constraint firstAttribute="height" constant="18" id="1qv-hN-SSp"/>
                                                         </constraints>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" id="bVS-iJ-2YI">
-                                                            <font key="font" metaFont="label" size="13"/>
+                                                            <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </textFieldCell>

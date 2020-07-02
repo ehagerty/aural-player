@@ -156,6 +156,53 @@ class Track: Hashable, PlaylistItem {
     }
 }
 
+class DisplayInfo {
+    
+    var duration: Double    // seconds
+    
+    // The following three fields are read from the track's metadata
+    var artist: String?
+    var title: String
+    var art: CoverArt?
+    
+    var conciseName: String
+    
+    init(_ file: URL, _ fileName: String) {
+        
+        self.duration = 0
+        self.title = fileName
+        self.conciseName = fileName
+    }
+    
+    func setMetadata(_ artist: String?, _ title: String?, _ art: CoverArt?) {
+        
+        self.artist = artist
+        self.title = title ?? self.title
+        
+        if art != nil {
+            self.art = art
+        }
+    }
+    
+    func hasArtistAndTitle() -> Bool {
+        return artist != nil
+    }
+}
+
+class GroupingInfo {
+    
+    // The following fields are read from the track's metadata
+    var artist: String?
+    var album: String?
+    var genre: String?
+    
+    var discNumber: Int?
+    var totalDiscs: Int?
+    
+    var trackNumber: Int?
+    var totalTracks: Int?
+}
+
 /*
     Represents a single chapter marking within a track
  */
@@ -220,60 +267,6 @@ class ImageMetadata {
 
     // True for transparent images like PNGs
     var hasAlpha: Bool? = nil
-}
-
-class DisplayInfo {
-    
-    var duration: Double    // seconds
-    
-    // The following three fields are read from the track's metadata
-    var artist: String?
-    var title: String?
-    var art: CoverArt?
-    
-    var conciseName: String
-    
-    init(_ file: URL, _ fileName: String) {
-        self.duration = 0
-        self.conciseName = fileName
-    }
-    
-    func setMetadata(_ artist: String?, _ title: String?, _ art: CoverArt?) {
-        
-        self.artist = artist
-        self.title = title
-        
-        if art != nil {
-            self.art = art
-        }
-        
-        if let theTitle = title {
-            
-            if let theArtist = artist {
-                self.conciseName = String(format: "%@ - %@", theArtist, theTitle)
-            } else {
-                self.conciseName = theTitle
-            }
-        }
-    }
-    
-    func hasArtistAndTitle() -> Bool {
-        return artist != nil && title != nil
-    }
-}
-
-class GroupingInfo {
-    
-    // The following fields are read from the track's metadata
-    var artist: String?
-    var album: String?
-    var genre: String?
-    
-    var discNumber: Int?
-    var totalDiscs: Int?
-    
-    var trackNumber: Int?
-    var totalTracks: Int?
 }
 
 // This info is used when actually playing the track

@@ -15,6 +15,7 @@ class RichUIWindowController: NSWindowController {
     private lazy var playerController: RichUIPlayerViewController = RichUIPlayerViewController()
     
     private lazy var sidebarController: SidebarViewController = SidebarViewController()
+    private lazy var playQueueController: PlayQueueViewController = PlayQueueViewController()
     
     override func windowDidLoad() {
 
@@ -27,13 +28,11 @@ class RichUIWindowController: NSWindowController {
         let sidebarView: NSView = sidebarController.view
         let containerView = splitView.arrangedSubviews[0]
         containerView.addSubview(sidebarView)
+        sidebarView.anchorToView(sidebarView.superview!)
         
-        sidebarView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            sidebarView.leadingAnchor.constraint(equalTo: sidebarView.superview!.leadingAnchor),
-            sidebarView.trailingAnchor.constraint(equalTo: sidebarView.superview!.trailingAnchor),
-            sidebarView.topAnchor.constraint(equalTo: sidebarView.superview!.topAnchor),
-            sidebarView.bottomAnchor.constraint(equalTo: sidebarView.superview!.bottomAnchor)])
+        let playQueueView: NSView = playQueueController.view
+        let playQueueContainerView = splitView.arrangedSubviews[1]
+        playQueueContainerView.addSubview(playQueueView)
+        playQueueView.anchorToView(playQueueView.superview!)
     }
 }

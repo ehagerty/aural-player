@@ -133,9 +133,9 @@ class TracksPlaylistViewDelegate: NSObject, NSTableViewDelegate {
         return cell
     }
     
-    private func createTrackNameCell(_ tableView: NSTableView, _ text: String, _ gapBefore: PlaybackGap? = nil, _ gapAfter: PlaybackGap? = nil, _ row: Int) -> TrackNameCellView? {
+    private func createTrackNameCell(_ tableView: NSTableView, _ text: String, _ gapBefore: PlaybackGap? = nil, _ gapAfter: PlaybackGap? = nil, _ row: Int) -> TextCellView? {
         
-        guard let cell = tableView.makeView(withIdentifier: .uid_trackName, owner: nil) as? TrackNameCellView else {return nil}
+        guard let cell = tableView.makeView(withIdentifier: .uid_trackName, owner: nil) as? TextCellView else {return nil}
             
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         

@@ -53,8 +53,8 @@ class FlatPlaylist: FlatPlaylistCRUDProtocol {
         }
         
         // Compare title field if included in search
-        if query.fields.title, let title = track.displayInfo.title, query.compare(title) {
-            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: title)
+        if query.fields.title, query.compare(track.displayInfo.title) {
+            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: track.displayInfo.title)
         }
         
         // Didn't match

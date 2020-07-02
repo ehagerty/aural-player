@@ -155,6 +155,19 @@ extension NSUserInterfaceItemIdentifier {
     static let uid_chapterStartTime: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier(UIConstants.chapterStartTimeColumnID)
     
     static let uid_chapterDuration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier(UIConstants.chapterDurationColumnID)
+    
+
+    static let playQueue_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_index")
+    
+    static let playQueue_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_title")
+    
+    static let playQueue_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_duration")
+    
+    static let playQueue_artist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_artist")
+    
+    static let playQueue_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_album")
+    
+    static let playQueue_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_genre")
 }
 
 extension NSPasteboard.PasteboardType {
