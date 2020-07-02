@@ -5,6 +5,8 @@ import Cocoa
  */
 class WindowFactory {
     
+    private static var richUIWindowController: RichUIWindowController = RichUIWindowController()
+    
     private static var mainWindowController: MainWindowController = MainWindowController()
     
     private static var effectsWindowController: EffectsWindowController = EffectsWindowController()
@@ -32,6 +34,10 @@ class WindowFactory {
     static var alertWindowController: AlertWindowController = AlertWindowController()
     
     // MARK: Accessor functions for the different windows/dialogs
+    
+    static var richUIWindow: NSWindow {
+        return richUIWindowController.window!
+    }
     
     static var mainWindow: NSWindow {
         return mainWindowController.window!

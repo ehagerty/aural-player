@@ -1,5 +1,16 @@
 import Cocoa
 
+extension NSWindow {
+    
+    func hide() {
+        self.setIsVisible(false)
+    }
+    
+    func show() {
+        self.setIsVisible(true)
+    }
+}
+
 extension NSView {
     
     var width: CGFloat {
@@ -508,23 +519,23 @@ extension NSColor {
 extension NSImageView {
 
     // Experimental code. Not currently in use.
-//    var cornerRadius: CGFloat {
-//
-//        get {
-//            return self.layer?.cornerRadius ?? 0
-//        }
-//
-//        set(newValue) {
-//
-//            if !self.wantsLayer {
-//
-//                self.wantsLayer = true
-//                self.layer?.masksToBounds = true;
-//            }
-//
-//            self.layer?.cornerRadius = newValue;
-//        }
-//    }
+    var cornerRadius: CGFloat {
+
+        get {
+            return self.layer?.cornerRadius ?? 0
+        }
+
+        set(newValue) {
+
+            if !self.wantsLayer {
+
+                self.wantsLayer = true
+                self.layer?.masksToBounds = true;
+            }
+
+            self.layer?.cornerRadius = newValue;
+        }
+    }
 }
 
 extension NSGradient {

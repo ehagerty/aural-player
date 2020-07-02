@@ -64,7 +64,7 @@ class HorizontalSliderCell: NSSliderCell {
 class VolumeSliderCell: HorizontalSliderCell {
     
     override var barRadius: CGFloat {return 0}
-    override var barInsetY: CGFloat {return 2}
+    override var barInsetY: CGFloat {return 1}
     override var knobWidth: CGFloat {return 6}
     override var knobRadius: CGFloat {return 1}
     override var knobHeightOutsideBar: CGFloat {return 2}
@@ -97,11 +97,13 @@ struct PlaybackLoopRange {
 class SeekSliderCell: HorizontalSliderCell {
     
     override var barRadius: CGFloat {return 0}
-    override var barInsetY: CGFloat {return 2}
+    override var barInsetY: CGFloat {return 1}
     
     override var knobRadius: CGFloat {return 1.5}
     override var knobWidth: CGFloat {return 6}
     override var knobHeightOutsideBar: CGFloat {return 2}
+    
+    override var gradientDegrees: CGFloat {return UIConstants.verticalGradientDegrees}
     
     var loop: PlaybackLoopRange?
     
@@ -185,15 +187,15 @@ class SeekSliderCell: HorizontalSliderCell {
     
     override internal func drawKnob(_ knobRect: NSRect) {
         
-        let bar = barRect(flipped: true)
-        
-        let knobHeight: CGFloat = bar.height + knobHeightOutsideBar
-        let knobMinX = knobRect.minX
-        let rect = NSRect(x: knobMinX, y: bar.minY - ((knobHeight - bar.height) / 2), width: knobWidth, height: knobHeight)
-        
-        let knobPath = NSBezierPath(roundedRect: rect, xRadius: knobRadius, yRadius: knobRadius)
-        knobColor.setFill()
-        knobPath.fill()
+//        let bar = barRect(flipped: true)
+//
+//        let knobHeight: CGFloat = bar.height + knobHeightOutsideBar
+//        let knobMinX = knobRect.minX
+//        let rect = NSRect(x: knobMinX, y: bar.minY - ((knobHeight - bar.height) / 2), width: knobWidth, height: knobHeight)
+//
+//        let knobPath = NSBezierPath(roundedRect: rect, xRadius: knobRadius, yRadius: knobRadius)
+//        knobColor.setFill()
+//        knobPath.fill()
     }
 }
 
