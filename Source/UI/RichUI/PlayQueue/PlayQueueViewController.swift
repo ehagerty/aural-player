@@ -1,12 +1,14 @@
 import Cocoa
 
-class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NotificationSubscriber {
+class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate, NotificationSubscriber {
     
     @IBOutlet weak var playQueueView: NSTableView!
     
-    private let playlist: PlaylistDelegateProtocol = ObjectGraph.playlistDelegate
+    @IBOutlet weak var artistColumnMenuItem: NSMenuItem!
+    @IBOutlet weak var albumColumnMenuItem: NSMenuItem!
+    @IBOutlet weak var genreColumnMenuItem: NSMenuItem!
     
-    // Used to determine the currently playing track
+    private let playlist: PlaylistDelegateProtocol = ObjectGraph.playlistDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
     private var cachedGapImage: NSImage!
@@ -21,22 +23,66 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         
         Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
         
-        let title_desc = NSSortDescriptor(key: "title", ascending: true)
-        let duration_desc = NSSortDescriptor(key: "duration", ascending: true)
-        let artist_desc = NSSortDescriptor(key: "artist", ascending: true)
+        artistColumnMenuItem.action = #selector(self.toggleArtistColumnAction(_:))
+        artistColumnMenuItem.target = self
         
-        playQueueView.tableColumns[1].sortDescriptorPrototype = title_desc
-        playQueueView.tableColumns[2].sortDescriptorPrototype = duration_desc
-        playQueueView.tableColumns[3].sortDescriptorPrototype = artist_desc
+        albumColumnMenuItem.action = #selector(self.toggleAlbumColumnAction(_:))
+        albumColumnMenuItem.target = self
+        
+        genreColumnMenuItem.action = #selector(self.toggleGenreColumnAction(_:))
+        genreColumnMenuItem.target = self
+    }
+    
+    var isShowingArtistColumn: Bool {!playQueueView.tableColumn(withIdentifier: .playQueue_artist)!.isHidden}
+    
+    var isShowingAlbumColumn: Bool {!playQueueView.tableColumn(withIdentifier: .playQueue_album)!.isHidden}
+    
+    var isShowingGenreColumn: Bool {!playQueueView.tableColumn(withIdentifier: .playQueue_genre)!.isHidden}
+    
+    func menuWillOpen(_ menu: NSMenu) {
+        
+        artistColumnMenuItem.onIf(isShowingArtistColumn)
+        albumColumnMenuItem.onIf(isShowingAlbumColumn)
+        genreColumnMenuItem.onIf(isShowingGenreColumn)
+    }
+    
+    @IBAction func toggleArtistColumnAction(_ sender: AnyObject) {
+        playQueueView.tableColumn(withIdentifier: .playQueue_artist)!.isHidden = isShowingArtistColumn
+    }
+    
+    @IBAction func toggleAlbumColumnAction(_ sender: AnyObject) {
+        playQueueView.tableColumn(withIdentifier: .playQueue_album)!.isHidden = isShowingAlbumColumn
+    }
+    
+    @IBAction func toggleGenreColumnAction(_ sender: AnyObject) {
+        playQueueView.tableColumn(withIdentifier: .playQueue_genre)!.isHidden = isShowingGenreColumn
     }
     
     func trackAdded(_ notification: TrackAddedNotification) {
-        self.playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
+        playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
     }
     
     func changeGapIndicatorColor(_ color: NSColor) {
         cachedGapImage = Images.imgGap.applyingTint(Colors.Playlist.trackNameTextColor)
     }
+    
+    // Plays the track selected within the playlist, if there is one. If multiple tracks are selected, the first one will be chosen.
+    @IBAction func playSelectedTrackAction(_ sender: AnyObject) {
+        playSelectedTrackWithDelay()
+    }
+    
+    func playSelectedTrack() {
+        playSelectedTrackWithDelay()
+    }
+    
+    func playSelectedTrackWithDelay(_ delay: Double? = nil) {
+        
+        if let firstSelectedRow = playQueueView.selectedRowIndexes.min() {
+            Messenger.publish(TrackPlaybackCommandNotification(index: firstSelectedRow, delay: delay))
+        }
+    }
+    
+    // MARK: Table view functions --------------------------------------------------------------------------------
     
     // Returns the total number of playlist rows
     func numberOfRows(in tableView: NSTableView) -> Int {
@@ -77,7 +123,7 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
         guard let track = playlist.trackAtIndex(row), let columnId = tableColumn?.identifier else {return nil}
-            
+        
         let gapBeforeTrack = playlist.getGapBeforeTrack(track)
         let gapAfterTrack = playlist.getGapAfterTrack(track)
         

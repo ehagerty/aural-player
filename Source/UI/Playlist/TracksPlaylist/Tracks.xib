@@ -216,7 +216,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="kEj-HT-bsP"/>
+                                    <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="irs-fv-TiD"/>
                                     <outlet property="dataSource" destination="vH7-ho-Ykd" id="rfp-o9-RCK"/>
                                     <outlet property="delegate" destination="fxO-kG-Bir" id="JYQ-SW-wPL"/>
                                 </connections>

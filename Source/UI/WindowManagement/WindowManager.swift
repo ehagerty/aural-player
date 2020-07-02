@@ -58,52 +58,59 @@ class WindowManager {
         }
     }
     
+    static var showRichUI: Bool = true
+    
     static func initializeWindows() {
         
-        richUIWindow.delegate = richUIWindowDelegate
-        
-        mainWindow.hide()
-        richUIWindow.show()
-        
-//        if preferences.layoutOnStartup.option == .specific {
-//
-//            layout(preferences.layoutOnStartup.layoutName)
-//
-//        } else {
-//
-//            // TODO: Improve the logic for defaultLayout ... maybe do a guard check at the beginning to see if defaultLayout is required ???
-//
-//            // Remember from last app launch
-//            mainWindow.setFrameOrigin(appState.mainWindowOrigin)
-//
-//            if appState.showEffects {
-//
-//                mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
-//
-//                if let effectsWindowOrigin = appState.effectsWindowOrigin {
-//                    effectsWindow.setFrameOrigin(effectsWindowOrigin)
-//                } else {
-//                    defaultLayout()
-//                }
-//            }
-//
-//            if appState.showPlaylist {
-//
-//                mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.below)
-//
-//                if let playlistWindowFrame = appState.playlistWindowFrame {
-//                    playlistWindow.setFrame(playlistWindowFrame, display: true)
-//                } else {
-//                    defaultLayout()
-//                }
-//            }
-//
-//            mainWindow.setIsVisible(true)
-//            effectsWindow.setIsVisible(appState.showEffects)
-//            playlistWindow.setIsVisible(appState.showPlaylist)
-//
-//            Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: appState.showPlaylist, showingEffectsWindow: appState.showEffects))
-//        }
+        if showRichUI {
+            
+            richUIWindow.delegate = richUIWindowDelegate
+            
+            mainWindow.hide()
+            richUIWindow.show()
+            
+        } else {
+            
+            if preferences.layoutOnStartup.option == .specific {
+                
+                layout(preferences.layoutOnStartup.layoutName)
+                
+            } else {
+                
+                // TODO: Improve the logic for defaultLayout ... maybe do a guard check at the beginning to see if defaultLayout is required ???
+                
+                // Remember from last app launch
+                mainWindow.setFrameOrigin(appState.mainWindowOrigin)
+                
+                if appState.showEffects {
+                    
+                    mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
+                    
+                    if let effectsWindowOrigin = appState.effectsWindowOrigin {
+                        effectsWindow.setFrameOrigin(effectsWindowOrigin)
+                    } else {
+                        defaultLayout()
+                    }
+                }
+                
+                if appState.showPlaylist {
+                    
+                    mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.below)
+                    
+                    if let playlistWindowFrame = appState.playlistWindowFrame {
+                        playlistWindow.setFrame(playlistWindowFrame, display: true)
+                    } else {
+                        defaultLayout()
+                    }
+                }
+                
+                mainWindow.setIsVisible(true)
+                effectsWindow.setIsVisible(appState.showEffects)
+                playlistWindow.setIsVisible(appState.showPlaylist)
+                
+                Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: appState.showPlaylist, showingEffectsWindow: appState.showEffects))
+            }
+        }
     }
     
     // Revert to default layout if app state is corrupted

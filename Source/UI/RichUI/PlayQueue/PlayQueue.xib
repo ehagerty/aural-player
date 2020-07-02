@@ -8,6 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PlayQueueViewController" customModule="Aural" customModuleProvider="target">
             <connections>
+                <outlet property="albumColumnMenuItem" destination="qZc-LB-WJG" id="lRo-fU-9ff"/>
+                <outlet property="artistColumnMenuItem" destination="o3o-sF-Pkk" id="H8F-iI-jqg"/>
+                <outlet property="genreColumnMenuItem" destination="zVF-0Z-NqM" id="j3d-Cz-qCF"/>
                 <outlet property="playQueueView" destination="tmn-d0-eHt" id="hnX-SH-dku"/>
                 <outlet property="view" destination="Tgc-2p-CcV" id="cd7-Lk-tzf"/>
             </connections>
@@ -227,6 +230,7 @@
                             </tableColumn>
                         </tableColumns>
                         <connections>
+                            <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="X8b-Iu-jZs"/>
                             <outlet property="dataSource" destination="-2" id="gL8-eL-vQF"/>
                             <outlet property="delegate" destination="-2" id="ndV-lh-GOV"/>
                         </connections>
@@ -234,7 +238,7 @@
                 </subviews>
                 <nil key="backgroundColor"/>
             </clipView>
-            <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.0046511627906976744" horizontal="YES" id="pYQ-Jl-vsu">
+            <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="pYQ-Jl-vsu">
                 <rect key="frame" x="0.0" y="372" width="578" height="15"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
@@ -245,8 +249,28 @@
             <tableHeaderView key="headerView" id="bxE-4p-5au">
                 <rect key="frame" x="0.0" y="0.0" width="793" height="25"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <connections>
+                    <outlet property="menu" destination="UmR-v1-63k" id="6a2-EX-CcS"/>
+                </connections>
             </tableHeaderView>
             <point key="canvasLocation" x="140" y="-241"/>
         </scrollView>
+        <menu id="UmR-v1-63k" userLabel="ColumnSelectionMenu">
+            <items>
+                <menuItem title="Artist" id="o3o-sF-Pkk" userLabel="Artist">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Album" id="qZc-LB-WJG" userLabel="Album">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Genre" id="zVF-0Z-NqM" userLabel="Genre">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="aYI-jU-JaZ"/>
+            </connections>
+            <point key="canvasLocation" x="237" y="53"/>
+        </menu>
     </objects>
 </document>

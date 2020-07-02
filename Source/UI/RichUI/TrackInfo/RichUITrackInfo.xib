@@ -8,6 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RichUITrackInfoViewController" customModule="Aural" customModuleProvider="target">
             <connections>
+                <outlet property="albumArtView" destination="hd7-3c-EoC" id="ec1-Ir-vg6"/>
+                <outlet property="lblAlbum" destination="Z18-Ca-rQe" id="gGB-be-Wjd"/>
+                <outlet property="lblArtist" destination="ej0-gh-zBZ" id="pE6-f4-YG5"/>
+                <outlet property="lblTitle" destination="TXJ-L9-qSk" id="LWp-7S-o5d"/>
                 <outlet property="view" destination="8UJ-fk-Tzs" id="DJh-60-88a"/>
             </connections>
         </customObject>
