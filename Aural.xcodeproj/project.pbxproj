@@ -533,6 +533,10 @@
 		3E810ACE2485876E00525442 /* HaltPlaybackActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E810ACD2485876E00525442 /* HaltPlaybackActionTests.swift */; };
 		3E81C64B21C5161A00EA1DFA /* TranscoderDaemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E81C64A21C5161A00EA1DFA /* TranscoderDaemon.swift */; };
 		3E822B381F21DCF20006CDBC /* RecordingFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E822B371F21DCF20006CDBC /* RecordingFormat.swift */; };
+		3E82888024ADD0E80032D0CE /* RichUITrackInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E82887F24ADD0E80032D0CE /* RichUITrackInfo.xib */; };
+		3E82888224ADD11B0032D0CE /* RichUITrackInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82888124ADD11B0032D0CE /* RichUITrackInfoViewController.swift */; };
+		3E82888524ADD18D0032D0CE /* RichUIPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E82888424ADD18D0032D0CE /* RichUIPlayer.xib */; };
+		3E82888724ADD19D0032D0CE /* RichUIPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E82888624ADD19D0032D0CE /* RichUIPlayerViewController.swift */; };
 		3E84F83F1F5FBB260010BCDA /* PlaybackDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84F83E1F5FBB260010BCDA /* PlaybackDelegateProtocol.swift */; };
 		3E84F8481F5FC58D0010BCDA /* PlaybackDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84F8471F5FC58D0010BCDA /* PlaybackDelegate.swift */; };
 		3E850D521FB441800017CD02 /* WindowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E850D511FB441800017CD02 /* WindowFactory.swift */; };
@@ -1168,6 +1172,10 @@
 		3E810ACD2485876E00525442 /* HaltPlaybackActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaltPlaybackActionTests.swift; sourceTree = "<group>"; };
 		3E81C64A21C5161A00EA1DFA /* TranscoderDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscoderDaemon.swift; sourceTree = "<group>"; };
 		3E822B371F21DCF20006CDBC /* RecordingFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingFormat.swift; sourceTree = "<group>"; };
+		3E82887F24ADD0E80032D0CE /* RichUITrackInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUITrackInfo.xib; sourceTree = "<group>"; };
+		3E82888124ADD11B0032D0CE /* RichUITrackInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUITrackInfoViewController.swift; sourceTree = "<group>"; };
+		3E82888424ADD18D0032D0CE /* RichUIPlayer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUIPlayer.xib; sourceTree = "<group>"; };
+		3E82888624ADD19D0032D0CE /* RichUIPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUIPlayerViewController.swift; sourceTree = "<group>"; };
 		3E84F83E1F5FBB260010BCDA /* PlaybackDelegateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackDelegateProtocol.swift; sourceTree = "<group>"; };
 		3E84F8471F5FC58D0010BCDA /* PlaybackDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackDelegate.swift; sourceTree = "<group>"; };
 		3E850D511FB441800017CD02 /* WindowFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowFactory.swift; sourceTree = "<group>"; };
@@ -2754,6 +2762,24 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		3E82887E24ADD03C0032D0CE /* TrackInfo */ = {
+			isa = PBXGroup;
+			children = (
+				3E82887F24ADD0E80032D0CE /* RichUITrackInfo.xib */,
+				3E82888124ADD11B0032D0CE /* RichUITrackInfoViewController.swift */,
+			);
+			path = TrackInfo;
+			sourceTree = "<group>";
+		};
+		3E82888324ADD17D0032D0CE /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				3E82888424ADD18D0032D0CE /* RichUIPlayer.xib */,
+				3E82888624ADD19D0032D0CE /* RichUIPlayerViewController.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		3E85F24D1EFA78D6007BE830 = {
 			isa = PBXGroup;
 			children = (
@@ -2896,6 +2922,8 @@
 			children = (
 				3ED404A924ACEFA4000BF125 /* RichUI.xib */,
 				3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */,
+				3E82887E24ADD03C0032D0CE /* TrackInfo */,
+				3E82888324ADD17D0032D0CE /* Player */,
 			);
 			path = RichUI;
 			sourceTree = "<group>";
@@ -3100,6 +3128,7 @@
 				3EDDF6AC1FB4FF5100DF2E9A /* MainWindow.xib in Resources */,
 				3E85F25C1EFA78D6007BE830 /* Assets.xcassets in Resources */,
 				3EF5E5B41FBDA3DB004270A4 /* Tracks.xib in Resources */,
+				3E82888024ADD0E80032D0CE /* RichUITrackInfo.xib in Resources */,
 				3E0835F72459A9FA00822FA8 /* ColorSchemesEditor.xib in Resources */,
 				3E0ED6B81FBB1C34008268B3 /* Reverb.xib in Resources */,
 				3E36E8621FC00E700005C62E /* PlaylistPreferences.xib in Resources */,
@@ -3160,6 +3189,7 @@
 				3EE7D72E244EDCB2005D76FA /* PlayerColorScheme.xib in Resources */,
 				3E0ED6AF1FBB1AB8008268B3 /* EQ.xib in Resources */,
 				3E36E8651FC00EC60005C62E /* SoundPreferences.xib in Resources */,
+				3E82888524ADD18D0032D0CE /* RichUIPlayer.xib in Resources */,
 				3E0ED6C11FBB1D21008268B3 /* Recorder.xib in Resources */,
 				3E309B741FB70BB800C61E72 /* InfoPopup.xib in Resources */,
 				3EF5E5BE1FBDB3F8004270A4 /* Albums.xib in Resources */,
@@ -3235,6 +3265,7 @@
 				3E5F00C62153986700A76C23 /* Bookmark.swift in Sources */,
 				3E94E85D2154AB9300C57AD8 /* FilterPresets.swift in Sources */,
 				3EB499F2244AF1E200711BC5 /* PlaylistViewPopupMenuController.swift in Sources */,
+				3E82888724ADD19D0032D0CE /* RichUIPlayerViewController.swift in Sources */,
 				3E80E66F1F04FA60007480CC /* Size.swift in Sources */,
 				3E78DCA124648D9200E6BC00 /* PlayerAudioViewController.swift in Sources */,
 				3E1DA6F8244D6D4A00FFF59E /* ColorScheme.swift in Sources */,
@@ -3319,6 +3350,7 @@
 				3E50DC982193A3B500D42373 /* FXUnit.swift in Sources */,
 				3E154D7B21DCC21F006DBD22 /* FileSystemDataSource.swift in Sources */,
 				3E1BF76524310DBD00B6B9F9 /* RecordingParams.swift in Sources */,
+				3E82888224ADD11B0032D0CE /* RichUITrackInfoViewController.swift in Sources */,
 				3E5F00D421543D3800A76C23 /* StringInputReceiver.swift in Sources */,
 				3E186FC021CE2CE400FD5F34 /* AlbumArtCache.swift in Sources */,
 				3E27D20B246FCC1800B6170B /* EndPlaybackSequenceAction.swift in Sources */,
