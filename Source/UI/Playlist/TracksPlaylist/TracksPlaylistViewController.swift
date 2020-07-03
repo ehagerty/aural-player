@@ -331,24 +331,18 @@ class TracksPlaylistViewController: NSViewController, NotificationSubscriber {
         let refreshIndexes: IndexSet = IndexSet(Set([notification.beginTrack, notification.endTrack].compactMap {$0}).compactMap {playlist.indexOfTrack($0)})
         let needToShowTrack: Bool = PlaylistViewState.current == .tracks && preferences.showNewTrackInPlaylist
 
-        if let newTrack = notification.endTrack {
-            
-            if needToShowTrack {
+        if needToShowTrack {
 
-                if let newTrackIndex = playlist.indexOfTrack(newTrack), newTrackIndex >= playlistView.numberOfRows {
+            if let newTrack = notification.endTrack, let newTrackIndex = playlist.indexOfTrack(newTrack), newTrackIndex >= playlistView.numberOfRows {
 
-                    // This means the track is in the playlist but has not yet been added to the playlist view (Bookmark/Recently played/Favorite item), and will be added shortly (this is a race condition). So, dispatch an async delayed handler to show the track in the playlist, after it is expected to be added.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
-                        self.showPlayingTrack()
-                    })
+                // This means the track is in the playlist but has not yet been added to the playlist view (Bookmark/Recently played/Favorite item), and will be added shortly (this is a race condition). So, dispatch an async delayed handler to show the track in the playlist, after it is expected to be added.
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                    self.showPlayingTrack()
+                })
 
-                } else {
-                    showPlayingTrack()
-                }
+            } else {
+                notification.endTrack != nil ? showPlayingTrack() : clearSelection()
             }
-
-        } else if needToShowTrack {
-            clearSelection()
         }
 
         // If this is not done async, the row view could get garbled.

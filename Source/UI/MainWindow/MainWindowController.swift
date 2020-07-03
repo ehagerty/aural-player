@@ -15,7 +15,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     // The box that encloses the Now Playing info section
     @IBOutlet weak var rootContainerBox: NSBox!
     @IBOutlet weak var containerBox: NSBox!
-    private lazy var playerView: NSView = ViewFactory.playerView
+//    private lazy var playerView: NSView = ViewFactory.playerView
     
     @IBOutlet weak var btnQuit: TintedImageButton!
     @IBOutlet weak var btnMinimize: TintedImageButton!
@@ -76,7 +76,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     // Add the sub-views that make up the main window
     private func addSubViews() {
-        containerBox.addSubview(playerView)
+//        containerBox.addSubview(playerView)
     }
     
     private func activateGestureHandler() {

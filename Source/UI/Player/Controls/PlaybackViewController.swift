@@ -48,17 +48,17 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
         Messenger.subscribe(self, .player_replayChapter, self.replayChapter)
         Messenger.subscribe(self, .player_toggleChapterLoop, self.toggleChapterLoop)
         
-        Messenger.subscribe(self, .player_showOrHideTimeElapsedRemaining, playbackView.showOrHideTimeElapsedRemaining)
-        Messenger.subscribe(self, .player_setTimeElapsedDisplayFormat, playbackView.setTimeElapsedDisplayFormat(_:))
-        Messenger.subscribe(self, .player_setTimeRemainingDisplayFormat, playbackView.setTimeRemainingDisplayFormat(_:))
-        
-        Messenger.subscribe(self, .player_changeTextSize, playbackView.changeTextSize(_:))
+//        Messenger.subscribe(self, .player_showOrHideTimeElapsedRemaining, playbackView.showOrHideTimeElapsedRemaining)
+//        Messenger.subscribe(self, .player_setTimeElapsedDisplayFormat, playbackView.setTimeElapsedDisplayFormat(_:))
+//        Messenger.subscribe(self, .player_setTimeRemainingDisplayFormat, playbackView.setTimeRemainingDisplayFormat(_:))
+//
+//        Messenger.subscribe(self, .player_changeTextSize, playbackView.changeTextSize(_:))
         
         Messenger.subscribe(self, .applyColorScheme, playbackView.applyColorScheme(_:))
-        Messenger.subscribe(self, .player_changeSliderColors, playbackView.changeSliderColors)
+//        Messenger.subscribe(self, .player_changeSliderColors, playbackView.changeSliderColors)
         Messenger.subscribe(self, .changeFunctionButtonColor, playbackView.changeFunctionButtonColor(_:))
         Messenger.subscribe(self, .changeToggleButtonOffStateColor, playbackView.changeToggleButtonOffStateColor(_:))
-        Messenger.subscribe(self, .player_changeSliderValueTextColor, playbackView.changeSliderValueTextColor(_:))
+//        Messenger.subscribe(self, .player_changeSliderValueTextColor, playbackView.changeSliderValueTextColor(_:))
     }
     
     // MARK: Track playback actions/functions ------------------------------------------------------------
@@ -144,7 +144,7 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
         let wasPaused: Bool = player.state == .paused
         
         player.replay()
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
         
         if wasPaused {
             playbackView.playbackStateChanged(player.state)
@@ -184,8 +184,8 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
     // Moving the seek slider results in seeking the track to the new slider position
     @IBAction func seekSliderAction(_ sender: AnyObject) {
         
-        player.seekToPercentage(playbackView.seekSliderValue)
-        playbackView.updateSeekPosition()
+//        player.seekToPercentage(playbackView.seekSliderValue)
+//        playbackView.updateSeekPosition()
     }
     
     // Seeks backward within the currently playing track
@@ -196,13 +196,13 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
     func seekBackward(_ inputMode: UserInputMode) {
         
         player.seekBackward(inputMode)
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
     }
     
     func seekBackward_secondary() {
         
         player.seekBackwardSecondary()
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
     }
     
     // Seeks forward within the currently playing track
@@ -213,26 +213,26 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
     func seekForward(_ inputMode: UserInputMode) {
         
         player.seekForward(inputMode)
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
     }
     
     func seekForward_secondary() {
         
         player.seekForwardSecondary()
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
     }
     
     func jumpToTime(_ time: Double) {
         
         player.seekToTime(time)
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
     }
     
     // Returns a view that marks the current position of the seek slider knob.
     var seekPositionMarkerView: NSView {
         
-        playbackView.positionSeekPositionMarkerView()
-        return playbackView.seekPositionMarker
+//        playbackView.positionSeekPositionMarkerView()
+        return self.view
     }
     
     // MARK: Segment looping actions/functions ------------------------------------------------------------
@@ -287,7 +287,7 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
     private func replayChapter() {
         
         player.replayChapter()
-        playbackView.updateSeekPosition()
+//        playbackView.updateSeekPosition()
         playbackView.playbackStateChanged(player.state)
     }
     
@@ -341,6 +341,6 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
     
     // When the playback rate changes (caused by the Time Stretch fx unit), the seek timer interval needs to be updated, to ensure that the seek position fields are updated fast/slow enough to match the new playback rate.
     func playbackRateChanged(_ newPlaybackRate: Float) {
-        playbackView.playbackRateChanged(newPlaybackRate, player.state)
+//        playbackView.playbackRateChanged(newPlaybackRate, player.state)
     }
 }

@@ -19,11 +19,11 @@ class TranscoderViewController: NSViewController, NotificationSubscriber {
     
     @IBOutlet weak var progressView: ProgressArc!
     
-    @IBOutlet weak var controlsBox: NSBox!
-    private let controlsView: NSView = ViewFactory.controlsView
-    
-    @IBOutlet weak var functionsBox: NSBox!
-    private let functionsView: NSView = ViewFactory.playingTrackFunctionsView
+//    @IBOutlet weak var controlsBox: NSBox!
+//    private let controlsView: NSView = ViewFactory.controlsView
+//
+//    @IBOutlet weak var functionsBox: NSBox!
+//    private let functionsView: NSView = ViewFactory.playingTrackFunctionsView
     
     @IBOutlet weak var containerBox: NSBox!
     
@@ -67,18 +67,18 @@ class TranscoderViewController: NSViewController, NotificationSubscriber {
     
     override func viewDidAppear() {
         
-        DispatchQueue.main.async {
-            
-            if !self.controlsView.isDescendant(of: self.controlsBox) {
-                self.controlsBox.addSubview(self.controlsView)
-            }
-
-            if !self.functionsView.isDescendant(of: self.functionsBox) {
-                self.functionsBox.addSubview(self.functionsView)
-            }
-
-            self.functionsBox.showIf(PlayerViewState.showPlayingTrackFunctions)
-        }
+//        DispatchQueue.main.async {
+//            
+//            if !self.controlsView.isDescendant(of: self.controlsBox) {
+//                self.controlsBox.addSubview(self.controlsView)
+//            }
+//
+//            if !self.functionsView.isDescendant(of: self.functionsBox) {
+//                self.functionsBox.addSubview(self.functionsView)
+//            }
+//
+//            self.functionsBox.showIf(PlayerViewState.showPlayingTrackFunctions)
+//        }
     }
     
     private func transcodingStarted(_ track: Track) {

@@ -8,9 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RichUIWindowController" customModule="Aural" customModuleProvider="target">
             <connections>
-                <outlet property="playerBox" destination="3dr-Sq-kpK" id="jPv-wB-nZZ"/>
+                <outlet property="playerBox" destination="14c-Br-nUU" id="eYf-l4-d0q"/>
                 <outlet property="splitView" destination="mCq-7J-CYT" id="edK-Sm-ts1"/>
-                <outlet property="trackInfoBox" destination="14c-Br-nUU" id="y2G-zT-xl2"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="aCb-t2-FOW"/>
             </connections>
         </customObject>
@@ -37,39 +36,21 @@
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="AppTitle"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <box boxType="custom" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="14c-Br-nUU" userLabel="TrackInfoBox">
-                        <rect key="frame" x="0.0" y="519" width="589" height="90"/>
+                    <box boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="14c-Br-nUU" userLabel="PlayerBox">
+                        <rect key="frame" x="0.0" y="519" width="1000" height="90"/>
                         <view key="contentView" id="n58-AY-b6k">
-                            <rect key="frame" x="0.0" y="0.0" width="589" height="90"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1000" height="90"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </view>
                         <constraints>
                             <constraint firstAttribute="height" constant="90" id="GrK-sh-gns"/>
                         </constraints>
                     </box>
-                    <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="bYj-fP-Oim" userLabel="Divider">
-                        <rect key="frame" x="587" y="514" width="5" height="90"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="1" id="GHc-qV-pQr"/>
-                            <constraint firstAttribute="height" constant="90" id="Kic-no-lax"/>
-                        </constraints>
-                    </box>
-                    <box boxType="custom" borderWidth="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="3dr-Sq-kpK" userLabel="ControlsBox">
-                        <rect key="frame" x="595" y="519" width="400" height="90"/>
-                        <view key="contentView" id="j5B-6X-Fu1">
-                            <rect key="frame" x="0.0" y="0.0" width="400" height="90"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        </view>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="90" id="Zf8-6k-7Hh"/>
-                            <constraint firstAttribute="width" constant="400" id="vNT-tt-4DL"/>
-                        </constraints>
-                    </box>
                     <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-7J-CYT">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="509"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="519"/>
                         <subviews>
                             <customView id="Lda-3H-PUQ">
-                                <rect key="frame" x="0.0" y="0.0" width="200" height="509"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="519"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="TGf-Gr-Na7"/>
@@ -77,7 +58,7 @@
                                 </constraints>
                             </customView>
                             <customView fixedFrame="YES" id="bU4-oH-OvX">
-                                <rect key="frame" x="201" y="0.0" width="799" height="509"/>
+                                <rect key="frame" x="201" y="0.0" width="799" height="519"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </customView>
                         </subviews>
@@ -93,18 +74,16 @@
                     </splitView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="14c-Br-nUU" firstAttribute="trailing" secondItem="bYj-fP-Oim" secondAttribute="leading" id="2ZX-tP-6OH"/>
-                    <constraint firstItem="mCq-7J-CYT" firstAttribute="top" secondItem="14c-Br-nUU" secondAttribute="bottom" constant="10" id="83E-U4-dwN"/>
                     <constraint firstItem="Nhh-o3-feJ" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="Aec-eT-TTf"/>
-                    <constraint firstItem="3dr-Sq-kpK" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="DGA-3e-cwj"/>
                     <constraint firstItem="14c-Br-nUU" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="Dyx-QK-bzd"/>
                     <constraint firstItem="14c-Br-nUU" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="FHA-UG-hci"/>
-                    <constraint firstAttribute="trailing" secondItem="3dr-Sq-kpK" secondAttribute="trailing" constant="5" id="PaA-BX-EDg"/>
-                    <constraint firstItem="bYj-fP-Oim" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="45" id="Qa9-Ag-K9P"/>
+                    <constraint firstItem="mCq-7J-CYT" firstAttribute="top" secondItem="14c-Br-nUU" secondAttribute="bottom" id="Hdd-A7-8Pb"/>
+                    <constraint firstAttribute="trailing" secondItem="14c-Br-nUU" secondAttribute="trailing" id="NAr-da-Ssc"/>
                     <constraint firstAttribute="trailing" secondItem="mCq-7J-CYT" secondAttribute="trailing" id="XNs-hM-lNo"/>
-                    <constraint firstItem="3dr-Sq-kpK" firstAttribute="leading" secondItem="bYj-fP-Oim" secondAttribute="trailing" constant="5" id="Xb4-Kn-5bH"/>
                     <constraint firstAttribute="bottom" secondItem="mCq-7J-CYT" secondAttribute="bottom" id="aAU-50-hdj"/>
                     <constraint firstItem="Nhh-o3-feJ" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="huI-Vx-0nX"/>
+                    <constraint firstItem="14c-Br-nUU" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="iUi-Bj-e9T"/>
+                    <constraint firstItem="14c-Br-nUU" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="k0P-4e-7Un"/>
                     <constraint firstItem="mCq-7J-CYT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="lKU-Ui-gVQ"/>
                 </constraints>
             </view>

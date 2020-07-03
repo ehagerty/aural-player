@@ -175,20 +175,20 @@ class PlayingTrackFunctionsViewController: NSViewController, NotificationSubscri
             
         } else {
             
-            let seekPositionMarkerView: NSView = ViewFactory.seekPositionMarkerView
-            
-            // Show popover relative to seek slider
-            if seekPositionMarkerView.isVisible {
-                bookmarkNamePopover.show(seekPositionMarkerView, NSRectEdge.maxY)
-
-            } // Show popover relative to bookmark function button
-            else if btnBookmark.isVisible {
-                bookmarkNamePopover.show(btnBookmark, NSRectEdge.maxX)
-                
-            } // Show popover relative to window
-            else if let windowRootView = self.view.window?.contentView {
-                bookmarkNamePopover.show(windowRootView, NSRectEdge.maxX)
-            }
+//            let seekPositionMarkerView: NSView = ViewFactory.seekPositionMarkerView
+//            
+//            // Show popover relative to seek slider
+//            if seekPositionMarkerView.isVisible {
+//                bookmarkNamePopover.show(seekPositionMarkerView, NSRectEdge.maxY)
+//
+//            } // Show popover relative to bookmark function button
+//            else if btnBookmark.isVisible {
+//                bookmarkNamePopover.show(btnBookmark, NSRectEdge.maxX)
+//                
+//            } // Show popover relative to window
+//            else if let windowRootView = self.view.window?.contentView {
+//                bookmarkNamePopover.show(windowRootView, NSRectEdge.maxX)
+//            }
         }
     }
     

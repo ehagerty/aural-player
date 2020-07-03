@@ -2,7 +2,6 @@ import Cocoa
 
 class RichUIWindowController: NSWindowController {
     
-    @IBOutlet weak var trackInfoBox: NSBox!
     @IBOutlet weak var playerBox: NSBox!
     
     @IBOutlet weak var splitView: NSSplitView!
@@ -11,7 +10,6 @@ class RichUIWindowController: NSWindowController {
     
     override var windowNibName: String? {return "RichUI"}
     
-    private lazy var trackInfoController: RichUITrackInfoViewController = RichUITrackInfoViewController()
     private lazy var playerController: RichUIPlayerViewController = RichUIPlayerViewController()
     
     private lazy var sidebarController: SidebarViewController = SidebarViewController()
@@ -19,11 +17,9 @@ class RichUIWindowController: NSWindowController {
     
     override func windowDidLoad() {
 
-        let trackInfoView = trackInfoController.view
-        trackInfoView.frame.size.width = trackInfoBox.width
-        
-        trackInfoBox.addSubview(trackInfoView)
-        playerBox.addSubview(playerController.view)
+        let playerView = playerController.view
+        playerBox.addSubview(playerView)
+        playerView.anchorToView(playerView.superview!)
         
         let sidebarView: NSView = sidebarController.view
         let containerView = splitView.arrangedSubviews[0]

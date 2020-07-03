@@ -116,14 +116,14 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
     }
     
     func changeTextSize(_ size: TextSize) {
-//        sliderView.changeTextSize(size)
+        sliderView.changeTextSize(size)
     }
     
     func applyColorScheme(_ scheme: ColorScheme) {
         
         // This call will also take care of toggle buttons
         changeFunctionButtonColor(scheme.general.functionButtonColor)
-//        sliderView.applyColorScheme(scheme)
+        sliderView.applyColorScheme(scheme)
     }
     
     func changeSliderColors() {
@@ -159,7 +159,7 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
     }
     
     var seekPositionMarker: NSView! {
-        return sliderView.seekPositionMarker
+        return sliderView
     }
     
     func playbackRateChanged(_ rate: Float, _ playbackState: PlaybackState) {

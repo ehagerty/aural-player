@@ -21,6 +21,7 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
     
     override func viewDidLoad() {
         
+        Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
         
         artistColumnMenuItem.action = #selector(self.toggleArtistColumnAction(_:))
@@ -79,6 +80,36 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         
         if let firstSelectedRow = playQueueView.selectedRowIndexes.min() {
             Messenger.publish(TrackPlaybackCommandNotification(index: firstSelectedRow, delay: delay))
+        }
+    }
+    
+    private func trackTransitioned(_ notification: TrackTransitionNotification) {
+        
+        let refreshIndexes: IndexSet = IndexSet(Set([notification.beginTrack, notification.endTrack].compactMap {$0}).compactMap {playlist.indexOfTrack($0)})
+////        let needToShowTrack: Bool = PlaylistViewState.current == .tracks && preferences.showNewTrackInPlaylist
+//        let needToShowTrack: Bool = true
+//
+//        if needToShowTrack {
+//
+//            if let newTrack = notification.endTrack, let newTrackIndex = playlist.indexOfTrack(newTrack), newTrackIndex >= playQueueView.numberOfRows {
+//
+//                // This means the track is in the playlist but has not yet been added to the playlist view (Bookmark/Recently played/Favorite item), and will be added shortly (this is a race condition). So, dispatch an async delayed handler to show the track in the playlist, after it is expected to be added.
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+//                    self.showPlayingTrack()
+//                })
+//
+//            } else {
+//                notification.endTrack != nil ? showPlayingTrack() : clearSelection()
+//            }
+//        }
+//
+//        // If this is not done async, the row view could get garbled.
+//        // (because of other potential simultaneous updates - e.g. PlayingTrackInfoUpdated)
+//        // Gaps may have been removed, so row heights need to be updated too
+        DispatchQueue.main.async {
+
+            self.playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: UIConstants.flatPlaylistViewColumnIndexes)
+            self.playQueueView.noteHeightOfRows(withIndexesChanged: refreshIndexes)
         }
     }
     
@@ -206,6 +237,7 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         
         cell.updateText(Fonts.Playlist.indexFont, text)
+        cell.textField?.alignment = .center
 //        cell.updateForGaps(gapBefore != nil, gapAfter != nil)
         
         return cell
@@ -244,6 +276,7 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         
         cell.updateText(Fonts.Playlist.indexFont, text)
+        cell.textField?.alignment = .right
 //        cell.updateForGaps(gapBefore != nil, gapAfter != nil, gapBefore?.duration, gapAfter?.duration)
         
         return cell
