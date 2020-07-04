@@ -276,7 +276,7 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         
         cell.updateText(Fonts.Playlist.indexFont, text)
-        cell.textField?.alignment = .right
+        cell.textField?.alignment = .center
 //        cell.updateForGaps(gapBefore != nil, gapAfter != nil, gapBefore?.duration, gapAfter?.duration)
         
         return cell

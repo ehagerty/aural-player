@@ -91,9 +91,7 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
         let seekPosn = player.seekPosition
         seekSlider.doubleValue = seekPosn.percentageElapsed
         
-        let trackTimes = ValueFormatter.formatTrackTimes(seekPosn.timeElapsed, seekPosn.trackDuration, seekPosn.percentageElapsed, PlayerViewState.timeElapsedDisplayType, PlayerViewState.timeRemainingDisplayType)
-        
-//        lblTimeElapsed.stringValue = trackTimes.elapsed
+        lblSeekTime.stringValue = ValueFormatter.formatTrackTimes(seekPosn.timeElapsed, seekPosn.trackDuration, seekPosn.percentageElapsed, PlayerViewState.seekTimeDisplayType)
         
         for task in SeekTimerTaskQueue.tasksArray {
             task()

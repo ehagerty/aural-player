@@ -19,6 +19,8 @@ class PlayerViewState {
     static var showControls: Bool = true
     static var showTimeElapsedRemaining: Bool = true
     
+    static var seekTimeDisplayType: SeekTimeDisplayType = .formatted
+    
     static var timeElapsedDisplayType: TimeElapsedDisplayType = .formatted
     static var timeRemainingDisplayType: TimeRemainingDisplayType = .formatted
     

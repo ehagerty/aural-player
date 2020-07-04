@@ -17,9 +17,9 @@ class RichUIWindowController: NSWindowController {
     
     override func windowDidLoad() {
 
-        let playerView = playerController.view
-        playerBox.addSubview(playerView)
-        playerView.anchorToView(playerView.superview!)
+//        let playerView = playerController.view
+//        playerBox.addSubview(playerView)
+//        playerView.anchorToView(playerView.superview!)
         
         let sidebarView: NSView = sidebarController.view
         let containerView = splitView.arrangedSubviews[0]
@@ -27,8 +27,20 @@ class RichUIWindowController: NSWindowController {
         sidebarView.anchorToView(sidebarView.superview!)
         
         let playQueueView: NSView = playQueueController.view
-        let playQueueContainerView = splitView.arrangedSubviews[1]
-        playQueueContainerView.addSubview(playQueueView)
-        playQueueView.anchorToView(playQueueView.superview!)
+        
+        let rightSplitView = splitView.arrangedSubviews[1]
+        if let playerBrowserSplitView = rightSplitView.subviews.first as? NSSplitView {
+            
+            let playerContainerView = playerBrowserSplitView.arrangedSubviews[0]
+            
+            let playerView = playerController.view
+            playerContainerView.addSubview(playerView)
+            playerView.anchorToView(playerView.superview!)
+            
+            let playQueueContainerView = playerBrowserSplitView.arrangedSubviews[1]
+
+            playQueueContainerView.addSubview(playQueueView)
+            playQueueView.anchorToView(playQueueView.superview!)
+        }
     }
 }

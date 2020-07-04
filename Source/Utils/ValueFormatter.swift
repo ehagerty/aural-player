@@ -20,6 +20,63 @@ class ValueFormatter {
     static let oneHour = 60 * oneMin
     
     // Given the elapsed time, in seconds, for a playing track, and its duration (also in seconds), returns 2 formatted strings: 1 - Formatted elapsed time, and 2 - Formatted time remaining. See formatSecondsToHMS()
+    static func formatTrackTimes(_ elapsedSeconds: Double, _ duration: Double, _ percentageElapsed: Double,
+                                 _ timeDisplayType: SeekTimeDisplayType = .formatted) -> String {
+        
+        var elapsedString: String?
+        var remainingString: String?
+        
+        switch timeDisplayType {
+         
+        case .formatted:
+
+            elapsedString = formatSecondsToHMS(elapsedSeconds)
+            remainingString = formatSecondsToHMS(roundedInt(duration) - roundedInt(elapsedSeconds), true)
+
+        case .seconds:
+
+            let elapsedSecondsInt = roundedInt(elapsedSeconds)
+            elapsedString = String(format: "%@ sec", commaSeparatedInt(elapsedSecondsInt))
+            remainingString = String(format: "- %@ sec", commaSeparatedInt(roundedInt(duration) - elapsedSecondsInt))
+
+//        case .percentage:
+
+//            elapsedString = String(format: "%d%%", floorInt(percentageElapsed))
+//
+//            let percentageRemaining = 100 - floorInt(percentageElapsed)
+//            remainingString = String(format: "- %d%%", percentageRemaining)
+//
+//            case .duration_formatted:
+//
+//            remainingString = formatSecondsToHMS(duration)
+//
+//            case .duration_seconds:
+//
+//            let durationInt = roundedInt(duration)
+//            let secStr = commaSeparatedInt(durationInt)
+//
+//            remainingString = String(format: "%@ sec", secStr)
+            
+        default:
+            
+            return ""
+
+        }
+         
+        if let theElapsedString = elapsedString, let theRemainingString = remainingString {
+            return String(format: "%@ / %@", theElapsedString, theRemainingString)
+            
+        } else if let theElapsedString = elapsedString {
+            return theElapsedString
+            
+        } else if let theRemainingString = remainingString {
+            return theRemainingString
+        }
+        
+        return ""
+    }
+    
+    // Given the elapsed time, in seconds, for a playing track, and its duration (also in seconds), returns 2 formatted strings: 1 - Formatted elapsed time, and 2 - Formatted time remaining. See formatSecondsToHMS()
     static func formatTrackTimes(_ elapsedSeconds: Double, _ duration: Double, _ percentageElapsed: Double, _ timeElapsedDisplayType: TimeElapsedDisplayType = .formatted, _ timeRemainingDisplayType: TimeRemainingDisplayType = .formatted) -> (elapsed: String, remaining: String) {
         
         var elapsedString: String
