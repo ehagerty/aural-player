@@ -1344,7 +1344,7 @@
 		3ED35D2E21E960CB00A5904F /* AudioToolboxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioToolboxParser.swift; sourceTree = "<group>"; };
 		3ED35D3021EAAB3D00A5904F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
 		3ED404A924ACEFA4000BF125 /* RichUI.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUI.xib; sourceTree = "<group>"; };
-		3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUIWindowController.swift; sourceTree = "<group>"; };
+		3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 1; path = RichUIWindowController.swift; sourceTree = "<group>"; };
 		3ED4257721E7EB4B00E202AB /* JSONWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWriter.swift; sourceTree = "<group>"; };
 		3ED4257921E803E000E202AB /* HTMLWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLWriter.swift; sourceTree = "<group>"; };
 		3ED4257B21E8414000E202AB /* ITunesSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesSpec.swift; sourceTree = "<group>"; };

@@ -42,8 +42,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="609"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="TGf-Gr-Na7"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="tUv-04-ehq"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="TGf-Gr-Na7"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="tUv-04-ehq"/>
                                 </constraints>
                             </customView>
                             <customView id="bU4-oH-OvX">
@@ -80,7 +80,7 @@
                             </customView>
                         </subviews>
                         <holdingPriorities>
-                            <real value="250"/>
+                            <real value="251"/>
                             <real value="250"/>
                         </holdingPriorities>
                         <userDefinedRuntimeAttributes>
