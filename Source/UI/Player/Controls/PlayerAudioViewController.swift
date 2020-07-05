@@ -12,14 +12,14 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     
     // These are feedback labels that are shown briefly and automatically hidden
     @IBOutlet weak var lblVolume: VALabel!
-    @IBOutlet weak var lblPan: VALabel!
+//    @IBOutlet weak var lblPan: VALabel!
     
     // Wrappers around the feedback labels that automatically hide them after showing them for a brief interval
     private var autoHidingVolumeLabel: AutoHidingView!
-    private var autoHidingPanLabel: AutoHidingView!
+//    private var autoHidingPanLabel: AutoHidingView!
     
-    @IBOutlet weak var lblPanCaption: VALabel!
-    @IBOutlet weak var lblPanCaption2: VALabel!
+//    @IBOutlet weak var lblPanCaption: VALabel!
+//    @IBOutlet weak var lblPanCaption2: VALabel!
     
     // Delegate that conveys all volume/pan adjustments to the audio graph
     private var audioGraph: AudioGraphDelegateProtocol = ObjectGraph.audioGraphDelegate
@@ -34,13 +34,13 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     override func viewDidLoad() {
         
         autoHidingVolumeLabel = AutoHidingView(lblVolume, UIConstants.feedbackLabelAutoHideIntervalSeconds)
-        autoHidingPanLabel = AutoHidingView(lblPan, UIConstants.feedbackLabelAutoHideIntervalSeconds)
+//        autoHidingPanLabel = AutoHidingView(lblPan, UIConstants.feedbackLabelAutoHideIntervalSeconds)
         
         volumeSlider.floatValue = audioGraph.volume
         volumeChanged(audioGraph.volume, audioGraph.muted, true, false)
         
-        panSlider.floatValue = audioGraph.balance
-        panChanged(audioGraph.balance, false)
+//        panSlider.floatValue = audioGraph.balance
+//        panChanged(audioGraph.balance, false)
         
         changeTextSize(PlayerViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
@@ -173,16 +173,16 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     
     private func panChanged(_ pan: Float, _ showFeedback: Bool = true) {
         
-        lblPan.stringValue = ValueFormatter.formatPan(pan)
-        
-        // Shows and automatically hides the pan label after a preset time interval
-        if showFeedback {
-            autoHidingPanLabel.showView()
-        }
+//        lblPan.stringValue = ValueFormatter.formatPan(pan)
+//
+//        // Shows and automatically hides the pan label after a preset time interval
+//        if showFeedback {
+//            autoHidingPanLabel.showView()
+//        }
     }
     
     private func changeTextSize(_ size: TextSize) {
-        [lblVolume, lblPan, lblPanCaption, lblPanCaption2].forEach({$0.font = Fonts.Player.feedbackFont})
+//        [lblVolume, lblPan, lblPanCaption, lblPanCaption2].forEach({$0.font = Fonts.Player.feedbackFont})
     }
     
     private func applyColorScheme(_ scheme: ColorScheme) {
@@ -196,8 +196,8 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
         
         btnVolume.reTint()
         
-        lblPanCaption.textColor = color
-        lblPanCaption2.textColor = color
+//        lblPanCaption.textColor = color
+//        lblPanCaption2.textColor = color
     }
     
     private func changeSliderColors() {
@@ -207,7 +207,7 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     private func changeSliderValueTextColor(_ color: NSColor) {
         
         lblVolume.textColor = Colors.Player.feedbackTextColor
-        lblPan.textColor = Colors.Player.feedbackTextColor
+//        lblPan.textColor = Colors.Player.feedbackTextColor
     }
     
     private func trackChanged(_ newTrack: Track?) {

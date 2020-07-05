@@ -19,6 +19,8 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
     
     override func viewDidLoad() {
         
+        albumArtView.cornerRadius = 2
+        
         // MARK: Notifications --------------------------------------------------------------
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)

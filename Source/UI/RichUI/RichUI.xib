@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RichUIWindowController" customModule="Aural" customModuleProvider="target">
             <connections>
-                <outlet property="playerBox" destination="14c-Br-nUU" id="eYf-l4-d0q"/>
                 <outlet property="splitView" destination="mCq-7J-CYT" id="edK-Sm-ts1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="aCb-t2-FOW"/>
             </connections>
@@ -36,16 +35,6 @@
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="AppTitle"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <box boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="14c-Br-nUU" userLabel="PlayerBox">
-                        <rect key="frame" x="0.0" y="519" width="1000" height="90"/>
-                        <view key="contentView" id="n58-AY-b6k">
-                            <rect key="frame" x="0.0" y="0.0" width="1000" height="90"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        </view>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="90" id="GrK-sh-gns"/>
-                        </constraints>
-                    </box>
                     <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-7J-CYT" userLabel="Root SplitView">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="609"/>
                         <subviews>
@@ -104,15 +93,10 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="mCq-7J-CYT" secondAttribute="trailing" id="3vB-dZ-JEx"/>
                     <constraint firstItem="Nhh-o3-feJ" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="Aec-eT-TTf"/>
-                    <constraint firstItem="14c-Br-nUU" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="Dyx-QK-bzd"/>
-                    <constraint firstItem="14c-Br-nUU" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="FHA-UG-hci"/>
-                    <constraint firstAttribute="trailing" secondItem="14c-Br-nUU" secondAttribute="trailing" id="NAr-da-Ssc"/>
                     <constraint firstItem="mCq-7J-CYT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="VPd-7z-eJC"/>
                     <constraint firstAttribute="bottom" secondItem="mCq-7J-CYT" secondAttribute="bottom" id="aVy-I3-SeK"/>
                     <constraint firstItem="mCq-7J-CYT" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="eVY-Km-OBd"/>
                     <constraint firstItem="Nhh-o3-feJ" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="huI-Vx-0nX"/>
-                    <constraint firstItem="14c-Br-nUU" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="iUi-Bj-e9T"/>
-                    <constraint firstItem="14c-Br-nUU" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="k0P-4e-7Un"/>
                 </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="162400EF-DA40-42A4-91F8-14E2E9923E13" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="LGv-gd-7MC">
