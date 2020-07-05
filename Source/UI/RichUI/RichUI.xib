@@ -104,10 +104,18 @@
                     <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="rg7-Db-TtQ"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="NiJ-55-841"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Hdw-Sd-5sM"/>
+                    <toolbarItem implicitItemIdentifier="D23F5F13-CAA7-4DEB-9A49-0F9C4F236163" label="Toolbar Item" paletteLabel="Toolbar Item" tag="-1" image="Sidebar" id="4Ji-9x-YdE">
+                        <connections>
+                            <action selector="toggleSidebarAction:" target="-2" id="2YM-RV-bSn"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="JAy-cd-ecc"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3ln-Nb-T6i"/>
                 </allowedToolbarItems>
-                <defaultToolbarItems/>
+                <defaultToolbarItems>
+                    <toolbarItem reference="3ln-Nb-T6i"/>
+                    <toolbarItem reference="4Ji-9x-YdE"/>
+                </defaultToolbarItems>
             </toolbar>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
@@ -119,5 +127,6 @@
     </objects>
     <resources>
         <image name="AppTitle" width="107" height="38"/>
+        <image name="Sidebar" width="169" height="169"/>
     </resources>
 </document>

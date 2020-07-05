@@ -3,6 +3,7 @@ import Cocoa
 class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     @IBOutlet weak var playQueueView: NSTableView!
+    @IBOutlet weak var lblTracksSummary: NSTextField!
     
     private let playlist: PlaylistDelegateProtocol = ObjectGraph.playlistDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
@@ -25,10 +26,14 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
+        
+        updateSummary()
     }
     
     func trackAdded(_ notification: TrackAddedNotification) {
+        
         playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
+        updateSummary()
     }
     
     // Plays the track selected within the playlist, if there is one. If multiple tracks are selected, the first one will be chosen.
@@ -95,5 +100,11 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     private func clearSelection() {
         playQueueView.selectRowIndexes(IndexSet(), byExtendingSelection: false)
+    }
+    
+    private func updateSummary() {
+        
+        let numTracks = playlist.size
+        lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
     }
 }

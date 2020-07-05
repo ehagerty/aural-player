@@ -380,6 +380,7 @@ G1BhbiBTbGlkZXI
             <connections>
                 <outlet property="btnVolume" destination="WJ8-c7-cak" id="oJb-3G-Md8"/>
                 <outlet property="lblVolume" destination="Qdz-h2-lvO" id="4Sv-ar-jHd"/>
+                <outlet property="view" destination="4lG-eV-Tui" id="xAb-3O-y8G"/>
                 <outlet property="volumeSlider" destination="hxu-OD-ArC" id="ALi-7z-ZwC"/>
             </connections>
         </customObject>

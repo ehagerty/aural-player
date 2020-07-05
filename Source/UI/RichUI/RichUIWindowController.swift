@@ -38,4 +38,11 @@ class RichUIWindowController: NSWindowController {
             playQueueView.anchorToView(playQueueView.superview!)
         }
     }
+    
+    @IBAction func toggleSidebarAction(_ sender: AnyObject) {
+        
+        if let theView = splitView.arrangedSubviews.first {
+            theView.isHidden.toggle()
+        }
+    }
 }
