@@ -1,10 +1,11 @@
 import Cocoa
 
-class RichUIWindowController: NSWindowController {
-    
-    @IBOutlet weak var playerBox: NSBox!
+class RichUIWindowController: NSWindowController, NotificationSubscriber {
     
     @IBOutlet weak var splitView: NSSplitView!
+    
+    @IBOutlet weak var playerBrowserSplitView: NSSplitView!
+    @IBOutlet weak var browserTabView: NSTabView!
     
     private var theWindow: NSWindow {self.window!}
     
@@ -14,29 +15,30 @@ class RichUIWindowController: NSWindowController {
     
     private lazy var sidebarController: SidebarViewController = SidebarViewController()
     private lazy var playQueueController: PlayQueueViewController = PlayQueueViewController()
+    private lazy var fileSystemBrowserController: FileSystemBrowserViewController = FileSystemBrowserViewController()
     
     override func windowDidLoad() {
-
+        
         let sidebarView: NSView = sidebarController.view
         let containerView = splitView.arrangedSubviews[0]
         containerView.addSubview(sidebarView)
         sidebarView.anchorToView(sidebarView.superview!)
         
-        let rightSplitView = splitView.arrangedSubviews[1]
-        if let playerBrowserSplitView = rightSplitView.subviews.first as? NSSplitView {
-            
-            let playerContainerView = playerBrowserSplitView.arrangedSubviews[0]
-            
-            let playerView = playerController.view
-            playerContainerView.addSubview(playerView)
-            playerView.anchorToView(playerView.superview!)
-            
-            let playQueueView: NSView = playQueueController.view
-            let playQueueContainerView = playerBrowserSplitView.arrangedSubviews[1]
-
-            playQueueContainerView.addSubview(playQueueView)
-            playQueueView.anchorToView(playQueueView.superview!)
-        }
+        let playerContainerView = playerBrowserSplitView.arrangedSubviews[0]
+        
+        let playerView = playerController.view
+        playerContainerView.addSubview(playerView)
+        playerView.anchorToView(playerView.superview!)
+        
+        let playQueueView: NSView = playQueueController.view
+        browserTabView.tabViewItem(at: 0).view?.addSubview(playQueueView)
+        playQueueView.anchorToView(playQueueView.superview!)
+        
+        let fileSystemBrowserView: NSView = fileSystemBrowserController.view
+        browserTabView.tabViewItem(at: 1).view?.addSubview(fileSystemBrowserView)
+        fileSystemBrowserView.anchorToView(fileSystemBrowserView.superview!)
+        
+        Messenger.subscribe(self, .browser_showTab, self.showBrowserTab(_:))
     }
     
     @IBAction func toggleSidebarAction(_ sender: AnyObject) {
@@ -44,5 +46,11 @@ class RichUIWindowController: NSWindowController {
         if let theView = splitView.arrangedSubviews.first {
             theView.isHidden.toggle()
         }
+    }
+
+    private func showBrowserTab(_ tabIndex: Int) {
+        browserTabView.selectTabViewItem(at: tabIndex)
+        
+        
     }
 }

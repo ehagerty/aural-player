@@ -116,7 +116,10 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         guard let outlineView = notification.object as? NSOutlineView else {return}
             
         if let selectedItem = outlineView.item(atRow: outlineView.selectedRow) as? SidebarItem {
+            
 //            print(selectedItem.displayName)
+            let index = selectedItem.displayName == "Play Queue" ? 0 : 1
+            Messenger.publish(.browser_showTab, payload: index)
         }
     }
 }

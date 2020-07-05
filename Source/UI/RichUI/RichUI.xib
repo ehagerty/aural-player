@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="RichUIWindowController" customModule="Aural" customModuleProvider="target">
             <connections>
+                <outlet property="browserTabView" destination="oOy-Uj-Vc4" id="eGp-5H-G77"/>
+                <outlet property="playerBrowserSplitView" destination="iiK-KV-OLC" id="mXZ-Xb-6oM"/>
                 <outlet property="splitView" destination="mCq-7J-CYT" id="edK-Sm-ts1"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="aCb-t2-FOW"/>
             </connections>
@@ -53,16 +55,42 @@
                                     <splitView dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="iiK-KV-OLC" userLabel="PlayerBrowser SplitView">
                                         <rect key="frame" x="0.0" y="0.0" width="799" height="609"/>
                                         <subviews>
-                                            <customView id="gXp-vx-rNg">
+                                            <customView id="gXp-vx-rNg" userLabel="PlayerContainer">
                                                 <rect key="frame" x="0.0" y="0.0" width="799" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="90" id="QbF-dg-H22"/>
                                                 </constraints>
                                             </customView>
-                                            <customView fixedFrame="YES" id="wsq-ma-gWv">
+                                            <customView id="wsq-ma-gWv" userLabel="BrowserContainer">
                                                 <rect key="frame" x="0.0" y="91" width="799" height="518"/>
                                                 <autoresizingMask key="autoresizingMask"/>
+                                                <subviews>
+                                                    <tabView drawsBackground="NO" allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="oOy-Uj-Vc4" userLabel="BrowserTabView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="799" height="518"/>
+                                                        <font key="font" metaFont="system"/>
+                                                        <tabViewItems>
+                                                            <tabViewItem label="Tab" identifier="" id="X1Z-no-G3Z" userLabel="PlayQueue Tab">
+                                                                <view key="view" id="WCI-Gr-I9f">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="818" height="518"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                </view>
+                                                            </tabViewItem>
+                                                            <tabViewItem label="View" identifier="" id="4gj-7i-7jt" userLabel="FileSystem Tab">
+                                                                <view key="view" id="2r3-BH-VLs">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="518"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                </view>
+                                                            </tabViewItem>
+                                                        </tabViewItems>
+                                                    </tabView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="oOy-Uj-Vc4" secondAttribute="trailing" id="FUI-OR-22q"/>
+                                                    <constraint firstItem="oOy-Uj-Vc4" firstAttribute="top" secondItem="wsq-ma-gWv" secondAttribute="top" id="boF-H4-zop"/>
+                                                    <constraint firstItem="oOy-Uj-Vc4" firstAttribute="leading" secondItem="wsq-ma-gWv" secondAttribute="leading" id="kZZ-TL-qTi"/>
+                                                    <constraint firstAttribute="bottom" secondItem="oOy-Uj-Vc4" secondAttribute="bottom" id="zGU-Rg-R3S"/>
+                                                </constraints>
                                             </customView>
                                         </subviews>
                                         <holdingPriorities>

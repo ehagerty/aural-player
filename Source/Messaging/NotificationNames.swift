@@ -632,4 +632,8 @@ extension Notification.Name {
 
     // Commands FX views corresponding to "suppressed" FX units, to redraw all their controls.
     static let fx_changeSuppressedUnitStateColor = Notification.Name("fx_changeSuppressedUnitStateColor")
+    
+    
+    
+    static let browser_showTab = Notification.Name("browser_showTab")
 }
