@@ -27,25 +27,25 @@
             </connections>
         </customObject>
         <view id="4lG-eV-Tui">
-            <rect key="frame" x="0.0" y="0.0" width="1000" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="1000" height="90"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <box boxType="custom" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="3ew-Q3-r0n" userLabel="PlayerBox">
-                    <rect key="frame" x="0.0" y="0.0" width="1000" height="120"/>
+                    <rect key="frame" x="0.0" y="0.0" width="1000" height="90"/>
                     <view key="contentView" id="Yu4-SL-kZb">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="90"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Y8-Zd-Wkf" userLabel="ArtView">
-                                <rect key="frame" x="5" y="5" width="110" height="110"/>
+                                <rect key="frame" x="5" y="10" width="72" height="68"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="110" id="36s-Hh-zlP"/>
-                                    <constraint firstAttribute="height" constant="110" id="GCa-yV-4T6"/>
+                                    <constraint firstAttribute="width" constant="72" id="36s-Hh-zlP"/>
+                                    <constraint firstAttribute="height" constant="68" id="GCa-yV-4T6"/>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="SampleArt" id="dY9-cZ-Y8v"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="byw-aJ-hsm" userLabel="Title">
-                                <rect key="frame" x="123" y="84" width="760" height="23"/>
+                                <rect key="frame" x="83" y="55" width="760" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="mUQ-04-cQ6"/>
                                 </constraints>
@@ -56,7 +56,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="prk-dv-JnC" userLabel="ArtistAlbum">
-                                <rect key="frame" x="123" y="66" width="58" height="20"/>
+                                <rect key="frame" x="83" y="37" width="58" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="4qd-wB-j1i"/>
                                     <constraint firstAttribute="height" constant="20" id="l37-YE-5xZ"/>
@@ -68,7 +68,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hbH-Gf-fxH" userLabel="Tertiary">
-                                <rect key="frame" x="123" y="48" width="53" height="18"/>
+                                <rect key="frame" x="83" y="19" width="53" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="ePX-XM-wFK"/>
                                 </constraints>
@@ -79,7 +79,7 @@
                                 </textFieldCell>
                             </textField>
                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C3R-WN-Mmn" userLabel="SeekSlider">
-                                <rect key="frame" x="123" y="28" width="867" height="19"/>
+                                <rect key="frame" x="83" y="5" width="549" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="Qho-l1-Ev5"/>
                                 </constraints>
@@ -89,23 +89,23 @@
                                 </connections>
                             </slider>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HUB-2C-2Ii" userLabel="SeekTime">
-                                <rect key="frame" x="733" y="82" width="254" height="22"/>
+                                <rect key="frame" x="371" y="14" width="254" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="Q5K-5y-K6q"/>
                                     <constraint firstAttribute="width" constant="250" id="m3l-4f-2NL"/>
                                 </constraints>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="5:25 / -7:18" id="jPb-iK-0O4">
-                                    <font key="font" size="13" name="Play-Regular"/>
+                                    <font key="font" size="11" name="Play-Regular"/>
                                     <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <view id="hwr-wU-Kp1" customClass="PlaybackView" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="-999" y="-300" width="16" height="30"/>
+                                <rect key="frame" x="-999" y="-265" width="16" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <slider hidden="YES" toolTip="Pan / Balance" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E4b-95-91z">
-                                        <rect key="frame" x="231" y="-18" width="40" height="18"/>
+                                        <rect key="frame" x="231" y="-48" width="40" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-100" maxValue="100" tickMarkPosition="below" numberOfTickMarks="1" sliderType="linear" id="I7l-OH-I5k" customClass="PanTickedSliderCell" customModule="Aural" customModuleProvider="target"/>
                                         <string key="userLabel" base64-UTF8="YES">
@@ -116,7 +116,7 @@ G1BhbiBTbGlkZXI
                                         </connections>
                                     </slider>
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lvI-8N-Xpt" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="212" y="-14" width="18" height="18"/>
+                                        <rect key="frame" x="212" y="-44" width="18" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="L" id="Ixb-fD-woz">
                                             <font key="font" size="9" name="Play-Regular"/>
@@ -125,7 +125,7 @@ G1BhbiBTbGlkZXI
                                         </textFieldCell>
                                     </textField>
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uo4-ri-Z8e" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="273" y="-14" width="18" height="18"/>
+                                        <rect key="frame" x="273" y="-44" width="18" height="18"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="R" id="uEK-aD-QzG">
                                             <font key="font" size="9" name="Play-Regular"/>
@@ -134,7 +134,7 @@ G1BhbiBTbGlkZXI
                                         </textFieldCell>
                                     </textField>
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M1x-vp-Fye" userLabel="Pan Value Label" customClass="BottomTextLabel" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="228" y="1" width="46" height="16"/>
+                                        <rect key="frame" x="228" y="-29" width="46" height="16"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="C" id="wZP-0N-n3l" customClass="VALabelCell" customModule="Aural" customModuleProvider="target">
                                             <font key="font" size="9" name="Play-Regular"/>
@@ -143,7 +143,7 @@ G1BhbiBTbGlkZXI
                                         </textFieldCell>
                                     </textField>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NGe-3o-uFr" customClass="SeekSliderView" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="-9999" y="-26" width="32" height="22"/>
+                                        <rect key="frame" x="-9999" y="-56" width="32" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <connections>
                                             <outlet property="lblSeekTime" destination="HUB-2C-2Ii" id="ut7-V3-Umx"/>
@@ -162,11 +162,27 @@ G1BhbiBTbGlkZXI
                                     <outlet property="sliderView" destination="NGe-3o-uFr" id="YDk-cD-7IX"/>
                                 </connections>
                             </view>
-                            <button toolTip="Previous track" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utR-Yg-crF" userLabel="PrevTrack Button" customClass="TrackPeekingButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="807" y="13" width="15" height="12"/>
+                            <button wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vIP-Yb-4ZG" userLabel="PlayingTrackMenu">
+                                <rect key="frame" x="971" y="65" width="15" height="12"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="583-bm-Hdd"/>
-                                    <constraint firstAttribute="width" constant="15" id="zd5-k8-ZzN"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="12" id="9tM-2A-RyM"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="Rh6-en-bhG"/>
+                                    <constraint firstAttribute="height" constant="12" id="a0Z-CX-hKp"/>
+                                    <constraint firstAttribute="width" constant="15" id="lEg-uk-lUd"/>
+                                </constraints>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="HamburgerMenu" imagePosition="only" imageScaling="proportionallyDown" inset="2" id="rcT-pH-mgG">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="playPauseAction:" target="-2" id="kDN-Yp-oJO"/>
+                                </connections>
+                            </button>
+                            <button toolTip="Previous track" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utR-Yg-crF" userLabel="PrevTrack Button" customClass="TrackPeekingButton" customModule="Aural" customModuleProvider="target">
+                                <rect key="frame" x="813" y="22" width="16" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="583-bm-Hdd"/>
+                                    <constraint firstAttribute="width" constant="16" id="zd5-k8-ZzN"/>
                                 </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PreviousTrack" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="oRm-6c-5ox">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -181,10 +197,10 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yOe-Tw-ryq" userLabel="PlayPause" customClass="OnOffImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="831" y="11" width="20" height="16"/>
+                                <rect key="frame" x="833" y="20" width="22" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="2R2-kS-LZr"/>
-                                    <constraint firstAttribute="width" constant="20" id="5aU-tR-3bf"/>
+                                    <constraint firstAttribute="height" constant="18" id="2R2-kS-LZr"/>
+                                    <constraint firstAttribute="width" constant="22" id="5aU-tR-3bf"/>
                                 </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Play" imagePosition="only" imageScaling="proportionallyDown" inset="2" id="5xf-HL-e6I">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -201,9 +217,9 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="Seek backward" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfF-Ly-TzL" userLabel="Seek Bwd Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="785" y="13" width="15" height="12"/>
+                                <rect key="frame" x="792" y="22" width="16" height="12"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="15" id="Blv-5P-uic"/>
+                                    <constraint firstAttribute="width" constant="16" id="Blv-5P-uic"/>
                                     <constraint firstAttribute="height" constant="12" id="aKE-J3-cJy"/>
                                 </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekBackward" imagePosition="only" alignment="center" continuous="YES" imageScaling="proportionallyDown" inset="2" id="pnT-Pb-1de">
@@ -218,10 +234,10 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="Next track" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TDj-ZZ-nWR" userLabel="NextTrack Button" customClass="TrackPeekingButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="856" y="13" width="15" height="12"/>
+                                <rect key="frame" x="856" y="22" width="16" height="14"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="12" id="1oZ-4D-wqJ"/>
-                                    <constraint firstAttribute="width" constant="15" id="ueu-Xb-Rat"/>
+                                    <constraint firstAttribute="height" constant="14" id="1oZ-4D-wqJ"/>
+                                    <constraint firstAttribute="width" constant="16" id="ueu-Xb-Rat"/>
                                 </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NextTrack" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="3xP-U4-r2f">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -236,10 +252,10 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="Seek forward" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQv-gt-4VE" userLabel="Seek Fwd Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="878" y="13" width="15" height="12"/>
+                                <rect key="frame" x="875" y="22" width="16" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="5Gd-3R-pRo"/>
-                                    <constraint firstAttribute="width" constant="15" id="f0R-KQ-jQd"/>
+                                    <constraint firstAttribute="width" constant="16" id="f0R-KQ-jQd"/>
                                 </constraints>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekForward" imagePosition="only" alignment="center" continuous="YES" imageScaling="proportionallyDown" inset="2" id="BjC-gW-VxF">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -253,7 +269,7 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="Shuffle" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1f-T3-zu7" userLabel="Shuffle Button" customClass="MultiStateImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="149" y="12" width="16" height="14"/>
+                                <rect key="frame" x="709" y="22" width="16" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="14" id="ESZ-7J-ecL"/>
                                     <constraint firstAttribute="width" constant="16" id="zZ0-zz-awm"/>
@@ -267,7 +283,7 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="Repeat" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tKe-cz-2yt" userLabel="Repeat Button" customClass="MultiStateImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="124" y="5" width="22" height="22"/>
+                                <rect key="frame" x="684" y="15" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="rjw-h2-w9h"/>
                                     <constraint firstAttribute="height" constant="22" id="y0F-OL-S1L"/>
@@ -281,7 +297,7 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="A-&gt;B Segment loop" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OJw-DK-SLL" userLabel="Loop Button" customClass="MultiStateImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="173" y="11" width="26" height="17"/>
+                                <rect key="frame" x="733" y="21" width="26" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="26" id="K4T-NF-i24"/>
                                     <constraint firstAttribute="height" constant="17" id="oAd-vu-NVp"/>
@@ -295,7 +311,7 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <button toolTip="Mute / Unmute" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SP0-M3-YW2" userLabel="Volume Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="919" y="11" width="14" height="14"/>
+                                <rect key="frame" x="919" y="21" width="14" height="14"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="14" id="IyA-w5-n26"/>
                                     <constraint firstAttribute="height" constant="14" id="wy6-MW-HAp"/>
@@ -312,7 +328,7 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </button>
                             <slider toolTip="Volume" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oIN-Iw-55u" userLabel="Volume Slider">
-                                <rect key="frame" x="936" y="11" width="50" height="15"/>
+                                <rect key="frame" x="936" y="21" width="50" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="bCk-RU-wWd"/>
                                     <constraint firstAttribute="height" constant="13" id="ong-gL-QsI"/>
@@ -323,7 +339,7 @@ G1BhbiBTbGlkZXI
                                 </connections>
                             </slider>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tpL-Gf-xaZ" userLabel="Volume Value Label" customClass="BottomTextLabel" customModule="Aural" customModuleProvider="target">
-                                <rect key="frame" x="938" y="22" width="50" height="16"/>
+                                <rect key="frame" x="938" y="33" width="50" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="BdO-tx-0qm"/>
                                     <constraint firstAttribute="height" constant="16" id="TXw-BQ-da2"/>
@@ -336,47 +352,50 @@ G1BhbiBTbGlkZXI
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="gQv-gt-4VE" secondAttribute="bottom" constant="13" id="1Yr-vJ-tH2"/>
+                            <constraint firstAttribute="bottom" secondItem="gQv-gt-4VE" secondAttribute="bottom" constant="22" id="1Yr-vJ-tH2"/>
                             <constraint firstItem="6Y8-Zd-Wkf" firstAttribute="leading" secondItem="Yu4-SL-kZb" secondAttribute="leading" constant="5" id="2Ta-r9-dfx"/>
                             <constraint firstItem="OJw-DK-SLL" firstAttribute="leading" secondItem="f1f-T3-zu7" secondAttribute="trailing" constant="8" id="2rY-ok-CzQ"/>
-                            <constraint firstItem="yOe-Tw-ryq" firstAttribute="leading" secondItem="utR-Yg-crF" secondAttribute="trailing" constant="9" id="3ea-4i-rOq"/>
-                            <constraint firstItem="TDj-ZZ-nWR" firstAttribute="leading" secondItem="yOe-Tw-ryq" secondAttribute="trailing" constant="5" id="64Q-4f-evt"/>
-                            <constraint firstAttribute="trailing" secondItem="byw-aJ-hsm" secondAttribute="trailing" constant="119" id="7BN-4t-2yu"/>
-                            <constraint firstAttribute="bottom" secondItem="f1f-T3-zu7" secondAttribute="bottom" constant="12" id="7h4-zG-ZEh"/>
+                            <constraint firstItem="yOe-Tw-ryq" firstAttribute="leading" secondItem="utR-Yg-crF" secondAttribute="trailing" constant="4" id="3ea-4i-rOq"/>
+                            <constraint firstItem="TDj-ZZ-nWR" firstAttribute="leading" secondItem="yOe-Tw-ryq" secondAttribute="trailing" constant="1" id="64Q-4f-evt"/>
+                            <constraint firstAttribute="trailing" secondItem="byw-aJ-hsm" secondAttribute="trailing" constant="159" id="7BN-4t-2yu"/>
+                            <constraint firstAttribute="bottom" secondItem="f1f-T3-zu7" secondAttribute="bottom" constant="22" id="7h4-zG-ZEh"/>
                             <constraint firstItem="f1f-T3-zu7" firstAttribute="leading" secondItem="tKe-cz-2yt" secondAttribute="trailing" constant="3" id="DB9-yM-WVv"/>
                             <constraint firstAttribute="trailing" secondItem="tpL-Gf-xaZ" secondAttribute="trailing" constant="14" id="Htm-OT-fuB"/>
-                            <constraint firstItem="byw-aJ-hsm" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="13" id="IeK-zq-n49"/>
-                            <constraint firstItem="C3R-WN-Mmn" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="10" id="KUy-9E-xeU"/>
-                            <constraint firstAttribute="bottom" secondItem="PfF-Ly-TzL" secondAttribute="bottom" constant="13" id="LoV-b5-SA9"/>
-                            <constraint firstItem="SP0-M3-YW2" firstAttribute="leading" secondItem="gQv-gt-4VE" secondAttribute="trailing" constant="26" id="Ncg-xi-zWd"/>
+                            <constraint firstItem="byw-aJ-hsm" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="12" id="IeK-zq-n49"/>
+                            <constraint firstItem="C3R-WN-Mmn" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="8" id="KUy-9E-xeU"/>
+                            <constraint firstAttribute="bottom" secondItem="PfF-Ly-TzL" secondAttribute="bottom" constant="22" id="LoV-b5-SA9"/>
+                            <constraint firstItem="SP0-M3-YW2" firstAttribute="leading" secondItem="gQv-gt-4VE" secondAttribute="trailing" constant="28" id="Ncg-xi-zWd"/>
                             <constraint firstItem="oIN-Iw-55u" firstAttribute="leading" secondItem="SP0-M3-YW2" secondAttribute="trailing" constant="3" id="O4d-yl-ClW"/>
-                            <constraint firstItem="gQv-gt-4VE" firstAttribute="leading" secondItem="TDj-ZZ-nWR" secondAttribute="trailing" constant="7" id="PXH-xg-93J"/>
-                            <constraint firstItem="prk-dv-JnC" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="10" id="TET-Gp-1ky"/>
-                            <constraint firstItem="utR-Yg-crF" firstAttribute="leading" secondItem="PfF-Ly-TzL" secondAttribute="trailing" constant="7" id="Tzi-mT-dqv"/>
-                            <constraint firstItem="byw-aJ-hsm" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="10" id="XS4-C5-4tf"/>
+                            <constraint firstItem="gQv-gt-4VE" firstAttribute="leading" secondItem="TDj-ZZ-nWR" secondAttribute="trailing" constant="3" id="PXH-xg-93J"/>
+                            <constraint firstItem="prk-dv-JnC" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="8" id="TET-Gp-1ky"/>
+                            <constraint firstItem="utR-Yg-crF" firstAttribute="leading" secondItem="PfF-Ly-TzL" secondAttribute="trailing" constant="5" id="Tzi-mT-dqv"/>
+                            <constraint firstItem="byw-aJ-hsm" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="8" id="XS4-C5-4tf"/>
                             <constraint firstAttribute="trailing" secondItem="oIN-Iw-55u" secondAttribute="trailing" constant="14" id="ZYp-wy-zbE"/>
                             <constraint firstItem="hbH-Gf-fxH" firstAttribute="top" secondItem="byw-aJ-hsm" secondAttribute="bottom" constant="18" id="Zwy-31-wtt"/>
-                            <constraint firstAttribute="bottom" secondItem="yOe-Tw-ryq" secondAttribute="bottom" constant="11" id="bWI-t0-oJ4"/>
-                            <constraint firstItem="SP0-M3-YW2" firstAttribute="leading" secondItem="gQv-gt-4VE" secondAttribute="trailing" constant="26" id="eyC-3I-fhe"/>
-                            <constraint firstAttribute="bottom" secondItem="utR-Yg-crF" secondAttribute="bottom" constant="13" id="fWp-Uu-pSk"/>
-                            <constraint firstAttribute="trailing" secondItem="HUB-2C-2Ii" secondAttribute="trailing" constant="15" id="hUV-o9-xl7"/>
-                            <constraint firstAttribute="bottom" secondItem="tpL-Gf-xaZ" secondAttribute="bottom" constant="22" id="jsO-L5-khY"/>
-                            <constraint firstItem="prk-dv-JnC" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="34" id="kPC-k3-zVH"/>
-                            <constraint firstAttribute="bottom" secondItem="tKe-cz-2yt" secondAttribute="bottom" constant="5" id="ngS-7K-ssv"/>
-                            <constraint firstItem="OJw-DK-SLL" firstAttribute="top" secondItem="C3R-WN-Mmn" secondAttribute="bottom" constant="2" id="sog-zi-8dl"/>
-                            <constraint firstItem="tKe-cz-2yt" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="9" id="sx9-mt-5Lx"/>
-                            <constraint firstAttribute="bottom" secondItem="SP0-M3-YW2" secondAttribute="bottom" constant="11" id="sy5-7V-yxs"/>
-                            <constraint firstItem="hbH-Gf-fxH" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="10" id="uy4-BE-1VU"/>
-                            <constraint firstAttribute="trailing" secondItem="C3R-WN-Mmn" secondAttribute="trailing" constant="12" id="vSc-AI-gzp"/>
-                            <constraint firstAttribute="bottom" secondItem="oIN-Iw-55u" secondAttribute="bottom" constant="12" id="yND-wV-hmj"/>
-                            <constraint firstAttribute="bottom" secondItem="TDj-ZZ-nWR" secondAttribute="bottom" constant="13" id="yT2-uy-QWJ"/>
-                            <constraint firstItem="6Y8-Zd-Wkf" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="5" id="ytH-fL-rsL"/>
-                            <constraint firstItem="HUB-2C-2Ii" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="16" id="zAb-AL-vj1"/>
-                            <constraint firstAttribute="bottom" secondItem="OJw-DK-SLL" secondAttribute="bottom" constant="11" id="zcv-Xv-Vi0"/>
+                            <constraint firstAttribute="bottom" secondItem="yOe-Tw-ryq" secondAttribute="bottom" constant="20" id="bWI-t0-oJ4"/>
+                            <constraint firstItem="SP0-M3-YW2" firstAttribute="leading" secondItem="gQv-gt-4VE" secondAttribute="trailing" constant="28" id="eyC-3I-fhe"/>
+                            <constraint firstAttribute="bottom" secondItem="utR-Yg-crF" secondAttribute="bottom" constant="22" id="fWp-Uu-pSk"/>
+                            <constraint firstAttribute="trailing" secondItem="HUB-2C-2Ii" secondAttribute="trailing" constant="377" id="hUV-o9-xl7"/>
+                            <constraint firstAttribute="bottom" secondItem="C3R-WN-Mmn" secondAttribute="bottom" constant="7" id="jWY-0m-yvg"/>
+                            <constraint firstAttribute="bottom" secondItem="tpL-Gf-xaZ" secondAttribute="bottom" constant="33" id="jsO-L5-khY"/>
+                            <constraint firstItem="prk-dv-JnC" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="33" id="kPC-k3-zVH"/>
+                            <constraint firstAttribute="bottom" secondItem="tKe-cz-2yt" secondAttribute="bottom" constant="15" id="ngS-7K-ssv"/>
+                            <constraint firstAttribute="trailing" secondItem="vIP-Yb-4ZG" secondAttribute="trailing" constant="14" id="o6F-tL-k7Y"/>
+                            <constraint firstItem="vIP-Yb-4ZG" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="13" id="snc-8B-DH8"/>
+                            <constraint firstItem="OJw-DK-SLL" firstAttribute="bottom" secondItem="Yu4-SL-kZb" secondAttribute="bottom" constant="-21" id="sog-zi-8dl"/>
+                            <constraint firstItem="tKe-cz-2yt" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="607" id="sx9-mt-5Lx"/>
+                            <constraint firstAttribute="bottom" secondItem="SP0-M3-YW2" secondAttribute="bottom" constant="21" id="sy5-7V-yxs"/>
+                            <constraint firstItem="hbH-Gf-fxH" firstAttribute="leading" secondItem="6Y8-Zd-Wkf" secondAttribute="trailing" constant="8" id="uy4-BE-1VU"/>
+                            <constraint firstAttribute="trailing" secondItem="C3R-WN-Mmn" secondAttribute="trailing" constant="370" id="vSc-AI-gzp"/>
+                            <constraint firstAttribute="bottom" secondItem="oIN-Iw-55u" secondAttribute="bottom" constant="22" id="yND-wV-hmj"/>
+                            <constraint firstAttribute="bottom" secondItem="TDj-ZZ-nWR" secondAttribute="bottom" constant="22" id="yT2-uy-QWJ"/>
+                            <constraint firstItem="6Y8-Zd-Wkf" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="12" id="ytH-fL-rsL"/>
+                            <constraint firstItem="HUB-2C-2Ii" firstAttribute="top" secondItem="Yu4-SL-kZb" secondAttribute="top" constant="54" id="zAb-AL-vj1"/>
+                            <constraint firstAttribute="bottom" secondItem="OJw-DK-SLL" secondAttribute="bottom" constant="21" id="zcv-Xv-Vi0"/>
                         </constraints>
                     </view>
                     <constraints>
-                        <constraint firstAttribute="height" constant="120" id="SLc-Hf-ugC"/>
+                        <constraint firstAttribute="height" constant="90" id="SLc-Hf-ugC"/>
                     </constraints>
                     <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </box>
@@ -387,7 +406,7 @@ G1BhbiBTbGlkZXI
                 <constraint firstItem="3ew-Q3-r0n" firstAttribute="leading" secondItem="4lG-eV-Tui" secondAttribute="leading" id="eFA-VE-v5a"/>
                 <constraint firstAttribute="trailing" secondItem="3ew-Q3-r0n" secondAttribute="trailing" id="nWX-fl-A2T"/>
             </constraints>
-            <point key="canvasLocation" x="-2758" y="381"/>
+            <point key="canvasLocation" x="-2758" y="396"/>
         </view>
         <customObject id="rth-Tv-i0H" customClass="PlayerSequencingViewController" customModule="Aural" customModuleProvider="target">
             <connections>
@@ -398,6 +417,7 @@ G1BhbiBTbGlkZXI
         </customObject>
     </objects>
     <resources>
+        <image name="HamburgerMenu" width="225" height="225"/>
         <image name="LoopOff" width="93" height="52"/>
         <image name="NextTrack" width="31" height="35"/>
         <image name="Pause" width="38" height="36"/>

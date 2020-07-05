@@ -54,14 +54,14 @@
                                         <rect key="frame" x="0.0" y="0.0" width="799" height="609"/>
                                         <subviews>
                                             <customView id="gXp-vx-rNg">
-                                                <rect key="frame" x="0.0" y="0.0" width="799" height="120"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="799" height="90"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="QbF-dg-H22"/>
+                                                    <constraint firstAttribute="height" constant="90" id="QbF-dg-H22"/>
                                                 </constraints>
                                             </customView>
                                             <customView fixedFrame="YES" id="wsq-ma-gWv">
-                                                <rect key="frame" x="0.0" y="121" width="799" height="488"/>
+                                                <rect key="frame" x="0.0" y="91" width="799" height="518"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </customView>
                                         </subviews>
