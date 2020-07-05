@@ -238,7 +238,6 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         
         cell.updateText(Fonts.Playlist.indexFont, text)
         cell.textField?.alignment = .center
-//        cell.updateForGaps(gapBefore != nil, gapAfter != nil)
         
         return cell
     }
@@ -250,7 +249,6 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         
         cell.updateImage(image)
-//        cell.updateForGaps(gapBefore != nil, gapAfter != nil)
         
         return cell
     }
@@ -264,7 +262,6 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         cell.updateText(Fonts.Playlist.trackNameFont, text)
         
         cell.gapImage = cachedGapImage
-//        cell.updateForGaps(gapBefore != nil, gapAfter != nil)
         
         return cell
     }
@@ -277,7 +274,6 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
         
         cell.updateText(Fonts.Playlist.indexFont, text)
         cell.textField?.alignment = .center
-//        cell.updateForGaps(gapBefore != nil, gapAfter != nil, gapBefore?.duration, gapAfter?.duration)
         
         return cell
     }
@@ -320,5 +316,43 @@ class PlayQueueViewController: NSViewController, NSTableViewDelegate, NSTableVie
 
         playlist.sort(sort, .tracks)
         tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: NSTableView, sizeToFitWidthOfColumn column: Int) -> CGFloat {
+        
+        guard tableView.numberOfRows > 0 else {return tableView.tableColumns[column].width}
+        
+        let rowsRange: Range<Int> = 0..<tableView.numberOfRows
+        var widths: [CGFloat] = [0]
+        
+        switch column {
+            
+        case 1:
+            
+            // Title
+            widths = rowsRange.compactMap {playlist.trackAtIndex($0)?.displayInfo.title}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+            
+        case 3:
+            
+            // Artist
+            widths = rowsRange.compactMap {playlist.trackAtIndex($0)?.groupingInfo.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+            
+        case 4:
+            
+            // Album
+            widths = rowsRange.compactMap {playlist.trackAtIndex($0)?.groupingInfo.album}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+            
+        case 5:
+            
+            // Genre
+            widths = rowsRange.compactMap {playlist.trackAtIndex($0)?.groupingInfo.genre}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+            
+        default:
+            
+            // Index / Duration
+            return tableView.tableColumns[column].maxWidth
+        }
+        
+        return max(widths.max() ?? 0, tableView.tableColumns[column].width) + 10
     }
 }
