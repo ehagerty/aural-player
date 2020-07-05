@@ -17,16 +17,33 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="92r-ck-7Zl" customClass="PlayQueueViewDelegate" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="albumColumnMenuItem" destination="qZc-LB-WJG" id="IJc-ad-QxC"/>
+                <outlet property="artistColumnMenuItem" destination="o3o-sF-Pkk" id="Ggq-Dk-4ls"/>
+                <outlet property="genreColumnMenuItem" destination="zVF-0Z-NqM" id="Gy0-yr-brA"/>
+                <outlet property="playQueueView" destination="tmn-d0-eHt" id="sHJ-df-WYO"/>
+            </connections>
+        </customObject>
         <menu id="UmR-v1-63k" userLabel="ColumnSelectionMenu">
             <items>
                 <menuItem title="Artist" id="o3o-sF-Pkk" userLabel="Artist">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleArtistColumnAction:" target="92r-ck-7Zl" id="j2q-aW-W83"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Album" id="qZc-LB-WJG" userLabel="Album">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleAlbumColumnAction:" target="92r-ck-7Zl" id="iF2-f5-KCi"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Genre" id="zVF-0Z-NqM" userLabel="Genre">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleGenreColumnAction:" target="92r-ck-7Zl" id="Y5v-so-0tL"/>
+                    </connections>
                 </menuItem>
             </items>
             <connections>
@@ -77,8 +94,14 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="lPw-cJ-FPy">
+                                                        <rect key="frame" x="10" y="4" width="20" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="Ukw-I9-1jP"/>
+                                                    </imageView>
                                                 </subviews>
                                                 <connections>
+                                                    <outlet property="imageView" destination="lPw-cJ-FPy" id="WXO-qz-uPI"/>
                                                     <outlet property="textField" destination="2q8-Z9-Foc" id="HBy-BW-vY7"/>
                                                 </connections>
                                             </tableCellView>
@@ -252,8 +275,8 @@
                                 </tableColumns>
                                 <connections>
                                     <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="X8b-Iu-jZs"/>
-                                    <outlet property="dataSource" destination="-2" id="gL8-eL-vQF"/>
-                                    <outlet property="delegate" destination="-2" id="ndV-lh-GOV"/>
+                                    <outlet property="dataSource" destination="92r-ck-7Zl" id="uVB-kd-vGD"/>
+                                    <outlet property="delegate" destination="92r-ck-7Zl" id="Vkg-r5-89i"/>
                                 </connections>
                             </tableView>
                         </subviews>
