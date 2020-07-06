@@ -1,6 +1,6 @@
 import Cocoa
 
-class RichUIWindowController: NSWindowController, NotificationSubscriber {
+class RichUIWindowController: NSWindowController, NSSplitViewDelegate, NotificationSubscriber {
     
     @IBOutlet weak var splitView: NSSplitView!
     
@@ -18,6 +18,8 @@ class RichUIWindowController: NSWindowController, NotificationSubscriber {
     private lazy var fileSystemBrowserController: FileSystemBrowserViewController = FileSystemBrowserViewController()
     
     override func windowDidLoad() {
+        
+        playerBrowserSplitView.delegate = self
         
         let sidebarView: NSView = sidebarController.view
         let containerView = splitView.arrangedSubviews[0]
@@ -50,7 +52,9 @@ class RichUIWindowController: NSWindowController, NotificationSubscriber {
 
     private func showBrowserTab(_ tabIndex: Int) {
         browserTabView.selectTabViewItem(at: tabIndex)
-        
-        
+    }
+    
+    func splitView(_ splitView: NSSplitView, effectiveRect proposedEffectiveRect: NSRect, forDrawnRect drawnRect: NSRect, ofDividerAt dividerIndex: Int) -> NSRect {
+        return NSZeroRect
     }
 }

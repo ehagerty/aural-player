@@ -10,7 +10,6 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
     
     @IBOutlet weak var lblTitle: NSTextField!
     @IBOutlet weak var lblArtist: NSTextField!
-    @IBOutlet weak var lblAlbum: NSTextField!
     
     // Delegate that conveys all playback requests to the player / playback sequencer
     private let player: PlaybackDelegateProtocol = ObjectGraph.playbackDelegate
@@ -165,12 +164,11 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
             
             lblTitle.stringValue = track.displayInfo.title
             lblArtist.stringValue = track.groupingInfo.artist ?? ""
-            lblAlbum.stringValue = track.groupingInfo.album ?? ""
             
         } else {  // No track
             
             albumArtView.image = Images.imgPlayingArt
-            [lblTitle, lblArtist, lblAlbum].forEach {$0?.stringValue = ""}
+            [lblTitle, lblArtist].forEach {$0?.stringValue = ""}
         }
         
         playbackView.trackChanged(player.state, player.playbackLoop, newTrack)

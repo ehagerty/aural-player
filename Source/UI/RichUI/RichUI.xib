@@ -56,23 +56,23 @@
                                         <rect key="frame" x="0.0" y="0.0" width="799" height="609"/>
                                         <subviews>
                                             <customView id="gXp-vx-rNg" userLabel="PlayerContainer">
-                                                <rect key="frame" x="0.0" y="0.0" width="799" height="90"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="799" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="90" id="QbF-dg-H22"/>
+                                                    <constraint firstAttribute="height" constant="60" id="QbF-dg-H22"/>
                                                 </constraints>
                                             </customView>
                                             <customView id="wsq-ma-gWv" userLabel="BrowserContainer">
-                                                <rect key="frame" x="0.0" y="91" width="799" height="518"/>
+                                                <rect key="frame" x="0.0" y="61" width="799" height="548"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tabView drawsBackground="NO" allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="oOy-Uj-Vc4" userLabel="BrowserTabView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="799" height="518"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="799" height="548"/>
                                                         <font key="font" metaFont="system"/>
                                                         <tabViewItems>
                                                             <tabViewItem label="Tab" identifier="" id="X1Z-no-G3Z" userLabel="PlayQueue Tab">
                                                                 <view key="view" id="WCI-Gr-I9f">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="818" height="518"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="548"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 </view>
                                                             </tabViewItem>
@@ -94,7 +94,7 @@
                                             </customView>
                                         </subviews>
                                         <holdingPriorities>
-                                            <real value="250"/>
+                                            <real value="251"/>
                                             <real value="250"/>
                                         </holdingPriorities>
                                     </splitView>

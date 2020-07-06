@@ -103,7 +103,7 @@ class SeekSliderCell: HorizontalSliderCell {
     var slider: NSSlider!
     
     override var barRadius: CGFloat {return 0}
-    override var barInsetY: CGFloat {return 1.25}
+    override var barInsetY: CGFloat {return 0}
     
     override var knobRadius: CGFloat {return 0}
     override var knobWidth: CGFloat {return 6}
