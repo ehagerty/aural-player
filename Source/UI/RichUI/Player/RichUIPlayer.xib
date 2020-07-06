@@ -33,15 +33,18 @@
                     <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </box>
                 <button wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k5X-eR-lej" userLabel="PlayingTrackMenu">
-                    <rect key="frame" x="588" y="41" width="20" height="15"/>
+                    <rect key="frame" x="591" y="39" width="17" height="11"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="20" id="Epr-WA-jrx"/>
-                        <constraint firstAttribute="height" constant="15" id="cF7-Rg-y2A"/>
+                        <constraint firstAttribute="width" constant="17" id="Epr-WA-jrx"/>
+                        <constraint firstAttribute="height" constant="11" id="cF7-Rg-y2A"/>
                     </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="HamburgerMenu" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="BLW-tR-m3k">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="playingTrackFunctionsAction:" target="Cos-Yd-Rxx" id="yYV-al-SU9"/>
+                    </connections>
                 </button>
                 <button toolTip="A-&gt;B Segment loop" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ksM-B1-yLO" userLabel="Loop Button" customClass="MultiStateImageButton" customModule="Aural" customModuleProvider="target">
                     <rect key="frame" x="68" y="22" width="26" height="17"/>
@@ -79,13 +82,13 @@
                     </connections>
                 </slider>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qdz-h2-lvO" userLabel="Volume Value Label" customClass="BottomTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="831" y="35" width="23" height="16"/>
+                    <rect key="frame" x="824" y="35" width="30" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="19" id="78P-bI-rvG"/>
-                        <constraint firstAttribute="height" constant="16" id="vcH-EM-B84"/>
+                        <constraint firstAttribute="width" constant="26" id="78P-bI-rvG"/>
+                        <constraint firstAttribute="height" constant="18" id="vcH-EM-B84"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="50%" id="Yb4-9U-uaQ" customClass="VALabelCell" customModule="Aural" customModuleProvider="target">
-                        <font key="font" size="9" name="Play-Regular"/>
+                        <font key="font" size="10" name="Play-Regular"/>
                         <color key="textColor" white="0.70298936629999997" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </textFieldCell>
@@ -99,10 +102,10 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="SampleArt" id="baM-On-jdX"/>
                 </imageView>
                 <button toolTip="Seek forward" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="baG-ko-Cvr" userLabel="Seek Fwd Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="739" y="23" width="16" height="14"/>
+                    <rect key="frame" x="739" y="23" width="14" height="12"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="16" id="hDl-DE-7Qz"/>
-                        <constraint firstAttribute="height" constant="14" id="uID-VN-HrS"/>
+                        <constraint firstAttribute="width" constant="14" id="hDl-DE-7Qz"/>
+                        <constraint firstAttribute="height" constant="12" id="uID-VN-HrS"/>
                     </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekForward" imagePosition="only" alignment="center" continuous="YES" imageScaling="proportionallyDown" inset="2" id="1Xv-z0-E0C">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -116,9 +119,9 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Fw-9q-fz0" userLabel="SeekTime">
-                    <rect key="frame" x="406" y="10" width="204" height="22"/>
+                    <rect key="frame" x="460" y="10" width="150" height="22"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="k7D-zY-Md3"/>
+                        <constraint firstAttribute="width" constant="146" id="k7D-zY-Md3"/>
                         <constraint firstAttribute="height" constant="22" id="tHJ-oT-HEW"/>
                     </constraints>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="5:25 / -7:18" id="JqH-8m-gdp">
@@ -145,10 +148,10 @@
                     </connections>
                 </button>
                 <button toolTip="Seek backward" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2W3-3X-Koh" userLabel="Seek Bwd Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="646" y="23" width="16" height="14"/>
+                    <rect key="frame" x="647" y="23" width="14" height="12"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="14" id="AWT-cU-4As"/>
-                        <constraint firstAttribute="width" constant="16" id="cud-9n-NFK"/>
+                        <constraint firstAttribute="height" constant="12" id="AWT-cU-4As"/>
+                        <constraint firstAttribute="width" constant="14" id="cud-9n-NFK"/>
                     </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekBackward" imagePosition="only" alignment="center" continuous="YES" imageScaling="proportionallyDown" inset="2" id="lad-BX-RC6">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -283,12 +286,12 @@ G1BhbiBTbGlkZXI
                         <action selector="shuffleAction:" target="nQ4-zh-lAt" id="0JP-gN-WTm"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="1" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="u5c-Rl-1mT" userLabel="ArtistAlbum">
-                    <rect key="frame" x="183" y="13" width="226" height="20"/>
+                <textField horizontalHuggingPriority="1" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="u5c-Rl-1mT" userLabel="ArtistAlbum">
+                    <rect key="frame" x="183" y="13" width="280" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="leE-9t-5g2"/>
                     </constraints>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Biosphere - Substrata" id="3Y3-Dy-W26">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" title="Biosphere - Substrata" id="3Y3-Dy-W26">
                         <font key="font" size="12" name="Play-Regular"/>
                         <color key="textColor" red="0.62311691999999996" green="0.62311691999999996" blue="0.62311691999999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -330,7 +333,7 @@ G1BhbiBTbGlkZXI
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="76u-TW-Jjc" secondAttribute="bottom" constant="21" id="05n-F4-wHe"/>
                 <constraint firstItem="o3b-qU-qP1" firstAttribute="trailing" secondItem="g9v-No-c4E" secondAttribute="trailing" constant="-2" id="0XV-Pb-5oJ"/>
-                <constraint firstItem="k5X-eR-lej" firstAttribute="top" secondItem="4lG-eV-Tui" secondAttribute="top" constant="4" id="0jy-Jp-OQK"/>
+                <constraint firstItem="k5X-eR-lej" firstAttribute="top" secondItem="4lG-eV-Tui" secondAttribute="top" constant="10" id="0jy-Jp-OQK"/>
                 <constraint firstItem="hxu-OD-ArC" firstAttribute="top" secondItem="Qdz-h2-lvO" secondAttribute="bottom" constant="-1" id="1bb-kY-22X"/>
                 <constraint firstAttribute="bottom" secondItem="2W3-3X-Koh" secondAttribute="bottom" constant="23" id="1yw-JS-lx5"/>
                 <constraint firstItem="76u-TW-Jjc" firstAttribute="leading" secondItem="od7-ff-tlV" secondAttribute="trailing" constant="10" id="4hh-yc-V2g"/>
@@ -348,10 +351,10 @@ G1BhbiBTbGlkZXI
                 <constraint firstItem="g9v-No-c4E" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="leading" id="KAh-ho-I5n"/>
                 <constraint firstItem="Qdz-h2-lvO" firstAttribute="trailing" secondItem="hxu-OD-ArC" secondAttribute="trailing" id="LbW-cn-Cu8"/>
                 <constraint firstItem="ksM-B1-yLO" firstAttribute="leading" secondItem="AL4-YV-WF4" secondAttribute="trailing" constant="10" id="NzR-GQ-HEG"/>
-                <constraint firstItem="WJ8-c7-cak" firstAttribute="leading" secondItem="baG-ko-Cvr" secondAttribute="trailing" constant="30" id="Ps3-Uh-FDd"/>
+                <constraint firstItem="WJ8-c7-cak" firstAttribute="leading" secondItem="baG-ko-Cvr" secondAttribute="trailing" constant="32" id="Ps3-Uh-FDd"/>
                 <constraint firstAttribute="bottom" secondItem="AL4-YV-WF4" secondAttribute="bottom" constant="22" id="RRf-uL-sed"/>
                 <constraint firstItem="AL4-YV-WF4" firstAttribute="leading" secondItem="TqZ-gy-2zk" secondAttribute="trailing" constant="10" id="VpH-8z-6lo"/>
-                <constraint firstItem="od7-ff-tlV" firstAttribute="leading" secondItem="2W3-3X-Koh" secondAttribute="trailing" constant="7" id="WX8-fU-gec"/>
+                <constraint firstItem="od7-ff-tlV" firstAttribute="leading" secondItem="2W3-3X-Koh" secondAttribute="trailing" constant="8" id="WX8-fU-gec"/>
                 <constraint firstItem="o3b-qU-qP1" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="trailing" constant="2" id="Wdj-bq-Fmp"/>
                 <constraint firstItem="u5c-Rl-1mT" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="trailing" constant="10" id="XZH-va-afx"/>
                 <constraint firstAttribute="bottom" secondItem="lsa-eQ-v8N" secondAttribute="bottom" constant="23" id="fFX-Y6-iTW"/>
@@ -364,7 +367,7 @@ G1BhbiBTbGlkZXI
                 <constraint firstAttribute="bottom" secondItem="WJ8-c7-cak" secondAttribute="bottom" constant="22" id="ppH-uw-lF8"/>
                 <constraint firstItem="hxu-OD-ArC" firstAttribute="leading" secondItem="WJ8-c7-cak" secondAttribute="trailing" constant="1" id="pup-cE-3yh"/>
                 <constraint firstItem="MDy-vp-Yb1" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="trailing" constant="10" id="rSi-B9-t1Y"/>
-                <constraint firstItem="2W3-3X-Koh" firstAttribute="leading" secondItem="g9v-No-c4E" secondAttribute="trailing" constant="31" id="tZ6-lm-9D0"/>
+                <constraint firstItem="2W3-3X-Koh" firstAttribute="leading" secondItem="g9v-No-c4E" secondAttribute="trailing" constant="32" id="tZ6-lm-9D0"/>
                 <constraint firstItem="g9v-No-c4E" firstAttribute="top" secondItem="a5n-rr-hWY" secondAttribute="top" id="uaw-L9-ELw"/>
                 <constraint firstItem="3Fw-9q-fz0" firstAttribute="trailing" secondItem="o3b-qU-qP1" secondAttribute="trailing" constant="-5" id="yxL-1w-475"/>
                 <constraint firstItem="a5n-rr-hWY" firstAttribute="top" secondItem="4lG-eV-Tui" secondAttribute="top" id="zhY-jV-atD"/>
@@ -386,9 +389,34 @@ G1BhbiBTbGlkZXI
                 <outlet property="view" destination="4lG-eV-Tui" id="1vz-c0-zBL"/>
             </connections>
         </customObject>
+        <customObject id="Cos-Yd-Rxx" customClass="PlayingTrackFunctionsMenuController" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="playingTrackFunctionsMenu" destination="UfQ-vJ-Hrh" id="SJd-tu-fr1"/>
+            </connections>
+        </customObject>
+        <menu id="UfQ-vJ-Hrh" userLabel="Playing Track Functions Menu">
+            <items>
+                <menuItem title="Detailed track info" id="5XX-kt-RVf">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Add track to Favorites" id="miD-Wi-9Pa">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Bookmark this track position" id="vJY-fX-OMU">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Show track in Play Queue" id="WL0-wy-b8c">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="Cos-Yd-Rxx" id="BIF-SR-cVp"/>
+            </connections>
+            <point key="canvasLocation" x="-2086" y="152"/>
+        </menu>
     </objects>
     <resources>
-        <image name="HamburgerMenu" width="512" height="128"/>
+        <image name="HamburgerMenu" width="286" height="90"/>
         <image name="LoopOff" width="93" height="52"/>
         <image name="NextTrack" width="31" height="35"/>
         <image name="Pause" width="38" height="36"/>
