@@ -18,7 +18,7 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
     
     override func viewDidLoad() {
         
-        albumArtView.cornerRadius = 2
+//        albumArtView.cornerRadius = 2
         
         // MARK: Notifications --------------------------------------------------------------
         
@@ -163,7 +163,22 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
             albumArtView.image = track.displayInfo.art?.image ?? Images.imgPlayingArt
             
             lblTitle.stringValue = track.displayInfo.title
-            lblArtist.stringValue = track.groupingInfo.artist ?? ""
+            
+            let artist = track.groupingInfo.artist
+            let album = track.groupingInfo.album
+            
+            if let theArtist = artist, let theAlbum = album {
+                lblArtist.stringValue = "\(theArtist) -- \(theAlbum)"
+                
+            } else if let theArtist = artist {
+                lblArtist.stringValue = theArtist
+                
+            } else if let theAlbum = album {
+                lblArtist.stringValue = theAlbum
+                
+            } else {
+                lblArtist.stringValue = ""
+            }
             
         } else {  // No track
             
