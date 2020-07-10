@@ -33,7 +33,7 @@
                     <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </box>
                 <button toolTip="Seek backward" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2W3-3X-Koh" userLabel="Seek Bwd Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="366" y="24" width="12" height="12"/>
+                    <rect key="frame" x="364" y="24" width="12" height="12"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="12" id="AWT-cU-4As"/>
                         <constraint firstAttribute="width" constant="12" id="cud-9n-NFK"/>
@@ -147,13 +147,13 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button toolTip="Mute / Unmute" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WJ8-c7-cak" userLabel="Volume Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="785" y="22" width="16" height="14"/>
+                <button toolTip="Mute / Unmute" wantsLayer="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WJ8-c7-cak" userLabel="Volume Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="783" y="22" width="18" height="14"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="16" id="1Q1-nK-8Yc"/>
+                        <constraint firstAttribute="width" constant="18" id="1Q1-nK-8Yc"/>
                         <constraint firstAttribute="height" constant="14" id="Gpo-gM-9j1"/>
                     </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="VolumeMedium" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="JS5-Ga-36v">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="VolumeMedium" imagePosition="only" alignment="center" inset="2" id="JS5-Ga-36v">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -343,6 +343,7 @@ G1BhbiBTbGlkZXI
                 <constraint firstAttribute="bottom" secondItem="ksM-B1-yLO" secondAttribute="bottom" constant="22" id="Boh-hu-Ccd"/>
                 <constraint firstAttribute="bottom" secondItem="TqZ-gy-2zk" secondAttribute="bottom" constant="13" id="EJg-gN-eVf"/>
                 <constraint firstItem="k5X-eR-lej" firstAttribute="trailing" secondItem="hxu-OD-ArC" secondAttribute="trailing" constant="-244" id="EUJ-IL-q6x"/>
+                <constraint firstItem="od7-ff-tlV" firstAttribute="leading" secondItem="2W3-3X-Koh" secondAttribute="trailing" constant="18" id="G6I-Oc-gyV"/>
                 <constraint firstItem="hxu-OD-ArC" firstAttribute="bottom" secondItem="4lG-eV-Tui" secondAttribute="bottom" constant="-23" id="GjE-ED-qsP"/>
                 <constraint firstItem="MDy-vp-Yb1" firstAttribute="top" secondItem="4lG-eV-Tui" secondAttribute="top" constant="7" id="Izi-DR-7hg"/>
                 <constraint firstAttribute="bottom" secondItem="3Fw-9q-fz0" secondAttribute="bottom" constant="10" id="J7a-HY-TD0"/>
@@ -356,7 +357,6 @@ G1BhbiBTbGlkZXI
                 <constraint firstItem="o3b-qU-qP1" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="trailing" constant="2" id="Wdj-bq-Fmp"/>
                 <constraint firstItem="u5c-Rl-1mT" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="trailing" constant="10" id="XZH-va-afx"/>
                 <constraint firstItem="Qdz-h2-lvO" firstAttribute="leading" secondItem="WJ8-c7-cak" secondAttribute="trailing" constant="25" id="Xtn-X9-Ucg"/>
-                <constraint firstItem="od7-ff-tlV" firstAttribute="leading" secondItem="2W3-3X-Koh" secondAttribute="trailing" constant="16" id="bKE-44-9sD"/>
                 <constraint firstAttribute="trailing" secondItem="g9v-No-c4E" secondAttribute="trailing" id="dXt-Vf-lOM"/>
                 <constraint firstAttribute="bottom" secondItem="lsa-eQ-v8N" secondAttribute="bottom" constant="23" id="fFX-Y6-iTW"/>
                 <constraint firstAttribute="bottom" secondItem="a5n-rr-hWY" secondAttribute="bottom" id="ghB-x2-Lc5"/>
@@ -364,7 +364,7 @@ G1BhbiBTbGlkZXI
                 <constraint firstAttribute="bottom" secondItem="o3b-qU-qP1" secondAttribute="bottom" constant="-4" id="jGa-cG-fHF"/>
                 <constraint firstAttribute="bottom" secondItem="od7-ff-tlV" secondAttribute="bottom" constant="23" id="oYa-8f-0b3"/>
                 <constraint firstAttribute="bottom" secondItem="baG-ko-Cvr" secondAttribute="bottom" constant="24" id="pNG-WY-dUs"/>
-                <constraint firstItem="WJ8-c7-cak" firstAttribute="bottom" secondItem="4lG-eV-Tui" secondAttribute="bottom" constant="-22" id="ppH-uw-lF8"/>
+                <constraint firstItem="WJ8-c7-cak" firstAttribute="bottom" secondItem="4lG-eV-Tui" secondAttribute="bottom" constant="-23" id="ppH-uw-lF8"/>
                 <constraint firstItem="MDy-vp-Yb1" firstAttribute="leading" secondItem="a5n-rr-hWY" secondAttribute="trailing" constant="10" id="rSi-B9-t1Y"/>
                 <constraint firstItem="lsa-eQ-v8N" firstAttribute="leading" secondItem="76u-TW-Jjc" secondAttribute="trailing" constant="20" id="rX7-gT-Y20"/>
                 <constraint firstItem="g9v-No-c4E" firstAttribute="top" secondItem="a5n-rr-hWY" secondAttribute="top" id="uaw-L9-ELw"/>
@@ -426,6 +426,6 @@ G1BhbiBTbGlkZXI
         <image name="SeekBackward" width="12" height="12"/>
         <image name="SeekForward" width="12" height="12"/>
         <image name="ShuffleOff" width="256" height="256"/>
-        <image name="VolumeMedium" width="160" height="138"/>
+        <image name="VolumeMedium" width="18" height="14"/>
     </resources>
 </document>
