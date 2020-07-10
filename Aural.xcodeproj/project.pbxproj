@@ -572,6 +572,8 @@
 		3E89CBAD249E1AA400972AE6 /* Messenger_SynchronousNotifications_ArbitraryPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89CBAC249E1AA400972AE6 /* Messenger_SynchronousNotifications_ArbitraryPayloadTests.swift */; };
 		3E89CBAF249E287100972AE6 /* Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89CBAE249E287100972AE6 /* Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift */; };
 		3E8E2C482493D3FF00D795F6 /* Messenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8E2C472493D3FF00D795F6 /* Messenger.swift */; };
+		3E929EA324B8EEE10010B176 /* PlayQueueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */; };
+		3E929EA524B8F4280010B176 /* PlayQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E929EA424B8F4280010B176 /* PlayQueue.swift */; };
 		3E9463971F29960F00A9019C /* TabGroupButtonCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9463961F29960F00A9019C /* TabGroupButtonCells.swift */; };
 		3E94E85B21549A5800C57AD8 /* DelayPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E94E85A21549A5800C57AD8 /* DelayPresets.swift */; };
 		3E94E85D2154AB9300C57AD8 /* FilterPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E94E85C2154AB9300C57AD8 /* FilterPresets.swift */; };
@@ -1225,6 +1227,8 @@
 		3E89CBAE249E287100972AE6 /* Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift; sourceTree = "<group>"; };
 		3E8A51CF21D856FB0014C185 /* build-ffmpeg.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-ffmpeg.sh"; sourceTree = "<group>"; };
 		3E8E2C472493D3FF00D795F6 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
+		3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueProtocol.swift; sourceTree = "<group>"; };
+		3E929EA424B8F4280010B176 /* PlayQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueue.swift; sourceTree = "<group>"; };
 		3E9463961F29960F00A9019C /* TabGroupButtonCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabGroupButtonCells.swift; sourceTree = "<group>"; };
 		3E94E85A21549A5800C57AD8 /* DelayPresets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayPresets.swift; sourceTree = "<group>"; };
 		3E94E85C2154AB9300C57AD8 /* FilterPresets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPresets.swift; sourceTree = "<group>"; };
@@ -1782,6 +1786,8 @@
 				3E357B531F9C7DFB00C8F7B1 /* FlatPlaylist.swift */,
 				3E221FB91F98541100DA3AD8 /* GroupingPlaylist.swift */,
 				3E1DAAA31FAEB561002BB405 /* CRUDOperationResults.swift */,
+				3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */,
+				3E929EA424B8F4280010B176 /* PlayQueue.swift */,
 			);
 			path = Playlist;
 			sourceTree = "<group>";
@@ -3330,6 +3336,7 @@
 				3E80E66F1F04FA60007480CC /* Size.swift in Sources */,
 				3E78DCA124648D9200E6BC00 /* PlayerAudioViewController.swift in Sources */,
 				3E1DA6F8244D6D4A00FFF59E /* ColorScheme.swift in Sources */,
+				3E929EA324B8EEE10010B176 /* PlayQueueProtocol.swift in Sources */,
 				3E4193DC24336D1B00F43162 /* SeekTimerTaskQueue.swift in Sources */,
 				3E633C491F14C9110040ECBC /* ParametricEQNode.swift in Sources */,
 				3E82888E24AE075E0032D0CE /* SidebarItems.swift in Sources */,
@@ -3532,6 +3539,7 @@
 				3E3AEB121F9D3BA200E9BEDE /* GroupingPlaylistViewController.swift in Sources */,
 				3E6341DA243DC50500190502 /* PreferencesDefaults.swift in Sources */,
 				3E0839AE219569C3008D84BA /* TimeUnit.swift in Sources */,
+				3E929EA524B8F4280010B176 /* PlayQueue.swift in Sources */,
 				3EDA8F2624602C13000715C8 /* WindowLayout.swift in Sources */,
 				3EA2E64C2192723300FB5BAC /* FXPresets.swift in Sources */,
 				3ECD17441F6BBEE400492F56 /* ID3Parser.swift in Sources */,
