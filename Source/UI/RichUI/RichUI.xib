@@ -37,33 +37,33 @@
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="AppTitle"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-7J-CYT" userLabel="Root SplitView">
+                    <splitView dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="iiK-KV-OLC" userLabel="Vertical SplitView">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="609"/>
                         <subviews>
-                            <customView id="Lda-3H-PUQ">
-                                <rect key="frame" x="0.0" y="0.0" width="200" height="609"/>
+                            <customView id="gXp-vx-rNg" userLabel="PlayerContainer">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="TGf-Gr-Na7"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="tUv-04-ehq"/>
+                                    <constraint firstAttribute="height" constant="60" id="QbF-dg-H22"/>
                                 </constraints>
                             </customView>
-                            <customView id="bU4-oH-OvX">
-                                <rect key="frame" x="201" y="0.0" width="799" height="609"/>
+                            <customView id="wsq-ma-gWv" userLabel="BrowserContainer">
+                                <rect key="frame" x="0.0" y="61" width="1000" height="548"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <splitView dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="iiK-KV-OLC" userLabel="PlayerBrowser SplitView">
-                                        <rect key="frame" x="0.0" y="0.0" width="799" height="609"/>
+                                    <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-7J-CYT" userLabel="LeftRight SplitView">
+                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="548"/>
                                         <subviews>
-                                            <customView id="gXp-vx-rNg" userLabel="PlayerContainer">
-                                                <rect key="frame" x="0.0" y="0.0" width="799" height="60"/>
+                                            <customView id="Lda-3H-PUQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="548"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="QbF-dg-H22"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="TGf-Gr-Na7"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="tUv-04-ehq"/>
                                                 </constraints>
                                             </customView>
-                                            <customView id="wsq-ma-gWv" userLabel="BrowserContainer">
-                                                <rect key="frame" x="0.0" y="61" width="799" height="548"/>
+                                            <customView id="bU4-oH-OvX">
+                                                <rect key="frame" x="201" y="0.0" width="799" height="548"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tabView drawsBackground="NO" allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="oOy-Uj-Vc4" userLabel="BrowserTabView">
@@ -86,10 +86,10 @@
                                                     </tabView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="oOy-Uj-Vc4" secondAttribute="trailing" id="FUI-OR-22q"/>
-                                                    <constraint firstItem="oOy-Uj-Vc4" firstAttribute="top" secondItem="wsq-ma-gWv" secondAttribute="top" id="boF-H4-zop"/>
-                                                    <constraint firstItem="oOy-Uj-Vc4" firstAttribute="leading" secondItem="wsq-ma-gWv" secondAttribute="leading" id="kZZ-TL-qTi"/>
-                                                    <constraint firstAttribute="bottom" secondItem="oOy-Uj-Vc4" secondAttribute="bottom" id="zGU-Rg-R3S"/>
+                                                    <constraint firstItem="oOy-Uj-Vc4" firstAttribute="top" secondItem="bU4-oH-OvX" secondAttribute="top" id="16f-MX-igt"/>
+                                                    <constraint firstAttribute="bottom" secondItem="oOy-Uj-Vc4" secondAttribute="bottom" id="1PR-dn-yHB"/>
+                                                    <constraint firstAttribute="trailing" secondItem="oOy-Uj-Vc4" secondAttribute="trailing" id="KWY-Fw-P2R"/>
+                                                    <constraint firstItem="oOy-Uj-Vc4" firstAttribute="leading" secondItem="bU4-oH-OvX" secondAttribute="leading" id="LNl-UT-Kxg"/>
                                                 </constraints>
                                             </customView>
                                         </subviews>
@@ -100,10 +100,10 @@
                                     </splitView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="iiK-KV-OLC" secondAttribute="trailing" id="4Ps-aM-q55"/>
-                                    <constraint firstItem="iiK-KV-OLC" firstAttribute="top" secondItem="bU4-oH-OvX" secondAttribute="top" id="DGH-bM-Lv2"/>
-                                    <constraint firstAttribute="bottom" secondItem="iiK-KV-OLC" secondAttribute="bottom" id="Sf2-2v-FIK"/>
-                                    <constraint firstItem="iiK-KV-OLC" firstAttribute="leading" secondItem="bU4-oH-OvX" secondAttribute="leading" id="pgh-Fj-aek"/>
+                                    <constraint firstItem="mCq-7J-CYT" firstAttribute="top" secondItem="wsq-ma-gWv" secondAttribute="top" id="HB7-r6-LYr"/>
+                                    <constraint firstItem="mCq-7J-CYT" firstAttribute="leading" secondItem="wsq-ma-gWv" secondAttribute="leading" id="IZX-Le-1Gf"/>
+                                    <constraint firstAttribute="bottom" secondItem="mCq-7J-CYT" secondAttribute="bottom" id="dOc-uw-aZq"/>
+                                    <constraint firstAttribute="trailing" secondItem="mCq-7J-CYT" secondAttribute="trailing" id="y3c-OB-F9V"/>
                                 </constraints>
                             </customView>
                         </subviews>
@@ -114,12 +114,12 @@
                     </splitView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="mCq-7J-CYT" secondAttribute="trailing" id="3vB-dZ-JEx"/>
+                    <constraint firstItem="iiK-KV-OLC" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="3Tr-bZ-fq8"/>
                     <constraint firstItem="Nhh-o3-feJ" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="10" id="Aec-eT-TTf"/>
-                    <constraint firstItem="mCq-7J-CYT" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="VPd-7z-eJC"/>
-                    <constraint firstAttribute="bottom" secondItem="mCq-7J-CYT" secondAttribute="bottom" id="aVy-I3-SeK"/>
-                    <constraint firstItem="mCq-7J-CYT" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="eVY-Km-OBd"/>
+                    <constraint firstItem="iiK-KV-OLC" firstAttribute="top" secondItem="Nhh-o3-feJ" secondAttribute="bottom" constant="16" id="XPt-gj-ZU8"/>
+                    <constraint firstAttribute="trailing" secondItem="iiK-KV-OLC" secondAttribute="trailing" id="eZU-gi-K1H"/>
                     <constraint firstItem="Nhh-o3-feJ" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="huI-Vx-0nX"/>
+                    <constraint firstAttribute="bottom" secondItem="iiK-KV-OLC" secondAttribute="bottom" id="wob-LM-NcS"/>
                 </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="162400EF-DA40-42A4-91F8-14E2E9923E13" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="LGv-gd-7MC">

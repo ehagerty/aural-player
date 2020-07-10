@@ -72,6 +72,12 @@
                 <outlet property="theMenu" destination="nzT-Bj-81Y" id="L7C-0i-wdd"/>
             </connections>
         </customObject>
+        <customObject id="EvH-oo-9ua" customClass="PlayQueueMenuController" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="removeSelectedItemsMenuItem" destination="HbX-0K-wz3" id="Izf-1v-BoF"/>
+                <outlet property="theMenu" destination="1CB-7I-204" id="ymS-0K-Zcf"/>
+            </connections>
+        </customObject>
         <customObject id="IvK-xG-TCa" customClass="PlaybackMenuController" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="detailedInfoMenuItem" destination="GCy-Rj-Mv5" id="FTi-Dg-C0L"/>
@@ -323,21 +329,21 @@
                         </connections>
                     </menu>
                 </menuItem>
-                <menuItem title="Playlist" id="nzT-Bj-81Y">
+                <menuItem title="Playlist" hidden="YES" enabled="NO" id="nzT-Bj-81Y">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Playlist" autoenablesItems="NO" id="OTj-Uh-IWl">
                         <items>
-                            <menuItem title="  Add files" image="Add-Small" keyEquivalent="o" id="Ysv-Pf-k88">
+                            <menuItem title="  Add files" image="Add-Small" enabled="NO" keyEquivalent="o" id="Ysv-Pf-k88">
                                 <connections>
                                     <action selector="addFilesAction:" target="sXT-Pr-clR" id="tcN-Bx-Cl6"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Save playlist" image="Save-Small" keyEquivalent="s" id="Cvk-m8-oAg">
+                            <menuItem title="  Save playlist" image="Save-Small" enabled="NO" keyEquivalent="s" id="Cvk-m8-oAg">
                                 <connections>
                                     <action selector="savePlaylistAction:" target="sXT-Pr-clR" id="bov-QP-LuK"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Clear playlist" image="Clear-Small" id="ec2-Jm-I4M">
+                            <menuItem title="  Clear playlist" image="Clear-Small" enabled="NO" id="ec2-Jm-I4M">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -346,7 +352,7 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="ZbT-B5-jLK"/>
-                            <menuItem title="  Play selected item" image="Play-Small" id="afl-Xm-nI9" userLabel="Play selected track/group">
+                            <menuItem title="  Play selected item" image="Play-Small" enabled="NO" id="afl-Xm-nI9" userLabel="Play selected track/group">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
@@ -355,60 +361,60 @@ DQ
                                     <action selector="playSelectedItemAction:" target="sXT-Pr-clR" id="6ty-nb-ja1"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Play selected item after timed delay" image="DelayedPlayback-Menu" id="Q9h-Nv-Vuv" userLabel="Play track delayed">
+                            <menuItem title="  Play selected item after timed delay" image="DelayedPlayback-Menu" enabled="NO" id="Q9h-Nv-Vuv" userLabel="Play track delayed">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="  Play selected item after timed delay" id="VIM-4Q-OAh">
                                     <items>
-                                        <menuItem title="5 seconds" tag="5" id="njI-b7-TQK">
+                                        <menuItem title="5 seconds" tag="5" enabled="NO" id="njI-b7-TQK">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="ji6-9m-AJz"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="10 seconds" tag="10" id="Yjk-ex-f8t">
+                                        <menuItem title="10 seconds" tag="10" enabled="NO" id="Yjk-ex-f8t">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="936-5c-ukZ"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="30 seconds" tag="30" id="Fdt-bH-mri">
+                                        <menuItem title="30 seconds" tag="30" enabled="NO" id="Fdt-bH-mri">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="U9x-2D-E6z"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="1 minute" tag="60" id="Kut-WL-qGT">
+                                        <menuItem title="1 minute" tag="60" enabled="NO" id="Kut-WL-qGT">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="qsw-6S-c9W"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="5 minutes" tag="300" id="iqd-m1-eQh">
+                                        <menuItem title="5 minutes" tag="300" enabled="NO" id="iqd-m1-eQh">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="QSQ-k1-fLD"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="10 minutes" tag="600" id="znj-uJ-5kA">
+                                        <menuItem title="10 minutes" tag="600" enabled="NO" id="znj-uJ-5kA">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="Evl-ZU-1dq"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="30 minutes" tag="1800" id="06H-Mx-6k1">
+                                        <menuItem title="30 minutes" tag="1800" enabled="NO" id="06H-Mx-6k1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="iSD-Ga-nnv"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="1 hour" tag="3600" id="Xw9-dy-zBv">
+                                        <menuItem title="1 hour" tag="3600" enabled="NO" id="Xw9-dy-zBv">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="o1z-dW-1mE"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uwW-rP-V5V"/>
-                                        <menuItem title="Custom" id="zTF-be-DXn">
+                                        <menuItem title="Custom" enabled="NO" id="zTF-be-DXn">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="playSelectedItemAfterDelayAction:" target="sXT-Pr-clR" id="vzb-ct-Kds"/>
@@ -417,61 +423,61 @@ DQ
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title=" Insert silent gaps around selected track" image="Gap-Small" id="9iu-he-pRn" userLabel="Insert gaps">
+                            <menuItem title=" Insert silent gaps around selected track" image="Gap-Small" enabled="NO" id="9iu-he-pRn" userLabel="Insert gaps">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title=" Insert silent gaps around selected track" id="Lrd-d0-88m">
                                     <items>
-                                        <menuItem title="5 seconds before track" tag="-5" id="gJ6-BW-gp0">
+                                        <menuItem title="5 seconds before track" tag="-5" enabled="NO" id="gJ6-BW-gp0">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="Q8s-eh-i0M"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="10 seconds before track" tag="-10" id="npX-0Z-nfR">
+                                        <menuItem title="10 seconds before track" tag="-10" enabled="NO" id="npX-0Z-nfR">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="WRp-ca-u4q"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="30 seconds before track" tag="-30" id="M5y-hJ-Rs8">
+                                        <menuItem title="30 seconds before track" tag="-30" enabled="NO" id="M5y-hJ-Rs8">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="N80-Ek-Vw1"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="60 seconds before track" tag="-60" id="SnN-Nc-MXY">
+                                        <menuItem title="60 seconds before track" tag="-60" enabled="NO" id="SnN-Nc-MXY">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="1fH-Ii-jyn"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="2EW-Dy-ct5"/>
-                                        <menuItem title="5 seconds after track" tag="5" id="nql-Yw-ixc">
+                                        <menuItem title="5 seconds after track" tag="5" enabled="NO" id="nql-Yw-ixc">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="SpT-WU-l8S"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="10 seconds after track" tag="10" id="qU3-qF-oPq">
+                                        <menuItem title="10 seconds after track" tag="10" enabled="NO" id="qU3-qF-oPq">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="zzl-m4-kVK"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="30 seconds after track" tag="30" id="dUl-J5-mT5">
+                                        <menuItem title="30 seconds after track" tag="30" enabled="NO" id="dUl-J5-mT5">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="sUw-8A-JvM"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="60 seconds after track" tag="60" id="BKF-Pm-Xmo">
+                                        <menuItem title="60 seconds after track" tag="60" enabled="NO" id="BKF-Pm-Xmo">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="YfF-dA-NZe"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="tfi-qc-dAY"/>
-                                        <menuItem title="Custom" id="xag-u9-6nG">
+                                        <menuItem title="Custom" enabled="NO" id="xag-u9-6nG">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="insertGapsAction:" target="sXT-Pr-clR" id="YrH-9k-Eqr"/>
@@ -480,32 +486,32 @@ DQ
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title=" Edit silent gaps around selected track" image="Gap-Small" id="y39-3c-GVk" userLabel="Edit gaps">
+                            <menuItem title=" Edit silent gaps around selected track" image="Gap-Small" enabled="NO" id="y39-3c-GVk" userLabel="Edit gaps">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="editGapsAction:" target="sXT-Pr-clR" id="lQn-m4-OVn"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="     Remove silent gaps around selected track" id="iK1-11-rDP" userLabel="Remove gaps">
+                            <menuItem title="     Remove silent gaps around selected track" enabled="NO" id="iK1-11-rDP" userLabel="Remove gaps">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="removeGapsAction:" target="sXT-Pr-clR" id="4rn-ui-ejH"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="15x-8w-Stx"/>
-                            <menuItem title=" Clear selection" image="InvertSelection-Small" id="y60-Ih-ViK" userLabel="Clear selection">
+                            <menuItem title=" Clear selection" image="InvertSelection-Small" enabled="NO" id="y60-Ih-ViK" userLabel="Clear selection">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="clearSelectionAction:" target="sXT-Pr-clR" id="TuU-uT-Adg"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Invert selection" image="InvertSelection-Small" id="mNx-Xb-Z6H" userLabel="Invert selection">
+                            <menuItem title=" Invert selection" image="InvertSelection-Small" enabled="NO" id="mNx-Xb-Z6H" userLabel="Invert selection">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="invertSelectionAction:" target="sXT-Pr-clR" id="b0a-lB-qWT"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Crop selection" image="CropSelection-Small" id="yml-EW-5wq" userLabel="Crop selection">
+                            <menuItem title=" Crop selection" image="CropSelection-Small" enabled="NO" id="yml-EW-5wq" userLabel="Crop selection">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -514,7 +520,7 @@ CA
                                     <action selector="cropSelectionAction:" target="sXT-Pr-clR" id="4c5-D4-loM"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Remove selected items" image="Remove-Small" id="20j-6Y-sbB" userLabel="Remove selected track">
+                            <menuItem title="  Remove selected items" image="Remove-Small" enabled="NO" id="20j-6Y-sbB" userLabel="Remove selected track">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -524,100 +530,100 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="A1f-ka-gQW"/>
-                            <menuItem title="  Move selected items up" image="Up-Small" keyEquivalent="" id="f3c-TG-M9r">
+                            <menuItem title="  Move selected items up" image="Up-Small" enabled="NO" keyEquivalent="" id="f3c-TG-M9r">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                 <connections>
                                     <action selector="moveItemsUpAction:" target="sXT-Pr-clR" id="NJB-lG-6X3"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Move selected items to top" image="Up-Small" keyEquivalent="" id="av2-sE-9MQ" userLabel="Move selected items top">
+                            <menuItem title="  Move selected items to top" image="Up-Small" enabled="NO" keyEquivalent="" id="av2-sE-9MQ" userLabel="Move selected items top">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                                 <connections>
                                     <action selector="moveItemsToTopAction:" target="sXT-Pr-clR" id="Xck-Tb-A3A"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Move selected items down" image="Down-Small" keyEquivalent="" id="F5x-Nm-ust">
+                            <menuItem title="  Move selected items down" image="Down-Small" enabled="NO" keyEquivalent="" id="F5x-Nm-ust">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                 <connections>
                                     <action selector="moveItemsDownAction:" target="sXT-Pr-clR" id="Vpf-ou-Z2h"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Move selected items to bottom" image="Down-Small" keyEquivalent="" id="07J-Mu-hRE" userLabel="Move selected items bottom">
+                            <menuItem title="  Move selected items to bottom" image="Down-Small" enabled="NO" keyEquivalent="" id="07J-Mu-hRE" userLabel="Move selected items bottom">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                                 <connections>
                                     <action selector="moveItemsToBottomAction:" target="sXT-Pr-clR" id="uBN-Wa-TQa"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Epc-oG-Po5"/>
-                            <menuItem title=" Expand selected groups" image="ExpandGroups" keyEquivalent="/" id="bgZ-UF-jHK" userLabel="Expand selected groups">
+                            <menuItem title=" Expand selected groups" image="ExpandGroups" enabled="NO" keyEquivalent="/" id="bgZ-UF-jHK" userLabel="Expand selected groups">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="expandSelectedGroupsAction:" target="sXT-Pr-clR" id="vvf-uQ-9kx"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Collapse selected items" image="CollapseGroups" keyEquivalent="." id="P3w-3g-aC8" userLabel="Collapse selected items">
+                            <menuItem title=" Collapse selected items" image="CollapseGroups" enabled="NO" keyEquivalent="." id="P3w-3g-aC8" userLabel="Collapse selected items">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="collapseSelectedItemsAction:" target="sXT-Pr-clR" id="hdb-mK-JPn"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Expand all groups" image="ExpandGroups" keyEquivalent="/" id="Sls-KQ-Exg" userLabel="Expand all groups">
+                            <menuItem title=" Expand all groups" image="ExpandGroups" enabled="NO" keyEquivalent="/" id="Sls-KQ-Exg" userLabel="Expand all groups">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="expandAllGroupsAction:" target="sXT-Pr-clR" id="z4e-po-fu5"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Collapse all groups" image="CollapseGroups" keyEquivalent="." id="vBe-YK-qXP" userLabel="Collapse all groups">
+                            <menuItem title=" Collapse all groups" image="CollapseGroups" enabled="NO" keyEquivalent="." id="vBe-YK-qXP" userLabel="Collapse all groups">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="collapseAllGroupsAction:" target="sXT-Pr-clR" id="Zdp-pO-9F5"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Qlz-cM-3y9"/>
-                            <menuItem title=" Search playlist" image="Search-Small" keyEquivalent="f" id="Pxd-7C-8tq">
+                            <menuItem title=" Search playlist" image="Search-Small" enabled="NO" keyEquivalent="f" id="Pxd-7C-8tq">
                                 <connections>
                                     <action selector="playlistSearchAction:" target="sXT-Pr-clR" id="i4v-Sr-0DH"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Sort playlist" image="Sort-Small" keyEquivalent="s" id="ttf-Ix-LHp" userLabel="Sort playlist">
+                            <menuItem title="Sort playlist" image="Sort-Small" enabled="NO" keyEquivalent="s" id="ttf-Ix-LHp" userLabel="Sort playlist">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="playlistSortAction:" target="sXT-Pr-clR" id="agN-rP-uIH"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="BOf-ev-Ydf"/>
-                            <menuItem title=" Scroll to top of playlist" image="ScrollToTop-Small" keyEquivalent="" id="rnZ-aQ-jrV">
+                            <menuItem title=" Scroll to top of playlist" image="ScrollToTop-Small" enabled="NO" keyEquivalent="" id="rnZ-aQ-jrV">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="scrollToTopAction:" target="sXT-Pr-clR" id="ee7-HS-RLj"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Scroll to bottom of playlist" image="ScrollToBottom-Small" keyEquivalent="" id="c6s-9I-Btt" userLabel="Scroll to bottom of playlist">
+                            <menuItem title=" Scroll to bottom of playlist" image="ScrollToBottom-Small" enabled="NO" keyEquivalent="" id="c6s-9I-Btt" userLabel="Scroll to bottom of playlist">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="scrollToBottomAction:" target="sXT-Pr-clR" id="C3f-pL-2AA"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Page up" image="PageUp-Small" keyEquivalent="" id="OVI-nb-hI6" userLabel="Page up">
+                            <menuItem title=" Page up" image="PageUp-Small" enabled="NO" keyEquivalent="" id="OVI-nb-hI6" userLabel="Page up">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="pageUpAction:" target="sXT-Pr-clR" id="meb-hY-yYP"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Page down" image="PageDown-Small" keyEquivalent="" id="aHg-LZ-M39" userLabel="Page down">
+                            <menuItem title=" Page down" image="PageDown-Small" enabled="NO" keyEquivalent="" id="aHg-LZ-M39" userLabel="Page down">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="pageDownAction:" target="sXT-Pr-clR" id="8di-V3-kIw"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="YfP-4x-5Xb"/>
-                            <menuItem title="     Toggle (previous) playlist view" keyEquivalent="[" id="I5Z-AW-JY4">
+                            <menuItem title="     Toggle (previous) playlist view" enabled="NO" keyEquivalent="[" id="I5Z-AW-JY4">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
                                     <action selector="previousPlaylistViewAction:" target="sXT-Pr-clR" id="q0s-dd-ahC"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="     Toggle (next) playlist view" keyEquivalent="]" id="C4n-hs-Fjm">
+                            <menuItem title="     Toggle (next) playlist view" enabled="NO" keyEquivalent="]" id="C4n-hs-Fjm">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
                                     <action selector="nextPlaylistViewAction:" target="sXT-Pr-clR" id="C7n-av-U2z"/>
@@ -626,6 +632,137 @@ CA
                         </items>
                         <connections>
                             <outlet property="delegate" destination="sXT-Pr-clR" id="f9A-Ji-QwQ"/>
+                        </connections>
+                    </menu>
+                </menuItem>
+                <menuItem title="Play Queue" id="1CB-7I-204" userLabel="Play Queue">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Play Queue" autoenablesItems="NO" id="AMQ-5J-ShB">
+                        <items>
+                            <menuItem title="  Add files / folders" image="Add-Small" keyEquivalent="o" id="fru-he-3Cc">
+                                <connections>
+                                    <action selector="addFilesAction:" target="sXT-Pr-clR" id="REU-Fe-HlL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Export as playlist file" image="Save-Small" keyEquivalent="s" id="iwj-Ff-5kU">
+                                <connections>
+                                    <action selector="savePlaylistAction:" target="sXT-Pr-clR" id="tZ5-BG-mlL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Clear play queue" image="Clear-Small" id="16r-k6-bn6">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <connections>
+                                    <action selector="clearPlaylistAction:" target="sXT-Pr-clR" id="o4e-bc-XYy"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="a4x-lS-hDT"/>
+                            <menuItem title="  Play selected track" image="Play-Small" id="FzQ-dh-6fa" userLabel="Play selected track/group">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="playSelectedItemAction:" target="sXT-Pr-clR" id="JNs-le-ZAs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="BAj-9E-fEq"/>
+                            <menuItem title=" Clear selection" image="InvertSelection-Small" id="LOQ-hE-pXB" userLabel="Clear selection">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="clearSelectionAction:" target="sXT-Pr-clR" id="ktY-vk-uC9"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Invert selection" image="InvertSelection-Small" id="eeC-H9-SfE" userLabel="Invert selection">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="invertSelectionAction:" target="sXT-Pr-clR" id="tTo-21-oi8"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Crop selection" image="CropSelection-Small" id="ni6-Cg-Lol" userLabel="Crop selection">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="cropSelectionAction:" target="sXT-Pr-clR" id="s6n-0I-mht"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Remove selected tracks" image="Remove-Small" id="HbX-0K-wz3" userLabel="Remove selected tracks">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeSelectedItemsAction:" target="EvH-oo-9ua" id="9XN-KW-VA3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="AkG-pZ-HQw"/>
+                            <menuItem title="  Move selected tracks up" image="Up-Small" keyEquivalent="" id="d08-sF-Za0">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                <connections>
+                                    <action selector="moveItemsUpAction:" target="sXT-Pr-clR" id="QxA-Ra-IDX"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Move selected tracks to top" image="Up-Small" keyEquivalent="" id="Ahi-A1-wX1" userLabel="Move selected items top">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
+                                <connections>
+                                    <action selector="moveItemsToTopAction:" target="sXT-Pr-clR" id="pha-FW-P0Y"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Move selected tracks down" image="Down-Small" keyEquivalent="" id="0Jf-TT-U2K">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                <connections>
+                                    <action selector="moveItemsDownAction:" target="sXT-Pr-clR" id="wSI-2R-Wmp"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Move selected tracks to bottom" image="Down-Small" keyEquivalent="" id="Cc3-kd-x71" userLabel="Move selected items bottom">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
+                                <connections>
+                                    <action selector="moveItemsToBottomAction:" target="sXT-Pr-clR" id="CGs-oi-i2U"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zxw-IT-pSF"/>
+                            <menuItem title=" Search play queue" image="Search-Small" keyEquivalent="f" id="Nhp-Z7-eAP">
+                                <connections>
+                                    <action selector="playlistSearchAction:" target="sXT-Pr-clR" id="4BS-L4-hMh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Sort play queue" image="Sort-Small" keyEquivalent="s" id="Kih-00-ymk" userLabel="Sort playlist">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="playlistSortAction:" target="sXT-Pr-clR" id="6by-Bu-IDE"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vne-Bl-t3s"/>
+                            <menuItem title=" Scroll to top of playlist" image="ScrollToTop-Small" keyEquivalent="" id="xau-Ke-pjh">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="scrollToTopAction:" target="sXT-Pr-clR" id="ArC-ey-KbW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Scroll to bottom of playlist" image="ScrollToBottom-Small" keyEquivalent="" id="j0e-BX-nfx" userLabel="Scroll to bottom of playlist">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="scrollToBottomAction:" target="sXT-Pr-clR" id="KJa-Xh-GST"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Page up" image="PageUp-Small" keyEquivalent="" id="7IE-jP-x7U" userLabel="Page up">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="pageUpAction:" target="sXT-Pr-clR" id="KhX-b5-VIN"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Page down" image="PageDown-Small" keyEquivalent="" id="jkp-zW-yYV" userLabel="Page down">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="pageDownAction:" target="sXT-Pr-clR" id="5Gj-rz-a13"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                        <connections>
+                            <outlet property="delegate" destination="sXT-Pr-clR" id="kRH-sx-vSW"/>
                         </connections>
                     </menu>
                 </menuItem>

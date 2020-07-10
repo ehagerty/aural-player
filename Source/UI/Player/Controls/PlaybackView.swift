@@ -122,7 +122,7 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
     func applyColorScheme(_ scheme: ColorScheme) {
         
         // This call will also take care of toggle buttons
-        changeFunctionButtonColor(scheme.general.functionButtonColor)
+//        changeFunctionButtonColor(scheme.general.functionButtonColor)
         sliderView.applyColorScheme(scheme)
     }
     
@@ -138,9 +138,9 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
         
         // TODO: Put these buttons in an array on initialization and refer to the array here
         
-        [btnLoop, btnPlayPause, btnPreviousTrack, btnNextTrack, btnSeekBackward, btnSeekForward].forEach({
-            ($0 as? Tintable)?.reTint()
-        })
+//        [btnLoop, btnPlayPause, btnPreviousTrack, btnNextTrack, btnSeekBackward, btnSeekForward].forEach({
+//            ($0 as? Tintable)?.reTint()
+//        })
     }
     
     func changeToggleButtonOffStateColor(_ color: NSColor) {

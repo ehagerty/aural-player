@@ -8,7 +8,6 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
     @IBOutlet weak var browserTabView: NSTabView!
     
     private var theWindow: NSWindow {self.window!}
-    
     override var windowNibName: String? {return "RichUI"}
     
     private lazy var playerController: RichUIPlayerViewController = RichUIPlayerViewController()

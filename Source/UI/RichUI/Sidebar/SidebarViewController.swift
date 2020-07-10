@@ -6,11 +6,13 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
     
     override var nibName: String? {return "Sidebar"}
     
-    let mainFont_14: NSFont = NSFont(name: "Play Regular", size: 14)!
+    let mainFont_14: NSFont = NSFont(name: "Play Regular", size: 13)!
+    
+    let playQueueItem: SidebarItem = SidebarItem(displayName: "Play Queue")
     
     let categories: [SidebarCategory] = SidebarCategory.allCases
     
-    let libraryItems: [SidebarItem] = ["Play Queue", "File System", "Favorites", "Bookmarks"].map {SidebarItem(displayName: $0)}
+    let libraryItems: [SidebarItem] = ["Tracks", "File System", "Favorites", "Bookmarks"].map {SidebarItem(displayName: $0)}
     let historyItems: [SidebarItem] = ["Recently Added", "Recently Played"].map {SidebarItem(displayName: $0)}
     let playlistsItems: [SidebarItem] = ["Biosphere Tranquility", "Nature Sounds"].map {SidebarItem(displayName: $0)}
     
@@ -19,13 +21,13 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        return 25
+        return (item as? SidebarItem)?.displayName == playQueueItem.displayName ? 30 : 24
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
         
         if item == nil {
-            return categories.count
+            return categories.count + 1
             
         } else if let sidebarCat = item as? SidebarCategory {
             
@@ -49,14 +51,14 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
     }
     
     func outlineView(_ outlineView: NSOutlineView, isGroupItem item: Any) -> Bool {
-        return item is SidebarCategory
+        return item is SidebarCategory || (item as? SidebarItem)?.displayName == playQueueItem.displayName
     }
     
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
         
         if item == nil {
             
-            return categories[index]
+            return index == 0 ? playQueueItem : categories[index - 1]
             
         } else if item as? SidebarCategory == .library {
             
@@ -118,7 +120,7 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         if let selectedItem = outlineView.item(atRow: outlineView.selectedRow) as? SidebarItem {
             
 //            print(selectedItem.displayName)
-            let index = selectedItem.displayName == "Play Queue" ? 0 : 1
+            let index = selectedItem.displayName == "Tracks" ? 0 : 1
             Messenger.publish(.browser_showTab, payload: index)
         }
     }

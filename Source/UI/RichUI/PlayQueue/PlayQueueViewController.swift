@@ -16,6 +16,8 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     private var selectedRowCount: Int {playQueueView.numberOfSelectedRows}
     
+    private var atLeastOneSelectedRow: Bool {playQueueView.numberOfSelectedRows > 0}
+    
     private var rowCount: Int {playQueueView.numberOfRows}
     
     private var atLeastOneRow: Bool {playQueueView.numberOfRows > 0}
@@ -26,6 +28,9 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
+        Messenger.subscribeAsync(self, .playlist_tracksRemoved, self.tracksRemoved(_:), queue: .main)
+        
+        Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
         
         updateSummary()
     }
@@ -106,5 +111,36 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         let numTracks = playlist.size
         lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
+    }
+    
+    private func removeSelectedTracks() {
+            
+        if atLeastOneSelectedRow {
+            
+            playlist.removeTracks(selectedRows)
+            clearSelection()
+        }
+    }
+    
+    private func tracksRemoved(_ results: TrackRemovalResults) {
+        
+        let indexes = results.flatPlaylistResults
+        guard !indexes.isEmpty else {return}
+        
+        // Tell the playlist view that the number of rows has changed (should result in removal of rows)
+        playQueueView.noteNumberOfRowsChanged()
+        
+        // Update all rows from the first (i.e. smallest index) removed row, down to the end of the playlist
+        let firstRemovedRow = indexes.min()!
+        let lastPlaylistRowAfterRemove = playlist.size - 1
+        
+        // This will be true unless a contiguous block of tracks was removed from the bottom of the playlist.
+        if firstRemovedRow <= lastPlaylistRowAfterRemove {
+            
+            let refreshIndexes = IndexSet(firstRemovedRow...lastPlaylistRowAfterRemove)
+            playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: IndexSet(0..<self.playQueueView.tableColumns.count))
+        }
+        
+        updateSummary()
     }
 }

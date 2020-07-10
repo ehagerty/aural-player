@@ -51,7 +51,8 @@ struct Colors {
     }
     
     static var functionButtonColor: NSColor {
-        return ColorSchemes.systemScheme.general.functionButtonColor
+//        return ColorSchemes.systemScheme.general.functionButtonColor
+        return NSColor.white
     }
     
     static var functionButtonGradient: NSGradient {

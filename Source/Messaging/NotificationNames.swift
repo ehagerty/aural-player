@@ -399,6 +399,13 @@ extension Notification.Name {
 
     // ----------------------------------------------------------------------------------------
     
+    // MARK: Play Queue commands
+    
+    // Commands the play queue to remove any selected tracks selected in the current playlist view.
+    static let playQueue_removeTracks = Notification.Name("playQueue_removeTracks")
+    
+    // ----------------------------------------------------------------------------------------
+    
     // MARK: Chapters List commands
     
     // Commands the chapters list to initiate playback of the selected chapter
