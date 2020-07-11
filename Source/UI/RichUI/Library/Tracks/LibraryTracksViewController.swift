@@ -18,6 +18,7 @@ class LibraryTracksViewController: AuralViewController {
     @IBOutlet weak var lblTracksSummary: NSTextField!
     
     private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
+    private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
     override var nibName: String? {return "LibraryTracks"}
@@ -158,5 +159,17 @@ class LibraryTracksViewController: AuralViewController {
         }
         
         updateSummary()
+    }
+    
+    // MARK: Context menu handling -----------------------------------------------------------------
+    
+    @IBAction func playNow(_ sender: AnyObject) {
+        _ = playQueue.playNow(libraryView.selectedRowIndexes.compactMap({index in self.library.trackAtIndex(index)}))
+    }
+    
+    @IBAction func playNext(_ sender: AnyObject) {
+    }
+    
+    @IBAction func playLater(_ sender: AnyObject) {
     }
 }

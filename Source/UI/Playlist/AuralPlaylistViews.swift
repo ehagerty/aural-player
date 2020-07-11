@@ -10,6 +10,14 @@ extension NSTableView {
         self.registerForDraggedTypes([.file_URL])
     }
     
+    func selectRow(_ row: Int) {
+        self.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+    }
+    
+    func selectRows(_ rows: [Int]) {
+        self.selectRowIndexes(IndexSet(rows), byExtendingSelection: false)
+    }
+    
     /*
         An event handler for customized contextual menu behavior.
         This function needs to be overriden in order to:

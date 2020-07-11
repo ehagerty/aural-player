@@ -25,7 +25,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="598" height="353"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" headerView="F0I-M8-5P2" viewBased="YES" id="vSn-tY-x9I" userLabel="LibraryTracks">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" headerView="F0I-M8-5P2" viewBased="YES" id="vSn-tY-x9I" userLabel="LibraryTracks" customClass="LibraryTableView" customModule="Aural" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="778" height="328"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -240,6 +240,7 @@
                                     <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="FoX-Ch-Fdq"/>
                                     <outlet property="dataSource" destination="aAC-sk-WD8" id="Jhz-49-mcX"/>
                                     <outlet property="delegate" destination="aAC-sk-WD8" id="56U-hw-hkg"/>
+                                    <outlet property="menu" destination="RLh-jJ-KaU" id="YEC-SE-FVp"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -289,6 +290,29 @@
                 <outlet property="libraryView" destination="vSn-tY-x9I" id="bT8-U1-5XB"/>
             </connections>
         </customObject>
+        <menu id="RLh-jJ-KaU" userLabel="ContextMenu">
+            <items>
+                <menuItem title="Play Now" id="0F1-0B-mv7">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="playNow:" target="-2" id="dGH-Q4-I6c"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Play Next" id="PRf-db-WgK">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="playNext:" target="-2" id="Qjp-ah-pQg"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Play Later" id="KrO-qG-bBi">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="playLater:" target="-2" id="pWu-hf-mzU"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="343" y="-722"/>
+        </menu>
         <menu id="8u3-97-Hqz" userLabel="ColumnSelectionMenu">
             <items>
                 <menuItem title="Artist" id="uKa-NR-lfC" userLabel="Artist">

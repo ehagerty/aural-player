@@ -5,7 +5,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     @IBOutlet weak var playQueueView: NSTableView!
     @IBOutlet weak var lblTracksSummary: NSTextField!
     
-    private let playlist: PlaylistDelegateProtocol = ObjectGraph.playlistDelegate
+    private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
     override var nibName: String? {return "PlayQueue"}
@@ -27,7 +27,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     override func viewDidLoad() {
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
-        Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
+        Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded, queue: .main)
         Messenger.subscribeAsync(self, .playlist_tracksRemoved, self.tracksRemoved(_:), queue: .main)
         
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
@@ -35,9 +35,11 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         updateSummary()
     }
     
-    func trackAdded(_ notification: PlaylistTrackAddedNotification) {
+    func tracksAdded() {
         
-        playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
+//        playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
+//        playQueueView.noteNumberOfRowsChanged()
+        playQueueView.reloadData()
         updateSummary()
     }
     
@@ -59,13 +61,13 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     private func trackTransitioned(_ notification: TrackTransitionNotification) {
         
-        let refreshIndexes: IndexSet = IndexSet(Set([notification.beginTrack, notification.endTrack].compactMap {$0}).compactMap {playlist.indexOfTrack($0)})
+        let refreshIndexes: IndexSet = IndexSet(Set([notification.beginTrack, notification.endTrack].compactMap {$0}).compactMap {playQueue.indexOfTrack($0)})
 //        let needToShowTrack: Bool = playQueueViewState.current == .tracks && preferences.showNewTrackInPlaylist
         let needToShowTrack: Bool = true
 
         if needToShowTrack {
 
-            if let newTrack = notification.endTrack, let newTrackIndex = playlist.indexOfTrack(newTrack), newTrackIndex >= playQueueView.numberOfRows {
+            if let newTrack = notification.endTrack, let newTrackIndex = playQueue.indexOfTrack(newTrack), newTrackIndex >= playQueueView.numberOfRows {
 
                 // This means the track is in the playlist but has not yet been added to the playlist view (Bookmark/Recently played/Favorite item), and will be added shortly (this is a race condition). So, dispatch an async delayed handler to show the track in the playlist, after it is expected to be added.
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
@@ -88,7 +90,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     // Shows the currently playing track, within the playlist view
     private func showPlayingTrack() {
         
-        if let playingTrack = playbackInfo.currentTrack, let playingTrackIndex = playlist.indexOfTrack(playingTrack) {
+        if let playingTrack = playbackInfo.currentTrack, let playingTrackIndex = playQueue.indexOfTrack(playingTrack) {
             selectTrack(playingTrackIndex)
         }
     }
@@ -109,7 +111,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     private func updateSummary() {
         
-        let numTracks = playlist.size
+        let numTracks = playQueue.size
         lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
     }
     
@@ -117,7 +119,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
             
         if atLeastOneSelectedRow {
             
-            playlist.removeTracks(selectedRows)
+            _ = playQueue.removeTracks(selectedRows)
             clearSelection()
         }
     }
@@ -132,7 +134,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         // Update all rows from the first (i.e. smallest index) removed row, down to the end of the playlist
         let firstRemovedRow = indexes.min()!
-        let lastPlaylistRowAfterRemove = playlist.size - 1
+        let lastPlaylistRowAfterRemove = playQueue.size - 1
         
         // This will be true unless a contiguous block of tracks was removed from the bottom of the playlist.
         if firstRemovedRow <= lastPlaylistRowAfterRemove {

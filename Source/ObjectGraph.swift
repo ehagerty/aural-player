@@ -17,6 +17,9 @@ class ObjectGraph {
     static var playlistDelegate: PlaylistDelegateProtocol!
     static var playlistAccessorDelegate: PlaylistAccessorDelegateProtocol! {return playlistDelegate}
     
+    static var playQueue: PlayQueueProtocol!
+    static var playQueueDelegate: PlayQueueDelegateProtocol!
+    
     private static var library: LibraryProtocol!
     static var libraryDelegate: LibraryDelegateProtocol!
     
@@ -127,6 +130,9 @@ class ObjectGraph {
         // Playlist Delegate
         playlistDelegate = PlaylistDelegate(playlist, appState.playlist, preferences,
                                             [playbackDelegate as! PlaybackDelegate])
+        
+        playQueue = PlayQueue()
+        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)
         
         library = Library()
         libraryDelegate = LibraryDelegate(library, appState.library, preferences)

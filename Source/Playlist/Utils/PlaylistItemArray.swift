@@ -31,6 +31,14 @@ extension Array where Element: Equatable {
         return lastIndex
     }
     
+    mutating func addItems(_ items: [Element]) -> [Int] {
+        
+        let firstIndex: Int = self.count
+        self.append(contentsOf: items)
+        
+        return [Int](firstIndex..<self.count)
+    }
+    
     mutating func removeItem(_ index: Int) -> Element? {
         return indices.contains(index) ? self.remove(at: index) : nil
     }

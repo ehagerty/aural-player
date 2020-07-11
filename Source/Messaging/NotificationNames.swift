@@ -140,6 +140,12 @@ extension Notification.Name {
     
     // ----------------------------------------------------------------------------------------
     
+    // MARK: Notifications published by the play queue.
+    
+    static let playQueue_tracksAdded = Notification.Name("playQueue_tracksAdded")
+    
+    // ----------------------------------------------------------------------------------------
+    
     // MARK: Notifications published by the transcoder.
     
     // Provides a progress update for an ongoing transcoding task.

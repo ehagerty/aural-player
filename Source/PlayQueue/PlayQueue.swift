@@ -2,7 +2,7 @@ import Foundation
 
 class PlayQueue: PlayQueueProtocol {
     
-    var tracks: [Track] = [Track]()
+    var tracks: [Track] = []
     
     // MARK: Accessor functions
     
@@ -20,29 +20,22 @@ class PlayQueue: PlayQueueProtocol {
         return tracks.firstIndex(of: track)
     }
     
-    func summary() -> (size: Int, totalDuration: Double) {
-        return (size, duration)
-    }
+    var summary: (size: Int, totalDuration: Double) {(size, duration)}
     
-    // MARK: Mutator functions
+    // MARK: Mutator functions ------------------------------------------------------------------------
     
-    func addTrack(_ track: Track) -> Int {
-        return tracks.addItem(track)
-    }
-    
-    func clear() {
-        tracks.removeAll()
+    func enqueue(_ tracks: [Track]) -> [Int] {
+        return self.tracks.addItems(tracks)
     }
     
     func enqueueAtHead(_ tracks: [Track]) -> [Int] {
-        return []
+        
+        self.tracks.insert(contentsOf: tracks, at: 0)
+        return [Int](0..<tracks.count)
     }
     
+    // TODO
     func enqueueAfterCurrentTrack(_ tracks: [Track]) -> [Int] {
-        return []
-    }
-    
-    func enqueue(_ tracks: [Track]) -> [Int] {
         return []
     }
     
@@ -60,6 +53,10 @@ class PlayQueue: PlayQueueProtocol {
     
     func removeTracks(_ removedTracks: [Track]) -> IndexSet {
         return tracks.removeItems(removedTracks)
+    }
+    
+    func clear() {
+        tracks.removeAll()
     }
     
     func moveTracksToTop(_ indices: IndexSet) -> ItemMoveResults {

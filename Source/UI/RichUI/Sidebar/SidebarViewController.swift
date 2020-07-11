@@ -118,12 +118,14 @@ class SidebarViewController: AuralViewController, NSOutlineViewDelegate, NSOutli
     func outlineViewSelectionDidChange(_ notification: Notification) {
         
         guard let outlineView = notification.object as? NSOutlineView else {return}
-            
+        
         if let selectedItem = outlineView.item(atRow: outlineView.selectedRow) as? SidebarItem {
             
-//            print(selectedItem.displayName)
-            let index = selectedItem.displayName == "Tracks" ? 1 : 2
-            Messenger.publish(.browser_showTab, payload: index)
+            if selectedItem.displayName == playQueueItem.displayName {
+                Messenger.publish(.browser_showTab, payload: 0)
+            } else {
+                Messenger.publish(.browser_showTab, payload: selectedItem.displayName == "Tracks" ? 1 : 2)
+            }
         }
     }
 }

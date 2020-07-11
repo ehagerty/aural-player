@@ -10,20 +10,20 @@ protocol PlayQueueProtocol {
     
     func trackAtIndex(_ index: Int) -> Track?
     
-    func summary() -> (size: Int, totalDuration: Double)
+    var summary: (size: Int, totalDuration: Double) {get}
     
     func search(_ searchQuery: SearchQuery) -> SearchResults
     
     // MARK: Mutating functions ---------------------------------------------------------------
+    
+    // Adds tracks to the end of the queue, i.e. "Play Later"
+    func enqueue(_ tracks: [Track]) -> [Int]
     
     // Adds tracks to the beginning of the queue, i.e. "Play Now"
     func enqueueAtHead(_ tracks: [Track]) -> [Int]
 
     // Inserts tracks immediately after the current track, i.e. "Play Next"
     func enqueueAfterCurrentTrack(_ tracks: [Track]) -> [Int]
-    
-    // Adds tracks to the end of the queue, i.e. "Play Later"
-    func enqueue(_ tracks: [Track]) -> [Int]
     
     func removeTracks(_ indices: IndexSet) -> [Track]
 

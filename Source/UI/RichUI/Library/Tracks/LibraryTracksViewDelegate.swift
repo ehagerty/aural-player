@@ -225,7 +225,7 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataS
             
         case "genre":
             
-            _ = tracksSort.withFields(.genre)
+            _ = tracksSort.withFields(.genre, .artist, .album, .discNumberAndTrackNumber)
             
         default: return
             
