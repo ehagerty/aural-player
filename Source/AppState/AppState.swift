@@ -10,6 +10,7 @@ class AppState {
     var ui: UIState = UIState()
     var audioGraph: AudioGraphState = AudioGraphState()
     var playlist: PlaylistState = PlaylistState()
+    var library: LibraryState = LibraryState()
     var playbackSequence: PlaybackSequenceState = PlaybackSequenceState()
     var transcoder: TranscoderState = TranscoderState()
     
@@ -39,6 +40,10 @@ class AppState {
         
         if let playlistDict = (jsonObject["playlist"] as? NSDictionary) {
             state.playlist = PlaylistState.deserialize(playlistDict) as! PlaylistState
+        }
+        
+        if let libraryDict = (jsonObject["library"] as? NSDictionary), let libraryState = LibraryState.deserialize(libraryDict) as? LibraryState {
+            state.library = libraryState
         }
         
         if let transcoderDict = (jsonObject["transcoder"] as? NSDictionary) {

@@ -1,8 +1,8 @@
 import Cocoa
 
-class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineViewDataSource {
+class SidebarViewController: AuralViewController, NSOutlineViewDelegate, NSOutlineViewDataSource {
     
-    @IBOutlet weak var outlineView: NSOutlineView!
+    @IBOutlet weak var sidebarView: NSOutlineView!
     
     override var nibName: String? {return "Sidebar"}
     
@@ -16,8 +16,10 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
     let historyItems: [SidebarItem] = ["Recently Added", "Recently Played"].map {SidebarItem(displayName: $0)}
     let playlistsItems: [SidebarItem] = ["Biosphere Tranquility", "Nature Sounds"].map {SidebarItem(displayName: $0)}
     
-    override func viewDidLoad() {
-        categories.forEach {outlineView.expandItem($0)}
+    override func initializeUI() {
+        
+        categories.forEach {sidebarView.expandItem($0)}
+        sidebarView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
@@ -120,7 +122,7 @@ class SidebarViewController: NSViewController, NSOutlineViewDelegate, NSOutlineV
         if let selectedItem = outlineView.item(atRow: outlineView.selectedRow) as? SidebarItem {
             
 //            print(selectedItem.displayName)
-            let index = selectedItem.displayName == "Tracks" ? 0 : 1
+            let index = selectedItem.displayName == "Tracks" ? 1 : 2
             Messenger.publish(.browser_showTab, payload: index)
         }
     }

@@ -13,3 +13,5 @@ protocol PersistentState {
     // Constructs an instance of this state object from the given map
     static func deserialize(_ map: NSDictionary) -> PersistentState
 }
+
+// TODO: PMO<T> where T: PersistentState

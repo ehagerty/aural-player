@@ -2,8 +2,12 @@ import Cocoa
 
 extension NSTableView {
     
-    func enableDragDrop() {
+    func enableDragDrop_reorderingAndFiles() {
         self.registerForDraggedTypes([.data, .file_URL])
+    }
+    
+    func enableDragDrop_files() {
+        self.registerForDraggedTypes([.file_URL])
     }
     
     /*
@@ -168,6 +172,19 @@ extension NSUserInterfaceItemIdentifier {
     static let playQueue_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_album")
     
     static let playQueue_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_genre")
+    
+    
+    static let library_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_index")
+    
+    static let library_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_title")
+    
+    static let library_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_duration")
+    
+    static let library_artist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_artist")
+    
+    static let library_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_album")
+    
+    static let library_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_genre")
 }
 
 extension NSPasteboard.PasteboardType {

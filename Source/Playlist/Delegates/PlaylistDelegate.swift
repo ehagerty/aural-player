@@ -48,8 +48,8 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         trackUpdateQueue.qualityOfService = .utility
         
         // Subscribe to notifications
-        Messenger.subscribe(self, .application_launched, self.appLaunched(_:))
-        Messenger.subscribe(self, .application_reopened, self.appReopened(_:))
+//        Messenger.subscribe(self, .application_launched, self.appLaunched(_:))
+//        Messenger.subscribe(self, .application_reopened, self.appReopened(_:))
     }
     
     func indexOfTrack(_ track: Track) -> Int? {
@@ -491,6 +491,8 @@ class AutoplayOptions {
         self.autoplayType = autoplayType
         self.interruptPlayback = interruptPlayback
     }
+    
+    static let defaultOptions: AutoplayOptions = AutoplayOptions(false)
 }
 
 class TrackAddSession {

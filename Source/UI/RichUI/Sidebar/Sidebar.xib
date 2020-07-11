@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SidebarViewController" customModule="Aural" customModuleProvider="target">
             <connections>
-                <outlet property="outlineView" destination="Utz-zq-RYP" id="kxa-hV-l7t"/>
+                <outlet property="sidebarView" destination="Utz-zq-RYP" id="kxa-hV-l7t"/>
                 <outlet property="view" destination="NBK-PK-brC" id="OH8-5Y-WHf"/>
             </connections>
         </customObject>
@@ -22,7 +21,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="200" height="560"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmp-nL-uzF">
                         <rect key="frame" x="1" y="1" width="198" height="558"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="10" outlineTableColumn="AC9-Xq-AYv" id="Utz-zq-RYP" userLabel="Sidebar">
                                 <rect key="frame" x="0.0" y="0.0" width="198" height="558"/>

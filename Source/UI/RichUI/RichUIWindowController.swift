@@ -13,7 +13,9 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
     private lazy var playerController: RichUIPlayerViewController = RichUIPlayerViewController()
     
     private lazy var sidebarController: SidebarViewController = SidebarViewController()
+    
     private lazy var playQueueController: PlayQueueViewController = PlayQueueViewController()
+    private lazy var libraryTracksController: LibraryTracksViewController = LibraryTracksViewController()
     private lazy var fileSystemBrowserController: FileSystemBrowserViewController = FileSystemBrowserViewController()
     
     override func windowDidLoad() {
@@ -35,8 +37,12 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
         browserTabView.tabViewItem(at: 0).view?.addSubview(playQueueView)
         playQueueView.anchorToView(playQueueView.superview!)
         
+        let libraryTracksView: NSView = libraryTracksController.view
+        browserTabView.tabViewItem(at: 1).view?.addSubview(libraryTracksView)
+        libraryTracksView.anchorToView(libraryTracksView.superview!)
+        
         let fileSystemBrowserView: NSView = fileSystemBrowserController.view
-        browserTabView.tabViewItem(at: 1).view?.addSubview(fileSystemBrowserView)
+        browserTabView.tabViewItem(at: 2).view?.addSubview(fileSystemBrowserView)
         fileSystemBrowserView.anchorToView(fileSystemBrowserView.superview!)
         
         Messenger.subscribe(self, .browser_showTab, self.showBrowserTab(_:))

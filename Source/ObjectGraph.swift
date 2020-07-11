@@ -17,6 +17,9 @@ class ObjectGraph {
     static var playlistDelegate: PlaylistDelegateProtocol!
     static var playlistAccessorDelegate: PlaylistAccessorDelegateProtocol! {return playlistDelegate}
     
+    private static var library: LibraryProtocol!
+    static var libraryDelegate: LibraryDelegateProtocol!
+    
     private static var audioGraph: AudioGraphProtocol!
     static var audioGraphDelegate: AudioGraphDelegateProtocol!
     
@@ -125,6 +128,9 @@ class ObjectGraph {
         playlistDelegate = PlaylistDelegate(playlist, appState.playlist, preferences,
                                             [playbackDelegate as! PlaybackDelegate])
         
+        library = Library()
+        libraryDelegate = LibraryDelegate(library, appState.library, preferences)
+        
         // Recorder (and delegate)
         recorder = Recorder(audioGraph)
         recorderDelegate = RecorderDelegate(recorder)
@@ -193,6 +199,7 @@ class ObjectGraph {
         
         appState.audioGraph = (audioGraph as! AudioGraph).persistentState as! AudioGraphState
         appState.playlist = (playlist as! Playlist).persistentState as! PlaylistState
+        appState.library = (library as! Library).persistentState as! LibraryState
         appState.playbackSequence = (sequencer as! Sequencer).persistentState as! PlaybackSequenceState
         appState.playbackProfiles = playbackDelegate.profiles.all()
         

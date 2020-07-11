@@ -33,7 +33,7 @@ class GroupingPlaylistViewController: NSViewController, NotificationSubscriber {
     override func viewDidLoad() {
         
         // Enable drag n drop
-        playlistView.enableDragDrop()
+        playlistView.enableDragDrop_reorderingAndFiles()
         playlistView.menu = contextMenu
         
         initSubscriptions()

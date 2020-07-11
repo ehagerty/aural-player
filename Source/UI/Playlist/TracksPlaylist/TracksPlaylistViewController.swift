@@ -26,7 +26,7 @@ class TracksPlaylistViewController: NSViewController, NotificationSubscriber {
     
     override func viewDidLoad() {
         
-        playlistView.enableDragDrop()
+        playlistView.enableDragDrop_reorderingAndFiles()
         
         initSubscriptions()
         

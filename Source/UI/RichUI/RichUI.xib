@@ -76,9 +76,15 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 </view>
                                                             </tabViewItem>
+                                                            <tabViewItem label="Tracks" identifier="" id="7to-mz-Rkl">
+                                                                <view key="view" id="zmM-4I-Zq6">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="548"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                </view>
+                                                            </tabViewItem>
                                                             <tabViewItem label="View" identifier="" id="4gj-7i-7jt" userLabel="FileSystem Tab">
                                                                 <view key="view" id="2r3-BH-VLs">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="518"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="548"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 </view>
                                                             </tabViewItem>

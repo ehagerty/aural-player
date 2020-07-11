@@ -13,6 +13,8 @@ protocol LibraryDelegateProtocol {
     // Whether or not tracks are being added to the playlist (which could be time consuming)
     var isBeingModified: Bool {get}
     
+    func trackAtIndex(_ index: Int) -> Track?
+    
     func indexOfTrack(_ track: Track) -> Int?
     
     func findTrackByFile(_ file: URL) -> Track?

@@ -8,7 +8,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     private let library: LibraryProtocol
     
     // Persistent playlist state (used upon app startup)
-    private let playlistState: PlaylistState
+    private let libraryState: LibraryState
     
     // User preferences (used for autoplay)
     private let preferences: Preferences
@@ -28,11 +28,11 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     
     var duration: Double {library.duration}
     
-    init(_ library: LibraryProtocol, _ playlistState: PlaylistState, _ preferences: Preferences, _ changeListeners: [PlaylistChangeListenerProtocol]) {
+    init(_ library: LibraryProtocol, _ libraryState: LibraryState, _ preferences: Preferences) {
         
         self.library = library
         
-        self.playlistState = playlistState
+        self.libraryState = libraryState
         self.preferences = preferences
         
         trackAddQueue.maxConcurrentOperationCount = concurrentAddOpCount
@@ -75,17 +75,13 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     // MARK: Playlist mutation functions --------------------------------------------------
     
     func addFiles(_ files: [URL]) {
-        
-        let autoplayEnabled: Bool = preferences.playbackPreferences.autoplayAfterAddingTracks
-        let interruptPlayback: Bool = preferences.playbackPreferences.autoplayAfterAddingOption == .always
-        
-        addFiles_async(files, AutoplayOptions(autoplayEnabled, .playSpecificTrack, interruptPlayback))
+        addFiles_async(files)
     }
     
     // Adds files to the playlist asynchronously, emitting event notifications as the work progresses
-    private func addFiles_async(_ files: [URL], _ autoplayOptions: AutoplayOptions, _ userAction: Bool = true) {
+    private func addFiles_async(_ files: [URL], _ userAction: Bool = true) {
         
-        addSession = TrackAddSession(files.count, autoplayOptions)
+        addSession = TrackAddSession(files.count, .defaultOptions)
         
         // Move to a background thread to unblock the main thread
         DispatchQueue.global(qos: .userInteractive).async {
@@ -212,7 +208,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         // Process all tracks in batch concurrently and wait until the entire batch finishes.
         trackAddQueue.addOperations(batch.map {index in BlockOperation {TrackIO.loadPrimaryInfo(self.addSession.tracks[index])}}, waitUntilFinished: true)
         
-        for (batchIndex, track) in zip(batch, batch.map {addSession.tracks[$0]}) {
+        for track in batch.map({addSession.tracks[$0]}) {
             
             if let result = self.library.addTrack(track) {
                 
@@ -221,10 +217,6 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
 
                 let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
                 Messenger.publish(LibraryTrackAddedNotification(trackIndex: result, addOperationProgress: progress))
-
-                if batchIndex == 0 && addSession.autoplayOptions.autoplay {
-                    autoplay(addSession.autoplayOptions.autoplayType, track, addSession.autoplayOptions.interruptPlayback)
-                }
             }
         }
     }
@@ -299,26 +291,26 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         if filesToOpen.isNonEmpty {
             
             // Launch parameters  specified, override playlist saved state and add file paths in params to playlist
-            addFiles_async(filesToOpen, AutoplayOptions(true), false)
+            addFiles_async(filesToOpen, false)
             
         } else if preferences.playlistPreferences.playlistOnStartup == .rememberFromLastAppLaunch {
             
             // No launch parameters specified, load playlist saved state if "Remember state from last launch" preference is selected
-            addFiles_async(playlistState.tracks, AutoplayOptions(preferences.playbackPreferences.autoplayOnStartup), false)
+            addFiles_async(libraryState.tracks, false)
             
         } else if preferences.playlistPreferences.playlistOnStartup == .loadFile, let playlistFile: URL = preferences.playlistPreferences.playlistFile {
             
-            addFiles_async([playlistFile], AutoplayOptions(preferences.playbackPreferences.autoplayOnStartup), false)
+            addFiles_async([playlistFile], false)
             
         } else if preferences.playlistPreferences.playlistOnStartup == .loadFolder, let folder: URL = preferences.playlistPreferences.tracksFolder {
             
-            addFiles_async([folder], AutoplayOptions(preferences.playbackPreferences.autoplayOnStartup), false)
+            addFiles_async([folder], false)
         }
     }
     
     func appReopened(_ notification: AppReopenedNotification) {
         
         // When a duplicate notification is sent, don't autoplay ! Otherwise, always autoplay.
-        addFiles_async(notification.filesToOpen, AutoplayOptions(!notification.isDuplicateNotification))
+        addFiles_async(notification.filesToOpen)
     }
 }
