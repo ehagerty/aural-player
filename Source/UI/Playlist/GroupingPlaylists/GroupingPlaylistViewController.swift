@@ -410,7 +410,7 @@ class GroupingPlaylistViewController: NSViewController, NotificationSubscriber {
     }
  
     // Refreshes the playlist view in response to a new track being added to the playlist
-    func trackAdded(_ notification: TrackAddedNotification) {
+    func trackAdded(_ notification: PlaylistTrackAddedNotification) {
         
         if let grouping = notification.groupingInfo[self.groupType] {
             

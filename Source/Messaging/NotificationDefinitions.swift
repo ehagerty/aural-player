@@ -285,7 +285,7 @@ enum UpdatedTrackInfoField: CaseIterable {
 }
 
 // Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
-struct TrackAddedNotification: NotificationPayload {
+struct PlaylistTrackAddedNotification: NotificationPayload {
     
     let notificationName: Notification.Name = .playlist_trackAdded
     
@@ -294,6 +294,18 @@ struct TrackAddedNotification: NotificationPayload {
     
     // Grouping info (parent groups) for the newly added track
     let groupingInfo: [GroupType: GroupedTrackAddResult]
+    
+    // The current progress of the track add operation (See TrackAddOperationProgress)
+    let addOperationProgress: TrackAddOperationProgress
+}
+
+// Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
+struct LibraryTrackAddedNotification: NotificationPayload {
+    
+    let notificationName: Notification.Name = .library_trackAdded
+    
+    // The index of the newly added track
+    let trackIndex: Int
     
     // The current progress of the track add operation (See TrackAddOperationProgress)
     let addOperationProgress: TrackAddOperationProgress

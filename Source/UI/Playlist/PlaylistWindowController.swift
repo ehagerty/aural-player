@@ -221,7 +221,7 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
     }
     
     // Handles a notification that a single track has been added to the playlist
-    func trackAdded(_ notification: TrackAddedNotification) {
+    func trackAdded(_ notification: PlaylistTrackAddedNotification) {
         updatePlaylistSummary(notification.addOperationProgress)
     }
     

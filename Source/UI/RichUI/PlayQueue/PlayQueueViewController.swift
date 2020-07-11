@@ -35,7 +35,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         updateSummary()
     }
     
-    func trackAdded(_ notification: TrackAddedNotification) {
+    func trackAdded(_ notification: PlaylistTrackAddedNotification) {
         
         playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
         updateSummary()

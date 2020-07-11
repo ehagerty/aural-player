@@ -281,7 +281,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
                 addSession.results.append(result)
                 
                 let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
-                Messenger.publish(TrackAddedNotification(trackIndex: result.flatPlaylistResult,
+                Messenger.publish(PlaylistTrackAddedNotification(trackIndex: result.flatPlaylistResult,
                                                          groupingInfo: result.groupingPlaylistResults, addOperationProgress: progress))
                 
                 if batchIndex == 0 && addSession.autoplayOptions.autoplay {
@@ -318,7 +318,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         // Non-nil result indicates success
         guard let result = self.playlist.addTrack(track) else {return nil}
             
-        let trackAddedNotification = TrackAddedNotification(trackIndex: result.flatPlaylistResult, groupingInfo: result.groupingPlaylistResults, addOperationProgress: TrackAddOperationProgress(tracksAdded: 1, totalTracks: 1))
+        let trackAddedNotification = PlaylistTrackAddedNotification(trackIndex: result.flatPlaylistResult, groupingInfo: result.groupingPlaylistResults, addOperationProgress: TrackAddOperationProgress(tracksAdded: 1, totalTracks: 1))
         
         Messenger.publish(trackAddedNotification)
         Messenger.publish(.history_itemsAdded, payload: [resolvedFile])
@@ -493,7 +493,7 @@ class AutoplayOptions {
     }
 }
 
-fileprivate class TrackAddSession {
+class TrackAddSession {
     
     var tracks: [Track] = []
     

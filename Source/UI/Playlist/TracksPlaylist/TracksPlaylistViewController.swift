@@ -291,7 +291,7 @@ class TracksPlaylistViewController: NSViewController, NotificationSubscriber {
         }
     }
     
-    func trackAdded(_ notification: TrackAddedNotification) {
+    func trackAdded(_ notification: PlaylistTrackAddedNotification) {
         self.playlistView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
     }
     
