@@ -17,13 +17,13 @@ protocol PlayQueueProtocol {
     // MARK: Mutating functions ---------------------------------------------------------------
     
     // Adds tracks to the end of the queue, i.e. "Play Later"
-    func enqueue(_ tracks: [Track]) -> [Int]
+    func enqueue(_ tracks: [Track]) -> ClosedRange<Int>
     
     // Adds tracks to the beginning of the queue, i.e. "Play Now"
-    func enqueueAtHead(_ tracks: [Track]) -> [Int]
+    func enqueueAtHead(_ tracks: [Track]) -> ClosedRange<Int>
 
     // Inserts tracks immediately after the current track, i.e. "Play Next"
-    func enqueueAfterCurrentTrack(_ tracks: [Track]) -> [Int]
+    func enqueueAfterCurrentTrack(_ tracks: [Track]) -> ClosedRange<Int>
     
     func removeTracks(_ indices: IndexSet) -> [Track]
 

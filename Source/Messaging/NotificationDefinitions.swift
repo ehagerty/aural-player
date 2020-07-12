@@ -311,6 +311,14 @@ struct LibraryTrackAddedNotification: NotificationPayload {
     let addOperationProgress: TrackAddOperationProgress
 }
 
+struct PlayQueueTracksAddedNotification: NotificationPayload {
+    
+    let notificationName: Notification.Name = .playQueue_tracksAdded
+    
+    // The index of the newly added track
+    let trackIndices: ClosedRange<Int>
+}
+
 // Indicates current progress associated with a TrackAddedNotification.
 struct TrackAddOperationProgress {
     

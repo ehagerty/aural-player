@@ -28,19 +28,25 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         return playQueue.search(searchQuery)
     }
     
-    func playLater(_ tracks: [Track]) -> [Int] {
-        return playQueue.enqueue(tracks)
-    }
-    
-    func playNow(_ tracks: [Track]) -> [Int] {
+    func playLater(_ tracks: [Track]) -> ClosedRange<Int> {
         
-        let indices = playQueue.enqueueAtHead(tracks)
-        Messenger.publish(.playQueue_tracksAdded)
+        let indices = playQueue.enqueue(tracks)
+        Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))
         return indices
     }
     
-    func playNext(_ tracks: [Track]) -> [Int] {
-        return playQueue.enqueueAfterCurrentTrack(tracks)
+    func playNow(_ tracks: [Track]) -> ClosedRange<Int> {
+        
+        let indices = playQueue.enqueueAtHead(tracks)
+        Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))
+        return indices
+    }
+    
+    func playNext(_ tracks: [Track]) -> ClosedRange<Int> {
+        
+        let indices = playQueue.enqueueAfterCurrentTrack(tracks)
+        Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))
+        return indices
     }
     
     func removeTracks(_ indices: IndexSet) -> [Track] {

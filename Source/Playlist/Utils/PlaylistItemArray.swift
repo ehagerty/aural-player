@@ -31,12 +31,12 @@ extension Array where Element: Equatable {
         return lastIndex
     }
     
-    mutating func addItems(_ items: [Element]) -> [Int] {
+    mutating func addItems(_ items: [Element]) -> ClosedRange<Int> {
         
         let firstIndex: Int = self.count
         self.append(contentsOf: items)
         
-        return [Int](firstIndex..<self.count)
+        return firstIndex...self.lastIndex
     }
     
     mutating func removeItem(_ index: Int) -> Element? {

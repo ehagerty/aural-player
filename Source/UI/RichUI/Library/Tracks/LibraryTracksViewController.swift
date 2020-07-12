@@ -163,13 +163,22 @@ class LibraryTracksViewController: AuralViewController {
     
     // MARK: Context menu handling -----------------------------------------------------------------
     
+    private var selectedTracks: [Track] {
+        libraryView.selectedRowIndexes.compactMap {self.library.trackAtIndex($0)}
+    }
+    
     @IBAction func playNow(_ sender: AnyObject) {
-        _ = playQueue.playNow(libraryView.selectedRowIndexes.compactMap({index in self.library.trackAtIndex(index)}))
+//        print("\nPLAY NOW")
+        _ = playQueue.playNow(selectedTracks)
     }
     
     @IBAction func playNext(_ sender: AnyObject) {
+//        print("\nPLAY NEXT")
+        _ = playQueue.playNext(selectedTracks)
     }
     
     @IBAction func playLater(_ sender: AnyObject) {
+//        print("\nPLAY LATER")
+        _ = playQueue.playLater(selectedTracks)
     }
 }

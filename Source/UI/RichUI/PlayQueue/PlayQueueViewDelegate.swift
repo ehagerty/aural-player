@@ -72,7 +72,7 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSourc
             
         case .playQueue_title:
             
-            return createTextCell(tableView, .playQueue_title, track.conciseDisplayName, row)
+            return createTextCell(tableView, .playQueue_title, displayName(track), row)
             
         case .playQueue_duration:
             
@@ -81,6 +81,15 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSourc
         default: return nil // Impossible
             
         }
+    }
+    
+    private func displayName(_ track: Track) -> String {
+        
+        if let theArtist = track.groupingInfo.artist {
+            return String(format: "%@ - %@", theArtist, track.displayInfo.title)
+        }
+        
+        return track.displayInfo.title
     }
     
     private func createIndexTextCell(_ tableView: NSTableView, _ text: String, _ row: Int) -> IndexCellView? {

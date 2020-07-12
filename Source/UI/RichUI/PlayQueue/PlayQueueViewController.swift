@@ -27,7 +27,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     override func viewDidLoad() {
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
-        Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded, queue: .main)
+        Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playlist_tracksRemoved, self.tracksRemoved(_:), queue: .main)
         
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
@@ -35,11 +35,16 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         updateSummary()
     }
     
-    func tracksAdded() {
+    func tracksAdded(_ notification: PlayQueueTracksAddedNotification) {
         
-//        playQueueView.insertRows(at: IndexSet(integer: notification.trackIndex), withAnimation: .slideDown)
-//        playQueueView.noteNumberOfRowsChanged()
-        playQueueView.reloadData()
+        let numRowsBeforeAdd = self.rowCount
+        playQueueView.noteNumberOfRowsChanged()
+        
+        // No need to refresh if tracks were added at the end of the queue
+        if let minRefreshIndex = notification.trackIndices.min(), minRefreshIndex < numRowsBeforeAdd {
+            playQueueView.reloadData(forRowIndexes: IndexSet(minRefreshIndex..<playQueue.size), columnIndexes: [0, 1, 2])
+        }
+        
         updateSummary()
     }
     

@@ -2833,8 +2833,8 @@
 		3E7651C324BA21EF002FB8B4 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				3E7651C424BA2206002FB8B4 /* PlayQueueDelegate.swift */,
 				3E7651C624BA221F002FB8B4 /* PlayQueueDelegateProtocol.swift */,
+				3E7651C424BA2206002FB8B4 /* PlayQueueDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";

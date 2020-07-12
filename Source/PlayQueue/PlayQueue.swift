@@ -24,19 +24,19 @@ class PlayQueue: PlayQueueProtocol {
     
     // MARK: Mutator functions ------------------------------------------------------------------------
     
-    func enqueue(_ tracks: [Track]) -> [Int] {
+    func enqueue(_ tracks: [Track]) -> ClosedRange<Int> {
         return self.tracks.addItems(tracks)
     }
     
-    func enqueueAtHead(_ tracks: [Track]) -> [Int] {
+    func enqueueAtHead(_ tracks: [Track]) -> ClosedRange<Int> {
         
         self.tracks.insert(contentsOf: tracks, at: 0)
-        return [Int](0..<tracks.count)
+        return 0...tracks.lastIndex
     }
     
     // TODO
-    func enqueueAfterCurrentTrack(_ tracks: [Track]) -> [Int] {
-        return []
+    func enqueueAfterCurrentTrack(_ tracks: [Track]) -> ClosedRange<Int> {
+        return 0...0
     }
     
     func removeTracks(_ indexes: IndexSet) -> [Track] {
