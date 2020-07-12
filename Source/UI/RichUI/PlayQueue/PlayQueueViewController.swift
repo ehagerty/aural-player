@@ -28,12 +28,13 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
-        Messenger.subscribeAsync(self, .playlist_tracksRemoved, self.tracksRemoved(_:), queue: .main)
         
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
         
         updateSummary()
     }
+    
+    private let allColumns: IndexSet = [0, 1, 2]
     
     func tracksAdded(_ notification: PlayQueueTracksAddedNotification) {
         
@@ -42,7 +43,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         // No need to refresh if tracks were added at the end of the queue
         if let minRefreshIndex = notification.trackIndices.min(), minRefreshIndex < numRowsBeforeAdd {
-            playQueueView.reloadData(forRowIndexes: IndexSet(minRefreshIndex..<playQueue.size), columnIndexes: [0, 1, 2])
+            playQueueView.reloadData(forRowIndexes: IndexSet(minRefreshIndex..<playQueue.size), columnIndexes: allColumns)
         }
         
         updateSummary()
@@ -88,7 +89,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
 //        // (because of other potential simultaneous updates - e.g. PlayingTrackInfoUpdated)
 //        // Gaps may have been removed, so row heights need to be updated too
         DispatchQueue.main.async {
-            self.playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: IndexSet(0..<self.playQueueView.tableColumns.count))
+            self.playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: self.allColumns)
         }
     }
     
@@ -121,33 +122,29 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     }
     
     private func removeSelectedTracks() {
-            
-        if atLeastOneSelectedRow {
-            
-            _ = playQueue.removeTracks(selectedRows)
-            clearSelection()
-        }
-    }
-    
-    private func tracksRemoved(_ results: TrackRemovalResults) {
         
-        let indexes = results.flatPlaylistResults
-        guard !indexes.isEmpty else {return}
+        let selectedRows = self.selectedRows
+            
+        // Ensure at least one selected row
+        guard let firstRemovedRow = selectedRows.min() else {return}
+        
+        _ = playQueue.removeTracks(selectedRows)
         
         // Tell the playlist view that the number of rows has changed (should result in removal of rows)
         playQueueView.noteNumberOfRowsChanged()
         
         // Update all rows from the first (i.e. smallest index) removed row, down to the end of the playlist
-        let firstRemovedRow = indexes.min()!
         let lastPlaylistRowAfterRemove = playQueue.size - 1
         
         // This will be true unless a contiguous block of tracks was removed from the bottom of the playlist.
         if firstRemovedRow <= lastPlaylistRowAfterRemove {
             
+            // Refresh only the index column for all these rows
             let refreshIndexes = IndexSet(firstRemovedRow...lastPlaylistRowAfterRemove)
-            playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: IndexSet(0..<self.playQueueView.tableColumns.count))
+            playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: allColumns)
         }
         
         updateSummary()
+        clearSelection()
     }
 }

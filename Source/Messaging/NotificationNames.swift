@@ -144,6 +144,8 @@ extension Notification.Name {
     
     static let playQueue_tracksAdded = Notification.Name("playQueue_tracksAdded")
     
+    static let playQueue_tracksRemoved = Notification.Name("playQueue_tracksRemoved")
+    
     // ----------------------------------------------------------------------------------------
     
     // MARK: Notifications published by the transcoder.

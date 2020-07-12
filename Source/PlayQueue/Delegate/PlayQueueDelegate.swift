@@ -50,7 +50,13 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     }
     
     func removeTracks(_ indices: IndexSet) -> [Track] {
-        return playQueue.removeTracks(indices)
+        
+        let removedTracks = playQueue.removeTracks(indices)
+        
+        Messenger.publish(.playQueue_tracksRemoved,
+                          payload: TrackRemovalResults(groupingPlaylistResults: [:], flatPlaylistResults: indices, tracks: removedTracks))
+        
+        return removedTracks
     }
     
     func moveTracksUp(_ indices: IndexSet) -> ItemMoveResults {

@@ -315,7 +315,7 @@ struct PlayQueueTracksAddedNotification: NotificationPayload {
     
     let notificationName: Notification.Name = .playQueue_tracksAdded
     
-    // The index of the newly added track
+    // The indices of the newly added tracks
     let trackIndices: ClosedRange<Int>
 }
 
