@@ -144,37 +144,37 @@ class PlayQueueMenuController: NSObject, NSMenuDelegate {
 //        }
 //    }
 //
-//    // Moves any selected playlist items up one row in the playlist
-//    @IBAction func moveItemsUpAction(_ sender: Any) {
-//
-//        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_moveTracksUp, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//        }
-//    }
-//
-//    // Moves the selected playlist item up one row in the playlist
-//    @IBAction func moveItemsToTopAction(_ sender: Any) {
-//
-//        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_moveTracksToTop, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//        }
-//    }
-//
-//    // Moves any selected playlist items down one row in the playlist
-//    @IBAction func moveItemsDownAction(_ sender: Any) {
-//
-//        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_moveTracksDown, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//        }
-//    }
-//
-//    // Moves the selected playlist item up one row in the playlist
-//    @IBAction func moveItemsToBottomAction(_ sender: Any) {
-//
-//        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_moveTracksToBottom, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//        }
-//    }
+    // Moves any selected playlist items up one row in the playlist
+    @IBAction func moveItemsUpAction(_ sender: Any) {
+
+        if !checkIfPlayQueueIsBeingModified() {
+            Messenger.publish(.playQueue_moveTracksUp)
+        }
+    }
+
+    // Moves the selected playlist item up one row in the playlist
+    @IBAction func moveItemsToTopAction(_ sender: Any) {
+
+        if !checkIfPlayQueueIsBeingModified() {
+            Messenger.publish(.playQueue_moveTracksToTop)
+        }
+    }
+
+    // Moves any selected playlist items down one row in the playlist
+    @IBAction func moveItemsDownAction(_ sender: Any) {
+
+        if !checkIfPlayQueueIsBeingModified() {
+            Messenger.publish(.playQueue_moveTracksDown)
+        }
+    }
+
+    // Moves the selected playlist item up one row in the playlist
+    @IBAction func moveItemsToBottomAction(_ sender: Any) {
+
+        if !checkIfPlayQueueIsBeingModified() {
+            Messenger.publish(.playQueue_moveTracksToBottom)
+        }
+    }
 //
 //    @IBAction func insertGapsAction(_ sender: NSMenuItem) {
 //

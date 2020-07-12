@@ -27,15 +27,15 @@ protocol PlayQueueProtocol {
     
     func removeTracks(_ indices: IndexSet) -> [Track]
 
-    func moveTracksUp(_ indices: IndexSet) -> ItemMoveResults
+    func moveTracksUp(_ indices: IndexSet) -> [TrackMoveResult]
     
-    func moveTracksToTop(_ indices: IndexSet) -> ItemMoveResults
+    func moveTracksToTop(_ indices: IndexSet) -> [TrackMoveResult]
     
-    func moveTracksDown(_ indices: IndexSet) -> ItemMoveResults
+    func moveTracksDown(_ indices: IndexSet) -> [TrackMoveResult]
     
-    func moveTracksToBottom(_ indices: IndexSet) -> ItemMoveResults
+    func moveTracksToBottom(_ indices: IndexSet) -> [TrackMoveResult]
     
-    func dropTracks(_ sourceIndices: IndexSet, _ dropIndex: Int) -> ItemMoveResults
+    func dropTracks(_ sourceIndices: IndexSet, _ dropIndex: Int) -> [TrackMoveResult]
     
     func clear()
 }

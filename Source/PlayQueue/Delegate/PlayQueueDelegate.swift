@@ -12,6 +12,8 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     
     var summary: (size: Int, totalDuration: Double) {playQueue.summary}
     
+    var isBeingModified: Bool {false}
+    
     init(playQueue: PlayQueueProtocol) {
         self.playQueue = playQueue
     }
@@ -59,23 +61,23 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         return removedTracks
     }
     
-    func moveTracksUp(_ indices: IndexSet) -> ItemMoveResults {
+    func moveTracksUp(_ indices: IndexSet) -> [TrackMoveResult] {
         return playQueue.moveTracksUp(indices)
     }
     
-    func moveTracksToTop(_ indices: IndexSet) -> ItemMoveResults {
+    func moveTracksToTop(_ indices: IndexSet) -> [TrackMoveResult] {
         return playQueue.moveTracksToTop(indices)
     }
     
-    func moveTracksDown(_ indices: IndexSet) -> ItemMoveResults {
+    func moveTracksDown(_ indices: IndexSet) -> [TrackMoveResult] {
         return playQueue.moveTracksDown(indices)
     }
     
-    func moveTracksToBottom(_ indices: IndexSet) -> ItemMoveResults {
+    func moveTracksToBottom(_ indices: IndexSet) -> [TrackMoveResult] {
         return playQueue.moveTracksToBottom(indices)
     }
     
-    func dropTracks(_ sourceIndices: IndexSet, _ dropIndex: Int) -> ItemMoveResults {
+    func dropTracks(_ sourceIndices: IndexSet, _ dropIndex: Int) -> [TrackMoveResult] {
         return playQueue.dropTracks(sourceIndices, dropIndex)
     }
     

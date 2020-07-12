@@ -1,6 +1,6 @@
 import Cocoa
 
-class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate {
+class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
     
     @IBOutlet weak var playQueueView: NSTableView!
     
@@ -8,11 +8,6 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSourc
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
     // MARK: Table view functions --------------------------------------------------------------------------------
-    
-    // Returns the total number of playlist rows
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return playQueue.size
-    }
     
     // Returns a view for a single row
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
@@ -137,43 +132,4 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSourc
         
         return cell
     }
-    
-//    func tableView(_ tableView: NSTableView, sizeToFitWidthOfColumn column: Int) -> CGFloat {
-//
-//        guard tableView.numberOfRows > 0 else {return tableView.tableColumns[column].width}
-//
-//        let rowsRange: Range<Int> = 0..<tableView.numberOfRows
-//        var widths: [CGFloat] = [0]
-//
-//        switch column {
-//
-//        case 1:
-//
-//            // Title
-//            widths = rowsRange.compactMap {playQueue.trackAtIndex($0)?.displayInfo.title}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-//
-//        case 3:
-//
-//            // Artist
-//            widths = rowsRange.compactMap {playQueue.trackAtIndex($0)?.groupingInfo.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-//
-//        case 4:
-//
-//            // Album
-//            widths = rowsRange.compactMap {playQueue.trackAtIndex($0)?.groupingInfo.album}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-//
-//        case 5:
-//
-//            // Genre
-//            widths = rowsRange.compactMap {playQueue.trackAtIndex($0)?.groupingInfo.genre}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-//
-//        default:
-//
-//            // Index / Duration
-//            return tableView.tableColumns[column].maxWidth
-//        }
-//
-//        return max(widths.max() ?? 0, tableView.tableColumns[column].width) + 10
-//    }
-
 }

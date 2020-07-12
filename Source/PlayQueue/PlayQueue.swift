@@ -59,24 +59,24 @@ class PlayQueue: PlayQueueProtocol {
         tracks.removeAll()
     }
     
-    func moveTracksToTop(_ indices: IndexSet) -> ItemMoveResults {
-        return ItemMoveResults(tracks.moveItemsToTop(indices).map {TrackMoveResult($0.key, $0.value)}, .tracks)
+    func moveTracksToTop(_ indices: IndexSet) -> [TrackMoveResult] {
+        return tracks.moveItemsToTop(indices).map {TrackMoveResult($0.key, $0.value)}
     }
     
-    func moveTracksToBottom(_ indices: IndexSet) -> ItemMoveResults {
-        return ItemMoveResults(tracks.moveItemsToBottom(indices).map {TrackMoveResult($0.key, $0.value)}, .tracks)
+    func moveTracksToBottom(_ indices: IndexSet) -> [TrackMoveResult] {
+        return tracks.moveItemsToBottom(indices).map {TrackMoveResult($0.key, $0.value)}
     }
     
-    func moveTracksUp(_ indices: IndexSet) -> ItemMoveResults {
-        return ItemMoveResults(tracks.moveItemsUp(indices).map {TrackMoveResult($0.key, $0.value)}, .tracks)
+    func moveTracksUp(_ indices: IndexSet) -> [TrackMoveResult] {
+        return tracks.moveItemsUp(indices).map {TrackMoveResult($0.key, $0.value)}
     }
     
-    func moveTracksDown(_ indices: IndexSet) -> ItemMoveResults {
-        return ItemMoveResults(tracks.moveItemsDown(indices).map {TrackMoveResult($0.key, $0.value)}, .tracks)
+    func moveTracksDown(_ indices: IndexSet) -> [TrackMoveResult] {
+        return tracks.moveItemsDown(indices).map {TrackMoveResult($0.key, $0.value)}
     }
     
-    func dropTracks(_ sourceIndexes: IndexSet, _ dropIndex: Int) -> ItemMoveResults {
-        return ItemMoveResults(tracks.dragAndDropItems(sourceIndexes, dropIndex).map {TrackMoveResult($0.key, $0.value)}, .tracks)
+    func dropTracks(_ sourceIndexes: IndexSet, _ dropIndex: Int) -> [TrackMoveResult] {
+        return tracks.dragAndDropItems(sourceIndexes, dropIndex).map {TrackMoveResult($0.key, $0.value)}
     }
     
     // MARK: Search ------------------------------------------------------------------------------------------------------

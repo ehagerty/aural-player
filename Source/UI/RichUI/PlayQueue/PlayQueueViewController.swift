@@ -26,10 +26,17 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     override func viewDidLoad() {
         
+        playQueueView.enableDragDrop_reorderingAndFiles()
+        
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
         
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
+        
+        Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
+        Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
+        Messenger.subscribe(self, .playQueue_moveTracksToTop, self.moveTracksToTop)
+        Messenger.subscribe(self, .playQueue_moveTracksToBottom, self.moveTracksToBottom)
         
         updateSummary()
     }
@@ -136,7 +143,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         // Update all rows from the first (i.e. smallest index) removed row, down to the end of the playlist
         let lastPlaylistRowAfterRemove = playQueue.size - 1
         
-        // This will be true unless a contiguous block of tracks was removed from the bottom of the playlist.
+        // This will be true unless a contiguous block of tracks was removed from the bottom of the playQueue.
         if firstRemovedRow <= lastPlaylistRowAfterRemove {
             
             // Refresh only the index column for all these rows
@@ -146,5 +153,92 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         updateSummary()
         clearSelection()
+    }
+    
+    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
+    private func moveTracksUp() {
+
+        guard rowCount > 1 && (1..<rowCount).contains(selectedRowCount) else {return}
+        
+        let results = playQueue.moveTracksUp(selectedRows)
+            
+        moveAndReloadItems(results.sorted(by: TrackMoveResult.compareAscending))
+        playQueueView.scrollRowToVisible(selectedRows.min()!)
+    }
+    
+    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
+    private func moveTracksDown() {
+        
+        guard rowCount > 1 && (1..<rowCount).contains(selectedRowCount) else {return}
+        
+        let results = playQueue.moveTracksDown(selectedRows)
+            
+        moveAndReloadItems(results.sorted(by: TrackMoveResult.compareDescending))
+        playQueueView.scrollRowToVisible(selectedRows.min()!)
+    }
+    
+    // Rearranges tracks within the view that have been reordered
+    private func moveAndReloadItems(_ results: [TrackMoveResult]) {
+        
+        for result in results {
+            
+            playQueueView.moveRow(at: result.sourceIndex, to: result.destinationIndex)
+            playQueueView.reloadData(forRowIndexes: IndexSet([result.sourceIndex, result.destinationIndex]), columnIndexes: UIConstants.flatPlaylistViewColumnIndexes)
+        }
+    }
+    
+    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
+    private func moveTracksToTop() {
+        
+        let selectedRows = self.selectedRows
+        let selectedRowCount = selectedRows.count
+        
+        guard rowCount > 1 && (1..<rowCount).contains(selectedRowCount) else {return}
+        
+        let results = playQueue.moveTracksToTop(selectedRows)
+        
+        // Move the rows
+        removeAndInsertItems(results.sorted(by: TrackMoveResult.compareAscending))
+        
+        // Refresh the relevant rows
+        playQueueView.reloadData(forRowIndexes: IndexSet(0...selectedRows.max()!), columnIndexes: UIConstants.flatPlaylistViewColumnIndexes)
+        
+        // Select all the same rows but now at the top
+        playQueueView.scrollRowToVisible(0)
+        playQueueView.selectRowIndexes(IndexSet(0..<selectedRowCount), byExtendingSelection: false)
+    }
+    
+    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
+    private func moveTracksToBottom() {
+        
+        let selectedRows = self.selectedRows
+        let selectedRowCount = selectedRows.count
+        
+        guard rowCount > 1 && (1..<rowCount).contains(selectedRowCount) else {return}
+        
+        let results = playQueue.moveTracksToBottom(selectedRows)
+
+        // Move the rows
+        removeAndInsertItems(results.sorted(by: TrackMoveResult.compareDescending))
+
+        // Refresh the relevant rows
+        playQueueView.reloadData(forRowIndexes: IndexSet(selectedRows.min()!...lastRow), columnIndexes: UIConstants.flatPlaylistViewColumnIndexes)
+        
+        // Select all the same items but now at the bottom
+        let firstSelectedRow = lastRow - selectedRowCount + 1
+        playQueueView.scrollRowToVisible(lastRow)
+        playQueueView.selectRowIndexes(IndexSet(firstSelectedRow...lastRow), byExtendingSelection: false)
+    }
+    
+    // Refreshes the playlist view by rearranging the items that were moved
+    private func removeAndInsertItems(_ results: [TrackMoveResult]) {
+        
+        for result in results {
+            
+//            playQueueView.moveRow
+            
+            playQueueView.removeRows(at: IndexSet(integer: result.sourceIndex), withAnimation: result.movedUp ? .slideUp : .slideDown)
+            playQueueView.insertRows(at: IndexSet(integer: result.destinationIndex), withAnimation: result.movedUp ? .slideDown : .slideUp)
+        }
     }
 }

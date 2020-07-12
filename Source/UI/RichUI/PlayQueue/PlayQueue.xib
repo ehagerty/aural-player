@@ -140,7 +140,7 @@
                                 </tableColumns>
                                 <connections>
                                     <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="Q37-zY-Rms"/>
-                                    <outlet property="dataSource" destination="92r-ck-7Zl" id="VGj-Kz-5JE"/>
+                                    <outlet property="dataSource" destination="Q3M-wx-VOF" id="Ivz-Mu-K9y"/>
                                     <outlet property="delegate" destination="92r-ck-7Zl" id="gJj-st-e72"/>
                                 </connections>
                             </tableView>
@@ -179,5 +179,6 @@
             </constraints>
             <point key="canvasLocation" x="252" y="-1021"/>
         </view>
+        <customObject id="Q3M-wx-VOF" customClass="PlayQueueViewDataSource" customModule="Aural" customModuleProvider="target"/>
     </objects>
 </document>

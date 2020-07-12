@@ -74,6 +74,10 @@
         </customObject>
         <customObject id="EvH-oo-9ua" customClass="PlayQueueMenuController" customModule="Aural" customModuleProvider="target">
             <connections>
+                <outlet property="moveItemsDownMenuItem" destination="0Jf-TT-U2K" id="2ZY-af-pBq"/>
+                <outlet property="moveItemsToBottomMenuItem" destination="Cc3-kd-x71" id="KbK-rV-wEd"/>
+                <outlet property="moveItemsToTopMenuItem" destination="Ahi-A1-wX1" id="PlG-oH-HnH"/>
+                <outlet property="moveItemsUpMenuItem" destination="d08-sF-Za0" id="zFb-yR-UB7"/>
                 <outlet property="removeSelectedItemsMenuItem" destination="HbX-0K-wz3" id="Izf-1v-BoF"/>
                 <outlet property="theMenu" destination="1CB-7I-204" id="ymS-0K-Zcf"/>
             </connections>
@@ -530,26 +534,26 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="A1f-ka-gQW"/>
-                            <menuItem title="  Move selected items up" image="Up-Small" enabled="NO" keyEquivalent="" id="f3c-TG-M9r">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                            <menuItem title="  Move selected items up" image="Up-Small" enabled="NO" id="f3c-TG-M9r">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="moveItemsUpAction:" target="sXT-Pr-clR" id="NJB-lG-6X3"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Move selected items to top" image="Up-Small" enabled="NO" keyEquivalent="" id="av2-sE-9MQ" userLabel="Move selected items top">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
+                            <menuItem title="  Move selected items to top" image="Up-Small" enabled="NO" id="av2-sE-9MQ" userLabel="Move selected items top">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="moveItemsToTopAction:" target="sXT-Pr-clR" id="Xck-Tb-A3A"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Move selected items down" image="Down-Small" enabled="NO" keyEquivalent="" id="F5x-Nm-ust">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                            <menuItem title="  Move selected items down" image="Down-Small" enabled="NO" id="F5x-Nm-ust">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="moveItemsDownAction:" target="sXT-Pr-clR" id="Vpf-ou-Z2h"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="  Move selected items to bottom" image="Down-Small" enabled="NO" keyEquivalent="" id="07J-Mu-hRE" userLabel="Move selected items bottom">
-                                <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
+                            <menuItem title="  Move selected items to bottom" image="Down-Small" enabled="NO" id="07J-Mu-hRE" userLabel="Move selected items bottom">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="moveItemsToBottomAction:" target="sXT-Pr-clR" id="uBN-Wa-TQa"/>
                                 </connections>
@@ -702,25 +706,25 @@ CA
                             <menuItem title="  Move selected tracks up" image="Up-Small" keyEquivalent="" id="d08-sF-Za0">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                 <connections>
-                                    <action selector="moveItemsUpAction:" target="sXT-Pr-clR" id="QxA-Ra-IDX"/>
+                                    <action selector="moveItemsUpAction:" target="EvH-oo-9ua" id="nks-T2-QQa"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Move selected tracks to top" image="Up-Small" keyEquivalent="" id="Ahi-A1-wX1" userLabel="Move selected items top">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                                 <connections>
-                                    <action selector="moveItemsToTopAction:" target="sXT-Pr-clR" id="pha-FW-P0Y"/>
+                                    <action selector="moveItemsToTopAction:" target="EvH-oo-9ua" id="zXp-9p-hM9"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Move selected tracks down" image="Down-Small" keyEquivalent="" id="0Jf-TT-U2K">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                 <connections>
-                                    <action selector="moveItemsDownAction:" target="sXT-Pr-clR" id="wSI-2R-Wmp"/>
+                                    <action selector="moveItemsDownAction:" target="EvH-oo-9ua" id="KV6-ej-tNf"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Move selected tracks to bottom" image="Down-Small" keyEquivalent="" id="Cc3-kd-x71" userLabel="Move selected items bottom">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" option="YES"/>
                                 <connections>
-                                    <action selector="moveItemsToBottomAction:" target="sXT-Pr-clR" id="CGs-oi-i2U"/>
+                                    <action selector="moveItemsToBottomAction:" target="EvH-oo-9ua" id="yo7-b9-iwg"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="zxw-IT-pSF"/>

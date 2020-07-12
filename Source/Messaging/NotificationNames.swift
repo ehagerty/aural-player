@@ -423,6 +423,13 @@ extension Notification.Name {
     
     // Commands the playlist to select a specific search result within the current list view.
     static let playlist_selectSearchResult = Notification.Name("playlist_selectSearchResult")
+    
+    // ----------------------------------------------------------------------------------------
+    
+    static let playQueue_moveTracksUp = Notification.Name("playQueue_moveTracksUp")
+    static let playQueue_moveTracksDown = Notification.Name("playQueue_moveTracksDown")
+    static let playQueue_moveTracksToTop = Notification.Name("playQueue_moveTracksToTop")
+    static let playQueue_moveTracksToBottom = Notification.Name("playQueue_moveTracksToBottom")
 
     // ----------------------------------------------------------------------------------------
     
