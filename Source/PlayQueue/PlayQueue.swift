@@ -1,6 +1,6 @@
 import Foundation
 
-class PlayQueue: PlayQueueProtocol {
+class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     
     var tracks: [Track] = []
     
@@ -18,9 +18,17 @@ class PlayQueue: PlayQueueProtocol {
     // Stores the currently playing track, if there is one
     private(set) var currentTrack: Track?
     
-    init(repeatMode: RepeatMode, shuffleMode: ShuffleMode) {
+    init(persistentState: PlayQueueState) {
         
-        sequence = PlaybackSequence(repeatMode, shuffleMode)
+        self.tracks = persistentState.tracks.map {Track($0)}
+        
+        for track in tracks {
+            
+            TrackIO.loadPrimaryInfo(track)
+            TrackIO.loadArt(track)
+        }
+        
+        sequence = PlaybackSequence(persistentState.repeatMode, persistentState.shuffleMode)
         currentTrack = nil
     }
     

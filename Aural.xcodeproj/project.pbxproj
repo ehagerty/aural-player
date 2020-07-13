@@ -398,7 +398,6 @@
 		3E50DC91219388D200D42373 /* DelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50DC90219388D200D42373 /* DelayView.swift */; };
 		3E50DC962193A36000D42373 /* MasterUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50DC952193A36000D42373 /* MasterUnit.swift */; };
 		3E50DC982193A3B500D42373 /* FXUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50DC972193A3B500D42373 /* FXUnit.swift */; };
-		3E53A48724BCBC7D005CA149 /* PlayQueueSequencing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E53A48624BCBC7D005CA149 /* PlayQueueSequencing.swift */; };
 		3E53A7D11FBD1C370058940D /* ToggleMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E53A7D01FBD1C370058940D /* ToggleMenuItem.swift */; };
 		3E5475C722C152DB00472ABB /* FXUnitTriStateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5475C622C152DB00472ABB /* FXUnitTriStateImageView.swift */; };
 		3E54B23922C263B3005EAEDF /* TriStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E54B23822C263B3005EAEDF /* TriStateLabel.swift */; };
@@ -477,7 +476,7 @@
 		3E6C327524AB11780011D44C /* CueSheetIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED06EDD24AA750A00E69277 /* CueSheetIO.swift */; };
 		3E6C327624AB11830011D44C /* M3UPlaylistIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E444F9824AA735F0090AED8 /* M3UPlaylistIO.swift */; };
 		3E6C328A24AB15CE0011D44C /* PlayerViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DCABF244B31F100563AE4 /* PlayerViewState.swift */; };
-		3E6C329124AB18930011D44C /* PlaybackSequenceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329024AB18930011D44C /* PlaybackSequenceState.swift */; };
+		3E6C329124AB18930011D44C /* PlayQueueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329024AB18930011D44C /* PlayQueueState.swift */; };
 		3E6C329324AB19EB0011D44C /* HistoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329224AB19EB0011D44C /* HistoryState.swift */; };
 		3E6C329524AB1A390011D44C /* TranscoderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329424AB1A390011D44C /* TranscoderState.swift */; };
 		3E6C329D24AB1B860011D44C /* AppStateProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329C24AB1B860011D44C /* AppStateProtocols.swift */; };
@@ -486,7 +485,7 @@
 		3E6C32AD24AB1C400011D44C /* AudioGraphState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB5784E244E4B8C002D1F87 /* AudioGraphState.swift */; };
 		3E6C32AE24AB1C400011D44C /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECE72CC219D5D2B00419F5F /* Mapper.swift */; };
 		3E6C32B124AB1C400011D44C /* PlaylistState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D71E244EADEB005D76FA /* PlaylistState.swift */; };
-		3E6C32B224AB1C400011D44C /* PlaybackSequenceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329024AB18930011D44C /* PlaybackSequenceState.swift */; };
+		3E6C32B224AB1C400011D44C /* PlayQueueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329024AB18930011D44C /* PlayQueueState.swift */; };
 		3E6C32B324AB1C400011D44C /* HistoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329224AB19EB0011D44C /* HistoryState.swift */; };
 		3E6C32B424AB1C400011D44C /* TranscoderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329424AB1A390011D44C /* TranscoderState.swift */; };
 		3E6C32B524AB1C400011D44C /* AppStateProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C329C24AB1B860011D44C /* AppStateProtocols.swift */; };
@@ -1091,7 +1090,6 @@
 		3E50DC90219388D200D42373 /* DelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayView.swift; sourceTree = "<group>"; };
 		3E50DC952193A36000D42373 /* MasterUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterUnit.swift; sourceTree = "<group>"; };
 		3E50DC972193A3B500D42373 /* FXUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXUnit.swift; sourceTree = "<group>"; };
-		3E53A48624BCBC7D005CA149 /* PlayQueueSequencing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueSequencing.swift; sourceTree = "<group>"; };
 		3E53A7D01FBD1C370058940D /* ToggleMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleMenuItem.swift; sourceTree = "<group>"; };
 		3E5475C622C152DB00472ABB /* FXUnitTriStateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXUnitTriStateImageView.swift; sourceTree = "<group>"; };
 		3E54B23822C263B3005EAEDF /* TriStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriStateLabel.swift; sourceTree = "<group>"; };
@@ -1152,7 +1150,7 @@
 		3E688AC221E3978600164E84 /* ApeV2Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApeV2Parser.swift; sourceTree = "<group>"; };
 		3E688AC421E462C400164E84 /* CommonAVAssetParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAVAssetParser.swift; sourceTree = "<group>"; };
 		3E69CC3D2449752100117EFA /* ModalComponentProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalComponentProtocols.swift; sourceTree = "<group>"; };
-		3E6C329024AB18930011D44C /* PlaybackSequenceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSequenceState.swift; sourceTree = "<group>"; };
+		3E6C329024AB18930011D44C /* PlayQueueState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueState.swift; sourceTree = "<group>"; };
 		3E6C329224AB19EB0011D44C /* HistoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryState.swift; sourceTree = "<group>"; };
 		3E6C329424AB1A390011D44C /* TranscoderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscoderState.swift; sourceTree = "<group>"; };
 		3E6C329C24AB1B860011D44C /* AppStateProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateProtocols.swift; sourceTree = "<group>"; };
@@ -1936,7 +1934,7 @@
 				3EE7D724244EC8D1005D76FA /* ColorState.swift */,
 				3EE7D71E244EADEB005D76FA /* PlaylistState.swift */,
 				3E7651B724B9B1E5002FB8B4 /* LibraryState.swift */,
-				3E6C329024AB18930011D44C /* PlaybackSequenceState.swift */,
+				3E6C329024AB18930011D44C /* PlayQueueState.swift */,
 				3E6C329224AB19EB0011D44C /* HistoryState.swift */,
 				3E6C329424AB1A390011D44C /* TranscoderState.swift */,
 				3E6C329C24AB1B860011D44C /* AppStateProtocols.swift */,
@@ -2986,7 +2984,6 @@
 				3E7651C324BA21EF002FB8B4 /* Delegate */,
 				3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */,
 				3E929EA424B8F4280010B176 /* PlayQueue.swift */,
-				3E53A48624BCBC7D005CA149 /* PlayQueueSequencing.swift */,
 			);
 			path = PlayQueue;
 			sourceTree = "<group>";
@@ -3710,7 +3707,6 @@
 				3E6C32A224AB1BF40011D44C /* AudioDeviceState.swift in Sources */,
 				3E0839B2219591AB008D84BA /* ReverbUnit.swift in Sources */,
 				3E46F55C1F2A7A36007CD384 /* CheckRadioButtonCell.swift in Sources */,
-				3E53A48724BCBC7D005CA149 /* PlayQueueSequencing.swift in Sources */,
 				3E582E7B1F6A5B440040A092 /* MetadataUtils.swift in Sources */,
 				3EF18475217C8E8A00D24F39 /* FFT.swift in Sources */,
 				3E633C471F14C6530040ECBC /* FlexibleFilterNode.swift in Sources */,
@@ -3797,7 +3793,7 @@
 				3EB2A7E81F043BBE001DF748 /* TickedSliderCells.swift in Sources */,
 				3EEDFC3624B2487C0025BA02 /* FileSystemBrowserViewController.swift in Sources */,
 				3EF5E5BC1FBDB38E004270A4 /* AlbumsPlaylistViewController.swift in Sources */,
-				3E6C329124AB18930011D44C /* PlaybackSequenceState.swift in Sources */,
+				3E6C329124AB18930011D44C /* PlayQueueState.swift in Sources */,
 				3EA2E64E2192E60000FB5BAC /* TimeView.swift in Sources */,
 				3EFFE6BB1F0372B3003728BD /* TrackIO.swift in Sources */,
 				3EB57851244E4C8D002D1F87 /* ColorSchemesState.swift in Sources */,
@@ -3835,7 +3831,7 @@
 				3EC90B9A246C8122009D2181 /* PlaybackLoop.swift in Sources */,
 				3E6C32B324AB1C400011D44C /* HistoryState.swift in Sources */,
 				3E40A538247FDFC500C831B7 /* SecondarySeekingTests.swift in Sources */,
-				3E6C32B224AB1C400011D44C /* PlaybackSequenceState.swift in Sources */,
+				3E6C32B224AB1C400011D44C /* PlayQueueState.swift in Sources */,
 				3E4B5474247C0591009CE7EA /* MockTrack.swift in Sources */,
 				3E6C327524AB11780011D44C /* CueSheetIO.swift in Sources */,
 				3E12ADDE2469CF5300A07611 /* CommonAVAssetParser.swift in Sources */,

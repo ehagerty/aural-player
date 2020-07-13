@@ -8,16 +8,16 @@ class MetadataUtils {
     
     private init() {}
 
-    private static var playlist: PlaylistDelegateProtocol!
+    private static var library: LibraryDelegateProtocol!
     
     private static var avAssetReader: AVAssetReader!
     private static var ffMpegReader: FFMpegReader!
     
-    static func initialize(_ playlist: PlaylistDelegateProtocol, _ avAssetReader: AVAssetReader, _ ffMpegReader: FFMpegReader) {
+    static func initialize(_ playlist: LibraryDelegateProtocol, _ avAssetReader: AVAssetReader, _ ffMpegReader: FFMpegReader) {
         
-        MetadataUtils.playlist = playlist
-        MetadataUtils.avAssetReader = avAssetReader
-        MetadataUtils.ffMpegReader = ffMpegReader
+        Self.library = playlist
+        Self.avAssetReader = avAssetReader
+        Self.ffMpegReader = ffMpegReader
     }
     
     // Loads the required display metadata (artist/title/art) for a track
@@ -70,7 +70,7 @@ class MetadataUtils {
     static func artForFile(_ file: URL) -> CoverArt? {
         
         // If playlist has this track, get art from there
-        if let track = playlist.findFile(file) {
+        if let track = library.findTrackByFile(file) {
             
             if track.displayInfo.art == nil {
                 loadArt(track)

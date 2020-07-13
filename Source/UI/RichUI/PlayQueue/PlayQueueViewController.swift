@@ -31,6 +31,9 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
         
+        // Only respond if the playing track was updated
+        Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:), queue: .main)
+        
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
         
         Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
@@ -98,6 +101,12 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         DispatchQueue.main.async {
             self.playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: self.allColumns)
         }
+    }
+    
+    private func trackInfoUpdated(_ notification: TrackInfoUpdatedNotification) {
+        
+        print("\nUpdated track:", notification.updatedTrack.displayInfo.title, notification.updatedFields)
+        playQueueView.reloadData(forRowIndexes: [playQueue.indexOfTrack(notification.updatedTrack)!], columnIndexes: [0, 1, 2])
     }
     
     // Shows the currently playing track, within the playlist view

@@ -103,55 +103,14 @@ class ObjectGraph {
         playlist = Playlist(flatPlaylist, [artistsPlaylist, albumsPlaylist, genresPlaylist])
         
         // Sequencer and delegate
-        let repeatMode = appState.playbackSequence.repeatMode
-        let shuffleMode = appState.playbackSequence.shuffleMode
+        let repeatMode = appState.playQueue.repeatMode
+        let shuffleMode = appState.playQueue.shuffleMode
         let playlistType = PlaylistType(rawValue: appState.ui.playlist.view.lowercased()) ?? .tracks
         
         sequencer = Sequencer(playlist, repeatMode, shuffleMode, playlistType)
         sequencerDelegate = SequencerDelegate(sequencer)
         
         transcoder = Transcoder(appState.transcoder, preferences.playbackPreferences.transcodingPreferences, playlist, sequencerDelegate)
-        
-        let profiles = PlaybackProfiles()
-        
-        for profile in appState.playbackProfiles {
-            profiles.add(profile.file, profile)
-        }
-        
-        let startPlaybackChain = StartPlaybackChain(player, sequencer, playlist, transcoder, profiles, preferences.playbackPreferences)
-        let stopPlaybackChain = StopPlaybackChain(player, sequencer, transcoder, profiles, preferences.playbackPreferences)
-        let trackPlaybackCompletedChain = TrackPlaybackCompletedChain(startPlaybackChain, stopPlaybackChain, sequencer, playlist, preferences.playbackPreferences)
-        
-        playQueue = PlayQueue(repeatMode: appState.playbackSequence.repeatMode, shuffleMode: appState.playbackSequence.shuffleMode)
-        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)
-        
-        // Playback Delegate
-        playbackDelegate = PlaybackDelegate(player, playQueue, profiles, preferences.playbackPreferences, startPlaybackChain, stopPlaybackChain, trackPlaybackCompletedChain)
-        
-        audioGraphDelegate = AudioGraphDelegate(audioGraph, playbackDelegate, preferences.soundPreferences, appState.audioGraph)
-        
-        // Playlist Delegate
-        playlistDelegate = PlaylistDelegate(playlist, appState.playlist, preferences,
-                                            [playbackDelegate as! PlaybackDelegate])
-        
-        
-        
-        library = Library()
-        libraryDelegate = LibraryDelegate(library, appState.library, preferences)
-        
-        // Recorder (and delegate)
-        recorder = Recorder(audioGraph)
-        recorderDelegate = RecorderDelegate(recorder)
-        
-        // History (and delegate)
-        history = History(preferences.historyPreferences)
-        historyDelegate = HistoryDelegate(history, playlistDelegate, playbackDelegate, appState.history)
-        
-        bookmarks = Bookmarks()
-        bookmarksDelegate = BookmarksDelegate(bookmarks, playlistDelegate, playbackDelegate, appState.bookmarks)
-        
-        favorites = Favorites()
-        favoritesDelegate = FavoritesDelegate(favorites, playlistDelegate, playbackDelegate, appState!.favorites)
         
         muxer = Muxer()
         
@@ -175,8 +134,48 @@ class ObjectGraph {
         // Initialize utility classes.
         
         AudioUtils.initialize(transcoder)
-        MetadataUtils.initialize(playlistDelegate, avAssetReader, ffmpegReader)
         PlaylistIO.initialize(playlist)
+        
+        library = Library()
+        libraryDelegate = LibraryDelegate(library, appState.library, preferences)
+        
+        MetadataUtils.initialize(libraryDelegate, avAssetReader, ffmpegReader)
+        
+        playQueue = PlayQueue(persistentState: appState.playQueue)
+        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)
+        
+        let profiles = PlaybackProfiles()
+        
+        for profile in appState.playbackProfiles {
+            profiles.add(profile.file, profile)
+        }
+        
+        let startPlaybackChain = StartPlaybackChain(player, sequencer, playlist, transcoder, profiles, preferences.playbackPreferences)
+        let stopPlaybackChain = StopPlaybackChain(player, sequencer, transcoder, profiles, preferences.playbackPreferences)
+        let trackPlaybackCompletedChain = TrackPlaybackCompletedChain(startPlaybackChain, stopPlaybackChain, sequencer, playlist, preferences.playbackPreferences)
+        
+        // Playback Delegate
+        playbackDelegate = PlaybackDelegate(player, playQueue, profiles, preferences.playbackPreferences, startPlaybackChain, stopPlaybackChain, trackPlaybackCompletedChain)
+        
+        audioGraphDelegate = AudioGraphDelegate(audioGraph, playbackDelegate, preferences.soundPreferences, appState.audioGraph)
+        
+        // Playlist Delegate
+        playlistDelegate = PlaylistDelegate(playlist, appState.playlist, preferences,
+                                            [playbackDelegate as! PlaybackDelegate])
+        
+        // Recorder (and delegate)
+        recorder = Recorder(audioGraph)
+        recorderDelegate = RecorderDelegate(recorder)
+        
+        // History (and delegate)
+        history = History(preferences.historyPreferences)
+        historyDelegate = HistoryDelegate(history, playlistDelegate, playbackDelegate, appState.history)
+        
+        bookmarks = Bookmarks()
+        bookmarksDelegate = BookmarksDelegate(bookmarks, playlistDelegate, playbackDelegate, appState.bookmarks)
+        
+        favorites = Favorites()
+        favoritesDelegate = FavoritesDelegate(favorites, playlistDelegate, playbackDelegate, appState!.favorites)
         
         // UI-related utility classes
         
@@ -208,7 +207,7 @@ class ObjectGraph {
         appState.audioGraph = (audioGraph as! AudioGraph).persistentState as! AudioGraphState
         appState.playlist = (playlist as! Playlist).persistentState as! PlaylistState
         appState.library = (library as! Library).persistentState as! LibraryState
-        appState.playbackSequence = (sequencer as! Sequencer).persistentState as! PlaybackSequenceState
+        appState.playQueue = (playQueue as! PlayQueue).persistentState as! PlayQueueState
         appState.playbackProfiles = playbackDelegate.profiles.all()
         
         appState.transcoder = (transcoder as! Transcoder).persistentState as! TranscoderState
