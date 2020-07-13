@@ -585,6 +585,7 @@
 		3E89CBAD249E1AA400972AE6 /* Messenger_SynchronousNotifications_ArbitraryPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89CBAC249E1AA400972AE6 /* Messenger_SynchronousNotifications_ArbitraryPayloadTests.swift */; };
 		3E89CBAF249E287100972AE6 /* Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89CBAE249E287100972AE6 /* Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift */; };
 		3E8E2C482493D3FF00D795F6 /* Messenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8E2C472493D3FF00D795F6 /* Messenger.swift */; };
+		3E8EB20624BCFD2D0034A45A /* FileSystemBrowserTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8EB20524BCFD2D0034A45A /* FileSystemBrowserTableViews.swift */; };
 		3E929EA324B8EEE10010B176 /* PlayQueueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */; };
 		3E929EA524B8F4280010B176 /* PlayQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E929EA424B8F4280010B176 /* PlayQueue.swift */; };
 		3E9463971F29960F00A9019C /* TabGroupButtonCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9463961F29960F00A9019C /* TabGroupButtonCells.swift */; };
@@ -1253,6 +1254,7 @@
 		3E89CBAE249E287100972AE6 /* Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger_AsynchronousNotifications_ArbitraryPayloadTests.swift; sourceTree = "<group>"; };
 		3E8A51CF21D856FB0014C185 /* build-ffmpeg.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-ffmpeg.sh"; sourceTree = "<group>"; };
 		3E8E2C472493D3FF00D795F6 /* Messenger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger.swift; sourceTree = "<group>"; };
+		3E8EB20524BCFD2D0034A45A /* FileSystemBrowserTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemBrowserTableViews.swift; sourceTree = "<group>"; };
 		3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueProtocol.swift; sourceTree = "<group>"; };
 		3E929EA424B8F4280010B176 /* PlayQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueue.swift; sourceTree = "<group>"; };
 		3E9463961F29960F00A9019C /* TabGroupButtonCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabGroupButtonCells.swift; sourceTree = "<group>"; };
@@ -3149,6 +3151,7 @@
 				3EEDFC2F24B23FE80025BA02 /* FileSystemBrowser.xib */,
 				3EEDFC3524B2487C0025BA02 /* FileSystemBrowserViewController.swift */,
 				3EEDFC3124B241940025BA02 /* FileSystemBrowserViewDelegate.swift */,
+				3E8EB20524BCFD2D0034A45A /* FileSystemBrowserTableViews.swift */,
 				3EEDFC3324B242500025BA02 /* FileSystemFolder.swift */,
 			);
 			path = FileSystemBrowser;
@@ -3375,6 +3378,7 @@
 				3E80E6721F04FA7C007480CC /* SizeUnit.swift in Sources */,
 				3EEDFC2B24B225720025BA02 /* PlayQueueViewDelegate.swift in Sources */,
 				3EB029141FB58CEC00A2D920 /* SoundMenuController.swift in Sources */,
+				3E8EB20624BCFD2D0034A45A /* FileSystemBrowserTableViews.swift in Sources */,
 				3EE4D44021D6E5DA000110FC /* AlertWindowController.swift in Sources */,
 				3E6341DC243DC53B00190502 /* HistoryPreferences.swift in Sources */,
 				3E0A66B62169FC9300B2EA2A /* PlaybackProfiles.swift in Sources */,

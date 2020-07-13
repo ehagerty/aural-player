@@ -5,6 +5,8 @@ struct FileSystemItem {
     let url: URL
     var children: [FileSystemItem] = []
     
+    var fileExtension: String {url.pathExtension.lowercased()}
+    
     init(url: URL) {
         
         self.url = url
@@ -15,8 +17,8 @@ struct FileSystemItem {
         
         if !dir.hasDirectoryPath {return []}
         
-        if let contents = FileSystemUtils.getContentsOfDirectory(dir) {
-            return contents.map {FileSystemItem(url: $0)}
+        if let dirContents = FileSystemUtils.getContentsOfDirectory(dir) {
+            return dirContents.map{FileSystemItem(url: $0)}.filter {$0.isTrack || $0.isPlaylist || $0.isDirectory}
         }
         
         return []
@@ -24,16 +26,7 @@ struct FileSystemItem {
     
     var isDirectory: Bool {url.hasDirectoryPath}
     
-//    static func fromRootDir(_ dir: URL) -> FileSystemItem {
-//
-//        if let contents = FileSystemUtils.getContentsOfDirectory(dir) {
-//            let children: [FileSystemItem] = contents.map {child in
-//
-//                let contents = child.hasDirectoryPath ? FileSystemUtils.getContentsOfDirectory(dir) ?? [] : []
-//                return FileSystemItem(url: child, children: contents)
-//            }
-//        }
-//
-//        return FileSystemItem(url: dir, children: [])
-//    }
+    var isPlaylist: Bool {AppConstants.SupportedTypes.playlistExtensions.contains(fileExtension)}
+    
+    var isTrack: Bool {AppConstants.SupportedTypes.allAudioExtensions.contains(fileExtension)}
 }

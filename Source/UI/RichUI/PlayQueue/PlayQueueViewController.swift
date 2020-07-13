@@ -9,7 +9,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
     override var nibName: String? {return "PlayQueue"}
-    
+  
     private var selectedRows: IndexSet {playQueueView.selectedRowIndexes}
     
     private var selectedRowsArr: [Int] {playQueueView.selectedRowIndexes.toArray()}
@@ -106,7 +106,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     private func trackInfoUpdated(_ notification: TrackInfoUpdatedNotification) {
         
 //        print("\nUpdated track:", notification.updatedTrack.displayInfo.title, notification.updatedFields)
-        playQueueView.reloadData(forRowIndexes: [playQueue.indexOfTrack(notification.updatedTrack)!], columnIndexes: [0, 1, 2])
+        playQueueView.reloadData(forRowIndexes: [playQueue.indexOfTrack(notification.updatedTrack)!], columnIndexes: allColumns)
     }
     
     // Shows the currently playing track, within the playlist view

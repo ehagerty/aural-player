@@ -72,10 +72,7 @@ class FileSystemUtils {
         
         do {
             // Retrieve all files/subfolders within this folder
-            let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: [], options: FileManager.DirectoryEnumerationOptions())
-            
-            // Add them
-            return files
+            return try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: [], options: FileManager.DirectoryEnumerationOptions())
             
         } catch let error as NSError {
             NSLog("Error retrieving contents of directory '%@': %@", dir.path, error.description)

@@ -7,7 +7,7 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
     private var fsTree: FileSystemItem!
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        return 25
+        return 30
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
@@ -45,22 +45,20 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
     
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         
-        if let fsItem = item as? FileSystemItem {
-            return createNameCell(outlineView, fsItem.url.lastPathComponent)
+        if tableColumn?.identifier.rawValue == "fileSystemBrowser_name", let fsItem = item as? FileSystemItem {
+            return createNameCell(outlineView, fsItem)
         }
         
         return nil
     }
     
-    private func createNameCell(_ outlineView: NSOutlineView, _ text: String) -> NSTableCellView? {
+    private func createNameCell(_ outlineView: NSOutlineView, _ item: FileSystemItem) -> FileSystemBrowserItemNameCell? {
         
         guard let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("fileSystemBrowser_name"), owner: nil)
-            as? NSTableCellView else {return nil}
+            as? FileSystemBrowserItemNameCell else {return nil}
         
-        cell.imageView?.image = nil
-        
-        cell.textField?.stringValue = text
-        cell.textField?.font = mainFont_13
+        cell.initializeForFile(item)
+        cell.lblName.font = mainFont_13
         
         return cell
     }

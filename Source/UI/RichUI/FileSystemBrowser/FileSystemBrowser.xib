@@ -30,21 +30,21 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbo-6n-dqy" userLabel="FileSystemBrowser">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="32" horizontalPageScroll="10" verticalLineScroll="32" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbo-6n-dqy" userLabel="FileSystemBrowser">
                     <rect key="frame" x="0.0" y="32" width="600" height="368"/>
                     <clipView key="contentView" id="MQ4-JQ-9S7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="368"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="eZt-0I-F1c" viewBased="YES" indentationPerLevel="16" outlineTableColumn="pZ3-N4-hj4" id="5rF-Be-k7i">
+                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" headerView="eZt-0I-F1c" viewBased="YES" indentationPerLevel="16" outlineTableColumn="pZ3-N4-hj4" id="5rF-Be-k7i">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="343"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="fileSystemBrowser_name" width="423" minWidth="40" maxWidth="1000" id="pZ3-N4-hj4">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
+                                    <tableColumn identifier="fileSystemBrowser_name" width="423" minWidth="40" maxWidth="1000" id="pZ3-N4-hj4" userLabel="Name">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
@@ -55,12 +55,17 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="fileSystemBrowser_name" id="CKE-MQ-G21">
-                                                <rect key="frame" x="1" y="1" width="423" height="17"/>
+                                            <tableCellView identifier="fileSystemBrowser_name" id="CKE-MQ-G21" customClass="FileSystemBrowserItemNameCell" customModule="Aural" customModuleProvider="target">
+                                                <rect key="frame" x="1" y="1" width="423" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kXf-x7-OJc">
+                                                        <rect key="frame" x="5" y="5" width="20" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="LBB-Aw-hyB"/>
+                                                    </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IVm-6t-f6Y">
-                                                        <rect key="frame" x="0.0" y="0.0" width="423" height="17"/>
+                                                        <rect key="frame" x="33" y="2" width="390" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="UpO-Jh-yJr">
                                                             <font key="font" metaFont="system"/>
@@ -70,6 +75,8 @@
                                                     </textField>
                                                 </subviews>
                                                 <connections>
+                                                    <outlet property="icon" destination="kXf-x7-OJc" id="gjZ-ns-cfA"/>
+                                                    <outlet property="lblName" destination="IVm-6t-f6Y" id="Ohz-T6-Xu1"/>
                                                     <outlet property="textField" destination="IVm-6t-f6Y" id="cz2-AH-Ws7"/>
                                                 </connections>
                                             </tableCellView>
@@ -88,11 +95,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="fileSystemBrowser_type" id="8Yj-Ed-RgM">
-                                                <rect key="frame" x="427" y="1" width="171" height="17"/>
+                                                <rect key="frame" x="427" y="1" width="171" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wVH-yg-RdV">
-                                                        <rect key="frame" x="0.0" y="0.0" width="171" height="17"/>
+                                                        <rect key="frame" x="0.0" y="2" width="171" height="24"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="oc7-5T-n8c">
                                                             <font key="font" metaFont="system"/>
@@ -111,6 +118,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="o8D-Ag-GDu" id="4eN-i8-SOQ"/>
                                     <outlet property="delegate" destination="o8D-Ag-GDu" id="XJc-56-Jl1"/>
+                                    <outlet property="menu" destination="txf-vM-Kvh" id="7IE-iq-anf"/>
                                 </connections>
                             </outlineView>
                         </subviews>
@@ -141,5 +149,36 @@
             <point key="canvasLocation" x="140" y="154"/>
         </customView>
         <customObject id="o8D-Ag-GDu" customClass="FileSystemBrowserViewDelegate" customModule="Aural" customModuleProvider="target"/>
+        <menu id="txf-vM-Kvh">
+            <items>
+                <menuItem title="Add to library" id="Nu4-VM-Dgd">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addItemsToLibraryAction:" target="-2" id="obw-B5-b5D"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Add to play queue" id="o3v-VJ-DKU">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Add to playlist" id="pqb-mS-UCz">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" id="KdT-yd-mK8">
+                        <items>
+                            <menuItem title="New playlist" id="s69-c4-fzt">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="0sd-nC-cja"/>
+                            <menuItem title="Item 2" id="WWq-9Q-QaK">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Item 3" id="mYM-pX-nbY">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="128" y="-143"/>
+        </menu>
     </objects>
 </document>
