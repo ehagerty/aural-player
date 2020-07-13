@@ -13,24 +13,24 @@ class TrackPlaybackCompletedChain: PlaybackChain {
     private let startPlaybackChain: StartPlaybackChain
     private let stopPlaybackChain: StopPlaybackChain
     
-    private let sequencer: SequencerProtocol
+    private let playQueue: PlayQueueProtocol
     
-    init(_ startPlaybackChain: StartPlaybackChain, _ stopPlaybackChain: StopPlaybackChain, _ sequencer: SequencerProtocol, _ playlist: PlaylistCRUDProtocol, _ preferences: PlaybackPreferences) {
+    init(_ startPlaybackChain: StartPlaybackChain, _ stopPlaybackChain: StopPlaybackChain, _ playQueue: PlayQueueProtocol, _ playlist: PlaylistCRUDProtocol, _ preferences: PlaybackPreferences) {
         
         self.startPlaybackChain = startPlaybackChain
         self.stopPlaybackChain = stopPlaybackChain
-        self.sequencer = sequencer
+        self.playQueue = playQueue
         
         super.init()
         
-        _ = withAction(DelayAfterTrackCompletionAction(playlist, sequencer, preferences))
+        _ = withAction(DelayAfterTrackCompletionAction(playlist, playQueue, preferences))
     }
     
     override func execute(_ context: PlaybackRequestContext) {
         
         super.execute(context)
         
-        context.requestedTrack = sequencer.subsequent()
+        context.requestedTrack = playQueue.subsequent()
         
         // Continue playback with the subsequent track (or stop if no subsequent track).
         context.requestedTrack != nil ? startPlaybackChain.execute(context) : stopPlaybackChain.execute(context)

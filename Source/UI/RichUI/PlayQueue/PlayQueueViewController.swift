@@ -105,7 +105,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     private func trackInfoUpdated(_ notification: TrackInfoUpdatedNotification) {
         
-        print("\nUpdated track:", notification.updatedTrack.displayInfo.title, notification.updatedFields)
+//        print("\nUpdated track:", notification.updatedTrack.displayInfo.title, notification.updatedFields)
         playQueueView.reloadData(forRowIndexes: [playQueue.indexOfTrack(notification.updatedTrack)!], columnIndexes: [0, 1, 2])
     }
     

@@ -7,20 +7,20 @@ import Foundation
 class DelayAfterTrackCompletionAction: PlaybackChainAction {
     
     private let playlist: PlaylistCRUDProtocol
-    private let sequencer: SequencerProtocol
+    private let playQueue: PlayQueueProtocol
     private let preferences: PlaybackPreferences
     
-    init(_ playlist: PlaylistCRUDProtocol, _ sequencer: SequencerProtocol, _ preferences: PlaybackPreferences) {
+    init(_ playlist: PlaylistCRUDProtocol, _ playQueue: PlayQueueProtocol, _ preferences: PlaybackPreferences) {
         
         self.playlist = playlist
-        self.sequencer = sequencer
+        self.playQueue = playQueue
         self.preferences = preferences
     }
     
     func execute(_ context: PlaybackRequestContext, _ chain: PlaybackChain) {
         
         // Adding a delay is only relevant when a track has completed and there is a subsequent track to play.
-        if let completedTrack = context.currentTrack, sequencer.peekSubsequent() != nil {
+        if let completedTrack = context.currentTrack, playQueue.peekSubsequent() != nil {
             
             // First, check for an explicit gap defined in the playlist (takes precedence over global preference).
             if let gapAfterCompletedTrack = playlist.getGapAfterTrack(completedTrack) {
