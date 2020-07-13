@@ -30,7 +30,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         return playQueue.search(searchQuery)
     }
     
-    func playLater(_ tracks: [Track]) -> ClosedRange<Int> {
+    func enqueueToPlayLater(_ tracks: [Track]) -> ClosedRange<Int> {
         
         tracks.forEach {TrackIO.loadArt($0)}
         
@@ -39,7 +39,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         return indices
     }
     
-    func playNow(_ tracks: [Track]) -> ClosedRange<Int> {
+    func enqueueToPlayNow(_ tracks: [Track]) -> ClosedRange<Int> {
         
         tracks.forEach {TrackIO.loadArt($0)}
         
@@ -48,7 +48,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         return indices
     }
     
-    func playNext(_ tracks: [Track]) -> ClosedRange<Int> {
+    func enqueueToPlayNext(_ tracks: [Track]) -> ClosedRange<Int> {
         
         tracks.forEach {TrackIO.loadArt($0)}
         

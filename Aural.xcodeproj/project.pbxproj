@@ -398,6 +398,7 @@
 		3E50DC91219388D200D42373 /* DelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50DC90219388D200D42373 /* DelayView.swift */; };
 		3E50DC962193A36000D42373 /* MasterUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50DC952193A36000D42373 /* MasterUnit.swift */; };
 		3E50DC982193A3B500D42373 /* FXUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E50DC972193A3B500D42373 /* FXUnit.swift */; };
+		3E53A48724BCBC7D005CA149 /* PlayQueueSequencing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E53A48624BCBC7D005CA149 /* PlayQueueSequencing.swift */; };
 		3E53A7D11FBD1C370058940D /* ToggleMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E53A7D01FBD1C370058940D /* ToggleMenuItem.swift */; };
 		3E5475C722C152DB00472ABB /* FXUnitTriStateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5475C622C152DB00472ABB /* FXUnitTriStateImageView.swift */; };
 		3E54B23922C263B3005EAEDF /* TriStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E54B23822C263B3005EAEDF /* TriStateLabel.swift */; };
@@ -1090,6 +1091,7 @@
 		3E50DC90219388D200D42373 /* DelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayView.swift; sourceTree = "<group>"; };
 		3E50DC952193A36000D42373 /* MasterUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterUnit.swift; sourceTree = "<group>"; };
 		3E50DC972193A3B500D42373 /* FXUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXUnit.swift; sourceTree = "<group>"; };
+		3E53A48624BCBC7D005CA149 /* PlayQueueSequencing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueSequencing.swift; sourceTree = "<group>"; };
 		3E53A7D01FBD1C370058940D /* ToggleMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleMenuItem.swift; sourceTree = "<group>"; };
 		3E5475C622C152DB00472ABB /* FXUnitTriStateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXUnitTriStateImageView.swift; sourceTree = "<group>"; };
 		3E54B23822C263B3005EAEDF /* TriStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriStateLabel.swift; sourceTree = "<group>"; };
@@ -2984,6 +2986,7 @@
 				3E7651C324BA21EF002FB8B4 /* Delegate */,
 				3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */,
 				3E929EA424B8F4280010B176 /* PlayQueue.swift */,
+				3E53A48624BCBC7D005CA149 /* PlayQueueSequencing.swift */,
 			);
 			path = PlayQueue;
 			sourceTree = "<group>";
@@ -3707,6 +3710,7 @@
 				3E6C32A224AB1BF40011D44C /* AudioDeviceState.swift in Sources */,
 				3E0839B2219591AB008D84BA /* ReverbUnit.swift in Sources */,
 				3E46F55C1F2A7A36007CD384 /* CheckRadioButtonCell.swift in Sources */,
+				3E53A48724BCBC7D005CA149 /* PlayQueueSequencing.swift in Sources */,
 				3E582E7B1F6A5B440040A092 /* MetadataUtils.swift in Sources */,
 				3EF18475217C8E8A00D24F39 /* FFT.swift in Sources */,
 				3E633C471F14C6530040ECBC /* FlexibleFilterNode.swift in Sources */,

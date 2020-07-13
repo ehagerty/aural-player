@@ -36,6 +36,15 @@ class PlaybackSequence {
         self.shuffleMode = shuffleMode
     }
     
+    func resize(size: Int) {
+        
+        self.size = size
+        
+        if shuffleMode == .on {
+            shuffleSequence.resizeAndReshuffle(size: size, startWith: curTrackIndex)
+        }
+    }
+    
     // Resizes and restarts the sequence with the given size.
     // The newCursor parameter denotes the first element (i.e. track) in the new sequence.
     func resizeAndStart(size: Int, withTrackIndex trackIndex: Int? = nil) {

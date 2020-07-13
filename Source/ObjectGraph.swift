@@ -122,8 +122,11 @@ class ObjectGraph {
         let stopPlaybackChain = StopPlaybackChain(player, sequencer, transcoder, profiles, preferences.playbackPreferences)
         let trackPlaybackCompletedChain = TrackPlaybackCompletedChain(startPlaybackChain, stopPlaybackChain, sequencer, playlist, preferences.playbackPreferences)
         
+        playQueue = PlayQueue(repeatMode: appState.playbackSequence.repeatMode, shuffleMode: appState.playbackSequence.shuffleMode)
+        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)
+        
         // Playback Delegate
-        playbackDelegate = PlaybackDelegate(player, playlist, sequencer, profiles, preferences.playbackPreferences, startPlaybackChain, stopPlaybackChain, trackPlaybackCompletedChain)
+        playbackDelegate = PlaybackDelegate(player, playQueue, profiles, preferences.playbackPreferences, startPlaybackChain, stopPlaybackChain, trackPlaybackCompletedChain)
         
         audioGraphDelegate = AudioGraphDelegate(audioGraph, playbackDelegate, preferences.soundPreferences, appState.audioGraph)
         
@@ -131,8 +134,7 @@ class ObjectGraph {
         playlistDelegate = PlaylistDelegate(playlist, appState.playlist, preferences,
                                             [playbackDelegate as! PlaybackDelegate])
         
-        playQueue = PlayQueue()
-        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)
+        
         
         library = Library()
         libraryDelegate = LibraryDelegate(library, appState.library, preferences)

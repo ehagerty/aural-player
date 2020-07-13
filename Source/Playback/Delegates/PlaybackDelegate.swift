@@ -8,10 +8,8 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
     // The actual player
     let player: PlayerProtocol
     
-    let playlist: PlaylistAccessorProtocol
-    
     // The playback sequence
-    let sequencer: SequencerProtocol
+    let playQueue: PlayQueueProtocol
     
     // User preferences
     let preferences: PlaybackPreferences
@@ -24,12 +22,11 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
     let stopPlaybackChain: StopPlaybackChain
     let trackPlaybackCompletedChain: TrackPlaybackCompletedChain
     
-    init(_ player: PlayerProtocol, _ playlist: PlaylistAccessorProtocol, _ sequencer: SequencerProtocol, _ profiles: PlaybackProfiles, _ preferences: PlaybackPreferences,
+    init(_ player: PlayerProtocol, _ sequencer: PlayQueueProtocol, _ profiles: PlaybackProfiles, _ preferences: PlaybackPreferences,
          _ startPlaybackChain: StartPlaybackChain, _ stopPlaybackChain: StopPlaybackChain, _ trackPlaybackCompletedChain: TrackPlaybackCompletedChain) {
         
         self.player = player
-        self.playlist = playlist
-        self.sequencer = sequencer
+        self.playQueue = sequencer
         self.preferences = preferences
         self.profiles = profiles
         
@@ -91,7 +88,7 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
     }
     
     private func beginPlayback() {
-        doPlay({return sequencer.begin()}, PlaybackParams.defaultParams())
+        doPlay({return playQueue.begin()}, PlaybackParams.defaultParams())
     }
     
     private func playImmediately(_ track: Track) {
@@ -101,27 +98,27 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
     func previousTrack() {
         
         if state != .noTrack {
-            doPlay({return sequencer.previous()})
+            doPlay({return playQueue.previous()})
         }
     }
     
     func nextTrack() {
         
         if state != .noTrack {
-            doPlay({return sequencer.next()})
+            doPlay({return playQueue.next()})
         }
     }
     
     func play(_ index: Int, _ params: PlaybackParams) {
-        doPlay({return sequencer.select(index)}, params)
+        doPlay({return playQueue.select(index)}, params)
     }
     
     func play(_ track: Track, _ params: PlaybackParams) {
-        doPlay({return sequencer.select(track)}, params)
+        doPlay({return playQueue.select(track)}, params)
     }
     
     func play(_ group: Group, _ params: PlaybackParams) {
-        doPlay({return sequencer.select(group)}, params)
+        doPlay({return playQueue.select(group)}, params)
     }
     
     // Captures the current player state and proceeds with playback according to the playback sequence
@@ -314,9 +311,7 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
     
     // MARK: Variables that indicate the current player state
     
-    var state: PlaybackState {
-        return player.state
-    }
+    var state: PlaybackState {player.state}
     
     var seekPosition: (timeElapsed: Double, percentageElapsed: Double, trackDuration: Double) {
         
@@ -331,29 +326,17 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
         return (0, 0, 0)
     }
     
-    var currentTrack: Track? {
-        return sequencer.currentTrack
-    }
+    var currentTrack: Track? {playQueue.currentTrack}
     
-    var playingTrack: Track? {
-        return state.isPlayingOrPaused ? sequencer.currentTrack : nil
-    }
+    var playingTrack: Track? {state.isPlayingOrPaused ? playQueue.currentTrack : nil}
     
-    var waitingTrack: Track? {
-        return state == .waiting ? sequencer.currentTrack : nil
-    }
+    var waitingTrack: Track? {state == .waiting ? playQueue.currentTrack : nil}
     
-    var transcodingTrack: Track? {
-        return state == .transcoding ? sequencer.currentTrack : nil
-    }
+    var transcodingTrack: Track? {state == .transcoding ? playQueue.currentTrack : nil}
     
-    var playingTrackStartTime: TimeInterval? {
-        return player.playingTrackStartTime
-    }
+    var playingTrackStartTime: TimeInterval? {player.playingTrackStartTime}
     
-    var playbackLoop: PlaybackLoop? {
-        return player.playbackLoop
-    }
+    var playbackLoop: PlaybackLoop? {player.playbackLoop}
     
     private func savePlaybackProfile() {
         
@@ -426,46 +409,5 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
         
         // Proceed with exit
         request.acceptResponse(okToExit: true)
-    }
-    
-    // ------------------- PlaylistChangeListenerProtocol methods ---------------------
-    
-    // TODO: Revisit all these functions
-    
-    func tracksAdded(_ addResults: [TrackAddResult]) {
-        sequencer.tracksAdded(addResults)
-    }
-    
-    func tracksReordered(_ moveResults: ItemMoveResults) {
-        sequencer.tracksReordered(moveResults)
-    }
-    
-    func playlistSorted(_ sortResults: SortResults) {
-        sequencer.playlistSorted(sortResults)
-    }
-    
-    func tracksRemoved(_ removeResults: TrackRemovalResults) {
-        
-        // Capture current track before the sequence is ended.
-        let trackBeforeChange = currentTrack
-        
-        sequencer.tracksRemoved(removeResults)
-        
-        // Playing track was removed, need to stop playback
-        if let thePlayingTrack = trackBeforeChange, !playlist.hasTrack(thePlayingTrack) {
-            doStop(thePlayingTrack)
-        }
-    }
-    
-    // Stop playback when the playlist is cleared.
-    func playlistCleared() {
-        
-        // Capture current track before the sequence is cleared
-        let trackBeforeChange = currentTrack
-        
-        sequencer.playlistCleared()
-        
-        // Stop playback
-        doStop(trackBeforeChange)
     }
 }

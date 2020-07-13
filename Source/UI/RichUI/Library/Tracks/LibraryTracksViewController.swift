@@ -169,16 +169,16 @@ class LibraryTracksViewController: AuralViewController {
     
     @IBAction func playNow(_ sender: AnyObject) {
 //        print("\nPLAY NOW")
-        _ = playQueue.playNow(selectedTracks)
+        _ = playQueue.enqueueToPlayNow(selectedTracks)
     }
     
     @IBAction func playNext(_ sender: AnyObject) {
 //        print("\nPLAY NEXT")
-        _ = playQueue.playNext(selectedTracks)
+        _ = playQueue.enqueueToPlayNext(selectedTracks)
     }
     
     @IBAction func playLater(_ sender: AnyObject) {
 //        print("\nPLAY LATER")
-        _ = playQueue.playLater(selectedTracks)
+        _ = playQueue.enqueueToPlayLater(selectedTracks)
     }
 }
