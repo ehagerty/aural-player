@@ -22,7 +22,7 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return 25
+        return 50
     }
     
     // Returns a view for a single column
@@ -59,15 +59,15 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
                 
                 }
                 
-                return createIndexImageCell(tableView, row, image.applyingTint(Colors.Playlist.playingTrackIconColor))
+                return createIndexImageCell(tableView, track, row)
             }
             
             // Otherwise, create a text cell with the track index
-            return createIndexTextCell(tableView, indexText, row)
+            return createIndexImageCell(tableView, track, row)
             
         case .playQueue_title:
             
-            return createTextCell(tableView, .playQueue_title, displayName(track), row)
+            return createTextCell(tableView, .playQueue_title, track, row)
             
         case .playQueue_duration:
             
@@ -76,15 +76,6 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
         default: return nil // Impossible
             
         }
-    }
-    
-    private func displayName(_ track: Track) -> String {
-        
-        if let theArtist = track.groupingInfo.artist {
-            return String(format: "%@ - %@", theArtist, track.displayInfo.title)
-        }
-        
-        return track.displayInfo.title
     }
     
     private func createIndexTextCell(_ tableView: NSTableView, _ text: String, _ row: Int) -> IndexCellView? {
@@ -99,24 +90,28 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
         return cell
     }
     
-    private func createIndexImageCell(_ tableView: NSTableView, _ row: Int, _ image: NSImage) -> IndexCellView? {
+    private func createIndexImageCell(_ tableView: NSTableView, _ track: Track, _ row: Int) -> PlayQueueTrackArtCell? {
         
-        guard let cell = tableView.makeView(withIdentifier: .playQueue_index, owner: nil) as? IndexCellView else {return nil}
+        guard let cell = tableView.makeView(withIdentifier: .playQueue_index, owner: nil) as? PlayQueueTrackArtCell else {return nil}
             
-        cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
-        
-        cell.updateImage(image)
+        TrackIO.loadArt(track)
+        cell.art = track.displayInfo.art?.image ?? Images.imgPlayingArt
         
         return cell
     }
     
-    private func createTextCell(_ tableView: NSTableView, _ id: NSUserInterfaceItemIdentifier, _ text: String, _ row: Int) -> TextCellView? {
+    private let titleFont: NSFont = NSFont(name: "Play Regular", size: 13)!
+    private let artistAlbumFont: NSFont = NSFont(name: "Play Regular", size: 11)!
+    
+    private func createTextCell(_ tableView: NSTableView, _ id: NSUserInterfaceItemIdentifier, _ track: Track, _ row: Int) -> PlayQueueTrackInfoCell? {
         
-        guard let cell = tableView.makeView(withIdentifier: id, owner: nil) as? TextCellView else {return nil}
+        guard let cell = tableView.makeView(withIdentifier: id, owner: nil) as? PlayQueueTrackInfoCell else {return nil}
             
-        cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
+//        cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         
-        cell.updateText(Fonts.Playlist.trackNameFont, text)
+        cell.titleFont = titleFont
+        cell.artistAlbumFont = artistAlbumFont
+        cell.initializeForTrack(track)
         
         return cell
     }

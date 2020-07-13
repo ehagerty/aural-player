@@ -259,6 +259,7 @@
 		3E18DF3C2483E12C00E498BC /* DelayAndTranscoding_EndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18DF3B2483E12C00E498BC /* DelayAndTranscoding_EndToEndTests.swift */; };
 		3E192394215AEEB600E894B3 /* LegacyPlaybackScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E192393215AEEB600E894B3 /* LegacyPlaybackScheduler.swift */; };
 		3E192396215B0F1100E894B3 /* FavoritesMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E192395215B0F1100E894B3 /* FavoritesMenuController.swift */; };
+		3E19C11624BC3D9E00568CE8 /* PlayQueueTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E19C11524BC3D9E00568CE8 /* PlayQueueTableViews.swift */; };
 		3E1AE56E21EB79DA00664152 /* CoverArtDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1AE56D21EB79DA00664152 /* CoverArtDataSource.swift */; };
 		3E1AE57021EC008D00664152 /* DefaultFFMpegMetadataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1AE56F21EC008D00664152 /* DefaultFFMpegMetadataParser.swift */; };
 		3E1BF7632431048800B6B9F9 /* RecordingQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1BF7622431048800B6B9F9 /* RecordingQuality.swift */; };
@@ -952,6 +953,7 @@
 		3E18DF3B2483E12C00E498BC /* DelayAndTranscoding_EndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayAndTranscoding_EndToEndTests.swift; sourceTree = "<group>"; };
 		3E192393215AEEB600E894B3 /* LegacyPlaybackScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyPlaybackScheduler.swift; sourceTree = "<group>"; };
 		3E192395215B0F1100E894B3 /* FavoritesMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesMenuController.swift; sourceTree = "<group>"; };
+		3E19C11524BC3D9E00568CE8 /* PlayQueueTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTableViews.swift; sourceTree = "<group>"; };
 		3E1AE56D21EB79DA00664152 /* CoverArtDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverArtDataSource.swift; sourceTree = "<group>"; };
 		3E1AE56F21EC008D00664152 /* DefaultFFMpegMetadataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFFMpegMetadataParser.swift; sourceTree = "<group>"; };
 		3E1BF7622431048800B6B9F9 /* RecordingQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingQuality.swift; sourceTree = "<group>"; };
@@ -2897,6 +2899,7 @@
 				3E82889224AE21B80032D0CE /* PlayQueueViewController.swift */,
 				3EEDFC2A24B225720025BA02 /* PlayQueueViewDelegate.swift */,
 				3E2C84D324BB8BAD00B0C589 /* PlayQueueViewDataSource.swift */,
+				3E19C11524BC3D9E00568CE8 /* PlayQueueTableViews.swift */,
 			);
 			path = PlayQueue;
 			sourceTree = "<group>";
@@ -3580,6 +3583,7 @@
 				3EDA1FBB214F305C003591FA /* SequencerDelegateProtocol.swift in Sources */,
 				3E46F55E1F2A8003007CD384 /* ModalDialogButtonCells.swift in Sources */,
 				3E1AE57021EC008D00664152 /* DefaultFFMpegMetadataParser.swift in Sources */,
+				3E19C11624BC3D9E00568CE8 /* PlayQueueTableViews.swift in Sources */,
 				3E9847861F5CFCE3001A2D28 /* RecorderViewController.swift in Sources */,
 				3E82889324AE21B80032D0CE /* PlayQueueViewController.swift in Sources */,
 				3E3FB7F9215B590A00974A59 /* Favorites.swift in Sources */,

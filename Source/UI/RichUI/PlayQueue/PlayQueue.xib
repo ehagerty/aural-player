@@ -33,7 +33,7 @@
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="playQueue_index" width="55" minWidth="40" maxWidth="55" id="966-oN-7HP">
+                                    <tableColumn identifier="playQueue_index" width="50" minWidth="50" maxWidth="50" id="966-oN-7HP">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="#">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -45,28 +45,18 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView id="Gqi-Ti-vm8" customClass="IndexCellView" customModule="Aural" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="1" width="55" height="50"/>
+                                            <tableCellView id="Gqi-Ti-vm8" customClass="PlayQueueTrackArtCell" customModule="Aural" customModuleProvider="target">
+                                                <rect key="frame" x="1" y="1" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oxz-wi-Ze3">
-                                                        <rect key="frame" x="0.0" y="25" width="55" height="25"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="zhp-pK-cAv">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="OXh-Jz-Lln">
-                                                        <rect key="frame" x="10" y="29" width="20" height="17"/>
+                                                        <rect key="frame" x="5" y="5" width="40" height="40"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="hVM-B8-2gn"/>
                                                     </imageView>
                                                 </subviews>
                                                 <connections>
-                                                    <outlet property="imageView" destination="OXh-Jz-Lln" id="zOh-Af-G5q"/>
-                                                    <outlet property="textField" destination="oxz-wi-Ze3" id="FOC-PM-Wvt"/>
+                                                    <outlet property="imgArt" destination="OXh-Jz-Lln" id="Awk-pg-NDO"/>
                                                 </connections>
                                             </tableCellView>
                                         </prototypeCellViews>
@@ -84,12 +74,12 @@
                                         <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="title"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView id="2yO-UU-fVl" customClass="TextCellView" customModule="Aural" customModuleProvider="target">
-                                                <rect key="frame" x="59" y="1" width="454" height="50"/>
+                                            <tableCellView id="2yO-UU-fVl" customClass="PlayQueueTrackInfoCell" customModule="Aural" customModuleProvider="target">
+                                                <rect key="frame" x="54" y="1" width="454" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Re3-3I-DbD">
-                                                        <rect key="frame" x="0.0" y="25" width="454" height="25"/>
+                                                        <rect key="frame" x="0.0" y="23" width="454" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="F43-aU-End">
                                                             <font key="font" metaFont="system"/>
@@ -97,9 +87,29 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8dg-tc-c7X">
+                                                        <rect key="frame" x="0.0" y="14" width="454" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="fwk-Bw-ds0">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cca-Gy-OKE">
+                                                        <rect key="frame" x="0.0" y="5" width="454" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="5Pe-w8-Ejm">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
                                                 </subviews>
                                                 <connections>
-                                                    <outlet property="textField" destination="Re3-3I-DbD" id="hHq-Hh-xhd"/>
+                                                    <outlet property="lblArtistAlbum" destination="cca-Gy-OKE" id="nGp-PA-Vw0"/>
+                                                    <outlet property="lblName" destination="8dg-tc-c7X" id="awo-ud-Oqj"/>
+                                                    <outlet property="lblTitle" destination="Re3-3I-DbD" id="tJg-EE-56P"/>
                                                 </connections>
                                             </tableCellView>
                                         </prototypeCellViews>
@@ -118,11 +128,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="Ox1-wp-9Mv" customClass="DurationCellView" customModule="Aural" customModuleProvider="target">
-                                                <rect key="frame" x="516" y="1" width="80" height="50"/>
+                                                <rect key="frame" x="511" y="1" width="80" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dv5-ri-kGY">
-                                                        <rect key="frame" x="0.0" y="25" width="80" height="25"/>
+                                                        <rect key="frame" x="0.0" y="14" width="90" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="A4C-yM-VPL">
                                                             <font key="font" metaFont="system"/>
