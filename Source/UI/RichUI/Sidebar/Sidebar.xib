@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,20 +18,20 @@
             <rect key="frame" x="0.0" y="0.0" width="200" height="560"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEl-CG-Gx6" userLabel="Sidebar">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="30" horizontalPageScroll="10" verticalLineScroll="30" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEl-CG-Gx6" userLabel="Sidebar">
                     <rect key="frame" x="0.0" y="0.0" width="200" height="560"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="jmp-nL-uzF">
-                        <rect key="frame" x="1" y="1" width="198" height="558"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <clipView key="contentView" copiesOnScroll="NO" id="jmp-nL-uzF">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="560"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="10" outlineTableColumn="AC9-Xq-AYv" id="Utz-zq-RYP" userLabel="Sidebar">
-                                <rect key="frame" x="0.0" y="0.0" width="198" height="558"/>
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="560"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="5"/>
-                                <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" white="0.082856514084507046" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="name" width="195" minWidth="16" maxWidth="1000" id="AC9-Xq-AYv" userLabel="Name">
+                                    <tableColumn identifier="name" width="197" minWidth="16" maxWidth="1000" id="AC9-Xq-AYv" userLabel="Name">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -43,7 +44,7 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView identifier="name" id="5id-77-TBG">
-                                                <rect key="frame" x="1" y="2" width="195" height="25"/>
+                                                <rect key="frame" x="1" y="2" width="197" height="25"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JgQ-I9-evN">
@@ -52,7 +53,7 @@
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ojv-r2-j4J"/>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tV1-3c-EYD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="170" height="25"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="172" height="25"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="File System" id="UUF-6B-n0R">
                                                             <font key="font" metaFont="system"/>
@@ -74,7 +75,7 @@
                                 </connections>
                             </outlineView>
                         </subviews>
-                        <nil key="backgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </clipView>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="3Rw-16-31S">
                         <rect key="frame" x="1" y="119" width="238" height="15"/>

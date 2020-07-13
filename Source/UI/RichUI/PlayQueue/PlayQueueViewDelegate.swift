@@ -101,7 +101,7 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
     }
     
     private let titleFont: NSFont = NSFont(name: "Play Regular", size: 13)!
-    private let artistAlbumFont: NSFont = NSFont(name: "Play Regular", size: 11)!
+    private let artistAlbumFont: NSFont = NSFont(name: "Play Regular", size: 12)!
     
     private func createTextCell(_ tableView: NSTableView, _ id: NSUserInterfaceItemIdentifier, _ track: Track, _ row: Int) -> PlayQueueTrackInfoCell? {
         
