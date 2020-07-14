@@ -4,7 +4,7 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
     
     let mainFont_13: NSFont = NSFont(name: "Play Regular", size: 13)!
     
-    private var fsTree: FileSystemItem!
+    private var fsRoot: FileSystemItem!
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
         return 30
@@ -14,8 +14,8 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
         
         if item == nil {
 
-            fsTree = FileSystemItem(url: URL(fileURLWithPath: "/Users/kven/Music/Grimes"))
-            return fsTree.children.count
+            fsRoot = FileSystemItem(url: URL(fileURLWithPath: "/Users/kven/Music/Grimes"))
+            return fsRoot.children.count
 
         } else if let fsItem = item as? FileSystemItem {
 
@@ -29,7 +29,7 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
         
         if item == nil {
             
-            return fsTree.children[index]
+            return fsRoot.children[index]
             
         } else if let fsItem = item as? FileSystemItem {
             
@@ -61,5 +61,10 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
         cell.lblName.font = mainFont_13
         
         return cell
+    }
+    
+    func outlineViewItemWillExpand(_ notification: Notification) {
+        
+        // TODO: Load folder contents (1 level deep) lazily
     }
 }
