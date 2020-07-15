@@ -44,29 +44,25 @@ class CircularSlider: NSControl {
 
         self.layer?.addSublayer(shapeLayer)
         
-        let line = NSBezierPath() // container for line(s)
-        line.move(to: center) // start point
-        line.line(to: perimeterPoint) // destination
-//        line.lineWidth = 2  // hair line
-//
-//        NSColor.gray.setStroke()
-//        line.stroke()
-  
-               
+        // ------------------------ ARC ----------------------------
                 
-                // To prevent the arc from disappearing when we hit 100%
-                percentage = Float(value - minValue) * 100 / Float(maxValue - minValue)
-                if percentage >= 100 {percentage = 99.98}
-                let endAngle: CGFloat = 225 - (CGFloat(percentage) * 2.7)
+        // To prevent the arc from disappearing when we hit 100%
+        percentage = Float(value - minValue) * 100 / Float(maxValue - minValue)
+        if percentage >= 100 {percentage = 99.98}
+        let endAngle: CGFloat = 225 - (CGFloat(percentage) * 2.7)
 
-         let arcPath = NSBezierPath()
+        let arcPath = NSBezierPath()
         arcPath.appendArc(withCenter: center, radius: radius + 2, startAngle: 225, endAngle: endAngle, clockwise: true)
-        
-//        print("\nVMMPE:", percentage, endAngle)
         
         foregroundColor.setStroke()
         arcPath.lineWidth = 1.5
         arcPath.stroke()
+        
+        // ------------------------ LINE ----------------------------
+        
+        let line = NSBezierPath() // container for line(s)
+        line.move(to: center) // start point
+        line.line(to: perimeterPoint) // destination
         
         let fgLayer = CAShapeLayer()
         fgLayer.path = line.CGPath
@@ -76,21 +72,6 @@ class CircularSlider: NSControl {
         fgLayer.lineWidth = 1.0
             
         self.layer?.addSublayer(fgLayer)
-        
-        // ---------------------- PERCENTAGE TEXT ----------------------
-        
-//        let text = String(format: "%d %%", Int(round(percentage)))
-        
-//        print("Perc:", text)
-        
-//        let dict: [NSAttributedString.Key: Any] = [
-//            NSAttributedString.Key.font: textFont,
-//            NSAttributedString.Key.foregroundColor: Colors.Player.transcoderArcProgressTextColor]
-//
-//        let size: CGSize = text.size(withAttributes: dict)
-//
-//        // Draw title (adjacent to image)
-//        text.draw(in: NSRect(x: (dirtyRect.width / 2) - (size.width / 2) + 2, y: (dirtyRect.height / 2) - (size.height / 2) + 2, width: size.width, height: size.height), withAttributes: dict)
     }
     
     override func mouseDown(with event: NSEvent) {
