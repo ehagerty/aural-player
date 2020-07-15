@@ -7,6 +7,9 @@ class PitchViewController: FXUnitViewController {
     
     @IBOutlet weak var pitchView: PitchView!
     
+    @IBOutlet weak var pitchSlider: CircularSlider!
+    @IBOutlet weak var sval: NSTextField!
+    
     @IBOutlet weak var lblPitch: VALabel!
     @IBOutlet weak var lblPitchMin: VALabel!
     @IBOutlet weak var lblPitchMax: VALabel!
@@ -67,6 +70,8 @@ class PitchViewController: FXUnitViewController {
         
         pitchUnit.pitch = pitchView.pitch
         pitchView.setPitch(pitchUnit.pitch, pitchUnit.formattedPitch)
+        sval.stringValue = String(roundedInt(pitchSlider.floatValue))
+//        print("SliderVal:", pitchSlider.floatValue)
     }
     
     // Sets the pitch to a specific value

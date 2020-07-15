@@ -1,15 +1,22 @@
 import Cocoa
 
+struct CircularSliderTick {
+    
+    let angleDegrees: CGFloat
+    let perimeterPoint: NSPoint
+}
+
 @IBDesignable
 class CircularSlider: NSControl {
     
     var percentage: Float = 50
     
-    @IBInspectable var value: Int = 50
-    @IBInspectable var minValue: Int = 0
-    @IBInspectable var maxValue: Int = 100
+    @IBInspectable var minValue: Float = 0
+    @IBInspectable var maxValue: Float = 100
+        
+    @IBInspectable var interval: Float = 1
     
-    @IBInspectable var radius: CGFloat = 30
+    var radius: CGFloat = 30
     var center: NSPoint = NSPoint.zero
     var perimeterPoint: NSPoint = NSPoint.zero
     
@@ -20,18 +27,69 @@ class CircularSlider: NSControl {
     
     var textFont: NSFont {return Fonts.Player.infoBoxArtistAlbumFont}
     
+    var ticks: [CircularSliderTick] = []
+    
     override func awakeFromNib() {
-        radius = (self.width - (2 * lineWidth)) / 2
+        
+        center = NSPoint(x: frame.width / 2, y: frame.height / 2)
+        radius = self.width / 2
+        computeTicks()
+    }
+    
+    private func computeTicks() {
+        
+        ticks.removeAll()
+        
+        for val in stride(from: minValue, through: maxValue, by: interval) {
+            ticks.append(computeTick(value: val))
+        }
+    }
+    
+    private func computeTick(value: Float) -> CircularSliderTick {
+
+        let angle = CGFloat(computeAngle(value: value))
+        let perimeterPoint = convertAngleDegreesToPerimeterPoint(angle)
+        
+        return CircularSliderTick(angleDegrees: angle, perimeterPoint: perimeterPoint)
+    }
+    
+    private func snapToTick(_ angle: CGFloat) -> CircularSliderTick {
+        
+        var minDistance: CGFloat = 10000
+        var snapTick: CircularSliderTick!
+        
+        for tick in ticks {
+            
+            let distance = abs(angle - tick.angleDegrees)
+            if distance < minDistance {
+                
+                minDistance = distance
+                snapTick = tick
+                
+            } else if distance > minDistance {
+                break
+            }
+        }
+        
+        return snapTick
+    }
+
+    private func computeAngle(value: Float) -> Float {
+
+        let percentage = (value - minValue) * 100 / (maxValue - minValue)
+        return percentage * 2.7
+    }
+
+    private func computeValue(angle: CGFloat) -> Float {
+        return Float(CGFloat(minValue) + (angle * CGFloat(maxValue - minValue) / 270.0))
     }
     
     override func draw(_ dirtyRect: NSRect) {
         
-        center = NSPoint(x: dirtyRect.width / 2, y: dirtyRect.height / 2)
-
         // Clear any previously added sublayers (otherwise, previously drawn arcs will remain)
         layer?.sublayers?.removeAll()
         
-        let circlePath = NSBezierPath(ovalIn: dirtyRect.insetBy(dx: 3, dy: 3))
+        let circlePath = NSBezierPath(ovalIn: dirtyRect.insetBy(dx: 0, dy: 0))
 
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
@@ -46,17 +104,17 @@ class CircularSlider: NSControl {
         
         // ------------------------ ARC ----------------------------
                 
-        // To prevent the arc from disappearing when we hit 100%
-        percentage = Float(value - minValue) * 100 / Float(maxValue - minValue)
-        if percentage >= 100 {percentage = 99.98}
-        let endAngle: CGFloat = 225 - (CGFloat(percentage) * 2.7)
-
-        let arcPath = NSBezierPath()
-        arcPath.appendArc(withCenter: center, radius: radius + 2, startAngle: 225, endAngle: endAngle, clockwise: true)
-        
-        foregroundColor.setStroke()
-        arcPath.lineWidth = 1.5
-        arcPath.stroke()
+//        // To prevent the arc from disappearing when we hit 100%
+//        percentage = (floatValue - minValue) * 100 / (maxValue - minValue)
+//        if percentage >= 100 {percentage = 99.98}
+//        let endAngle: CGFloat = 225 - (CGFloat(percentage) * 2.7)
+//
+//        let arcPath = NSBezierPath()
+//        arcPath.appendArc(withCenter: center, radius: radius + 2, startAngle: 225, endAngle: endAngle, clockwise: true)
+//
+//        foregroundColor.setStroke()
+//        arcPath.lineWidth = 1.5
+//        arcPath.stroke()
         
         // ------------------------ LINE ----------------------------
         
@@ -87,64 +145,84 @@ class CircularSlider: NSControl {
         let dx = center.x - loc.x
         let dy = center.y - loc.y
         
-        let rad: CGFloat = radius - 1
-//        print("\n", dx, dy)
+        let xSign: CGFloat = dx / abs(dx)
+        let ySign: CGFloat = dy / abs(dy)
         
-        var angle: CGFloat = 0
+        let angleRads = ySign > 0 ? min(atan((dy * ySign) / (dx * xSign)), 45 * CGFloat.pi / 180) : atan((dy * ySign) / (dx * xSign))
         
-        var ppx: CGFloat = 0
-        var ppy: CGFloat = 0
+        let correctedAngle: CGFloat = convertAngleRadsToAngleDegrees(angleRads, xSign, ySign)
+        let tick = snapToTick(correctedAngle)
+        perimeterPoint = tick.perimeterPoint
         
-        if dx > 0 && dy > 0 {
-            
-            let angleRads = min(atan(dy / dx), 45 * CGFloat.pi / 180)
-            print("AngleRads:", angleRads)
+        self.floatValue = computeValue(angle: tick.angleDegrees)
+        
+        self.redraw()
+        sendAction(self.action, to: self.target)
+    }
+    
+    private func convertAngleRadsToAngleDegrees(_ rads: CGFloat, _ xSign: CGFloat, _ ySign: CGFloat) -> CGFloat {
+        
+        let rawAngle = rads * (180 / CGFloat.pi)
+        
+        if xSign > 0 && ySign > 0 {
             
             // Bottom left quadrant
-            angle = max(0, 45 - angleRads * (180 / CGFloat.pi))
+            return max(0, 45 - rawAngle)
             
-            ppx = center.x - rad * cos(angleRads)
-            ppy = center.y - rad * sin(angleRads)
-            
-        } else if dx > 0 && dy < 0 {
-            
-            let angleRads = atan(-dy / dx)
-            print("AngleRads:", angleRads)
+        } else if xSign > 0 && ySign < 0 {
             
             // Top left quadrant
-            angle = 45 + angleRads * (180 / CGFloat.pi)
+            return 45 + rawAngle
             
-            ppx = center.x - rad * cos(angleRads)
-            ppy = center.y + rad * sin(angleRads)
-            
-        } else if dx < 0 && dy > 0 {
-            
-            let angleRads = min(atan(dy / -dx), 45 * CGFloat.pi / 180)
-            print("AngleRads:", angleRads)
+        } else if xSign < 0 && ySign > 0 {
             
             // Bottom right quadrant
-            angle = min(270, 225 + angleRads * (180 / CGFloat.pi))
-            
-            ppx = center.x + rad * cos(angleRads)
-            ppy = center.y - rad * sin(angleRads)
+            return min(270, 225 + rawAngle)
             
         } else {
             
-            let angleRads = atan(dy / dx)
-            print("AngleRads:", angleRads)
-            
             // Top right quadrant
-            angle = 225 - angleRads * (180 / CGFloat.pi)
-            
-            ppx = center.x + rad * cos(angleRads)
-            ppy = center.y + rad * sin(angleRads)
+            return 225 - rawAngle
         }
+    }
+    
+    private func convertAngleDegreesToPerimeterPoint(_ angle: CGFloat) -> NSPoint {
         
-        perimeterPoint = NSPoint(x: ppx, y: ppy)
-        
-        self.value = roundedInt(Float(CGFloat(minValue) + (angle * CGFloat(maxValue - minValue) / 270.0)))
-//        print("Angle:", angle, ", Value:", value, ", Pt:", perimeterPoint)
-        
-        self.redraw()
+        if angle < 45 {
+            
+            let angleRads: CGFloat = (45 - angle) * CGFloat.pi / 180
+            
+            let ppx: CGFloat = center.x - radius * cos(angleRads)
+            let ppy: CGFloat = center.y - radius * sin(angleRads)
+    
+            return NSPoint(x: ppx, y: ppy)
+            
+        } else if angle < 135 {
+            
+            let angleRads: CGFloat = (angle - 45) * CGFloat.pi / 180
+            
+            let ppx: CGFloat = center.x - radius * cos(angleRads)
+            let ppy: CGFloat = center.y + radius * sin(angleRads)
+    
+            return NSPoint(x: ppx, y: ppy)
+            
+        } else if angle < 225 {
+            
+            let angleRads: CGFloat = (225 - angle) * CGFloat.pi / 180
+            
+            let ppx: CGFloat = center.x + radius * cos(angleRads)
+            let ppy: CGFloat = center.y + radius * sin(angleRads)
+    
+            return NSPoint(x: ppx, y: ppy)
+            
+        } else {
+            
+            let angleRads: CGFloat = (angle - 225) * CGFloat.pi / 180
+            
+            let ppx: CGFloat = center.x + radius * cos(angleRads)
+            let ppy: CGFloat = center.y - radius * sin(angleRads)
+    
+            return NSPoint(x: ppx, y: ppy)
+        }
     }
 }
