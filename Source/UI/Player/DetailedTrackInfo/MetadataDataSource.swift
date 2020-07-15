@@ -125,7 +125,7 @@ class MetadataDataSource: TrackInfoDataSource {
         
         var trackInfo: [(key: String, value: String)] = []
         
-        trackInfo.append((key: "Title", value: track.displayInfo.title ?? value_unknown))
+        trackInfo.append((key: "Title", value: track.displayInfo.title))
         trackInfo.append((key: "Artist", value: track.displayInfo.artist ?? value_unknown))
         trackInfo.append((key: "Album", value: track.groupingInfo.album ?? value_unknown))
         trackInfo.append((key: "Genre", value: track.groupingInfo.genre ?? value_unknown))

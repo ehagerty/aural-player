@@ -6,7 +6,6 @@ import Cocoa
 class PitchViewController: FXUnitViewController {
     
     @IBOutlet weak var pitchView: PitchView!
-    @IBOutlet weak var box: NSBox!
     
     @IBOutlet weak var lblPitch: VALabel!
     @IBOutlet weak var lblPitchMin: VALabel!
@@ -78,7 +77,6 @@ class PitchViewController: FXUnitViewController {
         
         pitchView.setPitch(pitch, pitchUnit.formattedPitch)
         
-        btnBypass.updateState()
         pitchView.stateChanged()
         
         Messenger.publish(.fx_unitStateChanged)

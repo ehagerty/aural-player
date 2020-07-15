@@ -4,6 +4,10 @@ class FXUnitDelegate<T: FXUnit>: FXUnitDelegateProtocol {
     
     var unit: T
     
+    var unitType: EffectsUnit {unit.unitType}
+    
+    var unitDescription: String {""}
+    
     init(_ unit: T) {
         self.unit = unit
     }

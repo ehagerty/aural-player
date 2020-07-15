@@ -4,6 +4,8 @@ class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
     
     let preferences: SoundPreferences
     
+    override var unitDescription: String {"Equalizer"}
+    
     init(_ unit: EQUnit, _ preferences: SoundPreferences) {
         
         self.preferences = preferences

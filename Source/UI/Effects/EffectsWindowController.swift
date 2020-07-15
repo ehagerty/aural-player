@@ -4,10 +4,9 @@
 
 import Cocoa
 
-class EffectsWindowController: NSWindowController, NotificationSubscriber {
-    
-    @IBOutlet weak var rootContainerBox: NSBox!
-    @IBOutlet weak var effectsContainerBox: NSBox!
+class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate, NotificationSubscriber {
+
+    @IBOutlet weak var fxUnitsListView: NSOutlineView!
     @IBOutlet weak var tabButtonsBox: NSBox!
 
     // The constituent sub-views, one for each effects unit
@@ -36,10 +35,6 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
 
     private var fxTabViewButtons: [EffectsUnitTabButton]!
     
-    @IBOutlet weak var btnClose: TintedImageButton!
-    @IBOutlet weak var viewMenuButton: NSPopUpButton!
-    @IBOutlet weak var viewMenuIconItem: TintedIconMenuItem!
-
     // Delegate that alters the audio graph
     private let graph: AudioGraphDelegateProtocol = ObjectGraph.audioGraphDelegate
     
@@ -63,8 +58,6 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
 
         EffectsViewState.initialize(ObjectGraph.appState.ui.effects)
         
-        btnClose.tintFunction = {return Colors.viewControlButtonColor}
-        
         changeTextSize(EffectsViewState.textSize)
         Messenger.publish(.fx_changeTextSize, payload: EffectsViewState.textSize)
         
@@ -73,6 +66,8 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         initUnits()
         initTabGroup()
         initSubscriptions()
+        
+        fxUnitsListView.selectRow(1)
     }
 
     private func addSubViews() {
@@ -147,7 +142,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     }
     
     private func changeTextSize(_ textSize: TextSize) {
-        viewMenuButton.font = Fonts.Effects.menuFont
+//        viewMenuButton.font = Fonts.Effects.menuFont
     }
     
     private func applyColorScheme(_ scheme: ColorScheme) {
@@ -160,21 +155,19 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     
     private func changeBackgroundColor(_ color: NSColor) {
         
-        rootContainerBox.fillColor = color
-        
-        [effectsContainerBox, tabButtonsBox].forEach({
-            $0!.fillColor = color
-            $0!.isTransparent = !color.isOpaque
-        })
-        
-        fxTabViewButtons.forEach({$0.redraw()})
+//        [tabButtonsBox].forEach({
+//            $0!.fillColor = color
+//            $0!.isTransparent = !color.isOpaque
+//        })
+//
+//        fxTabViewButtons.forEach({$0.redraw()})
     }
     
     private func changeViewControlButtonColor(_ color: NSColor) {
         
-        [btnClose, viewMenuIconItem].forEach({
-            ($0 as? Tintable)?.reTint()
-        })
+//        [btnClose, viewMenuIconItem].forEach({
+//            ($0 as? Tintable)?.reTint()
+//        })
     }
     
     private func changeActiveUnitStateColor(_ color: NSColor) {
@@ -241,6 +234,73 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         case .master: tabViewAction(masterTabViewButton)
             
         }
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        return item == nil ? 6 : 0
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        
+        guard item == nil else {return ""}
+        
+        switch index {
+            
+        case 0: return graph.eqUnit
+            
+        case 1: return graph.pitchUnit
+            
+        case 2: return graph.timeUnit
+            
+        case 3: return graph.reverbUnit
+            
+        case 4: return graph.delayUnit
+            
+        case 5: return graph.filterUnit
+            
+        default: return ""
+            
+        }
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+        return false
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        
+        guard let unit = item as? FXUnitDelegateProtocol, let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("fxUnit"), owner: nil)
+            as? EffectsUnitEditorCell else {return nil}
+        
+        cell.initializeForUnit(unit)
+        return cell
+    }
+    
+    func outlineViewSelectionDidChange(_ notification: Notification) {
+        
+        guard let outlineView = notification.object as? NSOutlineView else {return}
+        
+        switch outlineView.selectedRow {
+            
+        case 0: showTab(.eq)
+            
+        case 1: showTab(.pitch)
+            
+        case 2: showTab(.time)
+        
+        case 3: showTab(.reverb)
+        
+        case 4: showTab(.delay)
+        
+        case 5: showTab(.filter)
+            
+        default: return
+            
+        }
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        return 30
     }
 }
 

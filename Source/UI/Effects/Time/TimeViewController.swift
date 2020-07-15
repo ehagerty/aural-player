@@ -5,19 +5,8 @@ import Cocoa
  */
 class TimeViewController: FXUnitViewController {
     
-    @IBOutlet weak var timeView: TimeView!
+    var timeView: TimeView {self.view as! TimeView}
     
-    @IBOutlet weak var lblRate: VALabel!
-    @IBOutlet weak var lblRateMin: VALabel!
-    @IBOutlet weak var lblRateMax: VALabel!
-    @IBOutlet weak var lblRateValue: VALabel!
-    
-    @IBOutlet weak var lblOverlap: VALabel!
-    @IBOutlet weak var lblOverlapMin: VALabel!
-    @IBOutlet weak var lblOverlapMax: VALabel!
-    @IBOutlet weak var lblOverlapValue: VALabel!
-    
-    @IBOutlet weak var lblPitchShiftValue: VALabel!
     @IBOutlet weak var btnShiftPitch: NSButton!
     
     override var nibName: String? {return "Time"}

@@ -4,6 +4,8 @@ class FilterUnitDelegate: FXUnitDelegate<FilterUnit>, FilterUnitDelegateProtocol
 
     var presets: FilterPresets {return unit.presets}
     
+    override var unitDescription: String {"Filter"}
+    
     var bands: [FilterBand] {
         
         get {return unit.bands}

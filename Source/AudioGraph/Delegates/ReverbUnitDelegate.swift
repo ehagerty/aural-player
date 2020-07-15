@@ -4,6 +4,8 @@ class ReverbUnitDelegate: FXUnitDelegate<ReverbUnit>, ReverbUnitDelegateProtocol
     
     var presets: ReverbPresets {return unit.presets}
     
+    override var unitDescription: String {"Reverb"}
+    
     var space: ReverbSpaces {
         
         get {return unit.space}

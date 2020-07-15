@@ -34,32 +34,30 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
             
         case .playQueue_index:
             
-            let indexText: String = String(row + 1)
-            
             // Check if there is a track currently playing, and if this row matches that track.
             if let currentTrack = playbackInfo.currentTrack, currentTrack == track {
                 
-                var image: NSImage!
+//                var image: NSImage!
+//
+//                switch playbackInfo.state {
+//
+//                case .playing, .paused:
+//
+//                    image = Images.imgPlayingTrack
+//
+//                case .waiting:
+//
+//                    image = Images.imgWaitingTrack
+//
+//                case .transcoding:
+//
+//                    image = Images.imgTranscodingTrack
+//
+//                default: return nil // Impossible
+//
+//                }
                 
-                switch playbackInfo.state {
-                    
-                case .playing, .paused:
-                    
-                    image = Images.imgPlayingTrack
-                    
-                case .waiting:
-                    
-                    image = Images.imgWaitingTrack
-                    
-                case .transcoding:
-                    
-                    image = Images.imgTranscodingTrack
-                
-                default: return nil // Impossible
-                
-                }
-                
-                return createIndexImageCell(tableView, track, row)
+//                return createIndexImageCell(tableView, track, row)
             }
             
             // Otherwise, create a text cell with the track index

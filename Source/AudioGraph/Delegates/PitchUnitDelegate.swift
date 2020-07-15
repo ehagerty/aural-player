@@ -4,6 +4,8 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     
     let preferences: SoundPreferences
     
+    override var unitDescription: String {"Pitch Shift"}
+    
     var pitch: Float {
         
         get {return unit.pitch * AppConstants.ValueConversions.pitch_audioGraphToUI}
@@ -33,16 +35,19 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     }
     
     func increasePitch() -> (pitch: Float, pitchString: String) {
+        
         ensureActiveAndResetPitch()
         return setUnitPitch(min(2400, unit.pitch + Float(preferences.pitchDelta)))
     }
     
     func decreasePitch() -> (pitch: Float, pitchString: String) {
+        
         ensureActiveAndResetPitch()
         return setUnitPitch(max(-2400, unit.pitch - Float(preferences.pitchDelta)))
     }
     
     private func setUnitPitch(_ value: Float) -> (pitch: Float, pitchString: String) {
+        
         unit.pitch = value
         return (pitch, formattedPitch)
     }

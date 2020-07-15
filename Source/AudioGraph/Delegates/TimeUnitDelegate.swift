@@ -4,6 +4,8 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
     
     let preferences: SoundPreferences
     
+    override var unitDescription: String {"Time Stretch"}
+    
     var rate: Float {
         
         get {return unit.rate}

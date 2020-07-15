@@ -37,6 +37,7 @@ struct Fonts {
         
         static let mainFont_20: NSFont = NSFont(name: "Play Regular", size: 20)!
         
+        static let captionFont_12: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 12)!
         static let captionFont_13: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 13)!
         static let captionFont_14: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 14)!
         static let captionFont_15: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 15)!

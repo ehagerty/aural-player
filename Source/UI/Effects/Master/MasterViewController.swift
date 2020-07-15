@@ -72,7 +72,6 @@ class MasterViewController: FXUnitViewController {
     }
     
     private func updateButtons() {
-        btnBypass.updateState()
         masterView.stateChanged()
     }
     
@@ -142,8 +141,6 @@ class MasterViewController: FXUnitViewController {
     }
     
     override func changeTextSize(_ textSize: TextSize) {
-        
-        lblCaption.font = Fonts.Effects.unitCaptionFont
         
         functionLabels.forEach({
             $0.font = $0 is EffectsUnitTriStateLabel ? Fonts.Effects.masterUnitFunctionFont : Fonts.Effects.unitFunctionFont
