@@ -10,7 +10,7 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     let barInsetX: CGFloat = 0
     let barInsetY: CGFloat = 0
     
-    let knobHeight: CGFloat = 10
+    let knobHeight: CGFloat = 4
     let knobInsetX: CGFloat = 0
     let knobInsetY: CGFloat = 0
     let knobRadius: CGFloat = 1
@@ -69,7 +69,7 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
         let knobFrame = knobRect(flipped: false)
         let halfKnobWidth = knobFrame.width / 2
         
-        let topRect = NSRect(x: drawRect.minX, y: drawRect.minY, width: drawRect.width, height: knobFrame.minY + halfKnobWidth).insetBy(dx: barInsetX, dy: barInsetY)
+        let topRect = NSRect(x: drawRect.minX + 1, y: drawRect.minY, width: drawRect.width - 2, height: knobFrame.minY).insetBy(dx: barInsetX, dy: barInsetY)
         
         let bottomRect = NSRect(x: drawRect.minX, y: knobFrame.maxY - halfKnobWidth, width: drawRect.width, height: drawRect.height - knobFrame.maxY + halfKnobWidth).insetBy(dx: barInsetX, dy: barInsetY)
         
@@ -80,7 +80,10 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
         
         // Top rect
         drawPath = NSBezierPath.init(roundedRect: topRect, xRadius: barRadius, yRadius: barRadius)
-        backgroundGradient.draw(in: drawPath, angle: -UIConstants.verticalGradientDegrees)
+        NSColor.black.setFill()
+        drawPath.fill()
+        
+//        backgroundGradient.draw(in: drawPath, angle: -UIConstants.verticalGradientDegrees)
         
         // Draw one tick across the center of the bar (marking 0dB)
         let tickMinX = drawRect.minX + 1.5

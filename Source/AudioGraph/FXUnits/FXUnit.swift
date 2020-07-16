@@ -60,7 +60,7 @@ class FXUnit {
 }
 
 // Enumeration of all the effects units
-enum EffectsUnit {
+enum EffectsUnit: Int {
 
     case master
     case eq

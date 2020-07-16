@@ -134,7 +134,7 @@ class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOu
     }
     
     func showTab(_ fxUnit: EffectsUnit) {
-        fxUnitsListView.selectRow(fxUnit.rawValue)
+        fxUnitsListView.selectRow(fxUnit.rawValue - 1)
     }
     
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
@@ -180,7 +180,7 @@ class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOu
     func outlineViewSelectionDidChange(_ notification: Notification) {
         
         if let outlineView = notification.object as? NSOutlineView {
-            fxUnitsListView.selectRow(outlineView.selectedRow)
+            fxTabView.selectTabViewItem(at: outlineView.selectedRow)
         }
     }
     
