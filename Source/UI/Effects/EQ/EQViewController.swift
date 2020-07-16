@@ -23,7 +23,7 @@ class EQViewController: FXUnitViewController {
     override func oneTimeSetup() {
         
         super.oneTimeSetup()
-        eqView.initialize(#selector(self.eqSliderAction(_:)), self, self.unitStateFunction)
+        eqView.initialize(self.unitStateFunction, #selector(self.eqSliderAction(_:)), self)
     }
     
     override func initSubscriptions() {
@@ -38,22 +38,12 @@ class EQViewController: FXUnitViewController {
         
         Messenger.subscribe(self, .eqFXUnit_decreaseTreble, self.decreaseTreble)
         Messenger.subscribe(self, .eqFXUnit_increaseTreble, self.increaseTreble)
-
-        Messenger.subscribe(self, .changeTabButtonTextColor, self.changeTabButtonTextColor(_:))
-        Messenger.subscribe(self, .changeSelectedTabButtonColor, self.changeSelectedTabButtonColor(_:))
-        Messenger.subscribe(self, .changeSelectedTabButtonTextColor, self.changeSelectedTabButtonTextColor(_:))
     }
     
     override func initControls() {
         
         super.initControls()
-        eqView.setState(eqUnit.type, eqUnit.bands, eqUnit.globalGain)
-    }
-    
-    @IBAction func chooseEQTypeAction(_ sender: AnyObject) {
-        
-        eqUnit.type = eqView.type
-        eqView.typeChanged(eqUnit.bands, eqUnit.globalGain)
+        eqView.updateBands(eqUnit.bands, eqUnit.globalGain)
     }
     
     override func stateChanged() {
@@ -104,27 +94,15 @@ class EQViewController: FXUnitViewController {
     private func bandsUpdated(_ bands: [Float]) {
         
         stateChanged()
-        eqView.bandsUpdated(bands, eqUnit.globalGain)
+        eqView.updateBands(bands, eqUnit.globalGain)
         
         Messenger.publish(.fx_unitStateChanged)
         showThisTab()
     }
     
-    override func changeTextSize(_ textSize: TextSize) {
-
-        super.changeTextSize(textSize)
-        
-        // Resize selector button and sync button text
-        eqView.changeTextSize()
-    }
-    
     override func applyColorScheme(_ scheme: ColorScheme) {
         
         super.applyColorScheme(scheme)
-        
-        changeSelectedTabButtonColor(scheme.general.selectedTabButtonColor)
-        changeTabButtonTextColor(scheme.general.tabButtonTextColor)
-        changeSelectedTabButtonTextColor(scheme.general.selectedTabButtonTextColor)
         changeSliderColors()
     }
     
@@ -153,18 +131,6 @@ class EQViewController: FXUnitViewController {
         if eqUnit.state == .suppressed {
             eqView.changeSuppressedUnitStateColor(color)
         }
-    }
-    
-    func changeSelectedTabButtonColor(_ color: NSColor) {
-        eqView.changeSelectedTabButtonColor()
-    }
-    
-    func changeTabButtonTextColor(_ color: NSColor) {
-        eqView.changeTabButtonTextColor()
-    }
-    
-    func changeSelectedTabButtonTextColor(_ color: NSColor) {
-        eqView.changeSelectedTabButtonTextColor()
     }
     
     override func changeSliderColors() {

@@ -2,124 +2,71 @@ import Cocoa
 
 class EQView: NSView {
     
-    @IBOutlet weak var container: NSBox!
+    @IBOutlet weak var globalGainSlider: EffectsUnitSlider!
     
-    @IBOutlet weak var eq10BandView: EQSubview!
-    @IBOutlet weak var eq15BandView: EQSubview!
-    
-    @IBOutlet weak var btn10Band: NSButton!
-    @IBOutlet weak var btn15Band: NSButton!
-    
-    var type: EQType {
-        return btn10Band.isOn ? .tenBand : .fifteenBand
-    }
-    
-    private var activeView: EQSubview {
-        return btn10Band.isOn ? eq10BandView : eq15BandView
-    }
-    
-    private var inactiveView: EQSubview {
-        return btn10Band.isOn ? eq15BandView : eq10BandView
-    }
-    
-    var globalGain: Float {
-        return activeView.globalGainSlider.floatValue
-    }
+    var bandSliders: [EffectsUnitSlider] = []
+    var allSliders: [EffectsUnitSlider] = []
     
     override func awakeFromNib() {
         
-        container.addSubviews(eq10BandView, eq15BandView)
+        let sliders = self.subviews.compactMap({$0 as? EffectsUnitSlider})
         
-        eq10BandView.positionAtZeroPoint()
-        eq15BandView.positionAtZeroPoint()
+        bandSliders = sliders.filter {$0.tag >= 0}
+        allSliders.append(contentsOf: sliders)
     }
     
-    func initialize(_ sliderAction: Selector?, _ sliderActionTarget: AnyObject?, _ eqStateFunction: @escaping EffectsUnitStateFunction) {
+    func initialize(_ stateFunction: @escaping EffectsUnitStateFunction, _ sliderAction: Selector?, _ sliderActionTarget: AnyObject?) {
         
-        eq10BandView.initialize(eqStateFunction, sliderAction, sliderActionTarget)
-        eq15BandView.initialize(eqStateFunction, sliderAction, sliderActionTarget)
-    }
-    
-    func setState(_ eqType: EQType, _ bands: [Float], _ globalGain: Float) {
-
-        chooseType(eqType)
-        bandsUpdated(bands, globalGain)
-    }
-    
-    func setUnitState(_ state: EffectsUnitState) {
-        activeView.setState(state)
-    }
-    
-    func typeChanged(_ bands: [Float], _ globalGain: Float) {
+        allSliders.forEach {$0.stateFunction = stateFunction}
         
-        activeView.stateChanged()
-        activeView.updateBands(bands, globalGain)
-        activeView.show()
-        inactiveView.hide()
-    }
-    
-    func bandsUpdated(_ bands: [Float], _ globalGain: Float) {
-        activeView.updateBands(bands, globalGain)
+        for slider in bandSliders {
+            
+            slider.action = sliderAction
+            slider.target = sliderActionTarget
+        }
     }
     
     func stateChanged() {
-        activeView.stateChanged()
-    }
-    
-    func chooseType(_ eqType: EQType) {
-        
-        eqType == .tenBand ? btn10Band.on() : btn15Band.on()
-        
-        activeView.stateChanged()
-        activeView.show()
-        inactiveView.hide()
-    }
-    
-    func applyPreset(_ preset: EQPreset) {
-    
-        setUnitState(preset.state)
-        bandsUpdated(preset.bands, preset.globalGain)
-    }
-    
-    func changeTextSize() {
-        
-        btn10Band.redraw()
-        btn15Band.redraw()
-    }
-    
-    func changeActiveUnitStateColor(_ color: NSColor) {
-        
-        eq10BandView.changeActiveUnitStateColor(color)
-        eq15BandView.changeActiveUnitStateColor(color)
-    }
-    
-    func changeBypassedUnitStateColor(_ color: NSColor) {
-        
-        eq10BandView.changeBypassedUnitStateColor(color)
-        eq15BandView.changeBypassedUnitStateColor(color)
-    }
-    
-    func changeSuppressedUnitStateColor(_ color: NSColor) {
-        
-        eq10BandView.changeSuppressedUnitStateColor(color)
-        eq15BandView.changeSuppressedUnitStateColor(color)
-    }
-    
-    func changeSelectedTabButtonColor() {
-        btn10Band.isOn ? btn10Band.redraw() : btn15Band.redraw()
-    }
-    
-    func changeTabButtonTextColor() {
-        btn10Band.isOff ? btn10Band.redraw() : btn15Band.redraw()
-    }
-    
-    func changeSelectedTabButtonTextColor() {
-        btn10Band.isOn ? btn10Band.redraw() : btn15Band.redraw()
+        allSliders.forEach {$0.updateState()}
     }
     
     func changeSliderColor() {
+        allSliders.forEach {$0.redraw()}
+    }
+    
+    func changeActiveUnitStateColor(_ color: NSColor) {
+        allSliders.forEach {$0.redraw()}
+    }
+    
+    func changeBypassedUnitStateColor(_ color: NSColor) {
+        allSliders.forEach {$0.redraw()}
+    }
+    
+    func changeSuppressedUnitStateColor(_ color: NSColor) {
+        allSliders.forEach {$0.redraw()}
+    }
+    
+    func setState(_ state: EffectsUnitState) {
+        allSliders.forEach {$0.setUnitState(state)}
+    }
+    
+    func updateBands(_ bands: [Float], _ globalGain: Float) {
         
-        eq10BandView.changeSliderColor()
-        eq15BandView.changeSliderColor()
+        // Slider tag = index. Default gain value, if bands array doesn't contain gain for index, is 0
+        bandSliders.forEach {$0.floatValue = bands[$0.tag]}
+        globalGainSlider.floatValue = globalGain
+    }
+    
+    // bands argument is a map of Frequency -> Gain
+    func updateBands(_ bands: [Float: Float], _ globalGain: Float) {
+        
+        let sortedBands: [Float] = bands.sorted(by: {r1, r2 -> Bool in r1.key < r2.key}).map {$0.value}
+        updateBands(sortedBands, globalGain)
+    }
+    
+    func applyPreset(_ preset: EQPreset) {
+        
+        setState(preset.state)
+        updateBands(preset.bands, preset.globalGain)
     }
 }

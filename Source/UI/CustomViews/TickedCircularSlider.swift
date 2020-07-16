@@ -57,7 +57,7 @@ class TickedCircularSlider: NSControl {
         center = NSPoint(x: frame.width / 2, y: frame.height / 2)
         radius = self.width / 2
         computeTicks()
-        
+
         setValue(initialValue)
     }
     

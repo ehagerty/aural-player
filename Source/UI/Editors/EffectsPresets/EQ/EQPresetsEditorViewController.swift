@@ -20,14 +20,7 @@ class EQPresetsEditorViewController: FXPresetsEditorGenericViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        eqView.initialize(nil, nil, {() -> EffectsUnitState in return .active})
-        eqView.chooseType(.tenBand)
-    }
-    
-    @IBAction func chooseEQTypeAction(_ sender: AnyObject) {
-        
-        let preset = eqUnit.presets.presetByName(firstSelectedPresetName)!
-        eqView.typeChanged(preset.bands, preset.globalGain)
+        eqView.initialize({() -> EffectsUnitState in return .active}, nil, nil)
     }
     
     override func renderPreview(_ presetName: String) {

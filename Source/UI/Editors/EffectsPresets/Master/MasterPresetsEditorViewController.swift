@@ -45,8 +45,6 @@ class MasterPresetsEditorViewController: FXPresetsEditorGenericViewController {
         subPreviewViews = [masterSubPreview, eqSubPreview, pitchSubPreview, timeSubPreview, reverbSubPreview, delaySubPreview, filterSubPreview]
         subPreviewViews.forEach({subPreviewBox.addSubview($0)})
         
-        eqSubPreview.chooseType(.tenBand)
-        
         let bandsDataFunction = {() -> [FilterBand] in return self.filterChartBands}
         filterSubPreview.initialize({() -> EffectsUnitState in return self.presetFilterUnitState}, bandsDataFunction, bandsDataSource, false)
         
@@ -101,13 +99,6 @@ class MasterPresetsEditorViewController: FXPresetsEditorGenericViewController {
         default: return
             
         }
-    }
-    
-    @IBAction func chooseEQTypeAction(_ sender: AnyObject) {
-        
-        let preset = masterPresets.presetByName(firstSelectedPresetName)!.eq
-        eqSubPreview.setUnitState(preset.state)
-        eqSubPreview.typeChanged(preset.bands, preset.globalGain)
     }
     
     private func renderPreview(_ preset: MasterPreset) {

@@ -44,6 +44,7 @@ class AudioEngineHelper {
                 output = nodes[i + 1]
                 
                 audioEngine.connect(input, to: output, format: nil)
+                
             }
         }
         

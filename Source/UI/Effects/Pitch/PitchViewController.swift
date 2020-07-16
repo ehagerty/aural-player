@@ -72,7 +72,7 @@ class PitchViewController: FXUnitViewController {
         // TODO: Move this to a generic view
         pitchView.initialize(self.unitStateFunction)
         
-        functionLabels = [lblPitch, lblOverlap, lblPitchMin, lblPitchMax, lblPitchValue, lblOverlapMin, lblOverlapMax, lblPitchOverlapValue]
+//        functionLabels = [lblPitch, lblOverlap, lblPitchMin, lblPitchMax, lblPitchValue, lblOverlapMin, lblOverlapMax, lblPitchOverlapValue]
     }
     
     override func initControls() {
