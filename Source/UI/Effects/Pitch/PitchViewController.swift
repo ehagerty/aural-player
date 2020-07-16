@@ -78,7 +78,7 @@ class PitchViewController: FXUnitViewController {
     override func initControls() {
         
         super.initControls()
-        pitchView.setState(pitchUnit.pitch, pitchUnit.formattedPitch, pitchUnit.overlap, pitchUnit.formattedOverlap)
+        pitchView.setState(Float(pitchUnit.pitch), pitchUnit.formattedPitch, pitchUnit.overlap, pitchUnit.formattedOverlap)
         
         [lblOctaves, lblSemitones, lblCents].forEach {$0?.textColor = Colors.Effects.activeUnitStateColor}
     }
@@ -93,9 +93,6 @@ class PitchViewController: FXUnitViewController {
     @IBAction func pitchOctavesAction(_ sender: AnyObject) {
         
         [lblOctaves, lblSemitones, lblCents].forEach {$0?.textColor = Colors.Effects.activeUnitStateColor}
-        
-//        pitchUnit.pitch = pitchView.pitch
-//        pitchView.setPitch(pitchUnit.pitch, pitchUnit.formattedPitch)
         
         let octaves = octavesSlider.integerValue
         let semitones = semitonesSlider.integerValue
@@ -176,7 +173,8 @@ class PitchViewController: FXUnitViewController {
         lblSemitones.stringValue = String(semitonesSlider.integerValue)
         lblCents.stringValue = String(centsSlider.integerValue)
         
-        lblPitchCents.stringValue = String(computePitch()) + " cents"
+        pitchUnit.pitch = computePitch()
+        lblPitchCents.stringValue = pitchUnit.formattedPitch
     }
     
     @IBAction func pitchSemitonesAction(_ sender: AnyObject) {
@@ -247,7 +245,8 @@ class PitchViewController: FXUnitViewController {
         lblSemitones.stringValue = String(semitonesSlider.integerValue)
         lblCents.stringValue = String(centsSlider.integerValue)
         
-        lblPitchCents.stringValue = String(computePitch()) + " cents"
+        pitchUnit.pitch = computePitch()
+        lblPitchCents.stringValue = pitchUnit.formattedPitch
     }
     
     @IBAction func pitchCentsAction(_ sender: AnyObject) {
@@ -256,7 +255,9 @@ class PitchViewController: FXUnitViewController {
 //        pitchView.setPitch(pitchUnit.pitch, pitchUnit.formattedPitch)
         
         lblCents.stringValue = String(centsSlider.integerValue)
-        lblPitchCents.stringValue = String(computePitch()) + " cents"
+        
+        pitchUnit.pitch = computePitch()
+        lblPitchCents.stringValue = pitchUnit.formattedPitch
     }
     
     private func computePitch() -> Int {
@@ -266,7 +267,7 @@ class PitchViewController: FXUnitViewController {
     // Sets the pitch to a specific value
     private func setPitch(_ pitch: Float) {
         
-        pitchUnit.pitch = pitch
+        pitchUnit.pitch = roundedInt(pitch)
         pitchUnit.ensureActive()
         
         pitchView.setPitch(pitch, pitchUnit.formattedPitch)

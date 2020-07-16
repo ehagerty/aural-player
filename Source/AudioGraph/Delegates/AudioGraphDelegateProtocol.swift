@@ -118,7 +118,7 @@ protocol EQUnitDelegateProtocol: FXUnitDelegateProtocol {
 protocol PitchUnitDelegateProtocol: FXUnitDelegateProtocol {
     
     // The pitch shift value, in cents, specified as a value between -2400 and 2400
-    var pitch: Float {get set}
+    var pitch: Int {get set}
     
     var formattedPitch: String {get}
     
