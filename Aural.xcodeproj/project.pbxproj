@@ -348,6 +348,7 @@
 		3E3CABE124770C32002E78AE /* SequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3CABE024770C32002E78AE /* SequencerTests.swift */; };
 		3E3D0923247950450009506E /* SequencerPeeking_TracksPlaylist_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D0922247950450009506E /* SequencerPeeking_TracksPlaylist_Tests.swift */; };
 		3E3D489B1F464C02004C0F91 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D489A1F464C02004C0F91 /* Errors.swift */; };
+		3E3DBE4524C03E7A000D1EE8 /* ContinuousCircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DBE4424C03E7A000D1EE8 /* ContinuousCircularSlider.swift */; };
 		3E3DCAC0244B31F100563AE4 /* PlayerViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DCABF244B31F100563AE4 /* PlayerViewState.swift */; };
 		3E3ECDFF242E2CC4000721E9 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3ECDFE242E2CC4000721E9 /* DeviceManager.swift */; };
 		3E3F29632159B69900581EFE /* LayoutsEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E3F29622159B69900581EFE /* LayoutsEditor.xib */; };
@@ -769,7 +770,7 @@
 		3EE7D730244EDCC2005D76FA /* PlayerColorSchemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D72F244EDCC2005D76FA /* PlayerColorSchemeViewController.swift */; };
 		3EE7D733244EE0C5005D76FA /* PlaylistColorScheme.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EE7D732244EE0C5005D76FA /* PlaylistColorScheme.xib */; };
 		3EE7D735244EE1AB005D76FA /* PlaylistColorSchemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D734244EE1AB005D76FA /* PlaylistColorSchemeViewController.swift */; };
-		3EE8E98624BF06570024FD0C /* CircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE8E98524BF06570024FD0C /* CircularSlider.swift */; };
+		3EE8E98624BF06570024FD0C /* TickedCircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE8E98524BF06570024FD0C /* TickedCircularSlider.swift */; };
 		3EE93BD424423D4C009A70D9 /* PlayerViewPopupMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE93BD324423D4C009A70D9 /* PlayerViewPopupMenuController.swift */; };
 		3EE97B39245C47C20063ADB2 /* ColorSchemeHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE97B38245C47C20063ADB2 /* ColorSchemeHistory.swift */; };
 		3EE97B3B245C4E1C0063ADB2 /* AuralColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE97B3A245C4E1C0063ADB2 /* AuralColorPicker.swift */; };
@@ -1049,6 +1050,7 @@
 		3E3CABE024770C32002E78AE /* SequencerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerTests.swift; sourceTree = "<group>"; };
 		3E3D0922247950450009506E /* SequencerPeeking_TracksPlaylist_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerPeeking_TracksPlaylist_Tests.swift; sourceTree = "<group>"; };
 		3E3D489A1F464C02004C0F91 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		3E3DBE4424C03E7A000D1EE8 /* ContinuousCircularSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousCircularSlider.swift; sourceTree = "<group>"; };
 		3E3DCABF244B31F100563AE4 /* PlayerViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewState.swift; sourceTree = "<group>"; };
 		3E3ECDFE242E2CC4000721E9 /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		3E3F29622159B69900581EFE /* LayoutsEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutsEditor.xib; sourceTree = "<group>"; };
@@ -1445,7 +1447,7 @@
 		3EE7D72F244EDCC2005D76FA /* PlayerColorSchemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerColorSchemeViewController.swift; sourceTree = "<group>"; };
 		3EE7D732244EE0C5005D76FA /* PlaylistColorScheme.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistColorScheme.xib; sourceTree = "<group>"; };
 		3EE7D734244EE1AB005D76FA /* PlaylistColorSchemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistColorSchemeViewController.swift; sourceTree = "<group>"; };
-		3EE8E98524BF06570024FD0C /* CircularSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularSlider.swift; sourceTree = "<group>"; };
+		3EE8E98524BF06570024FD0C /* TickedCircularSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickedCircularSlider.swift; sourceTree = "<group>"; };
 		3EE93BD324423D4C009A70D9 /* PlayerViewPopupMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewPopupMenuController.swift; sourceTree = "<group>"; };
 		3EE97B38245C47C20063ADB2 /* ColorSchemeHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeHistory.swift; sourceTree = "<group>"; };
 		3EE97B3A245C4E1C0063ADB2 /* AuralColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuralColorPicker.swift; sourceTree = "<group>"; };
@@ -1791,7 +1793,8 @@
 				3E54B23822C263B3005EAEDF /* TriStateLabel.swift */,
 				3E8103D8244DDAB800ACCFA1 /* TintedImageView.swift */,
 				3E17D03321E625A100951F81 /* PrettyScroller.swift */,
-				3EE8E98524BF06570024FD0C /* CircularSlider.swift */,
+				3EE8E98524BF06570024FD0C /* TickedCircularSlider.swift */,
+				3E3DBE4424C03E7A000D1EE8 /* ContinuousCircularSlider.swift */,
 				3E50ADE324614CFC00B31339 /* Alerts */,
 				3E50ADE424614D0100B31339 /* StringInputPopover */,
 				3E50ADE524614D0700B31339 /* Menus */,
@@ -3403,6 +3406,7 @@
 				3EEDFC2B24B225720025BA02 /* PlayQueueViewDelegate.swift in Sources */,
 				3EB029141FB58CEC00A2D920 /* SoundMenuController.swift in Sources */,
 				3E8EB20624BCFD2D0034A45A /* FileSystemBrowserTableViews.swift in Sources */,
+				3E3DBE4524C03E7A000D1EE8 /* ContinuousCircularSlider.swift in Sources */,
 				3EE4D44021D6E5DA000110FC /* AlertWindowController.swift in Sources */,
 				3E6341DC243DC53B00190502 /* HistoryPreferences.swift in Sources */,
 				3E0A66B62169FC9300B2EA2A /* PlaybackProfiles.swift in Sources */,
@@ -3713,7 +3717,7 @@
 				3EA19C211FC16A3C0072929E /* ControlsPreferencesViewController.swift in Sources */,
 				3EDD4CD42193FAE300C15D5A /* PitchUnit.swift in Sources */,
 				3EB2A7E41F0436D5001DF748 /* EQSliderCell.swift in Sources */,
-				3EE8E98624BF06570024FD0C /* CircularSlider.swift in Sources */,
+				3EE8E98624BF06570024FD0C /* TickedCircularSlider.swift in Sources */,
 				3E5E1E5321DB5688007C62B7 /* AboutDialogController.swift in Sources */,
 				3E7DCBDD2196E8B700C6D6D3 /* FilterUnit.swift in Sources */,
 				3E3707D5248A9B5D0057A965 /* SeekSliderView.swift in Sources */,

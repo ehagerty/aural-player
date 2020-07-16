@@ -131,6 +131,9 @@ struct AppConstants {
         static let pan_UIToAudioGraph: Float = (1/100) // Divide by 100
         static let pan_audioGraphToUI: Float = 100     // Multiply by 100
         
+        static let pitch_octaveToCents: Float = 1200     // Multiply by 1200
+        static let pitch_semitoneToCents: Float = 100     // Multiply by 1200
+        
         static let pitch_UIToAudioGraph: Float = 1200     // Multiply by 1200
         static let pitch_audioGraphToUI: Float = (1/1200) // Divide by 1200
     }
