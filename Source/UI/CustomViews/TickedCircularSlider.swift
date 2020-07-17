@@ -54,6 +54,8 @@ class TickedCircularSlider: NSControl {
     
     override func awakeFromNib() {
         
+        self.enable()
+        
         center = NSPoint(x: frame.width / 2, y: frame.height / 2)
         radius = self.width / 2
         computeTicks()

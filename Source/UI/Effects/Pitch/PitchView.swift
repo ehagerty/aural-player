@@ -41,7 +41,7 @@ class PitchView: NSView {
 //        sliders.forEach({$0.setUnitState(state)})
     }
     
-    func setPitch(_ pitch: Float, _ pitchString: String) {
+    func setPitch(_ octaves: Int, _ semitones: Int, _ cents: Int) {
         
 //        pitchSlider.floatValue = pitch
 //        lblPitchValue.stringValue = pitchString

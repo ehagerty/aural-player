@@ -12,6 +12,19 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
         set(newValue) {unit.pitch = Float(newValue)}
     }
     
+    var pitchAsOctavesSemitonesCents: (octaves: Int, semitones: Int, cents: Int) {
+        
+        var cents = self.pitch
+        
+        let octaves = cents / AppConstants.ValueConversions.pitch_octaveToCents
+        cents -= octaves * AppConstants.ValueConversions.pitch_octaveToCents
+        
+        let semitones = cents / AppConstants.ValueConversions.pitch_semitoneToCents
+        cents -= semitones * AppConstants.ValueConversions.pitch_semitoneToCents
+        
+        return (octaves, semitones, cents)
+    }
+    
     var formattedPitch: String {
         
         let pitch = self.pitch

@@ -21,7 +21,18 @@ class CircularSlider: NSControl {
     
     var textFont: NSFont {return Fonts.Player.infoBoxArtistAlbumFont}
     
+    func setValue(_ value: Float) {
+        
+        let angle = computeAngle(value: value)
+        perimeterPoint = convertAngleDegreesToPerimeterPoint(CGFloat(angle))
+        
+        self.floatValue = value
+        self.integerValue = roundedInt(self.floatValue)
+    }
+    
     override func awakeFromNib() {
+        
+        self.enable()
         
         center = NSPoint(x: frame.width / 2, y: frame.height / 2)
         radius = self.width / 2

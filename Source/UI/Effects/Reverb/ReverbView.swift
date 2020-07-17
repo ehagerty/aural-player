@@ -3,7 +3,7 @@ import Cocoa
 class ReverbView: NSView {
     
     @IBOutlet weak var reverbSpaceMenu: NSPopUpButton!
-    @IBOutlet weak var reverbAmountSlider: EffectsUnitSlider!
+    @IBOutlet weak var reverbAmountSlider: TickedCircularSlider!
     @IBOutlet weak var lblReverbAmountValue: NSTextField!
     
     var spaceString: String {
@@ -15,8 +15,8 @@ class ReverbView: NSView {
     }
     
     func initialize(_ stateFunction: (() -> EffectsUnitState)?) {
-        reverbAmountSlider.stateFunction = stateFunction
-        reverbAmountSlider.updateState()
+//        reverbAmountSlider.stateFunction = stateFunction
+//        reverbAmountSlider.updateState()
     }
     
     func setState(_ space: String , _ amount: Float, _ amountString: String) {
@@ -25,7 +25,7 @@ class ReverbView: NSView {
     }
     
     func setUnitState(_ state: EffectsUnitState) {
-        reverbAmountSlider.setUnitState(state)
+//        reverbAmountSlider.setUnitState(state)
     }
     
     func setSpace(_ space: String) {
@@ -38,7 +38,7 @@ class ReverbView: NSView {
     }
     
     func stateChanged() {
-        reverbAmountSlider.updateState()
+//        reverbAmountSlider.updateState()
     }
     
     func applyPreset(_ preset: ReverbPreset) {

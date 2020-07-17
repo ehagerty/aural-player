@@ -43,17 +43,19 @@ class PitchViewController: FXUnitViewController {
         fxUnit = pitchUnit
         presetsWrapper = PresetsWrapper<PitchPreset, PitchPresets>(pitchUnit.presets)
         
-        octavesSlider.integerValue = 0
-        semitonesSlider.integerValue = 0
-        centsSlider.integerValue = 0
+        let pitch = pitchUnit.pitchAsOctavesSemitonesCents
         
-        octavesSlider.enable()
-        semitonesSlider.enable()
-        centsSlider.enable()
-        
+        octavesSlider.setValue(Float(pitch.octaves))
         lblOctaves.stringValue = String(octavesSlider.integerValue)
+        
+        semitonesSlider.setValue(Float(pitch.semitones))
         lblSemitones.stringValue = String(semitonesSlider.integerValue)
+        
+        centsSlider.setValue(Float(pitch.cents))
         lblCents.stringValue = String(centsSlider.integerValue)
+        
+        overlapSlider.setValue(pitchUnit.overlap)
+        lblOverlapV.stringValue = String(format: "%.2f", overlapSlider.floatValue)
     }
     
     override func initSubscriptions() {
@@ -270,7 +272,7 @@ class PitchViewController: FXUnitViewController {
         pitchUnit.pitch = roundedInt(pitch)
         pitchUnit.ensureActive()
         
-        pitchView.setPitch(pitch, pitchUnit.formattedPitch)
+//        pitchView.setPitch(pitch, pitchUnit.formattedPitch)
         
         pitchView.stateChanged()
         
@@ -308,7 +310,7 @@ class PitchViewController: FXUnitViewController {
         
         Messenger.publish(.fx_unitStateChanged)
         
-        pitchView.setPitch(pitch, pitchString)
+//        pitchView.setPitch(pitch, pitchString)
         pitchView.stateChanged()
         
         // Show the Pitch tab if the Effects panel is shown

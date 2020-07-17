@@ -120,6 +120,8 @@ protocol PitchUnitDelegateProtocol: FXUnitDelegateProtocol {
     // The pitch shift value, in cents, specified as a value between -2400 and 2400
     var pitch: Int {get set}
     
+    var pitchAsOctavesSemitonesCents: (octaves: Int, semitones: Int, cents: Int) {get}
+    
     var formattedPitch: String {get}
     
     // the amount of overlap between segments of the input audio signal into the pitch effects unit, specified as a value between 3 and 32
