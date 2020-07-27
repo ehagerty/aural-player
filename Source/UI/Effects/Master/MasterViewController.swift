@@ -54,9 +54,13 @@ class MasterViewController: FXUnitViewController {
         broadcastStateChangeNotification()
     }
     
-    @IBAction override func bypassAction(_ sender: AnyObject) {
+    @IBAction func bypassAction(_ sender: AnyObject) {
         
-        super.bypassAction(sender)
+        _ = fxUnit.toggleState()
+        stateChanged()
+        
+        Messenger.publish(.fx_unitStateChanged)
+        
         updateButtons()
         broadcastStateChangeNotification()
     }

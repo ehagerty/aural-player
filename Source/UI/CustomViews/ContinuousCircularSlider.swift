@@ -1,7 +1,25 @@
 import Cocoa
 
 @IBDesignable
-class CircularSlider: NSControl {
+class CircularSlider: NSControl, EffectsUnitSliderProtocol {
+    
+    var unitState: EffectsUnitState = .bypassed {
+        
+        didSet {
+            redraw()
+        }
+    }
+    
+    var stateFunction: (() -> EffectsUnitState)?
+    
+    func updateState() {
+        
+        if let function = stateFunction {
+            
+            unitState = function()
+            redraw()
+        }
+    }
     
     var percentage: Float = 50
     
@@ -17,7 +35,10 @@ class CircularSlider: NSControl {
     var perimeterPoint: NSPoint = NSPoint.zero
     
     var backgroundColor: NSColor {return Colors.Player.transcoderArcBackgroundColor}
-    var foregroundColor: NSColor {return Colors.Player.sliderForegroundColor}
+    
+    var foregroundColor: NSColor {
+        return unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
+    }
     
     var textFont: NSFont {return Fonts.Player.infoBoxArtistAlbumFont}
     
@@ -81,9 +102,9 @@ class CircularSlider: NSControl {
 
         arcLayer.fillColor = NSColor.clear.cgColor
 
-        let arcColor: CGColor = NSColor(red: 0, green: 0.35, blue: 0.7, alpha: 1).cgColor
+        let arcColor: CGColor = unitState == .active ? NSColor(red: 0, green: 0.35, blue: 0.7, alpha: 1).cgColor : Colors.Constants.white70Percent.cgColor
         arcLayer.strokeColor = arcColor
-        arcLayer.lineWidth = 1
+        arcLayer.lineWidth = 2
 
         arcLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor
         arcLayer.shouldRasterize = true

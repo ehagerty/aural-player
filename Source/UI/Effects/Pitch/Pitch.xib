@@ -100,7 +100,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="pitchCentsAction:" target="-2" id="hTn-dC-3Jz"/>
+                        <action selector="pitchAction:" target="-2" id="sFU-ft-YrX"/>
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yY-Bp-kT8" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
@@ -148,7 +148,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="pitchSemitonesAction:" target="-2" id="waS-4c-fWx"/>
+                        <action selector="pitchAction:" target="-2" id="k9U-eV-OM1"/>
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1I-aS-oR6" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
@@ -196,7 +196,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="pitchOctavesAction:" target="-2" id="7ip-zL-gsO"/>
+                        <action selector="pitchAction:" target="-2" id="kiZ-ao-t8d"/>
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3oC-qk-aAJ" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
@@ -376,7 +376,18 @@
                 </textField>
             </subviews>
             <connections>
-                <outlet property="lblPitchOverlapValue" destination="b9W-qg-K1K" id="I49-EY-kOj"/>
+                <outlet property="centsSlider" destination="wik-f7-0DE" id="KDe-Ws-epB"/>
+                <outlet property="lblCents" destination="ryC-3C-jKV" id="kka-G0-xEx"/>
+                <outlet property="lblOctaves" destination="2Nk-Gs-ONv" id="d1Z-Ox-nUE"/>
+                <outlet property="lblOverlap" destination="ZPu-5Q-0fO" id="gwv-L0-7Sa"/>
+                <outlet property="lblOverlapMax" destination="qv1-xN-zP1" id="Lzk-oG-dmZ"/>
+                <outlet property="lblOverlapMin" destination="1Mj-z2-Eaj" id="R2E-yt-XUI"/>
+                <outlet property="lblOverlapValue" destination="b9W-qg-K1K" id="z1O-M2-GfY"/>
+                <outlet property="lblPitchValue" destination="cS4-CE-Czu" id="UST-tF-JNy"/>
+                <outlet property="lblSemitones" destination="hvG-kJ-HoT" id="lIv-Tk-03A"/>
+                <outlet property="octavesSlider" destination="hkm-hv-dgO" id="zYJ-es-kUl"/>
+                <outlet property="overlapSlider" destination="Nhe-v7-jh4" id="46z-Qj-R2O"/>
+                <outlet property="semitonesSlider" destination="Xrx-aR-KSa" id="CKp-jj-qfV"/>
             </connections>
             <point key="canvasLocation" x="139" y="153"/>
         </view>

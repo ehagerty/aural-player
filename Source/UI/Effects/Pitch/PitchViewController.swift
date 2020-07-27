@@ -7,29 +7,6 @@ class PitchViewController: FXUnitViewController {
     
     @IBOutlet weak var pitchView: PitchView!
     
-    @IBOutlet weak var octavesSlider: TickedCircularSlider!
-    @IBOutlet weak var semitonesSlider: TickedCircularSlider!
-    @IBOutlet weak var centsSlider: TickedCircularSlider!
-    
-    @IBOutlet weak var overlapSlider: CircularSlider!
-    @IBOutlet weak var lblOverlapV: NSTextField!
-    
-    @IBOutlet weak var lblOctaves: NSTextField!
-    @IBOutlet weak var lblSemitones: NSTextField!
-    @IBOutlet weak var lblCents: NSTextField!
-    
-    @IBOutlet weak var lblPitchCents: NSTextField!
-    
-    @IBOutlet weak var lblPitch: VALabel!
-    @IBOutlet weak var lblPitchMin: VALabel!
-    @IBOutlet weak var lblPitchMax: VALabel!
-    @IBOutlet weak var lblPitchValue: VALabel!
-    
-    @IBOutlet weak var lblOverlap: VALabel!
-    @IBOutlet weak var lblOverlapMin: VALabel!
-    @IBOutlet weak var lblOverlapMax: VALabel!
-    @IBOutlet weak var lblPitchOverlapValue: VALabel!
-    
     override var nibName: String? {return "Pitch"}
     
     private var pitchUnit: PitchUnitDelegateProtocol = ObjectGraph.audioGraphDelegate.pitchUnit
@@ -42,20 +19,6 @@ class PitchViewController: FXUnitViewController {
         unitType = .pitch
         fxUnit = pitchUnit
         presetsWrapper = PresetsWrapper<PitchPreset, PitchPresets>(pitchUnit.presets)
-        
-        let pitch = pitchUnit.pitchAsOctavesSemitonesCents
-        
-        octavesSlider.setValue(Float(pitch.octaves))
-        lblOctaves.stringValue = String(octavesSlider.integerValue)
-        
-        semitonesSlider.setValue(Float(pitch.semitones))
-        lblSemitones.stringValue = String(semitonesSlider.integerValue)
-        
-        centsSlider.setValue(Float(pitch.cents))
-        lblCents.stringValue = String(centsSlider.integerValue)
-        
-        overlapSlider.setValue(pitchUnit.overlap)
-        lblOverlapV.stringValue = String(format: "%.2f", overlapSlider.floatValue)
     }
     
     override func initSubscriptions() {
@@ -80,190 +43,18 @@ class PitchViewController: FXUnitViewController {
     override func initControls() {
         
         super.initControls()
-        pitchView.setState(Float(pitchUnit.pitch), pitchUnit.formattedPitch, pitchUnit.overlap, pitchUnit.formattedOverlap)
-        
-        [lblOctaves, lblSemitones, lblCents].forEach {$0?.textColor = Colors.Effects.activeUnitStateColor}
+        pitchView.setState(pitchUnit.pitchAsOctavesSemitonesCents, pitchUnit.formattedPitch, pitchUnit.overlap, pitchUnit.formattedOverlap)
     }
     
     override func stateChanged() {
-        
-        super.stateChanged()
         pitchView.stateChanged()
     }
     
     // Updates the pitch
-    @IBAction func pitchOctavesAction(_ sender: AnyObject) {
+    @IBAction func pitchAction(_ sender: AnyObject) {
         
-        [lblOctaves, lblSemitones, lblCents].forEach {$0?.textColor = Colors.Effects.activeUnitStateColor}
-        
-        let octaves = octavesSlider.integerValue
-        let semitones = semitonesSlider.integerValue
-        let cents = centsSlider.integerValue
-        
-        switch octaves {
-            
-        case -2:
-            
-            // Semitones can only be non-negative
-            semitonesSlider.allowedValues = 0...12
-            if semitones < 0 {
-                semitonesSlider.setValue(0)
-            }
-            
-            if semitonesSlider.integerValue == 0 {
-                
-                centsSlider.allowedValues = 0...100
-                if cents < 0 {
-                    centsSlider.setValue(0)
-                }
-            }
-            
-        case -1:
-            
-            semitonesSlider.allowedValues = -12...12
-            
-            if semitones == -12 {
-                
-                centsSlider.allowedValues = 0...100
-                if cents < 0 {
-                    centsSlider.setValue(0)
-                }
-                
-            } else {
-                
-                centsSlider.allowedValues = -100...100
-            }
-            
-        case 1:
-            
-            semitonesSlider.allowedValues = -12...12
-            
-            if semitones == 12 {
-                
-                centsSlider.allowedValues = -100...0
-                if cents > 0 {
-                    centsSlider.setValue(0)
-                }
-                
-            } else {
-                
-                centsSlider.allowedValues = -100...100
-            }
-
-        case 2:
-            
-            semitonesSlider.allowedValues = -12...0
-            if semitones > 0 {
-                semitonesSlider.setValue(0)
-            }
-            
-            if semitonesSlider.integerValue == 0 {
-                
-                centsSlider.allowedValues = -100...0
-                if cents > 0 {
-                    centsSlider.setValue(0)
-                }
-            }
-
-        default:
-            
-            semitonesSlider.allowedValues = -12...12
-            centsSlider.allowedValues = -100...100
-        }
-        
-        lblOctaves.stringValue = String(octavesSlider.integerValue)
-        lblSemitones.stringValue = String(semitonesSlider.integerValue)
-        lblCents.stringValue = String(centsSlider.integerValue)
-        
-        pitchUnit.pitch = computePitch()
-        lblPitchCents.stringValue = pitchUnit.formattedPitch
-    }
-    
-    @IBAction func pitchSemitonesAction(_ sender: AnyObject) {
-            
-//        pitchUnit.pitch = pitchView.pitch
-//        pitchView.setPitch(pitchUnit.pitch, pitchUnit.formattedPitch)
-        
-        let octaves = octavesSlider.integerValue
-        let semitones = semitonesSlider.integerValue
-        let cents = centsSlider.integerValue
-        
-        switch octaves {
-            
-        case -2:
-            
-            if semitones == 0 {
-                
-                centsSlider.allowedValues = 0...100
-                if cents < 0 {
-                    centsSlider.setValue(0)
-                }
-            }
-            
-        case -1:
-            
-            if semitones == -12 {
-                
-                centsSlider.allowedValues = 0...100
-                if cents < 0 {
-                    centsSlider.setValue(0)
-                }
-                
-            } else {
-                
-                centsSlider.allowedValues = -100...100
-            }
-            
-        case 1:
-            
-            if semitones == 12 {
-                
-                centsSlider.allowedValues = -100...0
-                if cents > 0 {
-                    centsSlider.setValue(0)
-                }
-                
-            } else {
-                
-                centsSlider.allowedValues = -100...100
-            }
-
-        case 2:
-            
-            if semitones == 0 {
-                
-                centsSlider.allowedValues = -100...0
-                if cents > 0 {
-                    centsSlider.setValue(0)
-                }
-            }
-
-        default:
-            
-            semitonesSlider.allowedValues = -12...12
-            centsSlider.allowedValues = -100...100
-        }
-        
-        lblSemitones.stringValue = String(semitonesSlider.integerValue)
-        lblCents.stringValue = String(centsSlider.integerValue)
-        
-        pitchUnit.pitch = computePitch()
-        lblPitchCents.stringValue = pitchUnit.formattedPitch
-    }
-    
-    @IBAction func pitchCentsAction(_ sender: AnyObject) {
-            
-//        pitchUnit.pitch = pitchView.pitch
-//        pitchView.setPitch(pitchUnit.pitch, pitchUnit.formattedPitch)
-        
-        lblCents.stringValue = String(centsSlider.integerValue)
-        
-        pitchUnit.pitch = computePitch()
-        lblPitchCents.stringValue = pitchUnit.formattedPitch
-    }
-    
-    private func computePitch() -> Int {
-        return (octavesSlider.integerValue * 1200) + (semitonesSlider.integerValue * 100) + centsSlider.integerValue
+        pitchUnit.pitch = pitchView.pitch
+        pitchView.pitchUpdated(formattedString: pitchUnit.formattedPitch)
     }
     
     // Sets the pitch to a specific value
@@ -287,8 +78,6 @@ class PitchViewController: FXUnitViewController {
 
         pitchUnit.overlap = pitchView.overlap
         pitchView.setPitchOverlap(pitchUnit.overlap, pitchUnit.formattedOverlap)
-        
-        lblOverlapV.stringValue = String(format: "%.2f", overlapSlider.floatValue)
     }
     
     // Increases the overall pitch by a certain preset increment

@@ -92,20 +92,10 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
         presetsMenu.selectItem(at: -1)
     }
     
-    func stateChanged() {
-//        btnBypass.updateState()
-    }
+    func stateChanged() {}
     
     func showThisTab() {
         Messenger.publish(.fx_showFXUnitTab, payload: self.unitType!)
-    }
-    
-    @IBAction func bypassAction(_ sender: AnyObject) {
-
-        _ = fxUnit.toggleState()
-        stateChanged()
-        
-        Messenger.publish(.fx_unitStateChanged)
     }
     
     // Applies a preset to the effects unit

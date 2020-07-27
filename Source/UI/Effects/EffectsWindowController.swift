@@ -10,12 +10,12 @@ class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOu
 
     // The constituent sub-views, one for each effects unit
 
-    private let eqViewController: NSViewController = EQViewController()
-    private let pitchViewController: NSViewController = PitchViewController()
-    private let timeViewController: NSViewController = TimeViewController()
-    private let reverbViewController: NSViewController = ReverbViewController()
-    private let delayViewController: NSViewController = DelayViewController()
-    private let filterViewController: NSViewController = FilterViewController()
+    private let eqViewController: EQViewController = EQViewController()
+    private let pitchViewController: PitchViewController = PitchViewController()
+    private let timeViewController: TimeViewController = TimeViewController()
+    private let reverbViewController: ReverbViewController = ReverbViewController()
+    private let delayViewController: DelayViewController = DelayViewController()
+    private let filterViewController: FilterViewController = FilterViewController()
 
     @IBOutlet weak var fxTabView: NSTabView!
     
@@ -172,6 +172,25 @@ class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOu
         
         guard let unit = item as? FXUnitDelegateProtocol,
             let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("fxUnit"), owner: nil) as? EffectsUnitEditorCell else {return nil}
+        
+//        var bypassAction: Selector!
+//        var bypassActionTarget: AnyObject!
+//        
+//        switch unit.unitType {
+//            
+//        case .eq:
+//            
+//            bypassAction = #selector(eqViewController.bypassAction(_:))
+//            bypassActionTarget = eqViewController
+//            
+//        case .pitch:
+//            
+//            bypassAction = #selector(pitchViewController.bypassAction(_:))
+//            bypassActionTarget = pitchViewController
+//            
+//        default: return nil
+//            
+//        }
         
         cell.initializeForUnit(unit)
         return cell

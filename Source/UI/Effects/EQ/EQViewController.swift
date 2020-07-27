@@ -47,8 +47,6 @@ class EQViewController: FXUnitViewController {
     }
     
     override func stateChanged() {
-        
-        super.stateChanged()
         eqView.stateChanged()
     }
     

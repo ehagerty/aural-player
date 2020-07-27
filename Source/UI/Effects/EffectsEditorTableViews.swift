@@ -19,11 +19,4 @@ class EffectsUnitEditorCell: NSTableCellView {
         lblName.stringValue = fxUnit.unitDescription.replacingOccurrences(of: " ", with: "  ")
         lblName.font = Fonts.Constants.captionFont_14
     }
-    
-    @IBAction func bypassAction(_ sender: AnyObject) {
-        
-        _ = fxUnit.toggleState()
-        btnBypass.updateState()
-        Messenger.publish(.fx_unitStateChanged)
-    }
 }

@@ -29,7 +29,7 @@ struct AppConstants {
         
         static let nonNativeAudioContainerExtensions: [String] = ["mka", "ogg"]
         
-        private static let globallyNonNativeAudioExtensions: [String] = ["oga", "opus", "wma", "dsf", "mpc", "mp2", "ape", "wv", "dts"]
+        private static let globallyNonNativeAudioExtensions: [String] = ["oga", "ogg", "opus", "wma", "dsf", "mpc", "mp2", "ape", "wv", "dts"]
         
         static let nonNativeAudioExtensions: [String] = {
             
