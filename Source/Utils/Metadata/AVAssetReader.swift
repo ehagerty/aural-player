@@ -24,9 +24,9 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
     // Helper function that ensures that a track's AVURLAsset has been initialized
     private func ensureTrackAssetLoaded(_ track: Track) {
         
-        if (track.audioAsset == nil) {
+        if (track.avfTrackInfo == nil) {
             
-            track.audioAsset = AVURLAsset(url: track.file, options: nil)
+            track.avfTrackInfo = AVURLAsset(url: track.file, options: nil)
             mapMetadata(track)
         }
     }
@@ -60,7 +60,7 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
 
         // TODO: Packet table for raw streams ?
         
-        var maxDuration: Double = track.audioAsset!.duration.seconds
+        var maxDuration: Double = track.avfTrackInfo!.duration.seconds
         
         for parser in allParsers {
             
@@ -175,7 +175,7 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
     
     private func getLyrics(_ track: Track) -> String? {
         
-        if let lyrics = track.audioAsset?.lyrics {
+        if let lyrics = track.avfTrackInfo?.lyrics {
             return lyrics
         }
         
@@ -264,7 +264,7 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
         
         var chapters: [Chapter] = []
         
-        if let asset = track.audioAsset, let langCode = asset.availableChapterLocales.first?.languageCode {
+        if let asset = track.avfTrackInfo, let langCode = asset.availableChapterLocales.first?.languageCode {
             
             let chapterMetadataGroups = asset.chapterMetadataGroups(bestMatchingPreferredLanguages: [langCode])
         
@@ -311,7 +311,7 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
         
         var chapters: [Chapter] = []
         
-        if let asset = track.audioAsset, let langCode = asset.availableChapterLocales.first?.languageCode {
+        if let asset = track.avfTrackInfo, let langCode = asset.availableChapterLocales.first?.languageCode {
             
             let chapterMetadataGroups = asset.chapterMetadataGroups(bestMatchingPreferredLanguages: [langCode])
             

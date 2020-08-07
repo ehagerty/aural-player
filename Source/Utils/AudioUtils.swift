@@ -47,11 +47,11 @@ class AudioUtils {
         
         if !track.playbackNativelySupported || fileExtension == "flac" {
             
-            if track.libAVInfo == nil {
+            if track.ffmpegTrackInfo == nil {
 //                track.libAVInfo = FFMpegWrapper.getMetadata(track)
             }
             
-            let avInfo = track.libAVInfo!
+            let avInfo = track.ffmpegTrackInfo!
             
             if !avInfo.hasValidAudioTrack {
                 throw TrackNotPlayableError(track)
@@ -65,15 +65,15 @@ class AudioUtils {
             
         } else {
             
-            if (track.audioAsset == nil) {
-                track.audioAsset = AVURLAsset(url: track.file, options: nil)
+            if (track.avfTrackInfo == nil) {
+                track.avfTrackInfo = AVURLAsset(url: track.file, options: nil)
             }
             
-            if track.audioAsset!.hasProtectedContent {
+            if track.avfTrackInfo!.hasProtectedContent {
                 throw DRMProtectionError(track)
             }
             
-            let assetTracks = track.audioAsset?.tracks(withMediaType: AVMediaType.audio)
+            let assetTracks = track.avfTrackInfo?.tracks(withMediaType: AVMediaType.audio)
             
             // Check if the asset has any audio tracks
             if (assetTracks?.count == 0) {
@@ -91,16 +91,16 @@ class AudioUtils {
     }
     
     // Loads info necessary for playback of the given track. Returns whether or not the info was successfully loaded.
-    static func loadPlaybackInfo(_ track: Track) {
-        
-        if !track.playbackNativelySupported {
-            
-            // TODO: FFmpeg
-            
-        } else {
-            prepareTrackWithFile(track, track.file)
-        }
-    }
+//    static func loadPlaybackInfo(_ track: Track) {
+//
+//        if !track.playbackNativelySupported {
+//
+//            // TODO: FFmpeg
+//
+//        } else {
+//            prepareTrack(track)
+//        }
+//    }
     
     static func loadPlaybackInfo_noPlayback(_ track: Track) {
         
@@ -122,7 +122,7 @@ class AudioUtils {
                 track.playbackInfo = playbackInfo
             }
             
-        } else if let stream = track.libAVInfo?.audioStream {
+        } else if let stream = track.ffmpegTrackInfo?.audioStream {
             
             let playbackInfo = PlaybackInfo()
             
@@ -140,9 +140,9 @@ class AudioUtils {
         track.playbackInfo = playbackInfo
     }
     
-    static func prepareTrackWithFile(_ track: Track, _ file: URL) {
+    static func prepareTrack(_ track: Track) {
         
-        guard let audioFile = AudioIO.createAudioFileForReading(file) else {return}
+        guard let audioFile = AudioIO.createAudioFileForReading(track.file) else {return}
         
         let trackDurationBeforePrep: Double = track.duration
         
@@ -151,7 +151,7 @@ class AudioUtils {
         if track.duration == 0 {
             
             // Load duration from metadata
-            track.setDuration(MetadataUtils.durationForFile(file))
+            track.setDuration(MetadataUtils.durationForFile(track.file))
         }
         
         playbackInfo.audioFile = audioFile
@@ -192,7 +192,7 @@ class AudioUtils {
         
         if (!track.playbackNativelySupported || fileExtension == "flac") {
             
-            if let avInfo = track.libAVInfo, let audioStream = avInfo.audioStream {
+            if let avInfo = track.ffmpegTrackInfo, let audioStream = avInfo.audioStream {
                 
                 if let sampleRate = audioStream.sampleRate {
                     audioInfo.sampleRate = sampleRate
@@ -234,7 +234,7 @@ class AudioUtils {
             
             var estBitRate: Float = 0
             
-            if let audioTrack = track.audioAsset?.tracks.first {
+            if let audioTrack = track.avfTrackInfo?.tracks.first {
                 
                 if let codec = formatDescriptions[getFormat(audioTrack)], codec != audioInfo.format {
                     audioInfo.codec = codec

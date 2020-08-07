@@ -3,7 +3,7 @@ import Foundation
 /*
     Encapsulates all metadata for a single track read by ffmpeg
  */
-class LibAVInfo {
+class FFmpegTrackInfo {
     
     let duration: Double
     let fileFormatDescription: String?

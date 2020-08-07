@@ -46,7 +46,7 @@ class TrackIO {
         loadArt(track)
         
         // Track is valid, prepare it for playback
-        AudioUtils.loadPlaybackInfo(track)
+        AudioUtils.prepareTrack(track)
         
         // Chapters
         loadChapters(track)

@@ -64,7 +64,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
     
     func mapTrack(_ track: Track, _ mapForTrack: AVAssetMetadata) {
         
-        for item in track.audioAsset!.metadata {
+        for item in track.avfTrackInfo!.metadata {
             
             if item.keySpace == .id3, let key = item.keyAsString {
                 

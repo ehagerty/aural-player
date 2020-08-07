@@ -43,7 +43,7 @@ class AudioToolboxParser: AVAssetParser {
         
         if #available(OSX 10.13, *) {
             
-            for item in track.audioAsset!.metadata {
+            for item in track.avfTrackInfo!.metadata {
                 
                 if item.keySpace == .audioFile, let key = item.keyAsString?.removingPercentEncoding {
                     

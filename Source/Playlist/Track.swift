@@ -10,9 +10,9 @@ class Track: Hashable, PlaylistItem {
     let metadataNativelySupported: Bool
     
     // The audio asset object used to retrieve metadata for this track
-    var audioAsset: AVURLAsset?
+    var avfTrackInfo: AVURLAsset?
     
-    var libAVInfo: LibAVInfo?
+    var ffmpegTrackInfo: FFmpegTrackInfo?
     
     // All info relating to how this track is displayed
     let displayInfo: DisplayInfo
@@ -101,11 +101,6 @@ class Track: Hashable, PlaylistItem {
         groupingInfo.totalTracks = totalTracks
         
         self.lyrics = lyrics
-    }
-    
-    // Sets all metadata used for display within the playlist and Now Playing box
-    func setDisplayMetadata(_ artist: String?, _ title: String?, _ art: CoverArt?) {
-        displayInfo.setMetadata(artist, title, art)
     }
     
     // Loads metadata and audio/filesystem info for display in the "More Info" view
