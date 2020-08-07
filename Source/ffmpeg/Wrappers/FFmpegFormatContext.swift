@@ -122,7 +122,7 @@ class FFmpegFormatContext {
     ///
     /// This is an expensive and potentially lengthy computation.
     ///
-    private lazy var packetTable: PacketTable? = PacketTable(forFile: file)
+    private lazy var packetTable: FFmpegPacketTable? = FFmpegPacketTable(forFile: file)
     
     ///
     /// Bit rate of the audio stream, 0 if not available.
@@ -258,7 +258,7 @@ class FFmpegFormatContext {
         
         // Compute the duration of the audio stream, trying various methods. See documentation of **duration**
         // for a detailed description.
-        self.isRawAudioFile = Constants.rawAudioFileExtensions.contains(file.pathExtension.lowercased())
+        self.isRawAudioFile = AppConstants.SupportedTypes.rawAudioFileExtensions.contains(file.pathExtension.lowercased())
         self.bitRate = pointer.pointee.bit_rate
         
         self.duration = (isRawAudioFile ? bruteForceDuration : audioStream?.duration ?? estimatedDuration) ?? 0

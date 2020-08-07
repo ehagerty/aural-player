@@ -10,12 +10,12 @@ import Accelerate
 /// the required standard format.
 /// ```
 ///
-class Resampler {
+class FFmpegResampler {
     
     ///
     /// Singleton instance of this class that is shared by different client objects.
     ///
-    static let instance = Resampler()
+    static let instance = FFmpegResampler()
     
     ///
     /// The default channel layout to assume when the channel layout for an audio file cannot be determined.
@@ -120,7 +120,7 @@ class Resampler {
     /// It is good from a safety perspective, to copy the output samples to the audio buffer right here rather than to give out a pointer to the memory
     /// space allocated from within this object so that a client object may perform the copy. This prevents any potentially unsafe use of the pointer.
     ///
-    func resample(_ frame: BufferedFrame, andCopyOutputTo audioBuffer: AVAudioPCMBuffer, startingAt offset: Int) {
+    func resample(_ frame: FFmpegBufferedFrame, andCopyOutputTo audioBuffer: AVAudioPCMBuffer, startingAt offset: Int) {
         
         // Allocate the context used to perform the resampling.
         guard let resampleCtx = FFmpegResamplingContext() else {
@@ -184,7 +184,7 @@ class Resampler {
     ///                          frames copied to it previously. So, the offset will equal the sum of the
     ///                          the sample counts of all frames previously copied to the audio buffer.
     ///
-    private func copyOutputFor(frame: BufferedFrame, to audioBuffer: AVAudioPCMBuffer, startingAt offset: Int) {
+    private func copyOutputFor(frame: FFmpegBufferedFrame, to audioBuffer: AVAudioPCMBuffer, startingAt offset: Int) {
         
         // Get a pointer to the audio buffer's internal data buffer.
         guard let audioBufferChannels = audioBuffer.floatChannelData else {return}

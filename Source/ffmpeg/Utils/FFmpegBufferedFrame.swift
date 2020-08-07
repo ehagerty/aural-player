@@ -4,7 +4,7 @@ import Accelerate
 ///
 /// A temporary container for the raw audio data from a single buffered frame.
 ///
-class BufferedFrame: Hashable {
+class FFmpegBufferedFrame: Hashable {
     
     ///
     /// Pointers to the raw data (unsigned bytes) constituting this frame's samples.
@@ -191,7 +191,7 @@ class BufferedFrame: Hashable {
     /// This comparison makes the assumption that both frames originated from the same stream.
     /// Otherwise, this comparison is meaningless and invalid.
     ///
-    static func == (lhs: BufferedFrame, rhs: BufferedFrame) -> Bool {
+    static func == (lhs: FFmpegBufferedFrame, rhs: FFmpegBufferedFrame) -> Bool {
         lhs.timestamp == rhs.timestamp
     }
     

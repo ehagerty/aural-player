@@ -4,7 +4,7 @@ import Foundation
 /// Assists in reading and decoding audio data from a codec.
 /// Handles errors and signals special conditions such as end of file (EOF).
 ///
-class Decoder {
+class FFmpegDecoder {
     
     /// A context associated with the currently playing file.
     private var file: FFmpegFileContext!
@@ -37,7 +37,7 @@ class Decoder {
     /// During a decoding loop, in the event that a FrameBuffer fills up, this queue will hold the overflow (excess) frames that can be passed off to the next
     /// FrameBuffer in the next decoding loop.
     ///
-    private var frameQueue: Queue<BufferedFrame> = Queue<BufferedFrame>()
+    private var frameQueue: Queue<FFmpegBufferedFrame> = Queue<FFmpegBufferedFrame>()
     
     ///
     /// Prepares the codec to decode a given audio file.
@@ -79,10 +79,10 @@ class Decoder {
     /// because upon reaching EOF, the decoder will drain the codec's internal buffers which may result in a few additional samples that will be
     /// allowed as this is the terminal buffer.
     ///
-    func decode(maxSampleCount: Int32) -> FrameBuffer {
+    func decode(maxSampleCount: Int32) -> FFmpegFrameBuffer {
         
         // Create a frame buffer with the specified maximum sample count and the codec's sample format for this file.
-        let buffer: FrameBuffer = FrameBuffer(sampleFormat: codec.sampleFormat, maxSampleCount: maxSampleCount)
+        let buffer: FFmpegFrameBuffer = FFmpegFrameBuffer(sampleFormat: codec.sampleFormat, maxSampleCount: maxSampleCount)
         
         // Keep decoding as long as EOF is not reached.
         while !eof {
@@ -130,7 +130,7 @@ class Decoder {
         
         if eof {
             
-            var terminalFrames: [BufferedFrame] = frameQueue.dequeueAll()
+            var terminalFrames: [FFmpegBufferedFrame] = frameQueue.dequeueAll()
             
             do {
                 
@@ -198,7 +198,7 @@ class Decoder {
     /// 3. The returned frame will not be dequeued (removed from the queue) by this function. It is the responsibility of the caller
     /// to do so, upon consuming the frame.
     ///
-    private func nextFrame() throws -> BufferedFrame {
+    private func nextFrame() throws -> FFmpegBufferedFrame {
         
         while frameQueue.isEmpty {
         

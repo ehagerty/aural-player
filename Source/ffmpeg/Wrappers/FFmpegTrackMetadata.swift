@@ -3,7 +3,7 @@ import Cocoa
 ///
 /// Encapsulates all metadata for a single audio track.
 ///
-struct TrackInfo {
+struct FFmpegTrackMetadata {
     
     ///
     /// Technical audio data for the audio stream in this file. e.g. codec name, sample rate, bit rate, etc.

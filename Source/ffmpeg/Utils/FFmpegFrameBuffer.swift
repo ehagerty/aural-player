@@ -7,13 +7,13 @@ import Accelerate
 ///
 /// Also assists in constructing AVAudioPCMBuffer objects that can be scheduled for playback.
 ///
-class FrameBuffer {
+class FFmpegFrameBuffer {
     
     ///
     /// An ordered list of buffered frames. The ordering is important as it reflects the order of
     /// the corresponding samples in the audio file from which they were read.
     ///
-    private var frames: [BufferedFrame] = []
+    private var frames: [FFmpegBufferedFrame] = []
     
     ///
     /// The PCM format of the samples in this buffer.
@@ -53,7 +53,7 @@ class FrameBuffer {
     ///
     /// - returns: Whether or not the frame was successfully appended to the buffer.
     ///
-    func appendFrame(frame: BufferedFrame) -> Bool {
+    func appendFrame(frame: FFmpegBufferedFrame) -> Bool {
 
         // Check if the sample count of the new frame would cause this buffer to
         // exceed maxSampleCount.
@@ -82,7 +82,7 @@ class FrameBuffer {
     /// So, unlike **appendFrame()**, this function will not reject the terminal frames ... they will always
     /// be appended to this buffer.
     ///
-    func appendTerminalFrames(frames: [BufferedFrame]) {
+    func appendTerminalFrames(frames: [FFmpegBufferedFrame]) {
         
         for frame in frames {
             
@@ -113,7 +113,7 @@ class FrameBuffer {
         // allocate enough space to accommodate the output of resampling
         // this buffer's samples.
         if sampleFormat.needsResampling {
-            Resampler.instance.allocateFor(channelCount: Int32(frames[0].channelCount), sampleCount: sampleCount)
+            FFmpegResampler.instance.allocateFor(channelCount: Int32(frames[0].channelCount), sampleCount: sampleCount)
         }
         
         if let audioBuffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(sampleCount)) {
@@ -130,7 +130,7 @@ class FrameBuffer {
                 if sampleFormat.needsResampling {
 
                     // Resample the frame's samples and copy them to the audio buffer.
-                    Resampler.instance.resample(frame, andCopyOutputTo: audioBuffer, startingAt: sampleCountSoFar)
+                    FFmpegResampler.instance.resample(frame, andCopyOutputTo: audioBuffer, startingAt: sampleCountSoFar)
                     
                 } else {
                     

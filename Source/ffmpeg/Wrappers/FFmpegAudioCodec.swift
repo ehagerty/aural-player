@@ -56,7 +56,7 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     /// - throws: **DecoderError** if an error occurs during decoding.
     ///
-    func decode(packet: FFmpegPacket) throws -> [BufferedFrame] {
+    func decode(packet: FFmpegPacket) throws -> [FFmpegBufferedFrame] {
         
         // Send the packet to the decoder for decoding.
         let resultCode: Int32 = packet.send(to: self)
@@ -79,7 +79,7 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     /// - returns: An ordered list of frames.
     ///
-    private func receiveFrames() -> [BufferedFrame] {
+    private func receiveFrames() -> [FFmpegBufferedFrame] {
         
         // Receive (potentially) multiple frames
 
@@ -87,7 +87,7 @@ class FFmpegAudioCodec: FFmpegCodec {
         let frame = FFmpegFrame(sampleFormat: self.sampleFormat)
         
         // Collect the received frames in an array.
-        var bufferedFrames: [BufferedFrame] = []
+        var bufferedFrames: [FFmpegBufferedFrame] = []
         
         // Receive a decoded frame from the codec.
         var resultCode: Int32 = frame.receive(from: self)
@@ -95,7 +95,7 @@ class FFmpegAudioCodec: FFmpegCodec {
         // Keep receiving frames while no errors are encountered
         while resultCode.isZero, frame.hasSamples {
             
-            bufferedFrames.append(BufferedFrame(frame))
+            bufferedFrames.append(FFmpegBufferedFrame(frame))
             frame.unreferenceBuffers()
             
             resultCode = frame.receive(from: self)
@@ -114,7 +114,7 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     /// - throws: **DecoderError** if an error occurs while draining the codec.
     ///
-    func drain() throws -> [BufferedFrame] {
+    func drain() throws -> [FFmpegBufferedFrame] {
         
         // Send the "flush packet" to the decoder
         let resultCode: Int32 = avcodec_send_packet(contextPointer, nil)

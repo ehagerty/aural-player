@@ -6,7 +6,7 @@ import AVFoundation
 /// This is required when setting the format for an audio buffer that is to be scheduled for playback, so that
 /// upmixing / downmixing can be performed correctly.
 ///
-struct ChannelLayouts {
+struct FFmpegChannelLayoutsMapper {
     
     ///
     /// A comprehensive mapping of ffmpeg layout identifiers to their corresponding AVFoundation channel layout tags.

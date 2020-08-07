@@ -91,6 +91,11 @@ struct AppConstants {
             return arr
         }()
         
+        ///
+        /// A list of extensions of files that represent raw audio streams that lack accurate duration information.
+        ///
+        static let rawAudioFileExtensions: [String] = ["aac", "adts", "ac3", "dts"]
+        
         static let artFormats: [String] = ["mjpeg", "mjpegb", "mjpeg_2000", "mpjpeg", "jpeg2000", "jpegls", "bmp", "png"]
     }
     

@@ -18,11 +18,11 @@ import Foundation
 /// computation should be used as the last resort when all other methods
 /// of estimating the duration have failed.
 ///
-class PacketTable {
+class FFmpegPacketTable {
     
     var duration: Double = 0
-    var timeBase: AVRational = AVRational()
-    var packetTable: [PacketTableEntry] = []
+    private var timeBase: AVRational = AVRational()
+    private var packetTable: [FFmpegPacketTableEntry] = []
     
     ///
     /// Attempts to instantiate and build a new PacketTable instance for the given file. May be nil.
@@ -89,7 +89,7 @@ class PacketTable {
                     lastPacket = packet
                     
                     // Store byte position and timestamp info for this packet.
-                    packetTable.append(PacketTableEntry(bytePosition: packet.bytePosition, pts: packet.pts))
+                    packetTable.append(FFmpegPacketTableEntry(bytePosition: packet.bytePosition, pts: packet.pts))
                 }
             }
             
@@ -226,7 +226,7 @@ class PacketTable {
 ///
 /// Holds a single packet table entry, i.e. information for a single packet.
 ///
-struct PacketTableEntry {
+fileprivate struct FFmpegPacketTableEntry {
    
     ///
     /// Offset position of the packet, in bytes, from the start of the stream.

@@ -18,7 +18,7 @@ class FFmpegMetadataReader {
     ///
     /// - returns: All available track metadata for the file pointed to by **fileCtx**.
     ///
-    func readMetadata(forFile fileContext: FFmpegFileContext) -> TrackInfo {
+    func readMetadata(forFile fileContext: FFmpegFileContext) -> FFmpegTrackMetadata {
         
         let audioInfo: FFmpegAudioInfo = readAudioInfo(fileContext)
         let metadata: [String: String] = readAudioMetadata(fileContext)
@@ -28,7 +28,7 @@ class FFmpegMetadataReader {
         
         let chapters: [FFmpegChapter] = fileContext.format.chapters
         
-        return TrackInfo(audioInfo: audioInfo, metadata: metadata, art: coverArt, artMetadata: artMetadata, chapters: chapters)
+        return FFmpegTrackMetadata(audioInfo: audioInfo, metadata: metadata, art: coverArt, artMetadata: artMetadata, chapters: chapters)
     }
     
     ///
@@ -72,7 +72,7 @@ class FFmpegMetadataReader {
         let sampleRate: Int = Int(codec.sampleRate)
         let sampleFormat: FFmpegSampleFormat = codec.sampleFormat
         let bitRate: Int64 = codec.bitRate > 0 ? codec.bitRate : fileCtx.format.bitRate
-        let channelLayoutString: String = ChannelLayouts.readableString(for: codec.channelLayout, channelCount: codec.channelCount)
+        let channelLayoutString: String = FFmpegChannelLayoutsMapper.readableString(for: codec.channelLayout, channelCount: codec.channelCount)
         
         let frames: Int64 = Int64(floor(duration * Double(sampleRate)))
 
