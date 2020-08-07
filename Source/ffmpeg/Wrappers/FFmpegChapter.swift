@@ -25,7 +25,7 @@ class FFmpegChapter {
         self.startTime = Double(chapter.start) * conversionFactor
         self.endTime = Double(chapter.end) * conversionFactor
         
-        self.metadata = MetadataDictionary(readingFrom: chapter.metadata).dictionary
+        self.metadata = FFmpegMetadataDictionary(readingFrom: chapter.metadata).dictionary
 
         // If the chapter's metadata does not have a "title" tag, create a default title
         // that contains the index of the chapter, e.g. "Chapter 2".

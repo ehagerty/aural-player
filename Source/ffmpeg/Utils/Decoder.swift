@@ -12,17 +12,17 @@ class Decoder {
     ///
     /// The context used to read packets and perform seeking within the audio stream.
     ///
-    private var format: FormatContext! {file.format}
+    private var format: FFmpegFormatContext! {file.format}
     
     ///
     /// The audio stream that is to be decoded.
     ///
-    private var stream: AudioStream! {file.audioStream}
+    private var stream: FFmpegAudioStream! {file.audioStream}
     
     ///
     /// The codec that will actually do the decoding.
     ///
-    private var codec: AudioCodec! {file.audioCodec}
+    private var codec: FFmpegAudioCodec! {file.audioCodec}
     
     ///
     /// A flag indicating whether or not the codec has reached the end of the currently playing file's audio stream, i.e. EOF..

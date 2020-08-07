@@ -5,7 +5,7 @@ import Foundation
 /// i.e. audio data in its raw decoded / uncompressed form, post-decoding,
 /// and provides convenient Swift-style access to its functions and member variables.
 ///
-class Frame {
+class FFmpegFrame {
  
     ///
     /// The encapsulated AVFrame object.
@@ -25,7 +25,7 @@ class Frame {
     ///
     /// PCM format of the samples.
     ///
-    var sampleFormat: SampleFormat
+    var sampleFormat: FFmpegSampleFormat
     
     ///
     /// Total number of samples in this frame.
@@ -71,7 +71,7 @@ class Frame {
     ///
     /// - Parameter sampleFormat: The format of the samples in this frame.
     ///
-    init(sampleFormat: SampleFormat) {
+    init(sampleFormat: FFmpegSampleFormat) {
         
         self.avFrame = AVFrame()
         self.sampleFormat = sampleFormat
@@ -84,7 +84,7 @@ class Frame {
     ///
     /// - returns: An integer code indicating the result of the receive operation.
     ///
-    func receive(from codec: Codec) -> ResultCode {
+    func receive(from codec: FFmpegCodec) -> ResultCode {
         return avcodec_receive_frame(codec.contextPointer, &avFrame)
     }
     

@@ -5,7 +5,7 @@ import Foundation
 /// i.e. audio data in its encoded / compressed form, prior to decoding,
 /// and provides convenient Swift-style access to their functions and member variables.
 ///
-class Packet {
+class FFmpegPacket {
     
     ///
     /// The encapsulated AVPacket object.
@@ -104,7 +104,7 @@ class Packet {
     ///
     /// - returns: An integer code indicating the result of the send operation.
     ///
-    func send(to codec: Codec) -> ResultCode {
+    func send(to codec: FFmpegCodec) -> ResultCode {
         return avcodec_send_packet(codec.contextPointer, &avPacket)
     }
 

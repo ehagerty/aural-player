@@ -8,7 +8,7 @@ import Foundation
 /// - Reads and provides audio stream data as encoded / compressed packets (which can be passed to the appropriate codec).
 /// - Performs seeking to arbitrary positions within the audio stream.
 ///
-class FormatContext {
+class FFmpegFormatContext {
 
     ///
     /// The file that is to be read by this context.
@@ -33,7 +33,7 @@ class FormatContext {
     ///
     /// An array of all audio / video streams demuxed by this context.
     ///
-    let streams: [StreamProtocol]
+    let streams: [FFmpegStreamProtocol]
     
     ///
     /// The number of streams present in the **streams** array.
@@ -43,7 +43,7 @@ class FormatContext {
     ///
     /// The first / best audio stream in this file, if one is present. May be nil.
     ///
-    let audioStream: AudioStream?
+    let audioStream: FFmpegAudioStream?
     
     ///
     /// The first / best video stream in this file, if one is present. May be nil.
@@ -54,7 +54,7 @@ class FormatContext {
     /// for our purposes, a video stream is treated as an "image" (i.e still image) stream
     /// with only one packet - containing our cover art.
     ///
-    let imageStream: ImageStream?
+    let imageStream: FFmpegImageStream?
     
     ///
     /// Whether or not this file is a raw audio file. This simply means that
@@ -150,7 +150,7 @@ class FormatContext {
     ///
     /// All metadata key / value pairs available in this file's header.
     ///
-    lazy var metadata: [String: String] = MetadataDictionary(readingFrom: avContext.metadata).dictionary
+    lazy var metadata: [String: String] = FFmpegMetadataDictionary(readingFrom: avContext.metadata).dictionary
     
     ///
     /// All chapter markings available in this file's header.
@@ -223,7 +223,7 @@ class FormatContext {
             return nil
         }
         
-        var streams: [StreamProtocol] = []
+        var streams: [FFmpegStreamProtocol] = []
         
         // Iterate through all the streams, and store all the ones we care about (i.e. audio / video) in the streams array.
         
@@ -237,9 +237,9 @@ class FormatContext {
                     
                 // For audio / video streams, wrap the AVStream in a AudioStream / ImageStream.
                     
-                case AVMEDIA_TYPE_AUDIO:    return AudioStream(encapsulating: streamPointer)
+                case AVMEDIA_TYPE_AUDIO:    return FFmpegAudioStream(encapsulating: streamPointer)
                     
-                case AVMEDIA_TYPE_VIDEO:    return ImageStream(encapsulating: streamPointer)
+                case AVMEDIA_TYPE_VIDEO:    return FFmpegImageStream(encapsulating: streamPointer)
                     
                 default:                    return nil
                     
@@ -253,8 +253,8 @@ class FormatContext {
         // Among all the discovered streams, find the first / best audio stream and/or video stream.
         // TODO: Should we use av_find_best_stream() here instead of picking the first audio stream ???
         
-        self.audioStream = streams.compactMap({$0 as? AudioStream}).first
-        self.imageStream = streams.compactMap({$0 as? ImageStream}).first
+        self.audioStream = streams.compactMap({$0 as? FFmpegAudioStream}).first
+        self.imageStream = streams.compactMap({$0 as? FFmpegImageStream}).first
         
         // Compute the duration of the audio stream, trying various methods. See documentation of **duration**
         // for a detailed description.
@@ -274,9 +274,9 @@ class FormatContext {
     ///
     /// - throws: **PacketReadError**, if an error occurred while attempting to read a packet.
     ///
-    func readPacket(from stream: StreamProtocol) throws -> Packet? {
+    func readPacket(from stream: FFmpegStreamProtocol) throws -> FFmpegPacket? {
         
-        let packet = try Packet(fromFormat: pointer)
+        let packet = try FFmpegPacket(fromFormat: pointer)
         return packet.streamIndex == stream.index ? packet : nil
     }
     
@@ -288,7 +288,7 @@ class FormatContext {
     ///
     /// - throws: **PacketReadError**, if an error occurred while attempting to read a packet.
     ///
-    func seek(within stream: AudioStream, to time: Double) throws {
+    func seek(within stream: FFmpegAudioStream, to time: Double) throws {
         
         // Before attempting the seek, it is necessary to ask the codec
         // to flush its internal buffers. Otherwise, the seek will likely fail.

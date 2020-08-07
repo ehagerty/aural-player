@@ -3,7 +3,7 @@ import Foundation
 ///
 /// Reads metadata from an AVDictionary.
 ///
-class MetadataDictionary {
+class FFmpegMetadataDictionary {
 
     ///
     /// A dictionary of String key / value pairs produced by reading the underlying AVDictionary.

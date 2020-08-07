@@ -72,7 +72,7 @@ class PacketTable {
         
         self.timeBase = theTimeBase
         
-        var lastPacket: Packet!
+        var lastPacket: FFmpegPacket!
         
         do {
             
@@ -80,7 +80,7 @@ class PacketTable {
             
             while true {
                 
-                let packet = try Packet(fromFormat: pointer)
+                let packet = try FFmpegPacket(fromFormat: pointer)
             
                 // Only process packets from our audio stream.
                 if packet.streamIndex == audioStreamIndex {

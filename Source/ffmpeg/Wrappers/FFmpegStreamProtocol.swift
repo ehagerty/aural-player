@@ -3,7 +3,7 @@ import Foundation
 ///
 /// A contract for all AVStream wrapper classes.
 ///
-protocol StreamProtocol {
+protocol FFmpegStreamProtocol {
     
     ///
     /// The encapsulated AVStream object.

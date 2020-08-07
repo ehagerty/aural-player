@@ -9,7 +9,7 @@ import Foundation
 /// - Conversion of sample rate (upsampling / downsampling)
 /// - Conversion of sample format
 ///
-class ResamplingContext {
+class FFmpegResamplingContext {
 
     ///
     /// Pointer to the encapsulated SwrContext struct.

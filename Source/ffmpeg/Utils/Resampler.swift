@@ -123,7 +123,7 @@ class Resampler {
     func resample(_ frame: BufferedFrame, andCopyOutputTo audioBuffer: AVAudioPCMBuffer, startingAt offset: Int) {
         
         // Allocate the context used to perform the resampling.
-        guard let resampleCtx = ResamplingContext() else {
+        guard let resampleCtx = FFmpegResamplingContext() else {
             
             print("\nUnable to instantiate resampling context !")
             return

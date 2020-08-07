@@ -18,7 +18,7 @@ class FrameBuffer {
     ///
     /// The PCM format of the samples in this buffer.
     ///
-    private let sampleFormat: SampleFormat
+    private let sampleFormat: FFmpegSampleFormat
     
     ///
     /// A counter that keeps track of how many samples have been accumulated in this buffer.
@@ -39,7 +39,7 @@ class FrameBuffer {
     ///
     private let maxSampleCount: Int32
     
-    init(sampleFormat: SampleFormat, maxSampleCount: Int32) {
+    init(sampleFormat: FFmpegSampleFormat, maxSampleCount: Int32) {
         
         self.sampleFormat = sampleFormat
         self.maxSampleCount = maxSampleCount

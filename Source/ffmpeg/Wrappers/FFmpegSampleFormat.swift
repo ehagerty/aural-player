@@ -6,7 +6,7 @@ import Foundation
 /// Reads and provides useful information about the format of audio samples,
 /// e.g. whether or not samples of this format need to be resampled for playback.
 ///
-struct SampleFormat {
+struct FFmpegSampleFormat {
     
     ///
     /// The AVSampleFormat that this object describes.

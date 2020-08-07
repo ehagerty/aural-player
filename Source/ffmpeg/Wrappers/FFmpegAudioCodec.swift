@@ -3,7 +3,7 @@ import Foundation
 ///
 /// A Codec that decodes (encoded) audio data packets into raw (PCM) frames.
 ///
-class AudioCodec: Codec {
+class FFmpegAudioCodec: FFmpegCodec {
     
     ///
     /// Average bit rate of the encoded data.
@@ -18,7 +18,7 @@ class AudioCodec: Codec {
     ///
     /// PCM format of the samples.
     ///
-    var sampleFormat: SampleFormat = SampleFormat(encapsulating: AVSampleFormat(0))
+    var sampleFormat: FFmpegSampleFormat = FFmpegSampleFormat(encapsulating: AVSampleFormat(0))
     
     ///
     /// Number of channels of audio data.
@@ -39,7 +39,7 @@ class AudioCodec: Codec {
         
         super.init(fromParameters: paramsPointer)
         
-        self.sampleFormat = SampleFormat(encapsulating: context.sample_fmt)
+        self.sampleFormat = FFmpegSampleFormat(encapsulating: context.sample_fmt)
         self.channelCount = params.channels
         
         // Correct channel layout if necessary.
@@ -56,7 +56,7 @@ class AudioCodec: Codec {
     ///
     /// - throws: **DecoderError** if an error occurs during decoding.
     ///
-    func decode(packet: Packet) throws -> [BufferedFrame] {
+    func decode(packet: FFmpegPacket) throws -> [BufferedFrame] {
         
         // Send the packet to the decoder for decoding.
         let resultCode: Int32 = packet.send(to: self)
@@ -84,7 +84,7 @@ class AudioCodec: Codec {
         // Receive (potentially) multiple frames
 
         // Resuse a single Frame object multiple times.
-        let frame = Frame(sampleFormat: self.sampleFormat)
+        let frame = FFmpegFrame(sampleFormat: self.sampleFormat)
         
         // Collect the received frames in an array.
         var bufferedFrames: [BufferedFrame] = []

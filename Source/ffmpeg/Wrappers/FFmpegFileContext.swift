@@ -16,7 +16,7 @@ class FFmpegFileContext {
     /// A context representing the file's container format.
     /// Used to obtain streams and read (coded) packets.
     ///
-    let format: FormatContext
+    let format: FFmpegFormatContext
 
     ///
     /// The first / best audio stream in the file.
@@ -26,17 +26,17 @@ class FFmpegFileContext {
     /// This property provides the convenience of accessing the audio stream within **format**.
     /// The same AudioStream may be obtained by calling **format.audioStream**.
     ///
-    let audioStream: AudioStream
+    let audioStream: FFmpegAudioStream
     
     ///
     /// The codec used to decode packets read from the audio stream.
     ///
-    let audioCodec: AudioCodec
+    let audioCodec: FFmpegAudioCodec
     
     ///
     /// The (optional) video stream that contains cover art, if present. Nil otherwise.
     ///
-    let imageStream: ImageStream?
+    let imageStream: FFmpegImageStream?
     
     ///
     /// Attempts to construct an FFmpegFileContext instance for the given file.
@@ -67,7 +67,7 @@ class FFmpegFileContext {
         
         // If any of the above steps fail, we cannot proceed with reading / decoding this file, so return nil.
         
-        guard let theFormatContext = FormatContext(forFile: file), let theAudioStream = theFormatContext.audioStream, let theAudioCodec = theAudioStream.codec else {return nil}
+        guard let theFormatContext = FFmpegFormatContext(forFile: file), let theAudioStream = theFormatContext.audioStream, let theAudioCodec = theAudioStream.codec else {return nil}
 
         self.format = theFormatContext
         self.audioStream = theAudioStream

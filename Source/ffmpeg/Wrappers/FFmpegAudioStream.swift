@@ -6,7 +6,7 @@ import Foundation
 ///
 /// Instantiates and provides the codec corresponding to the stream, and a codec context.
 ///
-class AudioStream: StreamProtocol {
+class FFmpegAudioStream: FFmpegStreamProtocol {
     
     ///
     /// A pointer to the encapsulated AVStream object.
@@ -31,7 +31,7 @@ class AudioStream: StreamProtocol {
     ///
     /// The codec associated with this stream.
     ///
-    lazy var codec: AudioCodec? = AudioCodec(fromParameters: avStream.codecpar)
+    lazy var codec: FFmpegAudioCodec? = FFmpegAudioCodec(fromParameters: avStream.codecpar)
     
     ///
     /// The duration of this stream, in seconds, if available. Nil if not available.
@@ -61,7 +61,7 @@ class AudioStream: StreamProtocol {
     ///
     /// All metadata key / value pairs available for this stream.
     ///
-    lazy var metadata: [String: String] = MetadataDictionary(readingFrom: avStream.metadata).dictionary
+    lazy var metadata: [String: String] = FFmpegMetadataDictionary(readingFrom: avStream.metadata).dictionary
     
     ///
     /// Instantiates this stream object and its associated codec and codec context.

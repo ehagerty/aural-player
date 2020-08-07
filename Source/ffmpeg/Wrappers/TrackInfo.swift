@@ -188,7 +188,7 @@ struct FFmpegAudioInfo {
     var sampleRate: Int
     
     /// Format of the PCM samples in this audio stream. (eg. Signed 32-bit integer planar)
-    var sampleFormat: SampleFormat
+    var sampleFormat: FFmpegSampleFormat
     
     /// Bit rate of the audio stream, in bits per second.
     var bitRate: Int64

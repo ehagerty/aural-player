@@ -6,7 +6,7 @@ import Foundation
 ///
 /// Instantiates and provides the codec corresponding to the stream, and a codec context.
 ///
-class ImageStream: StreamProtocol {
+class FFmpegImageStream: FFmpegStreamProtocol {
     
     ///
     /// A pointer to the encapsulated AVStream object.
@@ -37,12 +37,12 @@ class ImageStream: StreamProtocol {
     /// The packet (optionally) containing an attached picture.
     /// This can be used to read cover art.
     ///
-    lazy var attachedPic: Packet = Packet(encapsulating: avStream.attached_pic)
+    lazy var attachedPic: FFmpegPacket = FFmpegPacket(encapsulating: avStream.attached_pic)
     
     ///
     /// All metadata key / value pairs available for this stream.
     ///
-    lazy var metadata: [String: String] = MetadataDictionary(readingFrom: avStream.metadata).dictionary
+    lazy var metadata: [String: String] = FFmpegMetadataDictionary(readingFrom: avStream.metadata).dictionary
     
     ///
     /// Instantiates this stream object and its associated codec and codec context.

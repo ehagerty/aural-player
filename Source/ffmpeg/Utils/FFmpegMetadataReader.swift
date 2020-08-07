@@ -70,7 +70,7 @@ class FFmpegMetadataReader {
         let codecName: String = codec.longName
         let duration: Double = fileCtx.format.duration
         let sampleRate: Int = Int(codec.sampleRate)
-        let sampleFormat: SampleFormat = codec.sampleFormat
+        let sampleFormat: FFmpegSampleFormat = codec.sampleFormat
         let bitRate: Int64 = codec.bitRate > 0 ? codec.bitRate : fileCtx.format.bitRate
         let channelLayoutString: String = ChannelLayouts.readableString(for: codec.channelLayout, channelCount: codec.channelCount)
         

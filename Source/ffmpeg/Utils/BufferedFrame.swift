@@ -53,7 +53,7 @@ class BufferedFrame: Hashable {
     ///
     /// The format of the samples contained in this frame.
     ///
-    let sampleFormat: SampleFormat
+    let sampleFormat: FFmpegSampleFormat
     
     ///
     /// A timestamp indicating this frame's position (order) within the parent audio stream,
@@ -68,7 +68,7 @@ class BufferedFrame: Hashable {
     ///
     let timestamp: Int64
     
-    init(_ frame: Frame) {
+    init(_ frame: FFmpegFrame) {
         
         self.timestamp = frame.timestamp
 
