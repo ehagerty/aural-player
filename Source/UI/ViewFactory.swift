@@ -13,8 +13,6 @@ struct ViewFactory {
 //
 //        fileprivate static let waitingTrackViewController: WaitingTrackViewController = WaitingTrackViewController()
 //
-//        fileprivate static let transcodingTrackViewController: TranscoderViewController = TranscoderViewController()
-//
 //        fileprivate static let playingTrackFunctionsViewController: PlayingTrackFunctionsViewController = PlayingTrackFunctionsViewController()
 //
 //        fileprivate static let playbackViewController: PlaybackViewController = PlaybackViewController()

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,7 +10,6 @@
             <connections>
                 <outlet property="generalPrefsView" destination="Uko-LS-fAN" id="DJ5-6B-Jg1"/>
                 <outlet property="tabView" destination="5um-rX-aK1" id="Nf0-zd-Z6c"/>
-                <outlet property="transcodingPrefsView" destination="eVi-qL-s5p" id="0f1-K9-3ps"/>
                 <outlet property="view" destination="fBA-Aa-Qne" id="bEU-1Z-jc8"/>
             </connections>
         </customObject>
@@ -28,14 +27,6 @@
                         <font key="font" size="13" name="Play-Regular"/>
                     </buttonCell>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="PGF-aI-WQB" userLabel="Transcoding btn">
-                    <rect key="frame" x="329" y="435" width="80" height="27"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="square" title="Transcoding" bezelStyle="shadowlessSquare" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="S7P-r9-9LN" customClass="PrefsNestedTabButtonCell" customModule="Aural" customModuleProvider="target">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" size="13" name="Play-Regular"/>
-                    </buttonCell>
-                </button>
                 <tabView fixedFrame="YES" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="5um-rX-aK1" userLabel="Tab view" customClass="AuralTabView" customModule="Aural" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="660" height="430"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -49,7 +40,7 @@
                                     <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="wRN-LW-IsG">
                                         <rect key="frame" x="-10" y="-10" width="680" height="450"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" ambiguous="YES" id="PD4-oV-mRm">
+                                        <view key="contentView" id="PD4-oV-mRm">
                                             <rect key="frame" x="0.0" y="0.0" width="680" height="450"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
@@ -429,248 +420,10 @@
                                 <outlet property="tabButton" destination="Bbf-Gv-crh" id="TVu-Am-IHu"/>
                             </connections>
                         </tabViewItem>
-                        <tabViewItem label="Item 1" identifier="" id="zoH-LT-2Ae" userLabel="Transcoding" customClass="AuralTabViewItem" customModule="Aural" customModuleProvider="target">
-                            <view key="view" ambiguous="YES" id="iF1-wb-7OZ">
-                                <rect key="frame" x="0.0" y="0.0" width="660" height="430"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Nio-le-Ohn">
-                                        <rect key="frame" x="-10" y="-10" width="680" height="450"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <view key="contentView" ambiguous="YES" id="lle-5r-qaL">
-                                            <rect key="frame" x="0.0" y="0.0" width="680" height="450"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        </view>
-                                        <color key="fillColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </box>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="otW-Mc-vSu" userLabel="Seek Length Label">
-                                        <rect key="frame" x="25" y="399" width="275" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Persistence of transcoded (output) files" id="H8s-sY-SgS">
-                                            <font key="font" size="13" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qZu-Wg-luN">
-                                        <rect key="frame" x="35" y="373" width="187" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="radio" title="Save for use across app launches" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="Qlo-R0-h8n" customClass="CheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="transcoderPersistenceRadioButtonAction:" target="eVi-qL-s5p" id="cCF-1l-TqR"/>
-                                        </connections>
-                                    </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J2J-xo-pnw">
-                                        <rect key="frame" x="35" y="348" width="163" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="radio" title="Delete when app exits" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="jmf-oy-53U" customClass="CheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="transcoderPersistenceRadioButtonAction:" target="eVi-qL-s5p" id="PPk-eY-9e1"/>
-                                        </connections>
-                                    </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IBO-cn-sAg" userLabel="Seek Length Label">
-                                        <rect key="frame" x="234" y="370" width="294" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(better user experience,  takes up disk space)" id="1h6-56-QBW">
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SPq-8B-9FN" userLabel="Seek Length Label">
-                                        <rect key="frame" x="234" y="346" width="426" height="19"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(saves disk space,  files need to be re-transcoded on app launch)" id="Zdp-Aa-LCq">
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jJk-5t-z6o">
-                                        <rect key="frame" x="27" y="188" width="22" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="NHT-gG-n0C" customClass="CheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="limitSpaceAction:" target="eVi-qL-s5p" id="xQ2-sB-LWh"/>
-                                        </connections>
-                                    </button>
-                                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d2o-zu-8QZ">
-                                        <rect key="frame" x="57" y="163" width="111" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" state="on" alignment="left" title="Max. space to use" id="oZN-CP-nSu">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="7Zi-m7-tlt">
-                                                <real key="minimum" value="3"/>
-                                                <real key="maximum" value="300"/>
-                                            </numberFormatter>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zli-Zf-ltp" userLabel="Lbl Duration 1" customClass="FormattedIntervalLabel" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="514" y="162" width="80" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" state="on" alignment="left" title="1 GB" id="q61-De-96k">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="7xH-x9-1Wt">
-                                                <real key="minimum" value="3"/>
-                                                <real key="maximum" value="300"/>
-                                            </numberFormatter>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="interval">
-                                                <real key="value" value="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <slider hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5KB-3W-kzQ" userLabel="Startup Volume Slider">
-                                        <rect key="frame" x="155" y="160" width="353" height="18"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" controlSize="small" continuous="YES" enabled="NO" state="on" alignment="left" maxValue="5" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="6" sliderType="linear" id="qYk-Nk-BV9" customClass="PreferencesSliderCell" customModule="Aural" customModuleProvider="target"/>
-                                        <connections>
-                                            <action selector="maxSpaceSliderAction:" target="eVi-qL-s5p" id="wwG-fZ-g6U"/>
-                                        </connections>
-                                    </slider>
-                                    <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ufx-VW-KEd">
-                                        <rect key="frame" x="24" y="293" width="22" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="0tO-4Z-pY9" customClass="CheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="eagerTranscodingAction:" target="eVi-qL-s5p" id="zqJ-Zj-W1y"/>
-                                        </connections>
-                                    </button>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MQv-eE-z08" userLabel="Seek Length Label">
-                                        <rect key="frame" x="42" y="294" width="536" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Eager transcoding (automatic transcoding in the background, ahead of time ... will load the CPU)" id="yHp-cF-AAA">
-                                            <font key="font" size="13" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R7f-1b-FlK">
-                                        <rect key="frame" x="42" y="263" width="310" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="radio" title="Transcode all playlist files" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="xXk-Cd-s1X" customClass="CheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="eagerTranscodingOptionAction:" target="eVi-qL-s5p" id="1c0-kf-fQQ"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YVt-Pc-frJ">
-                                        <rect key="frame" x="42" y="242" width="199" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="radio" title="Transcode files that might play next" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="MZy-0M-Kf7" customClass="CheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="eagerTranscodingOptionAction:" target="eVi-qL-s5p" id="xPt-xd-rrZ"/>
-                                        </connections>
-                                    </button>
-                                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F37-yn-s2U">
-                                        <rect key="frame" x="58" y="137" width="91" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" state="on" alignment="left" title="Current usage" id="mZP-of-5k6">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Dg5-ds-eFw">
-                                                <real key="minimum" value="3"/>
-                                                <real key="maximum" value="300"/>
-                                            </numberFormatter>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kt9-pX-mFT">
-                                        <rect key="frame" x="153" y="137" width="91" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" state="on" alignment="left" title="125 MB" id="PhZ-jI-Qds">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="kCT-7a-pFk">
-                                                <real key="minimum" value="3"/>
-                                                <real key="maximum" value="300"/>
-                                            </numberFormatter>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DtT-p0-v9B" userLabel="Seek Length Label">
-                                        <rect key="frame" x="46" y="189" width="536" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit disk space usage  (oldest files wil be deleted to stay under limit)" id="2B4-5X-pzc">
-                                            <font key="font" size="13" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pEj-NO-2fL" userLabel="Pan Delta Field">
-                                        <rect key="frame" x="314" y="90" width="40" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" state="on" alignment="right" title="3" id="fN4-Ja-mdw">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="JRx-19-dKN">
-                                                <real key="minimum" value="3"/>
-                                                <real key="maximum" value="30"/>
-                                            </numberFormatter>
-                                            <font key="font" size="11" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <stepper hidden="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgT-zy-gzh" userLabel="Pan Delta Stepper">
-                                        <rect key="frame" x="355" y="89" width="15" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" minValue="1" maxValue="20" doubleValue="3" id="Ixn-oj-uIs"/>
-                                        <connections>
-                                            <action selector="maxTasksStepperAction:" target="eVi-qL-s5p" id="uaa-4V-SU1"/>
-                                        </connections>
-                                    </stepper>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rfg-Km-uW0" userLabel="Seek Length Label">
-                                        <rect key="frame" x="28" y="91" width="292" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Maximum number of background transcoding tasks" id="abK-R4-spH">
-                                            <font key="font" size="13" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YGw-Kk-u0n">
-                                        <rect key="frame" x="396" y="91" width="253" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" state="on" alignment="left" title="(Max. recommended on this system:   8)" id="d9j-LD-uIU">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="DRY-Qt-9yn">
-                                                <real key="minimum" value="3"/>
-                                                <real key="maximum" value="300"/>
-                                            </numberFormatter>
-                                            <font key="font" size="12" name="Play-Regular"/>
-                                            <color key="textColor" white="0.70467122400000004" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                            </view>
-                            <connections>
-                                <outlet property="tabButton" destination="PGF-aI-WQB" id="KKx-xE-Fpx"/>
-                            </connections>
-                        </tabViewItem>
                     </tabViewItems>
                 </tabView>
             </subviews>
+            <point key="canvasLocation" x="140" y="154"/>
         </view>
         <viewController id="Uko-LS-fAN" customClass="GeneralPlaybackPreferencesViewController" customModule="Aural" customModuleProvider="target">
             <connections>
@@ -699,23 +452,6 @@
                 <outlet property="secondarySeekLengthPercStepper" destination="nc5-FC-TJM" id="FsF-KB-amP"/>
                 <outlet property="secondarySeekLengthPicker" destination="rDm-SR-Iqf" id="HpJ-qc-20O"/>
                 <outlet property="view" destination="fBA-Aa-Qne" id="of9-qB-QP0"/>
-            </connections>
-        </viewController>
-        <viewController id="eVi-qL-s5p" customClass="TranscodingPreferencesViewController" customModule="Aural" customModuleProvider="target">
-            <connections>
-                <outlet property="btnAllFiles" destination="R7f-1b-FlK" id="2IW-ZP-nSH"/>
-                <outlet property="btnDeleteFiles" destination="J2J-xo-pnw" id="kXQ-Tg-d5d"/>
-                <outlet property="btnEagerTranscoding" destination="ufx-VW-KEd" id="DRn-Q1-alr"/>
-                <outlet property="btnLimitSpace" destination="jJk-5t-z6o" id="tcj-Wr-mAw"/>
-                <outlet property="btnPredictive" destination="YVt-Pc-frJ" id="5Wm-2T-4Lh"/>
-                <outlet property="btnSaveFiles" destination="qZu-Wg-luN" id="HLu-iS-8Vb"/>
-                <outlet property="lblCurrentUsage" destination="kt9-pX-mFT" id="6u4-NE-rcq"/>
-                <outlet property="lblMaxRecommendedTasks" destination="YGw-Kk-u0n" id="1vx-T0-2cB"/>
-                <outlet property="lblMaxSpace" destination="zli-Zf-ltp" id="hSm-wN-KGU"/>
-                <outlet property="lblMaxTasks" destination="pEj-NO-2fL" id="zzt-1m-fn9"/>
-                <outlet property="maxSpaceSlider" destination="5KB-3W-kzQ" id="OFV-xu-CJU"/>
-                <outlet property="maxTasksStepper" destination="wgT-zy-gzh" id="JRA-wi-GDe"/>
-                <outlet property="view" destination="iF1-wb-7OZ" id="X4i-aR-8O8"/>
             </connections>
         </viewController>
     </objects>

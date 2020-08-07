@@ -95,8 +95,7 @@ class AudioUtils {
         
         if !track.playbackNativelySupported {
             
-            // Transcode the track and let the transcoder prepare the track for playback
-//            track.lazyLoadingInfo.needsTranscoding = true
+            // TODO: FFmpeg
             
         } else {
             prepareTrackWithFile(track, track.file)

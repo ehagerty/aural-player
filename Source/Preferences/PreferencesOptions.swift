@@ -134,15 +134,3 @@ enum SeekLengthOptions: String {
     case constant
     case percentage
 }
-
-enum TranscoderPersistenceOptions: String {
-    
-    case save
-    case delete
-}
-
-enum EagerTranscodingOptions: String {
-    
-    case allFiles
-    case predictive
-}

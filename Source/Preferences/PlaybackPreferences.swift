@@ -29,11 +29,8 @@ class PlaybackPreferences: PersistentPreferencesProtocol {
     var gapBetweenTracks: Bool
     var gapBetweenTracksDuration: Int
     
-    // Transcoding preferences
-    
-    var transcodingPreferences: TranscodingPreferences
-    
     convenience init(_ defaultsDictionary: [String: Any], _ controlsPreferences: ControlsPreferences) {
+        
         self.init(defaultsDictionary)
         self.controlsPreferences = controlsPreferences
     }
@@ -78,8 +75,6 @@ class PlaybackPreferences: PersistentPreferencesProtocol {
         
         gapBetweenTracks = defaultsDictionary["playback.gapBetweenTracks"] as? Bool ?? PreferencesDefaults.Playback.gapBetweenTracks
         gapBetweenTracksDuration = defaultsDictionary["playback.gapBetweenTracks.duration"] as? Int ?? PreferencesDefaults.Playback.gapBetweenTracksDuration
-        
-        transcodingPreferences = TranscodingPreferences(defaultsDictionary)
     }
     
     func persist(defaults: UserDefaults) {
@@ -101,58 +96,5 @@ class PlaybackPreferences: PersistentPreferencesProtocol {
         
         defaults.set(gapBetweenTracks, forKey: "playback.gapBetweenTracks")
         defaults.set(gapBetweenTracksDuration, forKey: "playback.gapBetweenTracks.duration")
-        
-        transcodingPreferences.persist(defaults: defaults)
-    }
-}
-
-class TranscodingPreferences {
-    
-    var persistenceOption: TranscoderPersistenceOptions
-    var limitDiskSpaceUsage: Bool
-    var maxDiskSpaceUsage: Int // in MB
-    
-    var eagerTranscodingEnabled: Bool
-    var eagerTranscodingOption: EagerTranscodingOptions
-    var maxBackgroundTasks: Int
-    
-    internal required init(_ defaultsDictionary: [String: Any]) {
-        
-        if let transcoderPersistenceOptionStr = defaultsDictionary["playback.transcoding.persistence.option"] as? String {
-            persistenceOption = TranscoderPersistenceOptions(rawValue: transcoderPersistenceOptionStr) ?? PreferencesDefaults.Playback.Transcoding.persistenceOption
-        } else {
-            persistenceOption = PreferencesDefaults.Playback.Transcoding.persistenceOption
-        }
-        
-        limitDiskSpaceUsage = PreferencesDefaults.Playback.Transcoding.limitDiskSpaceUsage
-        maxDiskSpaceUsage = PreferencesDefaults.Playback.Transcoding.maxDiskSpaceUsage
-        
-        //        limitDiskSpaceUsage = defaultsDictionary["playback.transcoding.persistence.limitDiskSpaceUsage"] as? Bool ?? PreferencesDefaults.Playback.Transcoding.limitDiskSpaceUsage
-        //        maxDiskSpaceUsage = defaultsDictionary["playback.transcoding.persistence.maxDiskSpaceUsage"] as? Int ?? PreferencesDefaults.Playback.Transcoding.maxDiskSpaceUsage
-        
-        eagerTranscodingEnabled = PreferencesDefaults.Playback.Transcoding.eagerTranscodingEnabled
-        
-        //        if let eagerTranscodingOptionStr = defaultsDictionary["playback.transcoding.eagerTranscoding.option"] as? String {
-        //            eagerTranscodingOption = EagerTranscodingOptions(rawValue: eagerTranscodingOptionStr) ?? PreferencesDefaults.Playback.Transcoding.eagerTranscodingOption
-        //        } else {
-        //            eagerTranscodingOption = PreferencesDefaults.Playback.Transcoding.eagerTranscodingOption
-        //        }
-        
-        eagerTranscodingOption = PreferencesDefaults.Playback.Transcoding.eagerTranscodingOption
-        
-        //        maxBackgroundTasks = defaultsDictionary["playback.transcoding.maxBackgroundTasks"] as? Int ?? PreferencesDefaults.Playback.Transcoding.maxBackgroundTasks
-        maxBackgroundTasks = PreferencesDefaults.Playback.Transcoding.maxBackgroundTasks
-    }
-    
-    func persist(defaults: UserDefaults) {
-        
-        defaults.set(persistenceOption.rawValue, forKey: "playback.transcoding.persistence.option")
-        //        defaults.set(limitDiskSpaceUsage, forKey: "playback.transcoding.persistence.limitDiskSpaceUsage")
-        //        defaults.set(maxDiskSpaceUsage, forKey: "playback.transcoding.persistence.maxDiskSpaceUsage")
-        //
-        //        defaults.set(eagerTranscodingEnabled, forKey: "playback.transcoding.eagerTranscoding.enabled")
-        //        defaults.set(eagerTranscodingOption.rawValue, forKey: "playback.transcoding.eagerTranscoding.option")
-        //
-        //        defaults.set(maxBackgroundTasks, forKey: "playback.transcoding.maxBackgroundTasks")
     }
 }

@@ -60,14 +60,6 @@ class TrackNotPlayableError: InvalidTrackError {
     }
 }
 
-class TranscodingFailedError: InvalidTrackError {
-    
-    override init(_ track: Track) {
-        super.init(track)
-        self.message = "Aural Player is unable to transcode this file into a supported format."
-    }
-}
-
 // Denotes a file that has an unsupported audio format (e.g. WMA)
 class UnsupportedFormatError: InvalidTrackError {
     
@@ -82,7 +74,7 @@ class DRMProtectionError: InvalidTrackError {
     override init(_ track: Track) {
         
         super.init(track)
-        self.message = "This track has Digital Rights Management (DRM) protection, and cannot be transcoded or played back."
+        self.message = "This track has Digital Rights Management (DRM) protection, and cannot be played back."
     }
 }
 

@@ -230,27 +230,6 @@ struct DialogsAndAlerts {
         return alert
     }
     
-    static func trackNotTranscodedAlertWithError(_ error: InvalidTrackError, _ actionMessage: String?) -> NSAlert {
-        
-        let alert = errorAlert
-        
-        alert.window.title = "Track not transcoded"
-        
-        if let track = error.track {
-            alert.messageText = String(format: "The track '%@' cannot be transcoded !", track.conciseDisplayName)
-        } else {
-            alert.messageText = String(format: "The requested track cannot be transcoded !")
-        }
-        
-        alert.informativeText = error.message
-        
-        if let msg = actionMessage {
-            alert.buttons[0].title = msg
-        }
-        
-        return alert
-    }
-    
     static func historyItemNotAddedAlertWithError(_ error: FileNotFoundError, _ actionMessage: String?) -> NSAlert {
         
         let alert = errorAlert

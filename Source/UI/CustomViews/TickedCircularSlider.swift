@@ -63,7 +63,7 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     var center: NSPoint = NSPoint.zero
     var perimeterPoint: NSPoint = NSPoint.zero
     
-    var backgroundColor: NSColor {return Colors.Player.transcoderArcBackgroundColor}
+    var backgroundColor: NSColor {return Colors.Player.progressArcBackgroundColor}
 
     var foregroundColor: NSColor {
         return unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor

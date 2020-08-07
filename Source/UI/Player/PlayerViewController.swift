@@ -1,5 +1,5 @@
 /*
-    View controller that handles the assembly of the player view tree from its multiple pieces, and switches between high-level views depending on current player state (i.e. playing / transcoding / stopped, etc).
+    View controller that handles the assembly of the player view tree from its multiple pieces, and switches between high-level views depending on current player state (i.e. playing / stopped, etc).
  
     The player view tree consists of:
         
@@ -8,8 +8,6 @@
             - Expanded Art view
  
         - Waiting track info (when a track is waiting to play after a delay)
- 
-        - Transcoder info (when a track is being transcoded)
  
         - Player controls (play/seek, next/previous track, repeat/shuffle, volume/balance)
  
@@ -21,7 +19,6 @@ class PlayerViewController: NSViewController, NotificationSubscriber {
     
 //    private var playingTrackView: PlayingTrackView = ViewFactory.playingTrackView as! PlayingTrackView
 //    private var waitingTrackView: NSView = ViewFactory.waitingTrackView
-//    private var transcodingTrackView: NSView = ViewFactory.transcodingTrackView
 //    
 //    // Delegate that conveys all seek and playback info requests to the player
 //    private let player: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
