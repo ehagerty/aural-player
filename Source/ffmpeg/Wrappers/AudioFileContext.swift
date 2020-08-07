@@ -5,7 +5,7 @@ import Foundation
 ///
 /// Instantiates, provides, and manages the life cycles of several member objects through which several ffmpeg functions can be executed.
 ///
-class AudioFileContext {
+class FFmpegFileContext {
 
     ///
     /// The audio file to be read / decoded by this context.
@@ -39,7 +39,7 @@ class AudioFileContext {
     let imageStream: ImageStream?
     
     ///
-    /// Attempts to construct an AudioFileContext instance for the given file.
+    /// Attempts to construct an FFmpegFileContext instance for the given file.
     ///
     /// - Parameter file: The audio file to be read / decoded by this context.
     ///
