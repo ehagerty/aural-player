@@ -307,6 +307,10 @@
 		3E27D20B246FCC1800B6170B /* EndPlaybackSequenceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E27D20A246FCC1800B6170B /* EndPlaybackSequenceAction.swift */; };
 		3E27D20D246FDCB600B6170B /* PlaybackRequestContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E27D20C246FDCB600B6170B /* PlaybackRequestContext.swift */; };
 		3E29C9112495F0040066D8B9 /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E29C9102495F0040066D8B9 /* NotificationNames.swift */; };
+		3E2B4D7324DD7296002C7AF6 /* libavformat.58.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2B4D6F24DD7296002C7AF6 /* libavformat.58.dylib */; };
+		3E2B4D7424DD7296002C7AF6 /* libavutil.56.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2B4D7024DD7296002C7AF6 /* libavutil.56.dylib */; };
+		3E2B4D7524DD7296002C7AF6 /* libswresample.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2B4D7124DD7296002C7AF6 /* libswresample.3.dylib */; };
+		3E2B4D7624DD7296002C7AF6 /* libavcodec.58.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E2B4D7224DD7296002C7AF6 /* libavcodec.58.dylib */; };
 		3E2C84D424BB8BAD00B0C589 /* PlayQueueViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C84D324BB8BAD00B0C589 /* PlayQueueViewDataSource.swift */; };
 		3E2CBDAE2189072800BD68B2 /* EQMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2CBDAD2189072800BD68B2 /* EQMapping.swift */; };
 		3E2D143924716DE500D6E81C /* IntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D143824716DE500D6E81C /* IntExtensions.swift */; };
@@ -362,8 +366,6 @@
 		3E3FB7FB215B5B4800974A59 /* FavoritesDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FB7FA215B5B4800974A59 /* FavoritesDelegateProtocol.swift */; };
 		3E3FB7FD215B5BBB00974A59 /* FavoritesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3FB7FC215B5BBB00974A59 /* FavoritesDelegate.swift */; };
 		3E4045D421DDEFF300F4708C /* Muxer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4045D321DDEFF300F4708C /* Muxer.swift */; };
-		3E4045D921DE1FA500F4708C /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3E4045D721DE1FA500F4708C /* ffmpeg */; };
-		3E4045DA21DE1FA500F4708C /* ffprobe in Resources */ = {isa = PBXBuildFile; fileRef = 3E4045D821DE1FA500F4708C /* ffprobe */; };
 		3E406BB22198F21C00A5776C /* FXPresetsEditorGenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E406BB12198F21C00A5776C /* FXPresetsEditorGenericViewController.swift */; };
 		3E40A538247FDFC500C831B7 /* SecondarySeekingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E40A537247FDFC500C831B7 /* SecondarySeekingTests.swift */; };
 		3E40A53A247FE49C00C831B7 /* ForcedSeekingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E40A539247FE49C00C831B7 /* ForcedSeekingTests.swift */; };
@@ -1007,6 +1009,11 @@
 		3E27D20A246FCC1800B6170B /* EndPlaybackSequenceAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndPlaybackSequenceAction.swift; sourceTree = "<group>"; };
 		3E27D20C246FDCB600B6170B /* PlaybackRequestContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackRequestContext.swift; sourceTree = "<group>"; };
 		3E29C9102495F0040066D8B9 /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
+		3E2B4D6F24DD7296002C7AF6 /* libavformat.58.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libavformat.58.dylib; sourceTree = "<group>"; };
+		3E2B4D7024DD7296002C7AF6 /* libavutil.56.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libavutil.56.dylib; sourceTree = "<group>"; };
+		3E2B4D7124DD7296002C7AF6 /* libswresample.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libswresample.3.dylib; sourceTree = "<group>"; };
+		3E2B4D7224DD7296002C7AF6 /* libavcodec.58.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libavcodec.58.dylib; sourceTree = "<group>"; };
+		3E2B4D7724DD72E9002C7AF6 /* Aural.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Aural.entitlements; sourceTree = "<group>"; };
 		3E2C84D324BB8BAD00B0C589 /* PlayQueueViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueViewDataSource.swift; sourceTree = "<group>"; };
 		3E2CBDAD2189072800BD68B2 /* EQMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQMapping.swift; sourceTree = "<group>"; };
 		3E2D143824716DE500D6E81C /* IntExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtensions.swift; sourceTree = "<group>"; };
@@ -1063,8 +1070,6 @@
 		3E3FB7FA215B5B4800974A59 /* FavoritesDelegateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesDelegateProtocol.swift; sourceTree = "<group>"; };
 		3E3FB7FC215B5BBB00974A59 /* FavoritesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesDelegate.swift; sourceTree = "<group>"; };
 		3E4045D321DDEFF300F4708C /* Muxer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Muxer.swift; sourceTree = "<group>"; };
-		3E4045D721DE1FA500F4708C /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
-		3E4045D821DE1FA500F4708C /* ffprobe */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffprobe; sourceTree = "<group>"; };
 		3E406BB12198F21C00A5776C /* FXPresetsEditorGenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FXPresetsEditorGenericViewController.swift; sourceTree = "<group>"; };
 		3E40A537247FDFC500C831B7 /* SecondarySeekingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondarySeekingTests.swift; sourceTree = "<group>"; };
 		3E40A539247FE49C00C831B7 /* ForcedSeekingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcedSeekingTests.swift; sourceTree = "<group>"; };
@@ -1499,6 +1504,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E2B4D7624DD7296002C7AF6 /* libavcodec.58.dylib in Frameworks */,
+				3E2B4D7324DD7296002C7AF6 /* libavformat.58.dylib in Frameworks */,
+				3E2B4D7424DD7296002C7AF6 /* libavutil.56.dylib in Frameworks */,
+				3E2B4D7524DD7296002C7AF6 /* libswresample.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2773,11 +2782,9 @@
 		3E67BEC121D273120091DC6C /* ffmpeg */ = {
 			isa = PBXGroup;
 			children = (
-				3E4045D721DE1FA500F4708C /* ffmpeg */,
-				3E4045D821DE1FA500F4708C /* ffprobe */,
+				3E5D708721D9EBFA00491D6C /* README.txt */,
 				3E8A51CF21D856FB0014C185 /* build-ffmpeg.sh */,
 				3E67BEC821D273E80091DC6C /* ffmpeg-sourceCode.bz2 */,
-				3E5D708721D9EBFA00491D6C /* README.txt */,
 			);
 			path = ffmpeg;
 			sourceTree = "<group>";
@@ -2921,6 +2928,7 @@
 		3E85F24D1EFA78D6007BE830 = {
 			isa = PBXGroup;
 			children = (
+				3E2B4D7724DD72E9002C7AF6 /* Aural.entitlements */,
 				3E85F2581EFA78D6007BE830 /* Source */,
 				3EDFB69A2466A49200F50610 /* Tests */,
 				3E72FCC41F2C0A780020FD20 /* Documentation */,
@@ -3018,6 +3026,10 @@
 		3EAC65E9249109C800E7D56B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E2B4D7224DD7296002C7AF6 /* libavcodec.58.dylib */,
+				3E2B4D6F24DD7296002C7AF6 /* libavformat.58.dylib */,
+				3E2B4D7024DD7296002C7AF6 /* libavutil.56.dylib */,
+				3E2B4D7124DD7296002C7AF6 /* libswresample.3.dylib */,
 				3EAC65EB249109D800E7D56B /* libswiftAVFoundation.dylib */,
 				3EAC65EC249109D800E7D56B /* libswiftsimd.dylib */,
 				3EAC65EA249109D800E7D56B /* libswiftSwiftOnoneSupport.dylib */,
@@ -3267,8 +3279,8 @@
 				TargetAttributes = {
 					3E85F2551EFA78D6007BE830 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = C4YUF2G676;
 						LastSwiftMigration = 1130;
+						ProvisioningStyle = Automatic;
 					};
 					3EDFB6982466A49200F50610 = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -3312,7 +3324,6 @@
 				3E0ED6B51FBB1B64008268B3 /* Time.xib in Resources */,
 				3EB9304921996353008E45F8 /* FilterBand.xib in Resources */,
 				3EB7F464217FC72900A2CE76 /* GenresPlaylistSort.xib in Resources */,
-				3E4045D921DE1FA500F4708C /* ffmpeg in Resources */,
 				3E61F45B24630D8C00FFADFA /* PlayingTrack.xib in Resources */,
 				3E89CA2E246337590057D3EE /* PlayingTrackFunctions.xib in Resources */,
 				3E2F104F21556A2D0099FD06 /* BookmarksEditor.xib in Resources */,
@@ -3345,7 +3356,6 @@
 				3EB662CA24BE3775006C946B /* EffectsPanel.xib in Resources */,
 				3E85F25F1EFA78D6007BE830 /* MainMenu.xib in Resources */,
 				3E24F4D021699E5000B9CDA6 /* EffectsPresetsEditor.xib in Resources */,
-				3E4045DA21DE1FA500F4708C /* ffprobe in Resources */,
 				3E066C2D216C6FB500E4FE80 /* TimePresetsEditor.xib in Resources */,
 				3E0ED6BD1FBB1CB7008268B3 /* Delay.xib in Resources */,
 				3E0C993D216C89B400E396DB /* FilterPresetsEditor.xib in Resources */,
@@ -4291,11 +4301,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Aural.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = C4YUF2G676;
+				DEVELOPMENT_TEAM = "";
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -4304,9 +4316,14 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = anon.Aural;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -4318,11 +4335,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Aural.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = NO;
-				DEVELOPMENT_TEAM = C4YUF2G676;
+				DEVELOPMENT_TEAM = "";
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				ENABLE_TESTABILITY = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -4331,9 +4350,14 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = anon.Aural;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
