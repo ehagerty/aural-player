@@ -48,9 +48,6 @@ class ObjectGraph {
     private static var bookmarks: Bookmarks!
     static var bookmarksDelegate: BookmarksDelegateProtocol!
     
-    static var transcoder: TranscoderProtocol!
-    static var muxer: MuxerProtocol!
-    
     static var avAssetReader: AVAssetReader!
     static var commonAVAssetParser: CommonAVAssetParser!
     static var id3Parser: ID3Parser!
@@ -110,16 +107,12 @@ class ObjectGraph {
         sequencer = Sequencer(playlist, repeatMode, shuffleMode, playlistType)
         sequencerDelegate = SequencerDelegate(sequencer)
         
-        transcoder = Transcoder(appState.transcoder, preferences.playbackPreferences.transcodingPreferences, playlist, sequencerDelegate)
-        
-        muxer = Muxer()
-        
         commonAVAssetParser = CommonAVAssetParser()
         id3Parser = ID3Parser()
         iTunesParser = ITunesParser()
         audioToolboxParser = AudioToolboxParser()
         
-        avAssetReader = AVAssetReader(commonAVAssetParser, id3Parser, iTunesParser, audioToolboxParser, muxer)
+        avAssetReader = AVAssetReader(commonAVAssetParser, id3Parser, iTunesParser, audioToolboxParser)
         
         commonFFMpegParser = CommonFFMpegMetadataParser()
         wmParser = WMParser()
@@ -127,13 +120,12 @@ class ObjectGraph {
         apeParser = ApeV2Parser()
         defaultParser = DefaultFFMpegMetadataParser()
         
-        ffmpegReader = FFMpegReader(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser, muxer)
+        ffmpegReader = FFMpegReader(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
 
         mediaKeyHandler = MediaKeyHandler(preferences.controlsPreferences)
         
         // Initialize utility classes.
         
-        AudioUtils.initialize(transcoder)
         PlaylistIO.initialize(playlist)
         
         library = Library()
@@ -150,8 +142,8 @@ class ObjectGraph {
             profiles.add(profile.file, profile)
         }
         
-        let startPlaybackChain = StartPlaybackChain(player, sequencer, playlist, transcoder, profiles, preferences.playbackPreferences)
-        let stopPlaybackChain = StopPlaybackChain(player, sequencer, transcoder, profiles, preferences.playbackPreferences)
+        let startPlaybackChain = StartPlaybackChain(player, sequencer, playlist, profiles, preferences.playbackPreferences)
+        let stopPlaybackChain = StopPlaybackChain(player, sequencer, profiles, preferences.playbackPreferences)
         let trackPlaybackCompletedChain = TrackPlaybackCompletedChain(startPlaybackChain, stopPlaybackChain, playQueue, playlist, preferences.playbackPreferences)
         
         // Playback Delegate
@@ -209,8 +201,6 @@ class ObjectGraph {
         appState.library = (library as! Library).persistentState as! LibraryState
         appState.playQueue = (playQueue as! PlayQueue).persistentState as! PlayQueueState
         appState.playbackProfiles = playbackDelegate.profiles.all()
-        
-        appState.transcoder = (transcoder as! Transcoder).persistentState as! TranscoderState
         
         appState.ui = UIState()
         appState.ui.windowLayout = WindowManager.persistentState

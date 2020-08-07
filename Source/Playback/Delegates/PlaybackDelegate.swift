@@ -79,11 +79,6 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
             if let track = waitingTrack {
                 playImmediately(track)
             }
-            
-        case .transcoding:
-            
-            // Do nothing if transcoding
-            return
         }
     }
     
@@ -331,8 +326,6 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
     var playingTrack: Track? {state.isPlayingOrPaused ? playQueue.currentTrack : nil}
     
     var waitingTrack: Track? {state == .waiting ? playQueue.currentTrack : nil}
-    
-    var transcodingTrack: Track? {state == .transcoding ? playQueue.currentTrack : nil}
     
     var playingTrackStartTime: TimeInterval? {player.playingTrackStartTime}
     

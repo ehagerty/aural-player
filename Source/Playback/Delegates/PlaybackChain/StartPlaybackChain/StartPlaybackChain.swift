@@ -10,22 +10,19 @@ class StartPlaybackChain: PlaybackChain, NotificationSubscriber {
     private let player: PlayerProtocol
     private let sequencer: SequencerProtocol
     
-    init(_ player: PlayerProtocol, _ sequencer: SequencerProtocol, _ playlist: PlaylistCRUDProtocol, _ transcoder: TranscoderProtocol, _ profiles: PlaybackProfiles, _ preferences: PlaybackPreferences) {
+    init(_ player: PlayerProtocol, _ sequencer: SequencerProtocol, _ playlist: PlaylistCRUDProtocol, _ profiles: PlaybackProfiles, _ preferences: PlaybackPreferences) {
         
         self.player = player
         self.sequencer = sequencer
         super.init()
         
         _ = self.withAction(SavePlaybackProfileAction(profiles, preferences))
-        .withAction(CancelTranscodingAction(transcoder))
         .withAction(HaltPlaybackAction(player))
         .withAction(ValidateNewTrackAction())
         .withAction(ApplyPlaybackProfileAction(profiles, preferences))
         .withAction(SetPlaybackDelayAction(playlist))
-        .withAction(AudioFilePreparationAction(player, transcoder))
+        .withAction(AudioFilePreparationAction(player))
         .withAction(StartPlaybackAction(player))
-        
-        Messenger.subscribeAsync(self, .transcoder_finished, self.transcodingFinished(_:), queue: .main)
     }
     
     // Halts playback and ends the playback sequence when an error is encountered.
@@ -37,25 +34,5 @@ class StartPlaybackChain: PlaybackChain, NotificationSubscriber {
         // Notify observers of the error, and complete the request context.
         Messenger.publish(TrackNotPlayedNotification(oldTrack: context.currentTrack, error: error))
         complete(context)
-    }
-    
-    // Responds when transcoding for a track has finished.
-    // Either proceeds with playback, or terminates the chain, depending on
-    // transcoding success/failure.
-    func transcodingFinished(_ notification: TranscodingFinishedNotification) {
-        
-        // Match the transcoded track to that from the deferred (i.e. current) request context.
-        if let currentContext = PlaybackRequestContext.currentContext, notification.track == currentContext.requestedTrack {
-
-            // Make sure there is no delay (i.e. state != waiting) before proceeding.
-            if player.state != .waiting && notification.success {
-
-                proceed(currentContext)
-                
-            } else if !notification.success, let error = notification.track.lazyLoadingInfo.preparationError {
-                
-                terminate(currentContext, error)
-            }
-        }
     }
 }

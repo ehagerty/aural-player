@@ -100,10 +100,6 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataS
                     
                     image = Images.imgWaitingTrack
                     
-                case .transcoding:
-                    
-                    image = Images.imgTranscodingTrack
-                
                 default: return nil // Impossible
                 
                 }

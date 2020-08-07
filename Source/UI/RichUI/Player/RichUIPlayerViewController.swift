@@ -24,7 +24,6 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         Messenger.subscribe(self, .player_trackNotPlayed, self.trackNotPlayed(_:))
-        Messenger.subscribeAsync(self, .player_trackNotTranscoded, self.trackNotTranscoded(_:), queue: .main)
         
         Messenger.subscribe(self, .player_playbackLoopChanged, self.playbackLoopChanged)
         Messenger.subscribe(self, .fx_playbackRateChanged, self.playbackRateChanged(_:))
@@ -209,12 +208,6 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
         playbackView.gapOrTranscodingStarted()
     }
     
-    func trackNotTranscoded(_ notification: TrackNotTranscodedNotification) {
-        alertDialog.showAlert(.error, "Track not transcoded", notification.track.conciseDisplayName, notification.error.message)
-    }
-    
-    
-    
     // MARK: Segment looping actions/functions ------------------------------------------------------------
     
     // Toggles the state of the segment playback loop for the currently playing track
@@ -311,7 +304,7 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
     
     func trackTransitioned(_ notification: TrackTransitionNotification) {
         
-        if notification.gapStarted || notification.transcodingStarted {
+        if notification.gapStarted {
             gapOrTranscodingStarted()
             
         } else {

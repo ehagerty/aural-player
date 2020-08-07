@@ -101,10 +101,6 @@ class GroupingPlaylistViewDelegate: NSObject, NSOutlineViewDelegate {
             
             image = track == playbackInfo.waitingTrack ? Images.imgWaitingTrack : nil
             
-        case .transcoding:
-            
-            image = track == playbackInfo.transcodingTrack ? Images.imgTranscodingTrack : nil
-            
         case .noTrack:
             
             image = nil

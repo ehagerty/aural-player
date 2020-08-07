@@ -150,10 +150,6 @@ class Player: PlayerProtocol, NotificationSubscriber {
         state = .waiting
     }
     
-    func transcoding() {
-        state = .transcoding
-    }
-    
     // MARK: Looping functions and state
     
     func defineLoop(_ loopStartPosition: Double, _ loopEndPosition: Double, _ isChapterLoop: Bool = false) {
@@ -261,7 +257,6 @@ enum PlaybackState {
     case paused
     case noTrack
     case waiting
-    case transcoding
     
     var isPlayingOrPaused: Bool {
         return self == .playing || self == .paused

@@ -12,7 +12,6 @@ class AppState {
     var playlist: PlaylistState = PlaylistState()
     var library: LibraryState = LibraryState()
     var playQueue: PlayQueueState = PlayQueueState()
-    var transcoder: TranscoderState = TranscoderState()
     
     var history: HistoryState = HistoryState()
     var favorites: [(file: URL, name: String)] = [(file: URL, name: String)]()
@@ -46,10 +45,6 @@ class AppState {
         
         if let libraryDict = (jsonObject["library"] as? NSDictionary), let libraryState = LibraryState.deserialize(libraryDict) as? LibraryState {
             state.library = libraryState
-        }
-        
-        if let transcoderDict = (jsonObject["transcoder"] as? NSDictionary) {
-            state.transcoder = TranscoderState.deserialize(transcoderDict) as! TranscoderState
         }
         
         if let historyDict = (jsonObject["history"] as? NSDictionary) {

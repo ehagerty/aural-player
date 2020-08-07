@@ -5,7 +5,6 @@ class PlaybackPreferencesViewController: NSViewController, PreferencesViewProtoc
     @IBOutlet weak var tabView: AuralTabView!
     
     @IBOutlet var generalPrefsView: GeneralPlaybackPreferencesViewController!
-    @IBOutlet var transcodingPrefsView: TranscodingPreferencesViewController!
     
     override var nibName: String? {return "PlaybackPreferences"}
     
@@ -16,7 +15,6 @@ class PlaybackPreferencesViewController: NSViewController, PreferencesViewProtoc
     func resetFields(_ preferences: Preferences) {
         
         generalPrefsView.resetFields(preferences)
-        transcodingPrefsView.resetFields(preferences)
         
         tabView.selectTabViewItem(at: 0)
     }
@@ -24,6 +22,5 @@ class PlaybackPreferencesViewController: NSViewController, PreferencesViewProtoc
     func save(_ preferences: Preferences) throws {
         
         try generalPrefsView.save(preferences)
-        try transcodingPrefsView.save(preferences)
     }
 }

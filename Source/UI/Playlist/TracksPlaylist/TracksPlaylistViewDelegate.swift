@@ -82,10 +82,6 @@ class TracksPlaylistViewDelegate: NSObject, NSTableViewDelegate {
                     
                     image = Images.imgWaitingTrack
                     
-                case .transcoding:
-                    
-                    image = Images.imgTranscodingTrack
-                
                 default: return nil // Impossible
                 
                 }

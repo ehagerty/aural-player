@@ -5,13 +5,7 @@ import AVFoundation
  */
 class AudioUtils {
     
-    static var transcoder: TranscoderProtocol!
-    
     private init() {}
-    
-    static func initialize(_ transcoder: TranscoderProtocol) {
-        AudioUtils.transcoder = transcoder
-    }
     
     private static let formatDescriptions: [String: String] = [
     
@@ -54,7 +48,7 @@ class AudioUtils {
         if !track.playbackNativelySupported || fileExtension == "flac" {
             
             if track.libAVInfo == nil {
-                track.libAVInfo = FFMpegWrapper.getMetadata(track)
+//                track.libAVInfo = FFMpegWrapper.getMetadata(track)
             }
             
             let avInfo = track.libAVInfo!
@@ -102,7 +96,7 @@ class AudioUtils {
         if !track.playbackNativelySupported {
             
             // Transcode the track and let the transcoder prepare the track for playback
-            track.lazyLoadingInfo.needsTranscoding = true
+//            track.lazyLoadingInfo.needsTranscoding = true
             
         } else {
             prepareTrackWithFile(track, track.file)

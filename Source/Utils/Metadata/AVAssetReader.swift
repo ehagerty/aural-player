@@ -4,11 +4,10 @@ import AVFoundation
 class AVAssetReader: MetadataReader, NotificationSubscriber {
     
     var allParsers: [AVAssetParser]
-    var muxer: MuxerProtocol
     
     private var metadataMap: ConcurrentMap<Track, AVAssetMetadata> = ConcurrentMap<Track, AVAssetMetadata>("metadataMap")
     
-    init(_ commonAVAssetParser: CommonAVAssetParser, _ id3Parser: ID3Parser, _ iTunesParser: ITunesParser, _ audioToolboxParser: AudioToolboxParser, _ muxer: MuxerProtocol) {
+    init(_ commonAVAssetParser: CommonAVAssetParser, _ id3Parser: ID3Parser, _ iTunesParser: ITunesParser, _ audioToolboxParser: AudioToolboxParser) {
         
         let osVersion = SystemUtils.osVersion
         
@@ -18,8 +17,6 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
         } else {
             self.allParsers = [commonAVAssetParser, id3Parser, iTunesParser]
         }
-        
-        self.muxer = muxer
         
         Messenger.subscribeAsync(self, .playlist_tracksRemoved, self.tracksRemoved(_:), queue: DispatchQueue.global(qos: .background))
     }
@@ -60,11 +57,8 @@ class AVAssetReader: MetadataReader, NotificationSubscriber {
     }
     
     func getDuration(_ track: Track) -> Double {
-        
-        // Mux raw streams into containers to get accurate duration data (necessary for proper playback)
-        if muxer.trackNeedsMuxing(track), let trackDuration = muxer.muxForDuration(track) {
-            return trackDuration
-        }
+
+        // TODO: Packet table for raw streams ?
         
         var maxDuration: Double = track.audioAsset!.duration.seconds
         

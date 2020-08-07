@@ -11,23 +11,19 @@ class FFMpegReader: MetadataReader {
     
     private let genericMetadata_ignoreKeys: [String] = ["title", "artist", "duration", "disc", "track", "album", "genre"]
     
-    private var muxer: MuxerProtocol
-    
-    init(_ commonFFMpegParser: CommonFFMpegMetadataParser, _ id3Parser: ID3Parser, _ vorbisParser: VorbisCommentParser, _ apeParser: ApeV2Parser, _ wmParser: WMParser, _ defaultParser: DefaultFFMpegMetadataParser, _ muxer: MuxerProtocol) {
+    init(_ commonFFMpegParser: CommonFFMpegMetadataParser, _ id3Parser: ID3Parser, _ vorbisParser: VorbisCommentParser, _ apeParser: ApeV2Parser, _ wmParser: WMParser, _ defaultParser: DefaultFFMpegMetadataParser) {
         
         allParsers = [commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser]
         
         wmFileParsers = [commonFFMpegParser, wmParser, id3Parser, vorbisParser, apeParser, defaultParser]
         vorbisCommentFileParsers = [commonFFMpegParser, vorbisParser, id3Parser, apeParser, wmParser, defaultParser]
         apeFileParsers = [commonFFMpegParser, apeParser, id3Parser, vorbisParser, wmParser, defaultParser]
-        
-        self.muxer = muxer
     }
     
     private func ensureTrackAssetLoaded(_ track: Track) {
         
         if track.libAVInfo == nil {
-            track.libAVInfo = FFMpegWrapper.getMetadata(track)
+//            track.libAVInfo = FFMpegWrapper.getMetadata(track)
             parsersForTrack(track).forEach({$0.mapTrack(track.libAVInfo!.metadata)})
         }
     }
@@ -130,9 +126,7 @@ class FFMpegReader: MetadataReader {
     
     func getDuration(_ track: Track) -> Double {
         
-        if muxer.trackNeedsMuxing(track), let trackDuration = muxer.muxForDuration(track) {
-            return trackDuration
-        }
+        // TODO: Here is where we may need to build a packet table !!! (if isRawFile, ...)
         
         return track.libAVInfo!.duration
     }
@@ -242,7 +236,7 @@ class FFMpegReader: MetadataReader {
         if let avInfo = track.libAVInfo {
         
             if avInfo.hasArt {
-                return FFMpegWrapper.getArt(track)
+//                return FFMpegWrapper.getArt(track)
             }
         }
         
@@ -250,7 +244,8 @@ class FFMpegReader: MetadataReader {
     }
     
     func getArt(_ file: URL) -> CoverArt? {
-        return FFMpegWrapper.getArt(file)
+//        return FFMpegWrapper.getArt(file)
+        return nil
     }
     
     func getAllMetadata(_ track: Track) -> [String: MetadataEntry] {

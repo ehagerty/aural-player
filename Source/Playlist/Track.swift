@@ -333,8 +333,6 @@ class LazyLoadingInfo {
     var validated: Bool = false
     var preparedForPlayback: Bool = false
     
-    var needsTranscoding: Bool = false
-    
     var primaryInfoLoaded: Bool = false
     var secondaryInfoLoaded: Bool = false
     
