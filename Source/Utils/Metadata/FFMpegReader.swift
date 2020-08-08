@@ -4,12 +4,16 @@ class FFMpegReader: MetadataReader {
     
     private let allParsers: [FFMpegMetadataParser]
     
+    private let theReader: FFmpegMetadataReader = FFmpegMetadataReader()
+    
     // TODO: Is this useful/necessary ?
     private let wmFileParsers: [FFMpegMetadataParser]
     private let vorbisCommentFileParsers: [FFMpegMetadataParser]
     private let apeFileParsers: [FFMpegMetadataParser]
     
     private let genericMetadata_ignoreKeys: [String] = ["title", "artist", "duration", "disc", "track", "album", "genre"]
+    
+    private var metadataMap: ConcurrentMap<Track, LibAVMetadata> = ConcurrentMap<Track, LibAVMetadata>("ffmpeg-metadataMap")
     
     init(_ commonFFMpegParser: CommonFFMpegMetadataParser, _ id3Parser: ID3Parser, _ vorbisParser: VorbisCommentParser, _ apeParser: ApeV2Parser, _ wmParser: WMParser, _ defaultParser: DefaultFFMpegMetadataParser) {
         
@@ -22,9 +26,16 @@ class FFMpegReader: MetadataReader {
     
     private func ensureTrackAssetLoaded(_ track: Track) {
         
-        if track.ffmpegTrackInfo == nil {
-//            track.libAVInfo = FFMpegWrapper.getMetadata(track)
-            parsersForTrack(track).forEach({$0.mapTrack(track.ffmpegTrackInfo!.metadata)})
+        if track.ffmpegTrackInfo == nil, let fileContext = FFmpegFileContext(forFile: track.file) {
+            
+            track.ffmpegTrackInfo = fileContext
+            let allTrackMetadata = theReader.readMetadata(forFile: fileContext)
+            track.ffmpegMetadata = allTrackMetadata
+            
+            let libAVMetadata = LibAVMetadata(allTrackMetadata.metadata)
+            
+            parsersForTrack(track).forEach({$0.mapTrack(libAVMetadata)})
+            metadataMap[track] = libAVMetadata
         }
     }
     
@@ -66,7 +77,7 @@ class FFMpegReader: MetadataReader {
     
     private func getTitle(_ track: Track) -> String? {
         
-        if let metadata = track.ffmpegTrackInfo?.metadata {
+        if let metadata = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -81,7 +92,7 @@ class FFMpegReader: MetadataReader {
     
     private func getArtist(_ track: Track) -> String? {
         
-        if let metadata = track.ffmpegTrackInfo?.metadata {
+        if let metadata = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -96,7 +107,7 @@ class FFMpegReader: MetadataReader {
     
     private func getAlbum(_ track: Track) -> String? {
         
-        if let metadata = track.ffmpegTrackInfo?.metadata {
+        if let metadata = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -111,7 +122,7 @@ class FFMpegReader: MetadataReader {
     
     private func getGenre(_ track: Track) -> String? {
         
-        if let metadata = track.ffmpegTrackInfo?.metadata {
+        if let metadata = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -128,7 +139,7 @@ class FFMpegReader: MetadataReader {
         
         // TODO: Here is where we may need to build a packet table !!! (if isRawFile, ...)
         
-        return track.ffmpegTrackInfo!.duration
+        return track.ffmpegMetadata!.audioInfo.duration
     }
     
     func getSecondaryMetadata(_ track: Track) -> SecondaryMetadata {
@@ -151,12 +162,12 @@ class FFMpegReader: MetadataReader {
     }
     
     func getChapters(_ track: Track) -> [Chapter] {
-        return track.ffmpegTrackInfo?.chapters ?? []
+        return track.ffmpegMetadata?.chapters.map {Chapter($0.title, $0.startTime, $0.endTime)} ?? []
     }
     
     private func getDiscNumber(_ track: Track) -> (number: Int?, total: Int?)? {
         
-        if let map = track.ffmpegTrackInfo?.metadata {
+        if let map = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -171,7 +182,7 @@ class FFMpegReader: MetadataReader {
     
     private func getTotalDiscs(_ track: Track) -> Int? {
         
-        if let map = track.ffmpegTrackInfo?.metadata {
+        if let map = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -186,7 +197,7 @@ class FFMpegReader: MetadataReader {
     
     private func getTrackNumber(_ track: Track) -> (number: Int?, total: Int?)? {
         
-        if let map = track.ffmpegTrackInfo?.metadata {
+        if let map = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -201,7 +212,7 @@ class FFMpegReader: MetadataReader {
     
     private func getTotalTracks(_ track: Track) -> Int? {
         
-        if let map = track.ffmpegTrackInfo?.metadata {
+        if let map = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -216,7 +227,7 @@ class FFMpegReader: MetadataReader {
     
     private func getLyrics(_ track: Track) -> String? {
         
-        if let map = track.ffmpegTrackInfo?.metadata {
+        if let map = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 
@@ -233,10 +244,11 @@ class FFMpegReader: MetadataReader {
         
         ensureTrackAssetLoaded(track)
         
-        if let avInfo = track.ffmpegTrackInfo {
+        if let avInfo = track.ffmpegMetadata {
         
-            if avInfo.hasArt {
+            if let coverArt = avInfo.art {
 //                return FFMpegWrapper.getArt(track)
+                return CoverArt(coverArt, nil)
             }
         }
         
@@ -252,7 +264,7 @@ class FFMpegReader: MetadataReader {
         
         var metadata: [String: MetadataEntry] = [:]
         
-        if let map = track.ffmpegTrackInfo?.metadata {
+        if let map = metadataMap[track] {
             
             for parser in parsersForTrack(track) {
                 

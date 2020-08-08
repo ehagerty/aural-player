@@ -11,8 +11,9 @@ class Track: Hashable, PlaylistItem {
     
     // The audio asset object used to retrieve metadata for this track
     var avfTrackInfo: AVURLAsset?
+    var ffmpegTrackInfo: FFmpegFileContext?
     
-    var ffmpegTrackInfo: FFmpegTrackInfo?
+    var ffmpegMetadata: FFmpegTrackMetadata?
     
     // All info relating to how this track is displayed
     let displayInfo: DisplayInfo
@@ -266,9 +267,6 @@ class PlaybackInfo {
     
     // The sample rate of the track (in Hz)
     var sampleRate: Double = 0
-    
-    // Number of audio channels
-    var numChannels: Int = 2
 }
 
 class AudioInfo {

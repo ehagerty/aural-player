@@ -48,17 +48,13 @@ class AudioUtils {
         if !track.playbackNativelySupported || fileExtension == "flac" {
             
             if track.ffmpegTrackInfo == nil {
-//                track.libAVInfo = FFMpegWrapper.getMetadata(track)
+                track.ffmpegTrackInfo = FFmpegFileContext(forFile: track.file)
             }
             
-            let avInfo = track.ffmpegTrackInfo!
+            let avInfo = track.ffmpegTrackInfo
             
-            if !avInfo.hasValidAudioTrack {
+            if avInfo == nil {
                 throw TrackNotPlayableError(track)
-            }
-            
-            if avInfo.drmProtected {
-                throw DRMProtectionError(track)
             }
             
             return
@@ -90,18 +86,6 @@ class AudioUtils {
         }
     }
     
-    // Loads info necessary for playback of the given track. Returns whether or not the info was successfully loaded.
-//    static func loadPlaybackInfo(_ track: Track) {
-//
-//        if !track.playbackNativelySupported {
-//
-//            // TODO: FFmpeg
-//
-//        } else {
-//            prepareTrack(track)
-//        }
-//    }
-    
     static func loadPlaybackInfo_noPlayback(_ track: Track) {
         
         let playbackInfo = PlaybackInfo()
@@ -117,22 +101,15 @@ class AudioUtils {
                 
                 playbackInfo.sampleRate = audioFile.processingFormat.sampleRate
                 playbackInfo.frames = audioFile.length
-                playbackInfo.numChannels = Int(audioFile.fileFormat.channelCount)
                 
                 track.playbackInfo = playbackInfo
             }
             
-        } else if let stream = track.ffmpegTrackInfo?.audioStream {
+        } else if let codec = track.ffmpegTrackInfo?.audioCodec {
             
             let playbackInfo = PlaybackInfo()
             
-            if let sampleRate = stream.sampleRate {
-                playbackInfo.sampleRate = sampleRate
-            }
-            
-            if let channelCount = stream.channelCount {
-                playbackInfo.numChannels = channelCount
-            }
+            playbackInfo.sampleRate = Double(codec.sampleRate)
             
             playbackInfo.frames = Int64(playbackInfo.sampleRate * track.duration)
         }
@@ -161,7 +138,6 @@ class AudioUtils {
         
         playbackInfo.sampleRate = audioFile.processingFormat.sampleRate
         playbackInfo.frames = audioFile.length
-        playbackInfo.numChannels = Int(audioFile.fileFormat.channelCount)
         
         let computedDuration = Double(playbackInfo.frames) / playbackInfo.sampleRate
         
@@ -192,36 +168,18 @@ class AudioUtils {
         
         if (!track.playbackNativelySupported || fileExtension == "flac") {
             
-            if let avInfo = track.ffmpegTrackInfo, let audioStream = avInfo.audioStream {
+            if let avInfo = track.ffmpegMetadata?.audioInfo {
                 
-                if let sampleRate = audioStream.sampleRate {
-                    audioInfo.sampleRate = sampleRate
-                    audioInfo.frames = Int64(sampleRate * track.duration)
-                }
+                audioInfo.sampleRate = Double(avInfo.sampleRate)
+                audioInfo.frames = avInfo.frameCount
                 
-                audioInfo.numChannels = audioStream.channelCount
+//                audioInfo.format = track.ffmpegMetadata?.audioInfo.
                 
-                audioInfo.format = avInfo.fileFormatDescription
+                audioInfo.codec = avInfo.codec
                 
-                if let codec = audioStream.formatDescription, codec != audioInfo.format {
-                    audioInfo.codec = codec
-                }
+                audioInfo.channelLayout = avInfo.channelLayout
+                audioInfo.bitRate = Int(avInfo.bitRate)
                 
-                audioInfo.channelLayout = audioStream.channelLayout
-                
-                if let bitRate = audioStream.bitRate {
-                    
-                    audioInfo.bitRate = roundedInt(bitRate)
-                    
-                } else if track.duration == 0 {
-                    
-                    audioInfo.bitRate = 0
-                    
-                } else {
-
-                    let fileSize = FileSystemUtils.sizeOfFile(path: track.file.path)
-                    audioInfo.bitRate = roundedInt(Double(fileSize.sizeBytes) * 8 / (Double(track.duration) * Double(Size.KB)))
-                }
             }
             
         } else {

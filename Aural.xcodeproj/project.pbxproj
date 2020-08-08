@@ -2928,11 +2928,11 @@
 			children = (
 				3E2B4D7724DD72E9002C7AF6 /* Aural.entitlements */,
 				3E85F2581EFA78D6007BE830 /* Source */,
+				3E821AEC1F953253006F8E97 /* Resources */,
+				3EAC65E9249109C800E7D56B /* Frameworks */,
 				3EDFB69A2466A49200F50610 /* Tests */,
 				3E72FCC41F2C0A780020FD20 /* Documentation */,
 				3E85F2571EFA78D6007BE830 /* Products */,
-				3E821AEC1F953253006F8E97 /* Resources */,
-				3EAC65E9249109C800E7D56B /* Frameworks */,
 				3E85F2601EFA78D6007BE830 /* Info.plist */,
 			);
 			sourceTree = "<group>";

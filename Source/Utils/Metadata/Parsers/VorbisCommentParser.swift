@@ -189,6 +189,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         map["date"] = "Date"
         map["location"] = "Location"
         map["albumartist"] = "Album Artist"
+        map["album_artist"] = "Album Artist"
         
         map["actor"] = "Actor"
         map["director"] = "Director"

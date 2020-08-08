@@ -32,13 +32,6 @@ class AudioDataSource: TrackInfoDataSource {
         
         if let layout = track.audioInfo?.channelLayout {
             trackInfo.append((key: "Channel Layout", value: layout.capitalized))
-        } else {
-            
-            if let numChannels = track.playbackInfo?.numChannels {
-                trackInfo.append((key: "Channel Layout", value: channelLayout(numChannels)))
-            } else {
-                trackInfo.append((key: "Channel Layout", value: value_unknown))
-            }
         }
         
         // TODO: If playback info is present (prepared for playback), frame count is exact. Otherwise, it is an estimate.
