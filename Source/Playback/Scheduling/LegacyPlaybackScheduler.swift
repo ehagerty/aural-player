@@ -87,15 +87,15 @@ class LegacyPlaybackScheduler: PlaybackScheduler {
             return
         }
             
-        let trackDuration = curSession.track.duration
-        let curPos = seekPosition
-        
-        if curPos > (trackDuration - LegacyPlaybackScheduler.timeComparisonTolerance) && playerNode.isPlaying {
-            
-            // Notify observers that the track has finished playing. Don't do this if paused and seeking to the end.
-            trackCompleted(curSession)
-            destroyCompletionTimer()
-        }
+//        let trackDuration = curSession.track.duration
+//        let curPos = seekPosition
+//        
+//        if curPos > (trackDuration - LegacyPlaybackScheduler.timeComparisonTolerance) && playerNode.isPlaying {
+//            
+//            // Notify observers that the track has finished playing. Don't do this if paused and seeking to the end.
+//            trackCompleted(curSession)
+//            destroyCompletionTimer()
+//        }
     }
     
     override func loopSegmentCompleted(_ session: PlaybackSession) {

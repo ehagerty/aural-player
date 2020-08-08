@@ -112,7 +112,7 @@ class ObjectGraph {
         iTunesParser = ITunesParser()
         audioToolboxParser = AudioToolboxParser()
         
-        avAssetReader = AVAssetReader(commonAVAssetParser, id3Parser, iTunesParser, audioToolboxParser)
+        AVAssetReader.initialize(commonAVAssetParser, id3Parser, iTunesParser, audioToolboxParser)
         
         commonFFMpegParser = CommonFFMpegMetadataParser()
         wmParser = WMParser()
@@ -120,7 +120,7 @@ class ObjectGraph {
         apeParser = ApeV2Parser()
         defaultParser = DefaultFFMpegMetadataParser()
         
-        ffmpegReader = FFMpegReader(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
+//        ffmpegReader = FFMpegReader(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
 
         mediaKeyHandler = MediaKeyHandler(preferences.controlsPreferences)
         
@@ -131,7 +131,7 @@ class ObjectGraph {
         library = Library()
         libraryDelegate = LibraryDelegate(library, appState.library, preferences)
         
-        MetadataUtils.initialize(libraryDelegate, avAssetReader, ffmpegReader)
+//        MetadataUtils.initialize(libraryDelegate, avAssetReader, ffmpegReader)
         
         playQueue = PlayQueue(persistentState: appState.playQueue)
         playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)

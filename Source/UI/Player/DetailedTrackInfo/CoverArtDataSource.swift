@@ -31,7 +31,7 @@ class CoverArtDataSource: TrackInfoDataSource {
         
         var trackInfo: [(key: String, value: String)] = []
         
-        if let artInfo = track.displayInfo.art?.metadata {
+        if let artInfo = track.art?.metadata {
             
             if let type = artInfo.type {
                 trackInfo.append((key: "Type", value: type))

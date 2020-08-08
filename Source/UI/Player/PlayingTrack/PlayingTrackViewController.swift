@@ -99,18 +99,18 @@ class PlayingTrackViewController: NSViewController, NotificationSubscriber {
 //    }
 //
 //    var art: NSImage? {
-//        return track.displayInfo.art?.image
+//        return track.art?.image
 //    }
 //
 //    var artist: String? {
-//        return track.displayInfo.artist
+//        return track.artist
 //    }
 //
 //    var album: String? {
-//        return track.groupingInfo.album
+//        return track.album
 //    }
 //
 //    var displayName: String? {
-//        return track.displayInfo.title ?? track.conciseDisplayName
+//        return track.title ?? track.defaultDisplayName
 //    }
 }

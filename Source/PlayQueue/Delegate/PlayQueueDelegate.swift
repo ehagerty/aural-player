@@ -32,7 +32,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     
     func enqueueToPlayLater(_ tracks: [Track]) -> ClosedRange<Int> {
         
-        tracks.forEach {TrackIO.loadArt($0)}
+//        tracks.forEach {TrackIO.loadArt($0)}
         
         let indices = playQueue.enqueue(tracks)
         Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))
@@ -41,7 +41,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     
     func enqueueToPlayNow(_ tracks: [Track]) -> ClosedRange<Int> {
         
-        tracks.forEach {TrackIO.loadArt($0)}
+//        tracks.forEach {TrackIO.loadArt($0)}
         
         let indices = playQueue.enqueueAtHead(tracks)
         Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))
@@ -50,7 +50,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     
     func enqueueToPlayNext(_ tracks: [Track]) -> ClosedRange<Int> {
         
-        tracks.forEach {TrackIO.loadArt($0)}
+//        tracks.forEach {TrackIO.loadArt($0)}
         
         let indices = playQueue.enqueueAfterCurrentTrack(tracks)
         Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))

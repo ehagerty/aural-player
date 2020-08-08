@@ -16,9 +16,9 @@ fileprivate let essentialFieldKeys: Set<String> = [key_title, key_artist, key_al
 
 class CommonAVAssetParser: AVAssetParser {
     
-    func mapTrack(_ track: Track, _ mapForTrack: AVAssetMetadata) {
+    func mapTrack(_ mapForTrack: AVFMetadataMap) {
         
-        for item in track.avfTrackInfo!.metadata {
+        for item in mapForTrack.asset.metadata {
             
             if item.keySpace == .common, let key = item.commonKeyAsString {
                 
@@ -34,11 +34,11 @@ class CommonAVAssetParser: AVAssetParser {
         }
     }
     
-    func getDuration(_ mapForTrack: AVAssetMetadata) -> Double? {
+    func getDuration(_ mapForTrack: AVFMetadataMap) -> Double? {
         return nil
     }
     
-    func getTitle(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getTitle(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let titleItem = mapForTrack.map[key_title] {
             return titleItem.stringValue
@@ -47,7 +47,7 @@ class CommonAVAssetParser: AVAssetParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getArtist(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let artistItem = mapForTrack.map[key_artist] {
             return artistItem.stringValue
@@ -56,7 +56,7 @@ class CommonAVAssetParser: AVAssetParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getAlbum(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let albumItem = mapForTrack.map[key_album] {
             return albumItem.stringValue
@@ -65,7 +65,7 @@ class CommonAVAssetParser: AVAssetParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getGenre(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let genreItem = mapForTrack.map[key_genre] {
             return genreItem.stringValue
@@ -74,15 +74,15 @@ class CommonAVAssetParser: AVAssetParser {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         return nil
     }
     
-    func getArt(_ mapForTrack: AVAssetMetadata) -> CoverArt? {
+    func getArt(_ mapForTrack: AVFMetadataMap) -> CoverArt? {
         
         if let item = mapForTrack.map[key_art], let imgData = item.dataValue, let image = NSImage(data: imgData) {
             
@@ -104,7 +104,7 @@ class CommonAVAssetParser: AVAssetParser {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getLyrics(_ mapForTrack: AVFMetadataMap) -> String? {
         return nil
     }
     
@@ -117,7 +117,7 @@ class CommonAVAssetParser: AVAssetParser {
         })?.stringValue
     }
     
-    func getGenericMetadata(_ mapForTrack: AVAssetMetadata) -> [String: MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: AVFMetadataMap) -> [String: MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
 

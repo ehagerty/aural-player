@@ -112,7 +112,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
             
             // ------------------ UPDATE --------------------
             
-            self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {TrackIO.loadSecondaryInfo(result.track)}},
+            self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {result.track.loadSecondaryMetadata()}},
                                                 waitUntilFinished: false)
         }
     }
@@ -206,17 +206,20 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     private func processBatch(_ batch: AddBatch) {
         
         // Process all tracks in batch concurrently and wait until the entire batch finishes.
-        trackAddQueue.addOperations(batch.map {index in BlockOperation {TrackIO.loadPrimaryInfo(self.addSession.tracks[index])}}, waitUntilFinished: true)
+        trackAddQueue.addOperations(batch.map {index in BlockOperation {self.addSession.tracks[index].loadPrimaryMetadata()}}, waitUntilFinished: true)
         
         for track in batch.map({addSession.tracks[$0]}) {
             
-            if let result = self.library.addTrack(track) {
+            if track.isValidTrack, let result = self.library.addTrack(track) {
                 
                 addSession.tracksAdded.increment()
                 addSession.results.append(TrackAddResult(track: track, flatPlaylistResult: result, groupingPlaylistResults: [:]))
 
                 let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
                 Messenger.publish(LibraryTrackAddedNotification(trackIndex: result, addOperationProgress: progress))
+                
+            } else if !track.isValidTrack {
+                addSession.errors.append(track.validationError as? DisplayableError ?? InvalidTrackError(track))
             }
         }
     }
@@ -243,7 +246,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         
         // Load display info
         let track = Track(resolvedFile)
-        TrackIO.loadPrimaryInfo(track)
+//        TrackIO.loadPrimaryInfo(track)
         
         // Non-nil result indicates success
         guard let result = self.library.addTrack(track) else {return nil}
@@ -254,7 +257,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         Messenger.publish(trackAddedNotification)
         Messenger.publish(.history_itemsAdded, payload: [resolvedFile])
         
-        TrackIO.loadSecondaryInfo(track)
+//        TrackIO.loadSecondaryInfo(track)
         
         return track
     }

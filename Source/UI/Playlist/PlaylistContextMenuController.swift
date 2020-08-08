@@ -221,7 +221,7 @@ class PlaylistContextMenuController: NSObject, NSMenuDelegate {
         
         guard let theClickedTrack = clickedTrack else {return}
         
-        theClickedTrack.loadDetailedInfo()
+        theClickedTrack.loadAllMetadata()
         
         WindowManager.playlistWindow.makeKeyAndOrderFront(self)
         detailedInfoPopover.show(theClickedTrack, playlistSelectedRowView, NSRectEdge.maxY)   // Display the popover below the selected row

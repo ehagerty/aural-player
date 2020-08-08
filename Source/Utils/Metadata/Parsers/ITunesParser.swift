@@ -11,9 +11,9 @@ class ITunesParser: AVAssetParser {
     // BUG TODO: Find out why ITunesNormalization tag is not being ignored in MP3 file
     private let ignoredKeys: Set<String> = [ITunesSpec.key_normalization, ITunesSpec.key_soundCheck]
     
-    func mapTrack(_ track: Track, _ mapForTrack: AVAssetMetadata) {
-        
-        for item in track.avfTrackInfo!.metadata {
+    func mapTrack(_ mapForTrack: AVFMetadataMap) {
+    
+        for item in mapForTrack.asset.metadata {
             
             if item.keySpace == .iTunes, let key = item.keyAsString {
                 
@@ -40,7 +40,7 @@ class ITunesParser: AVAssetParser {
         }
     }
     
-    func getDuration(_ mapForTrack: AVAssetMetadata) -> Double? {
+    func getDuration(_ mapForTrack: AVFMetadataMap) -> Double? {
         
         if let item = mapForTrack.map[ITunesSpec.key_duration], let durationStr = item.stringValue, let durationMsecs = Double(durationStr) {
             return durationMsecs / 1000
@@ -49,7 +49,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getTitle(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getTitle(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let titleItem = mapForTrack.map[ITunesSpec.key_title] {
             return titleItem.stringValue
@@ -58,7 +58,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getArtist(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let artistItem = mapForTrack.map[ITunesSpec.key_artist] {
             return artistItem.stringValue
@@ -67,7 +67,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getAlbum(_ mapForTrack: AVFMetadataMap) -> String? {
         
             if let albumItem = mapForTrack.map[ITunesSpec.key_album] {
                 return albumItem.stringValue
@@ -76,7 +76,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getGenre(_ mapForTrack: AVFMetadataMap) -> String? {
         
         for key in [ITunesSpec.key_genre, ITunesSpec.key_predefGenre] {
             
@@ -122,7 +122,7 @@ class ITunesParser: AVAssetParser {
         return string
     }
     
-    func getDiscNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         
         for key in [ITunesSpec.key_discNumber, ITunesSpec.key_discNumber2] {
             
@@ -134,7 +134,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         
         if let item = mapForTrack.map[ITunesSpec.key_trackNumber] {
             return ParserUtils.parseDiscOrTrackNumber(item)
@@ -143,7 +143,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getArt(_ mapForTrack: AVAssetMetadata) -> CoverArt? {
+    func getArt(_ mapForTrack: AVFMetadataMap) -> CoverArt? {
         
         if let item = mapForTrack.map[ITunesSpec.key_art], let imgData = item.dataValue, let image = NSImage(data: imgData) {
             
@@ -165,7 +165,7 @@ class ITunesParser: AVAssetParser {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getLyrics(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let lyricsItem = mapForTrack.map[ITunesSpec.key_lyrics] {
             return lyricsItem.stringValue
@@ -178,7 +178,7 @@ class ITunesParser: AVAssetParser {
         return items.first(where: {$0.keySpace == .iTunes && $0.keyAsString == ITunesSpec.rawKey_title})?.stringValue
     }
     
-    func getGenericMetadata(_ mapForTrack: AVAssetMetadata) -> [String: MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: AVFMetadataMap) -> [String: MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         

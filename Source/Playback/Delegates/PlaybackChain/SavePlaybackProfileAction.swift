@@ -29,10 +29,10 @@ class SavePlaybackProfileAction: PlaybackChainAction {
             
             // Update last position for current track
             // If track finished playing, reset the last position to 0
-            let lastPosition = (context.currentSeekPosition >= currentTrack.duration ? 0 : context.currentSeekPosition)
-            
-            // Save the profile
-            profiles.add(currentTrack, PlaybackProfile(currentTrack, lastPosition))
+//            let lastPosition = (context.currentSeekPosition >= currentTrack.duration ? 0 : context.currentSeekPosition)
+//            
+//            // Save the profile
+//            profiles.add(currentTrack, PlaybackProfile(currentTrack, lastPosition))
         }
         
         chain.proceed(context)

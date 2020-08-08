@@ -172,8 +172,8 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
             
             // ------------------ UPDATE --------------------
             
-            self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {TrackIO.loadSecondaryInfo(result.track)}},
-                                                waitUntilFinished: false)
+//            self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {TrackIO.loadSecondaryInfo(result.track)}},
+//                                                waitUntilFinished: false)
         }
     }
     
@@ -266,7 +266,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
     private func processBatch(_ batch: AddBatch, _ gapsByFile: [URL: (gapBeforeTrack: PlaybackGap?, gapAfterTrack: PlaybackGap?)]) {
         
         // Process all tracks in batch concurrently and wait until the entire batch finishes.
-        trackAddQueue.addOperations(batch.map {index in BlockOperation {TrackIO.loadPrimaryInfo(self.addSession.tracks[index])}}, waitUntilFinished: true)
+//        trackAddQueue.addOperations(batch.map {index in BlockOperation {TrackIO.loadPrimaryInfo(self.addSession.tracks[index])}}, waitUntilFinished: true)
         
         for (batchIndex, track) in zip(batch, batch.map {addSession.tracks[$0]}) {
             
@@ -313,7 +313,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         
         // Load display info
         let track = Track(resolvedFile)
-        TrackIO.loadPrimaryInfo(track)
+//        TrackIO.loadPrimaryInfo(track)
         
         // Non-nil result indicates success
         guard let result = self.playlist.addTrack(track) else {return nil}
@@ -325,7 +325,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         
         self.changeListeners.forEach({$0.tracksAdded([result])})
         
-        TrackIO.loadSecondaryInfo(track)
+//        TrackIO.loadSecondaryInfo(track)
         
         return track
     }

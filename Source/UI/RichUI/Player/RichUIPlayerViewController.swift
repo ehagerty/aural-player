@@ -159,12 +159,12 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
         
         if let track = newTrack {
             
-            albumArtView.image = track.displayInfo.art?.image ?? Images.imgPlayingArt
+            albumArtView.image = track.art?.image ?? Images.imgPlayingArt
             
-            lblTitle.stringValue = track.displayInfo.title
+            lblTitle.stringValue = track.title ?? track.defaultDisplayName
             
-            let artist = track.groupingInfo.artist
-            let album = track.groupingInfo.album
+            let artist = track.artist
+            let album = track.album
             
             if let theArtist = artist, let theAlbum = album {
                 lblArtist.stringValue = "\(theArtist) -- \(theAlbum)"
@@ -199,7 +199,7 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
         self.trackChanged(nil)
         
         let error = notification.error
-        alertDialog.showAlert(.error, "Track not played", error.track?.conciseDisplayName ?? "<Unknown>", error.message)
+        alertDialog.showAlert(.error, "Track not played", error.track?.defaultDisplayName ?? "<Unknown>", error.message)
     }
     
     private func gapOrTranscodingStarted() {

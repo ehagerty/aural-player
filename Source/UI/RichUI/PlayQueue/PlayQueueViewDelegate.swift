@@ -18,7 +18,7 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
     func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> String? {
         
         // Only the track name column is used for type selection
-        return tableColumn?.identifier == .playQueue_title ? playQueue.trackAtIndex(row)?.conciseDisplayName : nil
+        return tableColumn?.identifier == .playQueue_title ? playQueue.trackAtIndex(row)?.defaultDisplayName : nil
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -37,27 +37,23 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
             // Check if there is a track currently playing, and if this row matches that track.
             if let currentTrack = playbackInfo.currentTrack, currentTrack == track {
                 
-//                var image: NSImage!
-//
-//                switch playbackInfo.state {
-//
-//                case .playing, .paused:
-//
-//                    image = Images.imgPlayingTrack
-//
-//                case .waiting:
-//
-//                    image = Images.imgWaitingTrack
-//
-//                case .transcoding:
-//
-//                    image = Images.imgTranscodingTrack
-//
-//                default: return nil // Impossible
-//
-//                }
+                var image: NSImage!
+
+                switch playbackInfo.state {
+
+                case .playing, .paused:
+
+                    image = Images.imgPlayingTrack
+
+                case .waiting:
+
+                    image = Images.imgWaitingTrack
+
+                default: return nil // Impossible
+
+                }
                 
-//                return createIndexImageCell(tableView, track, row)
+                return createIndexImageCell(tableView, track, row)
             }
             
             // Otherwise, create a text cell with the track index
@@ -92,8 +88,7 @@ class PlayQueueViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate {
         
         guard let cell = tableView.makeView(withIdentifier: .playQueue_index, owner: nil) as? PlayQueueTrackArtCell else {return nil}
             
-        TrackIO.loadArt(track)
-        cell.art = track.displayInfo.art?.image ?? Images.imgPlayingArt
+        cell.art = track.art?.image ?? Images.imgPlayingArt
         
         return cell
     }

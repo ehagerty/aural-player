@@ -68,20 +68,20 @@ class Library: LibraryProtocol {
         // Check both the filename and the display name
         if query.fields.name {
             
-            let filename = track.fileSystemInfo.fileName
-            if query.compare(filename) {
-                return SearchQueryMatch(track: track, matchedField: "filename", matchedFieldValue: filename)
-            }
+//            let filename = track.fileSystemInfo.fileName
+//            if query.compare(filename) {
+//                return SearchQueryMatch(track: track, matchedField: "filename", matchedFieldValue: filename)
+//            }
             
-            let displayName = track.conciseDisplayName
+            let displayName = track.defaultDisplayName
             if query.compare(displayName) {
                 return SearchQueryMatch(track: track, matchedField: "name", matchedFieldValue: displayName)
             }
         }
         
         // Compare title field if included in search
-        if query.fields.title, query.compare(track.displayInfo.title) {
-            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: track.displayInfo.title)
+        if query.fields.title, let theTitle = track.title, query.compare(theTitle) {
+            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: theTitle)
         }
         
         // Didn't match
@@ -90,7 +90,7 @@ class Library: LibraryProtocol {
     
     func sort(_ sort: Sort) -> SortResults {
         
-        tracks.sort(by: SortComparator(sort, {track in track.conciseDisplayName}).compareTracks)
+        tracks.sort(by: SortComparator(sort, {track in track.defaultDisplayName}).compareTracks)
         return SortResults(.tracks, sort)
     }
 }

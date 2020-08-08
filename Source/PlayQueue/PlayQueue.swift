@@ -20,12 +20,13 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     
     init(persistentState: PlayQueueState) {
         
+        // TODO: Don't load directly from file ... get tracks from library.
+        // So, library must be loaded first. then get everything from there.
+        
         self.tracks = persistentState.tracks.map {Track($0)}
         
         for track in tracks {
-            
-            TrackIO.loadPrimaryInfo(track)
-            TrackIO.loadArt(track)
+            track.loadPrimaryMetadata()
         }
         
         sequence = PlaybackSequence(persistentState.repeatMode, persistentState.shuffleMode)
@@ -155,20 +156,20 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         // Check both the filename and the display name
         if query.fields.name {
             
-            let filename = track.fileSystemInfo.fileName
-            if query.compare(filename) {
-                return SearchQueryMatch(track: track, matchedField: "filename", matchedFieldValue: filename)
-            }
+//            let filename = track.fileSystemInfo.fileName
+//            if query.compare(filename) {
+//                return SearchQueryMatch(track: track, matchedField: "filename", matchedFieldValue: filename)
+//            }
             
-            let displayName = track.conciseDisplayName
+            let displayName = track.defaultDisplayName
             if query.compare(displayName) {
                 return SearchQueryMatch(track: track, matchedField: "name", matchedFieldValue: displayName)
             }
         }
         
         // Compare title field if included in search
-        if query.fields.title, query.compare(track.displayInfo.title) {
-            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: track.displayInfo.title)
+        if query.fields.title, let theTitle = track.title, query.compare(theTitle) {
+            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: theTitle)
         }
         
         // Didn't match

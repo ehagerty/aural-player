@@ -31,7 +31,7 @@ class FFmpegImageStream: FFmpegStreamProtocol {
     ///
     /// The codec associated with this stream.
     ///
-    lazy var codec: ImageCodec? = ImageCodec(fromParameters: avStream.codecpar)
+    let codec: ImageCodec
     
     ///
     /// The packet (optionally) containing an attached picture.
@@ -51,10 +51,11 @@ class FFmpegImageStream: FFmpegStreamProtocol {
     ///
     /// - Parameter mediaType: The media type of this stream (e.g. audio / video, etc)
     ///
-    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) {
+    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) throws {
         
         self.pointer = pointer
         self.index = pointer.pointee.index
+        self.codec = try ImageCodec(fromParameters: pointer.pointee.codecpar)
     }
     
     ///

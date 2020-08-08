@@ -68,14 +68,14 @@ class BookmarksMenuController: NSObject, NSMenuDelegate {
         
         artLoadingQueue.addOperation {
             
-            if let img = MetadataUtils.artForFile(bookmark.file), let imgCopy = img.image.copy() as? NSImage {
-                
-                imgCopy.size = Dimensions.historyMenuItemImageSize
-                
-                DispatchQueue.main.async {
-                    menuItem.image = imgCopy
-                }
-            }
+//            if let img = MetadataUtils.artForFile(bookmark.file), let imgCopy = img.image.copy() as? NSImage {
+//                
+//                imgCopy.size = Dimensions.historyMenuItemImageSize
+//                
+//                DispatchQueue.main.async {
+//                    menuItem.image = imgCopy
+//                }
+//            }
         }
         
         menuItem.bookmark = bookmark

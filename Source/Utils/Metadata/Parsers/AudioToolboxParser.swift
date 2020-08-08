@@ -39,16 +39,16 @@ class AudioToolboxParser: AVAssetParser {
         return []
     }()
     
-    func mapTrack(_ track: Track, _ mapForTrack: AVAssetMetadata) {
+    func mapTrack(_ mapForTrack: AVFMetadataMap) {
         
         if #available(OSX 10.13, *) {
             
-            for item in track.avfTrackInfo!.metadata {
-                
+            for item in mapForTrack.asset.metadata {
+
                 if item.keySpace == .audioFile, let key = item.keyAsString?.removingPercentEncoding {
-                    
+
                     let mapKey = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, key)
-                    
+
                     if AudioToolboxParser.essentialFieldKeys.contains(mapKey) {
                         mapForTrack.map[mapKey] = item
                     } else {
@@ -60,7 +60,7 @@ class AudioToolboxParser: AVAssetParser {
         }
     }
     
-    func getDuration(_ mapForTrack: AVAssetMetadata) -> Double? {
+    func getDuration(_ mapForTrack: AVFMetadataMap) -> Double? {
         
         if #available(OSX 10.13, *), let item = mapForTrack.map[AudioToolboxParser.key_duration], let durationStr = item.stringValue, let durationSecs = Double(durationStr) {
             
@@ -70,7 +70,7 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getTitle(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getTitle(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if #available(OSX 10.13, *), let titleItem = mapForTrack.map[AudioToolboxParser.key_title] {
             return titleItem.stringValue
@@ -79,7 +79,7 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getArtist(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if #available(OSX 10.13, *), let artistItem = mapForTrack.map[AudioToolboxParser.key_artist] {
             return artistItem.stringValue
@@ -88,7 +88,7 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getAlbum(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if #available(OSX 10.13, *), let albumItem = mapForTrack.map[AudioToolboxParser.key_album] {
             return albumItem.stringValue
@@ -97,7 +97,7 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getGenre(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if #available(OSX 10.13, *), let genreItem = mapForTrack.map[AudioToolboxParser.key_genre] {
             return genreItem.stringValue
@@ -106,11 +106,11 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         
         if #available(OSX 10.13, *), let trackNumItem = mapForTrack.map[AudioToolboxParser.key_trackNumber] {
             return parseDiscOrTrackNumber(trackNumItem)
@@ -184,7 +184,7 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getArt(_ mapForTrack: AVAssetMetadata) -> CoverArt? {
+    func getArt(_ mapForTrack: AVFMetadataMap) -> CoverArt? {
         return nil
     }
     
@@ -192,11 +192,11 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getArtMetadata(_ mapForTrack: AVAssetMetadata) -> NSDictionary? {
+    func getArtMetadata(_ mapForTrack: AVFMetadataMap) -> NSDictionary? {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: AVAssetMetadata) -> String? {
+    func getLyrics(_ mapForTrack: AVFMetadataMap) -> String? {
         return nil
     }
     
@@ -209,7 +209,7 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getGenericMetadata(_ mapForTrack: AVAssetMetadata) -> [String: MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: AVFMetadataMap) -> [String: MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         

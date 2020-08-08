@@ -88,3 +88,27 @@ class PlayerInitializationError: Error {}
 func isEOF(code: ResultCode) -> Bool {
     code == ERROR_EOF
 }
+
+///
+class FormatContextInitializationError: Error {
+    
+    let description: String
+    
+    init(description: String) {
+        self.description = description
+    }
+}
+
+class CodecInitializationError: Error {
+    
+    let description: String
+    
+    init(description: String) {
+        self.description = description
+    }
+}
+
+class NoAudioStreamError: Error {
+    
+    let description = "No audio stream found in file."
+}

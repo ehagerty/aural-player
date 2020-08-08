@@ -7,14 +7,14 @@ class Favorite: StringKeyedItem {
     
     private var _name: String
     
-    // Used by the UI (track.conciseDisplayName)
+    // Used by the UI (track.defaultDisplayName)
     var name: String {
         
         get {
             
-            if let track = self.track {
-                return track.conciseDisplayName
-            }
+//            if let track = self.track {
+//                return track.defaultDisplayName
+//            }
             
             return _name
         }
@@ -41,7 +41,8 @@ class Favorite: StringKeyedItem {
         
         self.track = track
         self.file = track.file
-        self._name = track.conciseDisplayName
+//        self._name = track.defaultDisplayName
+        self._name = "<>"
     }
     
     init(_ file: URL, _ name: String) {

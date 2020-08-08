@@ -48,31 +48,31 @@ class PlayQueueTrackInfoCell: NSTableCellView {
     
     func initializeForTrack(_ track: Track) {
         
-        let artist = track.groupingInfo.artist
-        let album = track.groupingInfo.album
-        
+        let artist = track.artist
+        let album = track.album
+
         if let theArtist = artist, let theAlbum = album {
-            
+
             lblName.stringValue = ""
-            lblTitle.stringValue = track.displayInfo.title
+            lblTitle.stringValue = track.title ?? track.defaultDisplayName
             lblArtistAlbum.stringValue = "\(theArtist) -- \(theAlbum)"
-            
+
         } else if let theArtist = artist {
-            
+
             lblName.stringValue = ""
-            lblTitle.stringValue = track.displayInfo.title
+            lblTitle.stringValue = track.title ?? track.defaultDisplayName
             lblArtistAlbum.stringValue = theArtist
-            
+
         } else if let theAlbum = album {
-            
+
             lblName.stringValue = ""
-            lblTitle.stringValue = track.displayInfo.title
+            lblTitle.stringValue = track.title ?? track.defaultDisplayName
             lblArtistAlbum.stringValue = theAlbum
-            
+
         } else {
-            
+
             // No artist, no album
-            lblName.stringValue = track.displayInfo.title
+            lblName.stringValue = track.title ?? track.defaultDisplayName
             lblTitle.stringValue = ""
             lblArtistAlbum.stringValue = ""
         }

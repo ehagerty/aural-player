@@ -49,9 +49,9 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
         btnPreviousTrack.toolTipFunction = {
             () -> String? in
 
-            if let prevTrack = self.sequencer.peekPrevious() {
-                return String(format: "Previous track: '%@'", prevTrack.conciseDisplayName)
-            }
+//            if let prevTrack = self.sequencer.peekPrevious() {
+//                return String(format: "Previous track: '%@'", prevTrack.defaultDisplayName)
+//            }
 
             return nil
         }
@@ -59,9 +59,9 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
         btnNextTrack.toolTipFunction = {
             () -> String? in
 
-            if let nextTrack = self.sequencer.peekNext() {
-                return String(format: "Next track: '%@'", nextTrack.conciseDisplayName)
-            }
+//            if let nextTrack = self.sequencer.peekNext() {
+//                return String(format: "Next track: '%@'", nextTrack.defaultDisplayName)
+//            }
 
             return nil
         }

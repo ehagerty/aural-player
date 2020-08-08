@@ -15,17 +15,17 @@ class ValidateNewTrackAction: PlaybackChainAction {
         }
         
         // Validate the track
-        newTrack.validateAudio()
-
-        if newTrack.lazyLoadingInfo.preparationFailed, let preparationError = newTrack.lazyLoadingInfo.preparationError {
-
-            // Validation failed, terminate the chain.
-            chain.terminate(context, preparationError)
-            
-        } else {
+//        newTrack.validateAudio()
+//
+//        if newTrack.lazyLoadingInfo.preparationFailed, let preparationError = newTrack.lazyLoadingInfo.preparationError {
+//
+//            // Validation failed, terminate the chain.
+//            chain.terminate(context, preparationError)
+//
+//        } else {
             
             // Track is valid, OK to proceed
             chain.proceed(context)
-        }
+//        }
     }
 }

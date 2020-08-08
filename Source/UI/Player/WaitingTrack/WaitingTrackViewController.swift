@@ -116,8 +116,8 @@ class WaitingTrackViewController: NSViewController, NotificationSubscriber {
 //    
 //    func updateTrackInfo() {
 //
-//        artView.image = track?.displayInfo.art?.image ?? Images.imgPlayingArt
-//        lblTrackName.stringValue = track?.conciseDisplayName ?? ""
+//        artView.image = track?.art?.image ?? Images.imgPlayingArt
+//        lblTrackName.stringValue = track?.defaultDisplayName ?? ""
 //    }
 //    
 //    private func startTimer() {

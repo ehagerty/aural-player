@@ -35,9 +35,9 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     /// - Parameter paramsPointer: A pointer to parameters for the associated AVCodec object.
     ///
-    override init?(fromParameters paramsPointer: UnsafeMutablePointer<AVCodecParameters>) {
+    override init(fromParameters paramsPointer: UnsafeMutablePointer<AVCodecParameters>) throws {
         
-        super.init(fromParameters: paramsPointer)
+        try super.init(fromParameters: paramsPointer)
         
         self.sampleFormat = FFmpegSampleFormat(encapsulating: context.sample_fmt)
         self.channelCount = params.channels

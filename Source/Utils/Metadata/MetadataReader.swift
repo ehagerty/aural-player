@@ -1,21 +1,21 @@
 import Cocoa
 
-protocol MetadataReader {
-    
-    func getPrimaryMetadata(_ track: Track) -> PrimaryMetadata
-    
-    func getSecondaryMetadata(_ track: Track) -> SecondaryMetadata
-    
-    func getDurationForFile(_ file: URL) -> Double
-    
-    func getArt(_ track: Track) -> CoverArt?
-    
-    func getArt(_ file: URL) -> CoverArt?
-    
-    func getAllMetadata(_ track: Track) -> [String: MetadataEntry]
-}
+//protocol MetadataReader {
+//
+//    func getPrimaryMetadata(_ track: Track) -> PrimaryMetadata
+//
+//    func getSecondaryMetadata(_ track: Track) -> SecondaryMetadata
+//
+//    func getDurationForFile(_ file: URL) -> Double
+//
+//    func getArt(_ track: Track) -> CoverArt?
+//
+//    func getArt(_ file: URL) -> CoverArt?
+//
+//    func getAllMetadata(_ track: Track) -> [String: MetadataEntry]
+//}
 
-class PrimaryMetadata {
+struct PrimaryMetadata {
     
     let title: String?
     let artist: String?
@@ -24,35 +24,16 @@ class PrimaryMetadata {
     
     let duration: Double
     
-    init(_ title: String?, _ artist: String?, _ album: String?, _ genre: String?, _ duration: Double) {
-        
-        self.title = title
-        self.artist = artist
-        self.album = album
-        self.genre = genre
-        
-        self.duration = duration
-    }
+    let coverArt: CoverArt?
 }
 
-class SecondaryMetadata {
+struct SecondaryMetadata {
     
-    let discNum: Int?
+    let discNumber: Int?
     let totalDiscs: Int?
     
-    let trackNum: Int?
+    let trackNumber: Int?
     let totalTracks: Int?
     
     let lyrics: String?
-    
-    init(_ discNum: Int?, _ totalDiscs: Int?, _ trackNum: Int?, _ totalTracks: Int?, _ lyrics: String?) {
-        
-        self.discNum = discNum
-        self.totalDiscs = totalDiscs
-        
-        self.trackNum = trackNum
-        self.totalTracks = totalTracks
-        
-        self.lyrics = lyrics
-    }
 }

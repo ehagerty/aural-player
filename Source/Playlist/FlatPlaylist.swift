@@ -12,11 +12,13 @@ class FlatPlaylist: FlatPlaylistCRUDProtocol {
     var size: Int {tracks.count}
     
     var duration: Double {
-        return tracks.reduce(0.0, {(totalSoFar: Double, track: Track) -> Double in totalSoFar + track.duration})
+//        return tracks.reduce(0.0, {(totalSoFar: Double, track: Track) -> Double in totalSoFar + track.duration})
+        0
     }
     
     func displayNameForTrack(_ track: Track) -> String {
-        return track.conciseDisplayName
+//        return track.defaultDisplayName
+        ""
     }
     
     func trackAtIndex(_ index: Int) -> Track? {
@@ -39,23 +41,23 @@ class FlatPlaylist: FlatPlaylistCRUDProtocol {
     private func executeQuery(_ track: Track, _ query: SearchQuery) -> SearchQueryMatch? {
 
         // Check both the filename and the display name
-        if query.fields.name {
-            
-            let filename = track.fileSystemInfo.fileName
-            if query.compare(filename) {
-                return SearchQueryMatch(track: track, matchedField: "filename", matchedFieldValue: filename)
-            }
-            
-            let displayName = track.conciseDisplayName
-            if query.compare(displayName) {
-                return SearchQueryMatch(track: track, matchedField: "name", matchedFieldValue: displayName)
-            }
-        }
-        
-        // Compare title field if included in search
-        if query.fields.title, query.compare(track.displayInfo.title) {
-            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: track.displayInfo.title)
-        }
+//        if query.fields.name {
+//
+//            let filename = track.fileSystemInfo.fileName
+//            if query.compare(filename) {
+//                return SearchQueryMatch(track: track, matchedField: "filename", matchedFieldValue: filename)
+//            }
+//
+//            let displayName = track.defaultDisplayName
+//            if query.compare(displayName) {
+//                return SearchQueryMatch(track: track, matchedField: "name", matchedFieldValue: displayName)
+//            }
+//        }
+//
+//        // Compare title field if included in search
+//        if query.fields.title, query.compare(track.title) {
+//            return SearchQueryMatch(track: track, matchedField: "title", matchedFieldValue: track.title)
+//        }
         
         // Didn't match
         return nil

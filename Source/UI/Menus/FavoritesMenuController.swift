@@ -74,14 +74,14 @@ class FavoritesMenuController: NSObject, NSMenuDelegate {
         
         artLoadingQueue.addOperation {
             
-            if let img = MetadataUtils.artForFile(item.file), let imgCopy = img.image.copy() as? NSImage {
-                
-                imgCopy.size = Dimensions.historyMenuItemImageSize
-                
-                DispatchQueue.main.async {
-                    menuItem.image = imgCopy
-                }
-            }
+//            if let img = MetadataUtils.artForFile(item.file), let imgCopy = img.image.copy() as? NSImage {
+//                
+//                imgCopy.size = Dimensions.historyMenuItemImageSize
+//                
+//                DispatchQueue.main.async {
+//                    menuItem.image = imgCopy
+//                }
+//            }
         }
         
         menuItem.favorite = item

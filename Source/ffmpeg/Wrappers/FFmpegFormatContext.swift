@@ -185,7 +185,7 @@ class FFmpegFormatContext {
     /// - An error occurs while opening the file or reading (demuxing) its streams.
     /// - No audio stream is found in the file.
     ///
-    init?(forFile file: URL) {
+    init(forFile file: URL) throws {
         
         self.file = file
         self.filePath = file.path
@@ -196,9 +196,7 @@ class FFmpegFormatContext {
         self.pointer = avformat_alloc_context()
         
         guard self.pointer != nil else {
-            
-            print("\nFormatContext.init(): Unable to allocate memory for format context for file '\(filePath)'.")
-            return nil
+            throw FormatContextInitializationError(description: "Unable to allocate memory for format context for file '\(filePath)'.")
         }
         
         // Try to open the audio file so that it can be read.
@@ -206,9 +204,7 @@ class FFmpegFormatContext {
         
         // If the file open failed, log a message and return nil.
         guard resultCode.isNonNegative, pointer?.pointee != nil else {
-            
-            print("\nFormatContext.init(): Unable to open file '\(filePath)'. Error: \(resultCode.errorDescription)")
-            return nil
+            throw FormatContextInitializationError(description: "Unable to open file '\(filePath)'. Error: \(resultCode.errorDescription)")
         }
         
         // MARK: Read the streams ----------------------------------------------------------------------------------
@@ -218,9 +214,7 @@ class FFmpegFormatContext {
         
         // If the read failed, log a message and return nil.
         guard resultCode.isNonNegative else {
-            
-            print("\nFormatContext.init(): Unable to find stream info for file '\(filePath)'. Error: \(resultCode.errorDescription)")
-            return nil
+            throw FormatContextInitializationError(description: "Unable to find stream info for file '\(filePath)'. Error: \(resultCode.errorDescription)")
         }
         
         var streams: [FFmpegStreamProtocol] = []
@@ -231,15 +225,15 @@ class FFmpegFormatContext {
         
             let avStreamPointers: [UnsafeMutablePointer<AVStream>] = (0..<pointer.pointee.nb_streams).compactMap {avStreams.advanced(by: Int($0)).pointee}
             
-            streams = avStreamPointers.compactMap {streamPointer in
+            streams = try avStreamPointers.compactMap {streamPointer in
                 
                 switch streamPointer.pointee.codecpar.pointee.codec_type {
                     
                 // For audio / video streams, wrap the AVStream in a AudioStream / ImageStream.
                     
-                case AVMEDIA_TYPE_AUDIO:    return FFmpegAudioStream(encapsulating: streamPointer)
+                case AVMEDIA_TYPE_AUDIO:    return try FFmpegAudioStream(encapsulating: streamPointer)
                     
-                case AVMEDIA_TYPE_VIDEO:    return FFmpegImageStream(encapsulating: streamPointer)
+                case AVMEDIA_TYPE_VIDEO:    return try FFmpegImageStream(encapsulating: streamPointer)
                     
                 default:                    return nil
                     
@@ -292,7 +286,7 @@ class FFmpegFormatContext {
         
         // Before attempting the seek, it is necessary to ask the codec
         // to flush its internal buffers. Otherwise, the seek will likely fail.
-        stream.codec?.flushBuffers()
+        stream.codec.flushBuffers()
         
         // Represents the target seek position that the format context understands.
         var timestamp: Int64 = 0

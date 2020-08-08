@@ -15,7 +15,8 @@ class Group: Hashable, PlaylistItem {
     
     // Total duration of all tracks in this group
     var duration: Double {
-        tracks.reduce(0.0, {(totalSoFar: Double, track: Track) -> Double in totalSoFar + track.duration})
+//        tracks.reduce(0.0, {(totalSoFar: Double, track: Track) -> Double in totalSoFar + track.duration})
+        0
     }
     
     init(_ type: GroupType, _ name: String) {

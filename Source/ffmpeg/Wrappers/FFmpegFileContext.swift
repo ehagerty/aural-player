@@ -57,7 +57,7 @@ class FFmpegFileContext {
     /// 2. Has at least one audio stream.
     /// 3. Is able to decode that audio stream.
     ///
-    init?(forFile file: URL) {
+    init(forFile file: URL) throws {
         
         self.file = file
     
@@ -67,13 +67,16 @@ class FFmpegFileContext {
         
         // If any of the above steps fail, we cannot proceed with reading / decoding this file, so return nil.
         
-        guard let theFormatContext = FFmpegFormatContext(forFile: file), let theAudioStream = theFormatContext.audioStream, let theAudioCodec = theAudioStream.codec else {return nil}
-
-        self.format = theFormatContext
-        self.audioStream = theAudioStream
-        self.audioCodec = theAudioCodec
+        self.format = try FFmpegFormatContext(forFile: file)
         
-        self.imageStream = theFormatContext.imageStream
+        guard let theAudioStream = format.audioStream else {
+            throw NoAudioStreamError()
+        }
+        
+        self.audioStream = theAudioStream
+        self.audioCodec = theAudioStream.codec
+        
+        self.imageStream = format.imageStream
     }
     
     /// Indicates whether or not this object has already been destroyed.

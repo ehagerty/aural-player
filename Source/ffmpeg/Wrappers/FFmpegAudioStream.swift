@@ -31,7 +31,7 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     ///
     /// The codec associated with this stream.
     ///
-    lazy var codec: FFmpegAudioCodec? = FFmpegAudioCodec(fromParameters: avStream.codecpar)
+    let codec: FFmpegAudioCodec
     
     ///
     /// The duration of this stream, in seconds, if available. Nil if not available.
@@ -70,11 +70,13 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     ///
     /// - Parameter mediaType: The media type of this stream (e.g. audio / video, etc)
     ///
-    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) {
+    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) throws {
         
         self.pointer = pointer
         self.index = pointer.pointee.index
-        self.duration = avStream.duration > 0 ? Double(avStream.duration) * avStream.time_base.ratio : nil
+        self.duration = pointer.pointee.duration > 0 ? Double(pointer.pointee.duration) * pointer.pointee.time_base.ratio : nil
+        
+        self.codec = try FFmpegAudioCodec(fromParameters: pointer.pointee.codecpar)
     }
     
     ///

@@ -121,49 +121,49 @@ class AuralPlayerNode: AVAudioPlayerNode {
     // Computes an audio file segment. Given seek times, computes the corresponding audio frames.
     func computeSegment(_ session: PlaybackSession, _ startTime: Double, _ endTime: Double? = nil, _ startFrame: AVAudioFramePosition? = nil) -> PlaybackSegment? {
         
-        guard let playbackInfo = session.track.playbackInfo, let playingFile: AVAudioFile = playbackInfo.audioFile,
-            areStartAndEndTimeValid(startTime, endTime) else {
+//        guard let playbackInfo = session.track.playbackInfo, let playingFile: AVAudioFile = playbackInfo.audioFile,
+//            areStartAndEndTimeValid(startTime, endTime) else {
             return nil
-        }
+//        }
 
-        let sampleRate = playbackInfo.sampleRate
-        let lastFrameInFile: AVAudioFramePosition = playbackInfo.frames - 1
-
-        // If an exact start frame is specified, use it.
-        // Otherwise, multiply sample rate by the new seek time in seconds to obtain the start frame.
-        var firstFrame: AVAudioFramePosition = startFrame ?? AVAudioFramePosition.fromTrackTime(startTime, sampleRate)
-        
-        var lastFrame: AVAudioFramePosition
-        var segmentEndTime: Double
-
-        // Check if end time is specified.
-        if let theEndTime = endTime {
-
-            // Use loop end time to calculate the last frame. Ensure the last frame doesn't go past the actual last frame in the file. Rounding may cause this problem.
-            lastFrame = min(AVAudioFramePosition.fromTrackTime(theEndTime, sampleRate), lastFrameInFile)
-            segmentEndTime = theEndTime
-
-        } else {
-
-            // No end time specified, use audio file's total frame count to determine the last frame
-            lastFrame = lastFrameInFile
-            segmentEndTime = session.track.duration
-        }
-        
-        // NOTE - Assign to a signed Int value here to account for possible negative values
-        var frameCount: Int64 = lastFrame - firstFrame + 1
-
-        // If the frame count is less than the minimum required to continue playback,
-        // schedule the minimum frame count for playback, to avoid crashes in the playerNode.
-        if frameCount < AuralPlayerNode.minFrames {
-            
-            frameCount = Int64(AuralPlayerNode.minFrames)
-            firstFrame = lastFrame - frameCount + 1
-        }
-        
-        // If startFrame is specified, use it to calculate a precise start time.
-        let segmentStartTime: Double = startFrame == nil ? startTime : startFrame!.toTrackTime(sampleRate)
-        
-        return PlaybackSegment(session, playingFile, firstFrame, lastFrame, AVAudioFrameCount(frameCount), segmentStartTime, segmentEndTime)
+//        let sampleRate = playbackInfo.sampleRate
+//        let lastFrameInFile: AVAudioFramePosition = playbackInfo.frames - 1
+//
+//        // If an exact start frame is specified, use it.
+//        // Otherwise, multiply sample rate by the new seek time in seconds to obtain the start frame.
+//        var firstFrame: AVAudioFramePosition = startFrame ?? AVAudioFramePosition.fromTrackTime(startTime, sampleRate)
+//        
+//        var lastFrame: AVAudioFramePosition
+//        var segmentEndTime: Double
+//
+//        // Check if end time is specified.
+//        if let theEndTime = endTime {
+//
+//            // Use loop end time to calculate the last frame. Ensure the last frame doesn't go past the actual last frame in the file. Rounding may cause this problem.
+//            lastFrame = min(AVAudioFramePosition.fromTrackTime(theEndTime, sampleRate), lastFrameInFile)
+//            segmentEndTime = theEndTime
+//
+//        } else {
+//
+//            // No end time specified, use audio file's total frame count to determine the last frame
+//            lastFrame = lastFrameInFile
+//            segmentEndTime = session.track.duration
+//        }
+//        
+//        // NOTE - Assign to a signed Int value here to account for possible negative values
+//        var frameCount: Int64 = lastFrame - firstFrame + 1
+//
+//        // If the frame count is less than the minimum required to continue playback,
+//        // schedule the minimum frame count for playback, to avoid crashes in the playerNode.
+//        if frameCount < AuralPlayerNode.minFrames {
+//            
+//            frameCount = Int64(AuralPlayerNode.minFrames)
+//            firstFrame = lastFrame - frameCount + 1
+//        }
+//        
+//        // If startFrame is specified, use it to calculate a precise start time.
+//        let segmentStartTime: Double = startFrame == nil ? startTime : startFrame!.toTrackTime(sampleRate)
+//        
+//        return PlaybackSegment(session, playingFile, firstFrame, lastFrame, AVAudioFrameCount(frameCount), segmentStartTime, segmentEndTime)
     }
 }

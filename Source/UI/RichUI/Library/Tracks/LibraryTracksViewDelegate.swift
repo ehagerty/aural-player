@@ -67,7 +67,7 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataS
     func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> String? {
         
         // Only the track name column is used for type selection
-        return tableColumn?.identifier == .library_title ? library.trackAtIndex(row)?.conciseDisplayName : nil
+        return tableColumn?.identifier == .library_title ? library.trackAtIndex(row)?.defaultDisplayName : nil
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -111,35 +111,35 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataS
             return createIndexTextCell(tableView, indexText, row)
             
         case .library_title:
-            
-            return createTextCell(tableView, .library_title, track.displayInfo.title, row)
-            
+
+            return createTextCell(tableView, .library_title, track.title ?? track.defaultDisplayName, row)
+
         case .library_duration:
-            
+
             return createDurationCell(tableView, ValueFormatter.formatSecondsToHMS(track.duration), row)
-            
+
         case .library_artist:
-            
-            if let artist = track.groupingInfo.artist {
+
+            if let artist = track.artist {
                 return createTextCell(tableView, .library_artist, artist, row)
             }
-            
+
             return nil
-            
+
         case .library_album:
-            
-            if let album = track.groupingInfo.album {
+
+            if let album = track.album {
                 return createTextCell(tableView, .library_album, album, row)
             }
-            
+
             return nil
-            
+
         case .library_genre:
-            
-            if let genre = track.groupingInfo.genre {
+
+            if let genre = track.genre {
                 return createTextCell(tableView, .library_genre, genre, row)
             }
-            
+
             return nil
             
         default: return nil // Impossible
@@ -241,27 +241,27 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataS
         var widths: [CGFloat] = [0]
         
         switch column {
-            
+
         case 1:
-            
+
             // Title
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.displayInfo.title}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-            
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.title}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
         case 3:
-            
+
             // Artist
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.groupingInfo.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-            
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
         case 4:
-            
+
             // Album
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.groupingInfo.album}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-            
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.album}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
         case 5:
-            
+
             // Genre
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.groupingInfo.genre}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-            
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.genre}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
         default:
             
             // Index / Duration

@@ -126,7 +126,7 @@ class GroupingPlaylistViewDelegate: NSObject, NSOutlineViewDelegate {
         cell.isGroup = false
         cell.rowSelectionStateFunction = {outlineView.selectedRowIndexes.contains(outlineView.row(forItem: track))}
         
-        cell.updateText(Fonts.Playlist.indexFont, ValueFormatter.formatSecondsToHMS(track.duration))
+//        cell.updateText(Fonts.Playlist.indexFont, ValueFormatter.formatSecondsToHMS(track.duration))
         
         let gapAfter = playlist.getGapAfterTrack(track)
         let gapBefore = playlist.getGapBeforeTrack(track)

@@ -6,29 +6,29 @@ import AVFoundation
  */
 protocol AVAssetParser {
     
-    func mapTrack(_ track: Track, _ mapForTrack: AVAssetMetadata)
+    func mapTrack(_ mapForTrack: AVFMetadataMap)
     
-    func getDuration(_ mapForTrack: AVAssetMetadata) -> Double?
+    func getDuration(_ mapForTrack: AVFMetadataMap) -> Double?
     
-    func getTitle(_ mapForTrack: AVAssetMetadata) -> String?
+    func getTitle(_ mapForTrack: AVFMetadataMap) -> String?
     
-    func getArtist(_ mapForTrack: AVAssetMetadata) -> String?
+    func getArtist(_ mapForTrack: AVFMetadataMap) -> String?
     
-    func getAlbum(_ mapForTrack: AVAssetMetadata) -> String?
+    func getAlbum(_ mapForTrack: AVFMetadataMap) -> String?
     
-    func getGenre(_ mapForTrack: AVAssetMetadata) -> String?
+    func getGenre(_ mapForTrack: AVFMetadataMap) -> String?
     
-    func getLyrics(_ mapForTrack: AVAssetMetadata) -> String?
+    func getLyrics(_ mapForTrack: AVFMetadataMap) -> String?
     
-    func getDiscNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)?
+    func getDiscNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)?
     
-    func getTrackNumber(_ mapForTrack: AVAssetMetadata) -> (number: Int?, total: Int?)?
+    func getTrackNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)?
     
-    func getArt(_ mapForTrack: AVAssetMetadata) -> CoverArt?
+    func getArt(_ mapForTrack: AVFMetadataMap) -> CoverArt?
     
     func getArt(_ asset: AVURLAsset) -> CoverArt?
     
-    func getGenericMetadata(_ mapForTrack: AVAssetMetadata) -> [String: MetadataEntry]
+    func getGenericMetadata(_ mapForTrack: AVFMetadataMap) -> [String: MetadataEntry]
     
     // ----------- Chapter-related functions
     
