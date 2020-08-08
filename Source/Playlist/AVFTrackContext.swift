@@ -5,7 +5,7 @@ class AVFTrackContext: TrackContextProtocol {
     private let track: Track
     
     private let metadataContext: AVFMetadataContext
-//    private let playbackContext: AVFPlaybackContext
+    var playbackContext: PlaybackContextProtocol?
     
     required init(for track: Track) throws {
         
@@ -26,6 +26,6 @@ class AVFTrackContext: TrackContextProtocol {
     }
     
     func prepareForPlayback() throws {
-        
+        self.playbackContext = try AVFPlaybackContext(for: track.file)
     }
 }

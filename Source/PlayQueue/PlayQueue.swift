@@ -23,14 +23,16 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         // TODO: Don't load directly from file ... get tracks from library.
         // So, library must be loaded first. then get everything from there.
         
-        self.tracks = persistentState.tracks.map {Track($0)}
-        
-        for track in tracks {
+        self.tracks = persistentState.tracks.compactMap {file in
+            
+            let track = Track(file)
             track.loadPrimaryMetadata()
             
             if !track.isValidTrack {
-                print("\(track.file.path) is not a valid track ! Error: \(track.validationError)")
+                print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
             }
+            
+            return track.isValidTrack ? track : nil
         }
         
         sequence = PlaybackSequence(persistentState.repeatMode, persistentState.shuffleMode)

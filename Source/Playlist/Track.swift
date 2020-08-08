@@ -11,6 +11,8 @@ class Track: Hashable, PlaylistItem {
     let nativelySupported: Bool
     
     var context: TrackContextProtocol!
+    var playbackContext: PlaybackContextProtocol? {context.playbackContext}
+    
     let metadata: TrackMetadata
     
     var isValidTrack: Bool = true

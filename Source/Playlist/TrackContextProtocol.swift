@@ -1,8 +1,10 @@
-import Foundation
+import AVFoundation
 
 protocol TrackContextProtocol {
     
     init(for track: Track) throws
+    
+    var playbackContext: PlaybackContextProtocol? {get}
     
     func loadPrimaryMetadata()
     
@@ -11,4 +13,9 @@ protocol TrackContextProtocol {
     func loadAllMetadata()
     
     func prepareForPlayback() throws
+}
+
+protocol PlaybackContextProtocol {
+    
+    var audioFormat: AVAudioFormat {get}
 }

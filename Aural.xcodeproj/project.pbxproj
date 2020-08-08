@@ -495,6 +495,8 @@
 		3E75929224DE81F300B95E8E /* TrackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75929124DE81F300B95E8E /* TrackMetadata.swift */; };
 		3E75929424DEADB200B95E8E /* AVFMetadataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75929324DEADB200B95E8E /* AVFMetadataContext.swift */; };
 		3E75929624DED68F00B95E8E /* FFmpegMetadataContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75929524DED68F00B95E8E /* FFmpegMetadataContext.swift */; };
+		3E75929824DEE97B00B95E8E /* AVFPlaybackContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75929724DEE97B00B95E8E /* AVFPlaybackContext.swift */; };
+		3E75929A24DEFAD800B95E8E /* FFmpegPlaybackContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E75929924DEFAD800B95E8E /* FFmpegPlaybackContext.swift */; };
 		3E7651AF24B9900E002FB8B4 /* LibraryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7651AE24B9900E002FB8B4 /* LibraryProtocol.swift */; };
 		3E7651B124B99A3C002FB8B4 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7651B024B99A3C002FB8B4 /* Library.swift */; };
 		3E7651B424B9A009002FB8B4 /* LibraryDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7651B324B9A009002FB8B4 /* LibraryDelegateProtocol.swift */; };
@@ -1191,6 +1193,8 @@
 		3E75929124DE81F300B95E8E /* TrackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMetadata.swift; sourceTree = "<group>"; };
 		3E75929324DEADB200B95E8E /* AVFMetadataContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFMetadataContext.swift; sourceTree = "<group>"; };
 		3E75929524DED68F00B95E8E /* FFmpegMetadataContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegMetadataContext.swift; sourceTree = "<group>"; };
+		3E75929724DEE97B00B95E8E /* AVFPlaybackContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFPlaybackContext.swift; sourceTree = "<group>"; };
+		3E75929924DEFAD800B95E8E /* FFmpegPlaybackContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegPlaybackContext.swift; sourceTree = "<group>"; };
 		3E7651AE24B9900E002FB8B4 /* LibraryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryProtocol.swift; sourceTree = "<group>"; };
 		3E7651B024B99A3C002FB8B4 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		3E7651B324B9A009002FB8B4 /* LibraryDelegateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDelegateProtocol.swift; sourceTree = "<group>"; };
@@ -1872,7 +1876,9 @@
 				3E06E74824DE6E7F0037A111 /* TrackContextProtocol.swift */,
 				3E06E74A24DE6F410037A111 /* AVFTrackContext.swift */,
 				3E75929324DEADB200B95E8E /* AVFMetadataContext.swift */,
+				3E75929724DEE97B00B95E8E /* AVFPlaybackContext.swift */,
 				3E06E74C24DE6F6F0037A111 /* FFmpegTrackContext.swift */,
+				3E75929924DEFAD800B95E8E /* FFmpegPlaybackContext.swift */,
 				3E75929524DED68F00B95E8E /* FFmpegMetadataContext.swift */,
 				3E1D93511F626BF9008AC59E /* Playlist.swift */,
 				3E357B531F9C7DFB00C8F7B1 /* FlatPlaylist.swift */,
@@ -3698,6 +3704,7 @@
 				3E1DAAA41FAEB561002BB405 /* CRUDOperationResults.swift in Sources */,
 				3E58CC291F02759D00C36DC1 /* Timer.swift in Sources */,
 				3EAD098F216478440007D7DF /* MasterPresets.swift in Sources */,
+				3E75929A24DEFAD800B95E8E /* FFmpegPlaybackContext.swift in Sources */,
 				3EF1847A217C8F1500D24F39 /* VisualizerWC.swift in Sources */,
 				3E5F00CE21539B7200A76C23 /* BookmarksProtocol.swift in Sources */,
 				3EDA1FBB214F305C003591FA /* SequencerDelegateProtocol.swift in Sources */,
@@ -3728,6 +3735,7 @@
 				3E688ABF21E3842800164E84 /* WMParser.swift in Sources */,
 				3EB4BCD6247040D4005024E5 /* StopPlaybackChain.swift in Sources */,
 				3E9A90E724DDA7B50027D414 /* FFmpegStreamProtocol.swift in Sources */,
+				3E75929824DEE97B00B95E8E /* AVFPlaybackContext.swift in Sources */,
 				3E06E74924DE6E7F0037A111 /* TrackContextProtocol.swift in Sources */,
 				3E047B0E1F01436700ADE0F1 /* ReverbSpaces.swift in Sources */,
 				3E167236246DBA7A00A57F64 /* SequencerDelegate.swift in Sources */,

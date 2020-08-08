@@ -27,28 +27,28 @@ class Player: PlayerProtocol, NotificationSubscriber {
     
     func play(_ track: Track, _ startPosition: Double, _ endPosition: Double? = nil) {
         
-//        guard let audioFormat = track.playbackInfo?.audioFile?.processingFormat else {
+        guard let audioFormat = track.playbackContext?.audioFormat else {
             return
-//        }
+        }
         
         // Disconnect player and reconnect with the file's processing format
-//        graph.reconnectPlayerNodeWithFormat(audioFormat)
-//
-//        let session = PlaybackSession.start(track)
-//
-//        if let end = endPosition {
-//
-//            // Segment loop is defined
-//            PlaybackSession.defineLoop(startPosition, end)
-//            scheduler.playLoop(session, true)
-//
-//        } else {
-//
-//            // No segment loop
-//            scheduler.playTrack(session, startPosition)
-//        }
-//
-//        state = .playing
+        graph.reconnectPlayerNodeWithFormat(audioFormat)
+
+        let session = PlaybackSession.start(track)
+
+        if let end = endPosition {
+
+            // Segment loop is defined
+            PlaybackSession.defineLoop(startPosition, end)
+            scheduler.playLoop(session, true)
+
+        } else {
+
+            // No segment loop
+            scheduler.playTrack(session, startPosition)
+        }
+
+        state = .playing
     }
     
     // Attempts to perform a seek to a given seek position, respecting the bounds of a defined segment loop. See doSeekToTime() for more details.

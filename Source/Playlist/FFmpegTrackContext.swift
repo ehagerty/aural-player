@@ -7,6 +7,8 @@ class FFmpegTrackContext: TrackContextProtocol {
     private let fileContext: FFmpegFileContext
     private let metadataContext: FFmpegMetadataContext
     
+    var playbackContext: PlaybackContextProtocol?
+    
     required init(for track: Track) throws {
         
         self.track = track

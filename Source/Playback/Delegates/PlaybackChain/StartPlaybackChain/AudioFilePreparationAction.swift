@@ -59,22 +59,23 @@ class AudioFilePreparationAction: PlaybackChainAction {
     
     func prepareTrackAndProceed(_ track: Track, _ context: PlaybackRequestContext, _ chain: PlaybackChain, _ isWaiting: Bool, _ gapEndTime: Date?) {
         
-//        track.prepareForPlayback()
-//        
-//        // Track preparation failed, terminate the chain.
-//        if track.lazyLoadingInfo.preparationFailed, let preparationError = track.lazyLoadingInfo.preparationError {
-//            
+        do {
+            
+            try track.prepareForPlayback()
+
+            // Proceed if not waiting
+            if !isWaiting {
+                chain.proceed(context)
+    
+            } else if let theGapEndTime = gapEndTime {
+                transitionToWaitingState(context, theGapEndTime)
+            }
+            
+        } catch {
+            
+            // Track preparation failed, terminate the chain.
 //            chain.terminate(context, preparationError)
-//            return
-//        }
-//        
-//        // Proceed if not waiting
-//        if !isWaiting {
-//            chain.proceed(context)
-//            
-//        } else if let theGapEndTime = gapEndTime {
-//            transitionToWaitingState(context, theGapEndTime)
-//        }
+        }
     }
     
     private func transitionToWaitingState(_ context: PlaybackRequestContext, _ gapEndTime: Date) {
