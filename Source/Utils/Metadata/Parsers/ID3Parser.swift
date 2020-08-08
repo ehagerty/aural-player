@@ -84,9 +84,9 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         }
     }
     
-    func mapTrack(_ mapForTrack: LibAVMetadata) {
+    func mapTrack(_ mapForTrack: FFmpegMetadataMap) {
         
-        let metadata = LibAVParserMetadata()
+        let metadata = FFmpegParserMetadataMap()
         mapForTrack.id3Metadata = metadata
         
         for (key, value) in mapForTrack.map {
@@ -136,7 +136,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getTitle(_ mapForTrack: LibAVMetadata) -> String? {
+    func getTitle(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in keys_title {
             
@@ -160,7 +160,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: LibAVMetadata) -> String? {
+    func getArtist(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in keys_artist {
             
@@ -184,7 +184,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: LibAVMetadata) -> String? {
+    func getAlbum(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in keys_album {
             
@@ -208,7 +208,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: LibAVMetadata) -> String? {
+    func getGenre(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in keys_genre {
             
@@ -232,7 +232,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         
         for key in keys_discNumber {
             
@@ -244,7 +244,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalDiscs(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         return nil
     }
     
@@ -260,7 +260,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         
         for key in keys_trackNumber {
             
@@ -272,7 +272,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalTracks(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         return nil
     }
     
@@ -324,7 +324,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: LibAVMetadata) -> String? {
+    func getLyrics(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in keys_lyrics {
             
@@ -459,7 +459,7 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
         return nil
     }
     
-    func getGenericMetadata(_ mapForTrack: LibAVMetadata) -> [String : MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: FFmpegMetadataMap) -> [String : MetadataEntry] {
 
         var metadata: [String: MetadataEntry] = [:]
         

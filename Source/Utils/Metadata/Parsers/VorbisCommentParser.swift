@@ -25,9 +25,9 @@ class VorbisCommentParser: FFMpegMetadataParser {
     
     private let essentialKeys: Set<String> = [key_title, key_artist, key_artists, key_album, key_genre, key_disc, key_totalDiscs, key_discTotal, key_track, key_trackTotal, key_totalTracks, key_lyrics]
     
-    func mapTrack(_ mapForTrack: LibAVMetadata) {
+    func mapTrack(_ mapForTrack: FFmpegMetadataMap) {
         
-        let metadata = LibAVParserMetadata()
+        let metadata = FFmpegParserMetadataMap()
         mapForTrack.vorbisMetadata = metadata
         
         for (key, value) in mapForTrack.map {
@@ -47,7 +47,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         }
     }
     
-    func getTitle(_ mapForTrack: LibAVMetadata) -> String? {
+    func getTitle(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let title = mapForTrack.vorbisMetadata?.essentialFields[key_title] {
             return title
@@ -56,7 +56,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: LibAVMetadata) -> String? {
+    func getArtist(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in [key_artist, key_artists] {
             
@@ -68,7 +68,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: LibAVMetadata) -> String? {
+    func getAlbum(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let album = mapForTrack.vorbisMetadata?.essentialFields[key_album] {
             return album
@@ -77,7 +77,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: LibAVMetadata) -> String? {
+    func getGenre(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let genre = mapForTrack.vorbisMetadata?.essentialFields[key_genre] {
             return genre
@@ -86,7 +86,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         
         if let discNumStr = mapForTrack.vorbisMetadata?.essentialFields[key_disc] {
             return ParserUtils.parseDiscOrTrackNumberString(discNumStr)
@@ -95,7 +95,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalDiscs(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         
         for key in [key_discTotal, key_totalDiscs] {
             
@@ -107,7 +107,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         
         if let trackNumStr = mapForTrack.vorbisMetadata?.essentialFields[key_track] {
             return ParserUtils.parseDiscOrTrackNumberString(trackNumStr)
@@ -116,7 +116,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalTracks(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         
         for key in [key_trackTotal, key_totalTracks] {
 
@@ -128,7 +128,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: LibAVMetadata) -> String? {
+    func getLyrics(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let lyrics = mapForTrack.vorbisMetadata?.essentialFields[key_lyrics] {
             return lyrics
@@ -137,7 +137,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getGenericMetadata(_ mapForTrack: LibAVMetadata) -> [String : MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: FFmpegMetadataMap) -> [String : MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         

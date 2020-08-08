@@ -16,80 +16,27 @@ struct AppConstants {
         
         // Supported audio file types/formats
         
-        private static let globallyNativeAudioExtensions: [String] = ["aac", "adts", "ac3", "aif", "aiff", "aifc", "caf", "mp3", "m4a", "m4b", "m4r", "snd", "au", "sd2", "wav"]
+        // MARK: Supported file extensions ------------------------------------------------------------------------
         
-        static let nativeAudioExtensions: [String] = {
-            
-            var exts: [String] = []
-            exts.append(contentsOf: globallyNativeAudioExtensions)
-            if AudioUtils.flacSupported {exts.append("flac")}
-            
-            return exts
-        }()
-        
-        static let nonNativeAudioContainerExtensions: [String] = ["mka", "ogg"]
-        
-        private static let globallyNonNativeAudioExtensions: [String] = ["oga", "ogg", "opus", "wma", "dsf", "mpc", "mp2", "ape", "wv", "dts"]
-        
-        static let nonNativeAudioExtensions: [String] = {
-            
-            var exts: [String] = []
-            exts.append(contentsOf: nonNativeAudioContainerExtensions)
-            exts.append(contentsOf: globallyNonNativeAudioExtensions)
-            if !AudioUtils.flacSupported {exts.append("flac")}
-            
-            return exts
-        }()
+        static let nativeAudioExtensions: [String] = ["aac", "adts", "ac3", "aif", "aiff", "aifc", "caf", "mp3", "m4a", "m4b", "m4r", "snd", "au", "sd2", "wav"]
+        static let nonNativeAudioExtensions: [String] = ["flac", "oga", "opus", "wma", "dsf", "mpc", "mp2", "ape", "wv", "dts", "mka", "ogg"]
 
-        static let allAudioExtensions: [String] = {
-            
-            var all: [String] = []
-            all.append(contentsOf: nativeAudioExtensions)
-            all.append(contentsOf: nonNativeAudioExtensions)
-            return all
-        }()
+        static let allAudioExtensions: [String] = {nativeAudioExtensions + nonNativeAudioExtensions}()
         
-        private static let globallyNativeFormats: [String] = ["aac", "mp3", "ac-3", "ac3", "alac", "pcm_alaw", "pcm_s16le", "pcm_f32be", "pcm_f32le", "pcm_f64be", "pcm_f64le", "pcm_s16be", "pcm_u8", "pcm_mulaw", "pcm_s24be", "pcm_s24le", "pcm_s32be", "pcm_s32le", "pcm_s8", "pcm_u16be", "pcm_u16le", "pcm_u24be", "pcm_u24le", "pcm_u32be", "pcm_u32le", "adpcm_ima_wav", "gsm_ms"]
+        // MARK: Supported audio formats ------------------------------------------------------------------------
         
-        static let nativeAudioFormats: [String] = {
-            
-            var formats: [String] = []
-            formats.append(contentsOf: globallyNativeFormats)
-            if AudioUtils.flacSupported {formats.append("flac")}
-            
-            return formats
-        }()
+        static let nativeAudioFormats: [String] = ["aac", "mp3", "ac-3", "ac3", "alac", "pcm_alaw", "pcm_s16le", "pcm_f32be", "pcm_f32le", "pcm_f64be", "pcm_f64le", "pcm_s16be", "pcm_u8", "pcm_mulaw", "pcm_s24be", "pcm_s24le", "pcm_s32be", "pcm_s32le", "pcm_s8", "pcm_u16be", "pcm_u16le", "pcm_u24be", "pcm_u24le", "pcm_u32be", "pcm_u32le", "adpcm_ima_wav", "gsm_ms"]
         
-        private static let globallyNonNativeFormats: [String] = ["ape", "dsd_lsbf", "dsd_lsbf_planar", "dsd_msbf", "dsd_msbf_planar", "mp2", "mp2_at", "mp2float", "musepack", "musepack7", "musepack8", "mpc", "mpc7", "mpc8", "opus", "vorbis", "wavpack", "wmav1", "wmav2", "wmalossless", "wmapro", "wmavoice", "dts"]
+        static let nonNativeAudioFormats: [String] = ["ape", "dsd_lsbf", "dsd_lsbf_planar", "dsd_msbf", "dsd_msbf_planar", "mp2", "mp2_at", "mp2float", "musepack", "musepack7", "musepack8", "mpc", "mpc7", "mpc8", "opus", "vorbis", "wavpack", "wmav1", "wmav2", "wmalossless", "wmapro", "wmavoice", "dts"]
         
-        static let nonNativeAudioFormats: [String] = {
-            
-            var formats: [String] = []
-            formats.append(contentsOf: globallyNonNativeFormats)
-            if !AudioUtils.flacSupported {formats.append("flac")}
-            
-            return formats
-        }()
+        static let allAudioFormats: [String] = {nativeAudioFormats + nonNativeAudioFormats}()
         
-        static let allAudioFormats: [String] = {
-            
-            var formats: [String] = []
-            formats.append(contentsOf: nativeAudioFormats)
-            formats.append(contentsOf: nonNativeAudioFormats)
-            return formats
-        }()
+        // ------------------------------------------------------------------------------------------------
         
-        static let avFileTypes: [String] = [AVFileType.mp3.rawValue, AVFileType.m4a.rawValue, AVFileType.aiff.rawValue, AVFileType.aifc.rawValue, AVFileType.caf.rawValue, AVFileType.wav.rawValue, AVFileType.ac3.rawValue]
+        static let avfFileTypes: [String] = [AVFileType.mp3.rawValue, AVFileType.m4a.rawValue, AVFileType.aiff.rawValue, AVFileType.aifc.rawValue, AVFileType.caf.rawValue, AVFileType.wav.rawValue, AVFileType.ac3.rawValue]
         
         // File types allowed in the Open file dialog (extensions and UTIs)
-        static let all: [String] = {
-            
-            var arr = [String]()
-            arr.append(contentsOf: allAudioExtensions)
-            arr.append(contentsOf: playlistExtensions)
-            arr.append(contentsOf: avFileTypes)
-            return arr
-        }()
+        static let all: [String] = {allAudioExtensions + playlistExtensions + avfFileTypes}()
         
         ///
         /// A list of extensions of files that represent raw audio streams that lack accurate duration information.

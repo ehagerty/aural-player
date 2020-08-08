@@ -8,7 +8,7 @@ class FFmpegTrackInfo {
     let duration: Double
     let fileFormatDescription: String?
     let streams: [LibAVStream]
-    let metadata: LibAVMetadata
+//    let metadata: FFmpegMetadataMap
     let drmProtected: Bool
     
     let chapters: [Chapter]
@@ -24,7 +24,7 @@ class FFmpegTrackInfo {
         self.duration = duration
         self.fileFormatDescription = fileFormatDescription
         self.streams = streams
-        self.metadata = LibAVMetadata(metadata)
+//        self.metadata = FFmpegMetadataMap(metadata)
         self.drmProtected = drmProtected
         
         self.chapters = chapters
@@ -53,23 +53,29 @@ class FFmpegTrackInfo {
     }
 }
 
-class LibAVMetadata {
+class FFmpegMetadataMap {
+    
+    var context: FFmpegFileContext
+    
+    var fileType: String {context.file.pathExtension.lowercased()}
     
     var map: [String: String]
     
-    var commonMetadata: LibAVParserMetadata?
-    var id3Metadata: LibAVParserMetadata?
-    var wmMetadata: LibAVParserMetadata?
-    var vorbisMetadata: LibAVParserMetadata?
-    var apeMetadata: LibAVParserMetadata?
-    var otherMetadata: LibAVParserMetadata?
+    var commonMetadata: FFmpegParserMetadataMap?
+    var id3Metadata: FFmpegParserMetadataMap?
+    var wmMetadata: FFmpegParserMetadataMap?
+    var vorbisMetadata: FFmpegParserMetadataMap?
+    var apeMetadata: FFmpegParserMetadataMap?
+    var otherMetadata: FFmpegParserMetadataMap?
     
-    init(_ map: [String: String]) {
+    init(_ context: FFmpegFileContext, _ map: [String: String]) {
+        
+        self.context = context
         self.map = map
     }
 }
 
-class LibAVParserMetadata {
+class FFmpegParserMetadataMap {
     
     var essentialFields: [String: String] = [:]
     var genericFields: [String: String] = [:]

@@ -120,7 +120,7 @@ class ObjectGraph {
         apeParser = ApeV2Parser()
         defaultParser = DefaultFFMpegMetadataParser()
         
-//        ffmpegReader = FFMpegReader(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
+        FFMpegReader.initialize(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
 
         mediaKeyHandler = MediaKeyHandler(preferences.controlsPreferences)
         

@@ -48,9 +48,9 @@ class WMParser: FFMpegMetadataParser {
     
     private let ignoredKeys: Set<String> = ["wmfsdkneeded"]
     
-    func mapTrack(_ mapForTrack: LibAVMetadata) {
+    func mapTrack(_ mapForTrack: FFmpegMetadataMap) {
         
-        let metadata = LibAVParserMetadata()
+        let metadata = FFmpegParserMetadataMap()
         mapForTrack.wmMetadata = metadata
         
         for (key, value) in mapForTrack.map {
@@ -76,7 +76,7 @@ class WMParser: FFMpegMetadataParser {
         }
     }
     
-    func getTitle(_ mapForTrack: LibAVMetadata) -> String? {
+    func getTitle(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let title = mapForTrack.wmMetadata?.essentialFields[key_title] {
             return title
@@ -85,7 +85,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: LibAVMetadata) -> String? {
+    func getArtist(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let artist = mapForTrack.wmMetadata?.essentialFields[key_artist] {
             return artist
@@ -94,7 +94,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: LibAVMetadata) -> String? {
+    func getAlbum(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let album = mapForTrack.wmMetadata?.essentialFields[key_album] {
             return album
@@ -103,7 +103,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: LibAVMetadata) -> String? {
+    func getGenre(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         if let genre = mapForTrack.wmMetadata?.essentialFields[key_genre] {
             return genre
@@ -116,7 +116,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         
         if let discNumStr = mapForTrack.wmMetadata?.essentialFields[key_disc] {
             return ParserUtils.parseDiscOrTrackNumberString(discNumStr)
@@ -125,7 +125,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalDiscs(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         
         if let totalDiscsStr = mapForTrack.wmMetadata?.essentialFields[key_discTotal]?.trim(), let totalDiscs = Int(totalDiscsStr) {
             return totalDiscs
@@ -134,7 +134,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         
         if let trackNumStr = mapForTrack.wmMetadata?.essentialFields[key_track] {
             return ParserUtils.parseDiscOrTrackNumberString(trackNumStr)
@@ -154,7 +154,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalTracks(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         
         if let totalTracksStr = mapForTrack.wmMetadata?.essentialFields[key_trackTotal]?.trim(), let totalTracks = Int(totalTracksStr) {
             return totalTracks
@@ -163,7 +163,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: LibAVMetadata) -> String? {
+    func getLyrics(_ mapForTrack: FFmpegMetadataMap) -> String? {
         
         for key in [key_lyrics, key_syncLyrics] {
         
@@ -175,7 +175,7 @@ class WMParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getGenericMetadata(_ mapForTrack: LibAVMetadata) -> [String : MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: FFmpegMetadataMap) -> [String : MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         

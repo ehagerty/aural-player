@@ -27,6 +27,10 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         
         for track in tracks {
             track.loadPrimaryMetadata()
+            
+            if !track.isValidTrack {
+                print("\(track.file.path) is not a valid track ! Error: \(track.validationError)")
+            }
         }
         
         sequence = PlaybackSequence(persistentState.repeatMode, persistentState.shuffleMode)

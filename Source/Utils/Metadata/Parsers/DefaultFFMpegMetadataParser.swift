@@ -4,9 +4,9 @@ class DefaultFFMpegMetadataParser: FFMpegMetadataParser {
     
     private let ignoredKeys: [String] = ["priv.www.amazon.com"]
     
-    func mapTrack(_ mapForTrack: LibAVMetadata) {
+    func mapTrack(_ mapForTrack: FFmpegMetadataMap) {
         
-        let metadata = LibAVParserMetadata()
+        let metadata = FFmpegParserMetadataMap()
         mapForTrack.otherMetadata = metadata
         
         for (key, value) in mapForTrack.map {
@@ -32,7 +32,7 @@ class DefaultFFMpegMetadataParser: FFMpegMetadataParser {
         return fTokens.joined(separator: " ")
     }
     
-    func getGenericMetadata(_ mapForTrack: LibAVMetadata) -> [String : MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: FFmpegMetadataMap) -> [String : MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         
@@ -46,39 +46,39 @@ class DefaultFFMpegMetadataParser: FFMpegMetadataParser {
         return metadata
     }
     
-    func getTitle(_ mapForTrack: LibAVMetadata) -> String? {
+    func getTitle(_ mapForTrack: FFmpegMetadataMap) -> String? {
         return nil
     }
     
-    func getArtist(_ mapForTrack: LibAVMetadata) -> String? {
+    func getArtist(_ mapForTrack: FFmpegMetadataMap) -> String? {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: LibAVMetadata) -> String? {
+    func getAlbum(_ mapForTrack: FFmpegMetadataMap) -> String? {
         return nil
     }
     
-    func getGenre(_ mapForTrack: LibAVMetadata) -> String? {
+    func getGenre(_ mapForTrack: FFmpegMetadataMap) -> String? {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: LibAVMetadata) -> String? {
+    func getLyrics(_ mapForTrack: FFmpegMetadataMap) -> String? {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         return nil
     }
     
-    func getTotalDiscs(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: LibAVMetadata) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
         return nil
     }
     
-    func getTotalTracks(_ mapForTrack: LibAVMetadata) -> Int? {
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataMap) -> Int? {
         return nil
     }
 }

@@ -3,7 +3,7 @@ import AVFoundation
 
 class AVAssetReader {
     
-    static var allParsers: [AVAssetParser] = []
+    private static var allParsers: [AVAssetParser] = []
     
     static func initialize(_ commonAVAssetParser: CommonAVAssetParser, _ id3Parser: ID3Parser, _ iTunesParser: ITunesParser, _ audioToolboxParser: AudioToolboxParser) {
 
@@ -44,8 +44,6 @@ class AVAssetReader {
     
     static func getDuration(from map: AVFMetadataMap) -> Double {
 
-        // TODO: Packet table for raw streams ?
-        
         var maxDuration: Double = map.asset.duration.seconds
         
         for parser in allParsers {
