@@ -50,9 +50,9 @@ class TimeViewController: FXUnitViewController {
     }
 
     // Activates/deactivates the Time stretch effects unit
-    @IBAction func bypassAction(_ sender: AnyObject) {
+    override func toggleUnitState() {
 
-//        super.bypassAction(sender)
+        super.toggleUnitState()
         
         // The playback rate may have changed, send out a notification
         Messenger.publish(.fx_playbackRateChanged, payload: timeUnit.effectiveRate)

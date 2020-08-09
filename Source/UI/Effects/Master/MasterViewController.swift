@@ -44,7 +44,7 @@ class MasterViewController: FXUnitViewController {
                                  filter: {msg in msg.trackChanged && self.soundPreferences.rememberEffectsSettings},
                                  queue: .main)
         
-        Messenger.subscribe(self, .masterFXUnit_toggleEffects, self.toggleEffects)
+        Messenger.subscribe(self, .masterFXUnit_toggleEffects, self.toggleUnitState)
     }
     
     override func initControls() {
@@ -54,19 +54,11 @@ class MasterViewController: FXUnitViewController {
         broadcastStateChangeNotification()
     }
     
-    @IBAction func bypassAction(_ sender: AnyObject) {
+    override func toggleUnitState() {
         
-        _ = fxUnit.toggleState()
-        stateChanged()
-        
-        Messenger.publish(.fx_unitStateChanged)
-        
+        super.toggleUnitState()
         updateButtons()
         broadcastStateChangeNotification()
-    }
-    
-    private func toggleEffects() {
-        bypassAction(self)
     }
     
     @IBAction override func presetsAction(_ sender: AnyObject) {

@@ -438,6 +438,8 @@ extension Notification.Name {
     
     // MARK: FX commands
     
+    static let fx_toggleFXUnitState = Notification.Name("fx_toggleFXUnitState")
+    
     // Commands the effects panel to switch the tab group to a specfic tab (to reveal a specific effects unit).
     static let fx_showFXUnitTab = Notification.Name("fx_showFXUnitTab")
 

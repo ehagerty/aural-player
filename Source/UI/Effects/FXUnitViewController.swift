@@ -67,10 +67,13 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
         // Subscribe to notifications
         Messenger.subscribe(self, .fx_unitStateChanged, self.stateChanged)
         
-//        Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
+        Messenger.subscribe(self, .fx_toggleFXUnitState, {(EffectsUnit) in self.toggleUnitState()},
+        filter: {(unit: EffectsUnit) in unit == self.unitType})
         
         Messenger.subscribe(self, .fx_updateFXUnitView, {(EffectsUnit) in self.initControls()},
                             filter: {(unit: EffectsUnit) in unit == .master || (unit == self.unitType)})
+        
+        //        Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
         
         Messenger.subscribe(self, .fx_changeSliderColors, self.changeSliderColors)
         
@@ -96,6 +99,14 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
     
     func showThisTab() {
         Messenger.publish(.fx_showFXUnitTab, payload: self.unitType!)
+    }
+    
+    func toggleUnitState() {
+
+        _ = fxUnit.toggleState()
+        stateChanged()
+        
+        Messenger.publish(.fx_unitStateChanged)
     }
     
     // Applies a preset to the effects unit

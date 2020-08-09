@@ -12,11 +12,17 @@ class EffectsUnitEditorCell: NSTableCellView {
     func initializeForUnit(_ fxUnit: FXUnitDelegateProtocol) {
         
         self.fxUnit = fxUnit
-        
+            
         btnBypass.stateFunction = fxUnit.stateFunction
         btnBypass.updateState()
         
         lblName.stringValue = fxUnit.unitDescription.replacingOccurrences(of: " ", with: "  ")
         lblName.font = Fonts.Constants.captionFont_14
+    }
+
+    @IBAction func bypassAction(_ sender: AnyObject) {
+        
+        Messenger.publish(.fx_toggleFXUnitState, payload: fxUnit.unitType)
+        btnBypass.updateState()
     }
 }

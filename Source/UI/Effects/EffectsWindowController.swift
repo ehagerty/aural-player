@@ -173,25 +173,6 @@ class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOu
         guard let unit = item as? FXUnitDelegateProtocol,
             let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("fxUnit"), owner: nil) as? EffectsUnitEditorCell else {return nil}
         
-//        var bypassAction: Selector!
-//        var bypassActionTarget: AnyObject!
-//        
-//        switch unit.unitType {
-//            
-//        case .eq:
-//            
-//            bypassAction = #selector(eqViewController.bypassAction(_:))
-//            bypassActionTarget = eqViewController
-//            
-//        case .pitch:
-//            
-//            bypassAction = #selector(pitchViewController.bypassAction(_:))
-//            bypassActionTarget = pitchViewController
-//            
-//        default: return nil
-//            
-//        }
-        
         cell.initializeForUnit(unit)
         return cell
     }

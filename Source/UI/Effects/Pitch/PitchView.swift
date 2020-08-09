@@ -117,10 +117,10 @@ class PitchView: NSView {
     
     func initialize(_ stateFunction: @escaping () -> EffectsUnitState) {
         
-//        sliders.forEach({
-//            $0.stateFunction = stateFunction
-//            $0.updateState()
-//        })
+        for var slider in sliders {
+            slider.stateFunction = stateFunction
+            slider.updateState()
+        }
     }
     
     func setState(_ pitch: (octaves: Int, semitones: Int, cents: Int), _ pitchString: String, _ overlap: Float, _ overlapString: String) {

@@ -2,7 +2,7 @@ import Cocoa
 
 class TimeView: NSView {
     
-    @IBOutlet weak var timeSlider: EffectsUnitSlider!
+    @IBOutlet weak var timeSlider: TimeStretchSlider!
     @IBOutlet weak var timeOverlapSlider: EffectsUnitSlider!
     
     @IBOutlet weak var btnShiftPitch: NSButton!
@@ -14,7 +14,7 @@ class TimeView: NSView {
     private var sliders: [EffectsUnitSlider] = []
     
     var rate: Float {
-        return timeSlider.floatValue
+        return timeSlider.rate
     }
     
     var overlap: Float {
@@ -50,7 +50,7 @@ class TimeView: NSView {
         btnShiftPitch.onIf(shiftPitch)
         updatePitchShift(shiftPitchString)
         
-        timeSlider.floatValue = rate
+        timeSlider.rate = rate
         lblTimeStretchRateValue.stringValue = rateString
         
         timeOverlapSlider.floatValue = overlap
@@ -66,7 +66,7 @@ class TimeView: NSView {
     func setRate(_ rate: Float, _ rateString: String, _ shiftPitchString: String) {
         
         lblTimeStretchRateValue.stringValue = rateString
-        timeSlider.floatValue = rate
+        timeSlider.rate = rate
         updatePitchShift(shiftPitchString)
     }
     
@@ -85,7 +85,7 @@ class TimeView: NSView {
         let shiftPitch = (preset.shiftPitch ? 1200 * log2(preset.rate) : 0) * AppConstants.ValueConversions.pitch_audioGraphToUI
         lblPitchShiftValue.stringValue = ValueFormatter.formatPitch(shiftPitch)
         
-        timeSlider.floatValue = preset.rate
+        timeSlider.rate = preset.rate
         lblTimeStretchRateValue.stringValue = ValueFormatter.formatTimeStretchRate(preset.rate)
         
         timeOverlapSlider.floatValue = preset.overlap
