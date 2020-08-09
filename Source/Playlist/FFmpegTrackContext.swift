@@ -29,6 +29,6 @@ class FFmpegTrackContext: TrackContextProtocol {
     }
     
     func prepareForPlayback() throws {
-        
+        self.playbackContext = try FFmpegPlaybackContext(for: fileContext)
     }
 }

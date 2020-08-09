@@ -27,8 +27,11 @@ class ObjectGraph {
     static var audioGraphDelegate: AudioGraphDelegateProtocol!
     
     private static var player: PlayerProtocol!
-    private static var playbackScheduler: PlaybackSchedulerProtocol!
+    private static var avfScheduler: PlaybackSchedulerProtocol!
+    private static var ffmpegScheduler: PlaybackSchedulerProtocol!
     private static var sequencer: SequencerProtocol!
+    
+    static var ffmpegResampler: FFmpegResampler!
     
     static var sequencerDelegate: SequencerDelegateProtocol!
     static var sequencerInfoDelegate: SequencerInfoDelegateProtocol! {return sequencerDelegate}
@@ -83,13 +86,17 @@ class ObjectGraph {
         // The new scheduler uses an AVFoundation API that is only available with macOS >= 10.13.
         // Instantiate the legacy scheduler if running on 10.12 Sierra or older systems.
         if #available(macOS 10.13, *) {
-            playbackScheduler = PlaybackScheduler(audioGraph.playerNode)
+            avfScheduler = PlaybackScheduler(audioGraph.playerNode)
         } else {
-            playbackScheduler = LegacyPlaybackScheduler(audioGraph.playerNode)
+            avfScheduler = LegacyPlaybackScheduler(audioGraph.playerNode)
         }
         
+        ffmpegScheduler = FFmpegScheduler(audioGraph.playerNode)
+        
+        ffmpegResampler = FFmpegResampler()
+        
         // Player
-        player = Player(audioGraph, playbackScheduler)
+        player = Player(graph: audioGraph, avfScheduler: avfScheduler, ffmpegScheduler: ffmpegScheduler)
         
         // Playlist
         let flatPlaylist = FlatPlaylist()

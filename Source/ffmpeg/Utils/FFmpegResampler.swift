@@ -13,11 +13,6 @@ import Accelerate
 class FFmpegResampler {
     
     ///
-    /// Singleton instance of this class that is shared by different client objects.
-    ///
-    static let instance = FFmpegResampler()
-    
-    ///
     /// The default channel layout to assume when the channel layout for an audio file cannot be determined.
     ///
     /// Should never have to be used.
@@ -42,14 +37,7 @@ class FFmpegResampler {
     ///
     var allocatedSampleCount: Int32 = 0
     
-    ///
-    /// The initializer is made private so as to prevent clients from creating their own instances.
-    /// Only one instance (i.e. a singleton) of this class should be created and made available
-    /// as a static member.
-    ///
-    /// See **instance**.
-    ///
-    private init() {
+    init() {
         
         // Allocate space for up to 8 channels of sample data.
         outputData = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>.allocate(capacity: 8)

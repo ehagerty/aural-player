@@ -113,7 +113,7 @@ class FFmpegFrameBuffer {
         // allocate enough space to accommodate the output of resampling
         // this buffer's samples.
         if sampleFormat.needsResampling {
-            FFmpegResampler.instance.allocateFor(channelCount: Int32(frames[0].channelCount), sampleCount: sampleCount)
+            ObjectGraph.ffmpegResampler.allocateFor(channelCount: Int32(format.channelCount), sampleCount: sampleCount)
         }
         
         if let audioBuffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(sampleCount)) {
@@ -130,7 +130,7 @@ class FFmpegFrameBuffer {
                 if sampleFormat.needsResampling {
 
                     // Resample the frame's samples and copy them to the audio buffer.
-                    FFmpegResampler.instance.resample(frame, andCopyOutputTo: audioBuffer, startingAt: sampleCountSoFar)
+                    ObjectGraph.ffmpegResampler.resample(frame, andCopyOutputTo: audioBuffer, startingAt: sampleCountSoFar)
                     
                 } else {
                     

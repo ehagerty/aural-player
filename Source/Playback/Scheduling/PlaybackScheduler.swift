@@ -25,30 +25,6 @@ class PlaybackScheduler: PlaybackSchedulerProtocol {
         playerNode.completionCallbackQueue = completionHandlerQueue
     }
     
-    // Retrieves the current seek position, in seconds
-    var seekPosition: Double {
-
-        guard let session = PlaybackSession.currentSession else {return 0}
-        
-        // Prevent seekPosition from overruning the track duration (or loop start/end times)
-        // to prevent weird incorrect UI displays of seek time
-            
-        // Check for loop
-        if let loop = session.loop {
-            
-            if let loopEndTime = loop.endTime {
-                return min(max(loop.startTime, playerNode.seekPosition), loopEndTime)
-                
-            } else {
-                // Incomplete loop (start time only)
-                return min(max(loop.startTime, playerNode.seekPosition), session.track.duration)
-            }
-            
-        } else {    // No loop
-            return min(max(0, playerNode.seekPosition), session.track.duration)
-        }
-    }
-    
     // MARK: Track scheduling, playback, and seeking functions -------------------------------------------------------------------------------------------
     
     // Start track playback from a given position expressed in seconds

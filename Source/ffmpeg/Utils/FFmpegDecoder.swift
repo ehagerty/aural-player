@@ -50,7 +50,7 @@ class FFmpegDecoder {
     ///
     /// - throws: A **DecoderInitializationError** if the underlying codec cannot be opened.
     ///
-    func initialize(with file: FFmpegFileContext) throws {
+    func initialize(with file: FFmpegFileContext) {
         
         self.file = file
         
@@ -59,9 +59,6 @@ class FFmpegDecoder {
         
         // Reset the EOF flag.
         self.eof = false
-        
-        // Try opening the codec. This step is vital to being able to decode this file.
-        try codec.open()
         
         // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
         file.audioStream.printInfo()

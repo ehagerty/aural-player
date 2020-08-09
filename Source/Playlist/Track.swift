@@ -8,7 +8,7 @@ class Track: Hashable, PlaylistItem {
     
     let file: URL
     
-    let nativelySupported: Bool
+    let isNativelySupported: Bool
     
     var context: TrackContextProtocol!
     var playbackContext: PlaybackContextProtocol? {context.playbackContext}
@@ -44,7 +44,7 @@ class Track: Hashable, PlaylistItem {
         self.file = file
         
         let fileExt = file.pathExtension.lowercased()
-        self.nativelySupported = AppConstants.SupportedTypes.nativeAudioExtensions.contains(fileExt)
+        self.isNativelySupported = AppConstants.SupportedTypes.nativeAudioExtensions.contains(fileExt)
         
         self.metadata = TrackMetadata(for: file)
     }
@@ -53,7 +53,7 @@ class Track: Hashable, PlaylistItem {
         
         do {
          
-            self.context = nativelySupported ? try AVFTrackContext(for: self) : try FFmpegTrackContext(for: self)
+            self.context = isNativelySupported ? try AVFTrackContext(for: self) : try FFmpegTrackContext(for: self)
             context.loadPrimaryMetadata()
             
         } catch {

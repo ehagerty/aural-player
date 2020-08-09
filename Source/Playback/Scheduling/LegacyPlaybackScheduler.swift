@@ -128,7 +128,8 @@ class LegacyPlaybackScheduler: PlaybackScheduler {
             return
         }
         
-        if seekPosition > (loopEndTime - LegacyPlaybackScheduler.timeComparisonTolerance) && playerNode.isPlaying {
+        // TODO: Verify that this comparison works (esp. seek position) !!!
+        if playerNode.seekPosition > (loopEndTime - LegacyPlaybackScheduler.timeComparisonTolerance) && playerNode.isPlaying {
             restartLoop(session, loop.startTime, loopEndTime)
         }
     }

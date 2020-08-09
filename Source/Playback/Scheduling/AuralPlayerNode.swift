@@ -109,6 +109,13 @@ class AuralPlayerNode: AVAudioPlayerNode {
         }
     }
     
+    func scheduleBuffer(_ buffer: AVAudioPCMBuffer, for session: PlaybackSession, completionHandler: @escaping SessionCompletionHandler) {
+        
+        scheduleBuffer(buffer, completionHandler: {
+            self.completionCallbackQueue.async {completionHandler(session)}
+        })
+    }
+    
     private func areStartAndEndTimeValid(_ startTime: Double, _ endTime: Double?) -> Bool {
         
         if let theEndTime = endTime {
