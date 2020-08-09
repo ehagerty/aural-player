@@ -17,7 +17,7 @@ class EffectsUnitEditorCell: NSTableCellView {
         btnBypass.updateState()
         
         lblName.stringValue = fxUnit.unitDescription.replacingOccurrences(of: " ", with: "  ")
-        lblName.font = Fonts.Constants.captionFont_14
+        lblName.font = Fonts.Constants.captionFont_15
     }
 
     @IBAction func bypassAction(_ sender: AnyObject) {

@@ -63,7 +63,7 @@ class NicerPopupMenuCell: PopupMenuCell {
 
 class FXUnitPopupMenuCell: NicerPopupMenuCell {
     
-    override var cellInsetY: CGFloat {return 1}
+    override var cellInsetY: CGFloat {return 0}
     override var rectRadius: CGFloat {return 2}
     override var arrowXMargin: CGFloat {return 10}
     override var arrowYMargin: CGFloat {return 7}

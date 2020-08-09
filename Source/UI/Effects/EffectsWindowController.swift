@@ -185,6 +185,6 @@ class EffectsWindowController: NSWindowController, NSOutlineViewDataSource, NSOu
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        return 30
+        return 38
     }
 }
