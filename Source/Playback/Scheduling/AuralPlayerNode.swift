@@ -109,7 +109,19 @@ class AuralPlayerNode: AVAudioPlayerNode {
         }
     }
     
-    func scheduleBuffer(_ buffer: AVAudioPCMBuffer, for session: PlaybackSession, completionHandler: @escaping SessionCompletionHandler) {
+    func scheduleBuffer(_ buffer: AVAudioPCMBuffer, for session: PlaybackSession, completionHandler: @escaping SessionCompletionHandler, _ startTime: Double? = nil, _ immediatePlayback: Bool = false) {
+        
+        // The start frame and seek position should be reset only if this segment will be played immediately.
+        // If it is being scheduled for the future, doing this will cause inaccurate seek position values.
+        if immediatePlayback, let theStartTime = startTime {
+            
+            // Advance the last seek position to the new position
+            cachedSeekPosn = theStartTime
+            startFrame = AVAudioFramePosition(theStartTime * buffer.format.sampleRate)
+            
+            // Reset this flag for the new segment
+            correctionAppliedForSegment = false
+        }
         
         scheduleBuffer(buffer, completionHandler: {
             self.completionCallbackQueue.async {completionHandler(session)}

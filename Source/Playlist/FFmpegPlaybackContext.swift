@@ -33,12 +33,10 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     ///
     let sampleCountForDeferredPlayback: Int32
     
-    init(for fileContext: FFmpegFileContext) throws {
+    init(for fileContext: FFmpegFileContext) {
         
         self.fileContext = fileContext
         let codec: FFmpegAudioCodec = fileContext.audioCodec
-        
-        try codec.open()
         
         let sampleRate: Int32 = codec.sampleRate
         let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout))!
@@ -73,13 +71,19 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
             sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
             sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
         }
+    }
+    
+    func prepareForPlayback() throws {
         
         // If the PCM sample format produced by the codec for this file is not suitable for use with our audio engine,
         // all samples need to be resampled (converted) to a suitable format. So, prepare the resampler for that
         // conversion if required.
         
+        let codec: FFmpegAudioCodec = fileContext.audioCodec
+        try codec.open()
+        
         if codec.sampleFormat.needsResampling {
-            ObjectGraph.ffmpegResampler.allocateFor(channelCount: channelCount, sampleCount: sampleCountForDeferredPlayback)
+            ObjectGraph.ffmpegResampler.allocateFor(channelCount: codec.channelCount, sampleCount: sampleCountForDeferredPlayback)
         }
     }
 }

@@ -7,7 +7,8 @@ class FFmpegTrackContext: TrackContextProtocol {
     private let fileContext: FFmpegFileContext
     private let metadataContext: FFmpegMetadataContext
     
-    var playbackContext: PlaybackContextProtocol?
+    private var thePlaybackContext: FFmpegPlaybackContext!
+    var playbackContext: PlaybackContextProtocol? {thePlaybackContext}
     
     required init(for track: Track) throws {
         
@@ -29,6 +30,11 @@ class FFmpegTrackContext: TrackContextProtocol {
     }
     
     func prepareForPlayback() throws {
-        self.playbackContext = try FFmpegPlaybackContext(for: fileContext)
+        
+        if thePlaybackContext == nil {
+            thePlaybackContext = FFmpegPlaybackContext(for: fileContext)
+        }
+        
+        try thePlaybackContext.prepareForPlayback()
     }
 }

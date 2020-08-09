@@ -112,7 +112,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             }
             
             // Schedule one buffer for immediate playback
-            decodeAndScheduleOneBuffer(for: session, maxSampleCount: playbackCtx.sampleCountForImmediatePlayback)
+            decodeAndScheduleOneBuffer(for: session, from: seekPosition, maxSampleCount: playbackCtx.sampleCountForImmediatePlayback)
             
             // Schedule a second buffer asynchronously, for later, to avoid a gap in playback.
             // If this is not done, when the first buffer finishes playing, there will be
@@ -172,7 +172,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     /// number of samples may be slightly larger than the maximum, because upon reaching EOF, the decoder will drain the codec's
     /// internal buffers which may result in a few additional samples that will be allowed as this is the terminal buffer.
     ///
-    private func decodeAndScheduleOneBuffer(for session: PlaybackSession, maxSampleCount: Int32) {
+    private func decodeAndScheduleOneBuffer(for session: PlaybackSession, from seekPosition: Double? = nil, maxSampleCount: Int32) {
         
         if eof {return}
         
@@ -192,7 +192,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             // 3 - the completion handler will execute even when the player is stopped, i.e. the buffer
             //      has not really completed playback but has been removed from the playback queue.
             
-            playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session))
+            playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, seekPosition != nil)
             
             // Upon scheduling the buffer, increment the counter.
             scheduledBufferCount.increment()
@@ -248,8 +248,18 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         decoder.stop()
     }
     
-    func seekToTime(_ playbackSession: PlaybackSession, _ seconds: Double, _ beginPlayback: Bool) {
+    func seekToTime(_ session: PlaybackSession, _ seconds: Double, _ beginPlayback: Bool) {
         
+        stop()
+        
+        initiateDecodingAndScheduling(for: session, from: seconds)
+        
+        if scheduledBufferCount.isPositive {
+            
+            if beginPlayback {
+                playerNode.play()
+            }
+        }
     }
     
     func playLoop(_ playbackSession: PlaybackSession, _ beginPlayback: Bool) {
