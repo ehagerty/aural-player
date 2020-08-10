@@ -66,6 +66,8 @@ class FFmpegFrame {
     ///
     var dataPointers: [UnsafeMutablePointer<UInt8>?] {avFrame.dataPointers}
     
+    var pts: Int64 {avFrame.pts}
+    
     ///
     /// Instantiates a Frame and sets the sample format.
     ///

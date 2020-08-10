@@ -29,6 +29,8 @@ class FFmpegDecoder {
     ///
     var eof: Bool = false
     
+    var endOfLoop: Bool = false
+    
     ///
     /// A queue data structure used to temporarily hold buffered frames as they are decoded by the codec and before passing them off to a FrameBuffer.
     ///
@@ -59,10 +61,7 @@ class FFmpegDecoder {
         
         // Reset the EOF flag.
         self.eof = false
-        
-        // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
-        file.audioStream.printInfo()
-        file.audioCodec.printInfo()
+        self.endOfLoop = false
     }
     
     ///
@@ -165,6 +164,69 @@ class FFmpegDecoder {
             
             try format.seek(within: stream, to: time)
             
+            let etime = measureExecutionTime {
+
+                do {
+
+                var packetsRead: [(pkt: FFmpegPacket, timestamp: Double)] = []
+                var ptime: Double = 0
+
+                while ptime < time {
+
+                    if let packet = try format.readPacket(from: stream) {
+
+                        print("\n*** LOOP - LAST PKT READ: \(packet.pts), TIME = \(Double(packet.pts) * stream.timeBase.ratio)")
+                        ptime = Double(packet.pts) * stream.timeBase.ratio
+                        packetsRead.append((packet, ptime))
+                    }
+                }
+
+                    if let firstIndexAfterTargetTime = packetsRead.firstIndex(where: {$0.timestamp > time}) {
+                        
+                        if 0 < firstIndexAfterTargetTime - 1 {
+                        
+                            for index in 0..<(firstIndexAfterTargetTime - 1) {
+
+                                let pkt = packetsRead[index].pkt
+                                print("\n*** DROPPING PKT: \(pkt.pts)")
+                                codec.decodeAndDrop(packet: pkt)
+                            }
+                        }
+
+                        for index in max(firstIndexAfterTargetTime - 1, 0)..<packetsRead.count {
+
+                            let pkt = packetsRead[index].pkt
+
+                            let fs = try codec.decode(packet: pkt)
+                            
+                            print("\n*** TRYING PKT: \(pkt.pts) GOT \(fs.count) frames.")
+
+                            for frame in fs {
+                                frameQueue.enqueue(frame)
+                            }
+                        }
+                        
+                        let err = abs(time - packetsRead[max(firstIndexAfterTargetTime - 1, 0)].timestamp)
+                        print("\nSEEK-ERROR = \(err)")
+                        
+                        if err > 0.01 {
+                            
+                            // TODO: This doesn't work if there are multiple frames in one packet.
+                            
+                            let frame = frameQueue.peek()!
+                            let numSamplesToKeep = Int32((packetsRead[firstIndexAfterTargetTime].timestamp - time) * Double(codec.sampleRate))
+                            
+                            print("\nKeeping last \(numSamplesToKeep) in start frame with PTS \(frame.pts).")
+                            
+                            frame.keepLastNSamples(sampleCount: numSamplesToKeep)
+                        }
+                    }
+                    
+                } catch {}
+            }
+
+            print("\nSKIPPING TOOK \(etime * 1000) msec")
+            
             // If the seek succeeds, we have not reached EOF.
             self.eof = false
             
@@ -222,5 +284,93 @@ class FFmpegDecoder {
     ///
     func playbackCompleted() {
         self.file = nil
+    }
+    
+    func decodeLoop(maxSampleCount: Int32, loopEndTime: Double) -> FFmpegFrameBuffer {
+        
+        // Create a frame buffer with the specified maximum sample count and the codec's sample format for this file.
+        let buffer: FFmpegFrameBuffer = FFmpegFrameBuffer(sampleFormat: codec.sampleFormat, maxSampleCount: maxSampleCount)
+        
+        let sampleRate = Double(codec.sampleRate)
+        
+        // Keep decoding as long as EOF is not reached.
+        while !eof {
+            
+            do {
+
+                // Try to obtain a single decoded frame.
+                let frame = try nextFrame()
+                
+                let frameStartTime = Double(frame.pts) * stream.timeBase.ratio
+                let frameEndTime = frameStartTime + (Double(frame.sampleCount) / sampleRate)
+                
+                if loopEndTime < frameEndTime {
+                    
+                    let truncatedSampleCount = Int32((loopEndTime - frameStartTime) * sampleRate)
+                    
+                    // Truncate frame, append it to the frame buffer, and break from loop
+                    frame.truncate(sampleCount: truncatedSampleCount)
+                    buffer.appendTerminalFrames(frames: [frame])
+                    
+                    self.endOfLoop = true
+                    break
+                }
+                
+                // Try appending the frame to the frame buffer.
+                // The frame buffer may reject the new frame if appending it would
+                // cause its sample count to exceed the maximum.
+                if buffer.appendFrame(frame: frame) {
+                    
+                    // The buffer accepted the new frame. Remove it from the queue.
+                    _ = frameQueue.dequeue()
+                    
+                } else {
+                    
+                    // The frame buffer rejected the new frame because it is full. End the loop.
+                    break
+                }
+                
+            } catch let packetReadError as PacketReadError {
+                
+                // If the error signals EOF, suppress it, and simply set the EOF flag.
+                self.eof = packetReadError.isEOF
+                
+                // If the error is something other than EOF, it either indicates a real problem or simply that there was one bad packet. Log the error.
+                if !eof {print("\nPacket read error:", packetReadError)}
+                
+            } catch {
+                
+                // This either indicates a real problem or simply that there was one bad packet. Log the error.
+                print("\nDecoder error:", error)
+            }
+        }
+        
+        // If and when EOF has been reached, drain both:
+        //
+        // - the frame queue (which may have overflow frames left over from the previous decoding loop), AND
+        // - the codec's internal frame buffer
+        //
+        //, and append them to our frame buffer.
+        
+        if eof {
+            
+            self.endOfLoop = true
+            
+            var terminalFrames: [FFmpegBufferedFrame] = frameQueue.dequeueAll()
+            
+            do {
+                
+                let drainFrames = try codec.drain()
+                terminalFrames.append(contentsOf: drainFrames)
+                
+            } catch {
+                print("\nDecoder drain error:", error)
+            }
+          
+            // Append these terminal frames to the frame buffer (the frame buffer cannot reject terminal frames).
+            buffer.appendTerminalFrames(frames: terminalFrames)
+        }
+        
+        return buffer
     }
 }

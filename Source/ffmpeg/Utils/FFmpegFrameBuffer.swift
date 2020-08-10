@@ -63,6 +63,12 @@ class FFmpegFrameBuffer {
             self.sampleCount += frame.sampleCount
             frames.append(frame)
             
+            if frames.count == 1 {
+                
+                let time = Double(frame.pts) * FFmpegAudioStream.timeBase.ratio
+                print("\nACTUAL SEEK TIME: \(time) \(frame.pts) \(FFmpegAudioStream.timeBase)")
+            }
+            
             return true
         }
         

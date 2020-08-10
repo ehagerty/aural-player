@@ -37,7 +37,9 @@ class FFmpegBufferedFrame: Hashable {
     ///
     /// The number of samples contained in this frame.
     ///
-    let sampleCount: Int32
+    var sampleCount: Int32
+    
+    var firstSampleIndex: Int32
     
     ///
     /// The sampling rate for the samples contained in this frame, i.e. samples per second (or Hz).
@@ -68,6 +70,8 @@ class FFmpegBufferedFrame: Hashable {
     ///
     let timestamp: Int64
     
+    let pts: Int64
+    
     init(_ frame: FFmpegFrame) {
         
         self.timestamp = frame.timestamp
@@ -75,9 +79,11 @@ class FFmpegBufferedFrame: Hashable {
         self.channelLayout = frame.channelLayout
         self.channelCount = Int(frame.channelCount)
         self.sampleCount = frame.sampleCount
+        self.firstSampleIndex = 0
         self.sampleRate = frame.sampleRate
         self.lineSize = frame.lineSize
         self.sampleFormat = frame.sampleFormat
+        self.pts = frame.pts
         
         self.actualDataPointers = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>.allocate(capacity: channelCount)
         self.allocatedDataPointerCount = 0
@@ -104,6 +110,19 @@ class FFmpegBufferedFrame: Hashable {
         }
         
         self.rawDataPointers = UnsafeMutableBufferPointer(start: actualDataPointers, count: channelCount)
+    }
+    
+    func truncate(sampleCount: Int32) {
+        self.sampleCount = sampleCount
+    }
+    
+    func keepLastNSamples(sampleCount: Int32) {
+        
+        if sampleCount < self.sampleCount {
+            
+            firstSampleIndex = self.sampleCount - sampleCount
+            self.sampleCount = sampleCount
+        }
     }
     
     ///
@@ -133,6 +152,7 @@ class FFmpegBufferedFrame: Hashable {
             let audioBufferChannels = audioBuffer.floatChannelData else {return}
         
         let intSampleCount: Int = Int(sampleCount)
+        let intFirstSampleIndex: Int = Int(firstSampleIndex)
         
         for channelIndex in 0..<channelCount {
             
@@ -146,7 +166,11 @@ class FFmpegBufferedFrame: Hashable {
                 (floatsForChannel: UnsafeMutablePointer<Float>) in
                 
                 // Use Accelerate to perform the copy optimally, starting at the given offset.
-                cblas_scopy(sampleCount, floatsForChannel, 1, audioBufferChannel.advanced(by: offset), 1)
+                cblas_scopy(sampleCount, floatsForChannel.advanced(by: intFirstSampleIndex), 1, audioBufferChannel.advanced(by: offset), 1)
+                
+                if channelIndex == 0, firstSampleIndex != 0 {
+                    print("\nBUF.FRAME - \(sampleCount) samples copied from frame with PTS \(pts), firstIndex = \(firstSampleIndex)")
+                }
             }
         }
     }

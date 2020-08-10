@@ -58,6 +58,8 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     ///
     var timeBaseDuration: Int64 {avStream.duration}
     
+    static var timeBase: AVRational!
+    
     ///
     /// All metadata key / value pairs available for this stream.
     ///
@@ -85,6 +87,9 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     /// Useful for debugging purposes.
     ///
     func printInfo() {
+        
+        Self.timeBase = self.timeBase
+        print("\n*** SET TIME BASE TO: \(self.timeBase) \(Self.timeBase!)")
         
         print("\n---------- Audio Stream Info ----------\n")
         

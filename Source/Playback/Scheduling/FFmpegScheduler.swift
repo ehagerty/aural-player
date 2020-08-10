@@ -42,7 +42,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     ///
     /// 3. Scheduling tasks for *immediate* playback will **not** be enqueued on this queue. They will be run immediately on the main thread.
     ///
-    private lazy var schedulingOpQueue: OperationQueue = {
+    lazy var schedulingOpQueue: OperationQueue = {
         
         let queue = OperationQueue()
         queue.underlyingQueue = DispatchQueue.global(qos: .userInitiated)
@@ -64,9 +64,13 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         guard let thePlaybackCtx = session.track.playbackContext as? FFmpegPlaybackContext else {return}
         self.playbackCtx = thePlaybackCtx
         
+        // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
+        thePlaybackCtx.fileContext.audioStream.printInfo()
+        thePlaybackCtx.fileContext.audioCodec.printInfo()
+        
         decoder.initialize(with: thePlaybackCtx.fileContext)
         
-        initiateDecodingAndScheduling(for: session, from: startPosition)
+        initiateDecodingAndScheduling(for: session, from: startPosition == 0 ? nil : startPosition)
         
         // Check that at least one audio buffer was successfully scheduled, before beginning playback.
         if scheduledBufferCount.isPositive {
@@ -260,18 +264,6 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
                 playerNode.play()
             }
         }
-    }
-    
-    func playLoop(_ playbackSession: PlaybackSession, _ beginPlayback: Bool) {
-        
-    }
-    
-    func playLoop(_ playbackSession: PlaybackSession, _ playbackStartTime: Double, _ beginPlayback: Bool) {
-        
-    }
-    
-    func endLoop(_ playbackSession: PlaybackSession, _ loopEndTime: Double) {
-        
     }
     
     ///

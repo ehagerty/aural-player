@@ -221,7 +221,7 @@ class Player: PlayerProtocol, NotificationSubscriber {
         // Loop has a start time, but no end time ... mark its end time
         PlaybackSession.endLoop(seekPos)
         
-        // When the loop's end time is defined, playback jumps to the loop's start time, and a new playback session is started.
+        // When the loop's end time is defined, playback jumps back to the loop's start time, and a new playback session is started.
         if let newSession = PlaybackSession.startNewSessionForPlayingTrack() {
             scheduler.playLoop(newSession, state == .playing)
         }

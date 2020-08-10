@@ -107,6 +107,19 @@ class FFmpegAudioCodec: FFmpegCodec {
         return bufferedFrames
     }
     
+    func decodeAndDrop(packet: FFmpegPacket) {
+        
+        // Send the packet to the decoder for decoding.
+        var resultCode: Int32 = packet.send(to: self)
+        if resultCode.isNegative {return}
+        
+        var avFrame: AVFrame = AVFrame()
+        
+        repeat {
+            resultCode = avcodec_receive_frame(contextPointer, &avFrame)
+        } while resultCode.isZero && avFrame.nb_samples > 0
+    }
+    
     ///
     /// Drains the codec of all internally buffered frames.
     ///
