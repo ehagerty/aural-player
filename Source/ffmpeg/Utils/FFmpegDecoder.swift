@@ -6,6 +6,13 @@ import Foundation
 ///
 class FFmpegDecoder {
     
+    ///
+    /// The maximum difference between a desired seek position and an actual seek
+    /// position (that results from actually performing a seek) that will be tolerated,
+    /// i.e. will not require a correction.
+    ///
+    private static let seekPositionTolerance: Double = 0.01
+    
     /// A context associated with the currently playing file.
     private var file: FFmpegFileContext!
     
@@ -39,7 +46,7 @@ class FFmpegDecoder {
     /// During a decoding loop, in the event that a FrameBuffer fills up, this queue will hold the overflow (excess) frames that can be passed off to the next
     /// FrameBuffer in the next decoding loop.
     ///
-    private var frameQueue: Queue<FFmpegBufferedFrame> = Queue<FFmpegBufferedFrame>()
+    private var frameQueue: Queue<FFmpegFrame> = Queue<FFmpegFrame>()
     
     ///
     /// Prepares the codec to decode a given audio file.
@@ -91,7 +98,7 @@ class FFmpegDecoder {
                 // Try appending the frame to the frame buffer.
                 // The frame buffer may reject the new frame if appending it would
                 // cause its sample count to exceed the maximum.
-                if buffer.appendFrame(frame: frame) {
+                if buffer.appendFrame(frame) {
                     
                     // The buffer accepted the new frame. Remove it from the queue.
                     _ = frameQueue.dequeue()
@@ -126,19 +133,19 @@ class FFmpegDecoder {
         
         if eof {
             
-            var terminalFrames: [FFmpegBufferedFrame] = frameQueue.dequeueAll()
+            var terminalFrames: [FFmpegFrame] = frameQueue.dequeueAll()
             
             do {
                 
                 let drainFrames = try codec.drain()
-                terminalFrames.append(contentsOf: drainFrames)
+                terminalFrames.append(contentsOf: drainFrames.frames)
                 
             } catch {
                 print("\nDecoder drain error:", error)
             }
-          
+            
             // Append these terminal frames to the frame buffer (the frame buffer cannot reject terminal frames).
-            buffer.appendTerminalFrames(frames: terminalFrames)
+            buffer.appendTerminalFrames(terminalFrames)
         }
         
         return buffer
@@ -163,69 +170,66 @@ class FFmpegDecoder {
         do {
             
             try format.seek(within: stream, to: time)
-            
-            let etime = measureExecutionTime {
 
-                do {
-
-                var packetsRead: [(pkt: FFmpegPacket, timestamp: Double)] = []
-                var ptime: Double = 0
-
-                while ptime < time {
-
+            // Because ffmpeg's seeking is not always accurate, we need to check where the seek took us to, within the stream, and
+            // we may need to skip some packets / samples.
+            do {
+                
+                // Keep track of which packets we have read, and the corresponding timestamp (in seconds) for each.
+                var packetsRead: [(packet: FFmpegPacket, timestampSeconds: Double)] = []
+                
+                // Keep track of the last read packet's timestamp.
+                var lastReadPacketTimestamp: Double = -1
+                
+                // Keep reading packets till the packet timestamp crosses our target seek time.
+                while lastReadPacketTimestamp < time {
+                    
                     if let packet = try format.readPacket(from: stream) {
-
-                        print("\n*** LOOP - LAST PKT READ: \(packet.pts), TIME = \(Double(packet.pts) * stream.timeBase.ratio)")
-                        ptime = Double(packet.pts) * stream.timeBase.ratio
-                        packetsRead.append((packet, ptime))
+                        
+                        lastReadPacketTimestamp = Double(packet.pts) * stream.timeBase.ratio
+                        packetsRead.append((packet, lastReadPacketTimestamp))
                     }
                 }
-
-                    if let firstIndexAfterTargetTime = packetsRead.firstIndex(where: {$0.timestamp > time}) {
-                        
-                        if 0 < firstIndexAfterTargetTime - 1 {
-                        
-                            for index in 0..<(firstIndexAfterTargetTime - 1) {
-
-                                let pkt = packetsRead[index].pkt
-                                print("\n*** DROPPING PKT: \(pkt.pts)")
-                                codec.decodeAndDrop(packet: pkt)
-                            }
-                        }
-
-                        for index in max(firstIndexAfterTargetTime - 1, 0)..<packetsRead.count {
-
-                            let pkt = packetsRead[index].pkt
-
-                            let fs = try codec.decode(packet: pkt)
-                            
-                            print("\n*** TRYING PKT: \(pkt.pts) GOT \(fs.count) frames.")
-
-                            for frame in fs {
-                                frameQueue.enqueue(frame)
-                            }
-                        }
-                        
-                        let err = abs(time - packetsRead[max(firstIndexAfterTargetTime - 1, 0)].timestamp)
-                        print("\nSEEK-ERROR = \(err)")
-                        
-                        if err > 0.01 {
-                            
-                            // TODO: This doesn't work if there are multiple frames in one packet.
-                            
-                            let frame = frameQueue.peek()!
-                            let numSamplesToKeep = Int32((packetsRead[firstIndexAfterTargetTime].timestamp - time) * Double(codec.sampleRate))
-                            
-                            print("\nKeeping last \(numSamplesToKeep) in start frame with PTS \(frame.pts).")
-                            
-                            frame.keepLastNSamples(sampleCount: numSamplesToKeep)
-                        }
+                
+                if let firstIndexAfterTargetTime = packetsRead.firstIndex(where: {$0.timestampSeconds > time}) {
+                    
+                    // Decode and drop all but the last packet whose timestamp < seek target time.
+                    if firstIndexAfterTargetTime > 1 {
+                        (0..<(firstIndexAfterTargetTime - 1)).map {packetsRead[$0].packet}.forEach {codec.decodeAndDrop(packet: $0)}
                     }
                     
-                } catch {}
+                    // Decode and enqueue all usable packets, starting at either:
+                    // 1 - the last packet whose timestamp < seek target time, (this case is most likely) OR
+                    // 2 - the first packet whose timestamp > seek target time (rare cases),
+                    // depending on where the seek took us to within the stream.
+                    
+                    let firstUsablePacketIndex = max(firstIndexAfterTargetTime - 1, 0)
+                    var framesFromUsablePackets: [FFmpegPacketFrames] = []
+                    
+                    for packet in (firstUsablePacketIndex..<packetsRead.count).map({packetsRead[$0].packet}) {
+                        framesFromUsablePackets.append(try codec.decode(packet: packet))
+                    }
+                    
+                    // If the difference between the target time and the first usable packet's timestamp is greater
+                    // than our tolerance threshold, truncate and/or discard the first few frames to get to our
+                    // target seek time.
+                    //
+                    // NOTE - This may be required because some packet sizes can be quite large (eg. 1 second or more),
+                    // increasing the margin of error (i.e. granularity) when seeking.
+                    if framesFromUsablePackets.count > 1, time - packetsRead[firstUsablePacketIndex].timestampSeconds > Self.seekPositionTolerance {
+                        
+                        // The number of samples we keep will be determined by the timestamp of the first packet whose timestamp > seek target time.
+                        let numSamplesToKeep = Int32((packetsRead[firstIndexAfterTargetTime].timestampSeconds - time) * Double(codec.sampleRate))
+                        framesFromUsablePackets.first?.keepLastNSamples(sampleCount: numSamplesToKeep)
+                    }
+                    
+                    // Put all our usable frames in the queue so that they may be read later from within the decoding loop.
+                    framesFromUsablePackets.flatMap{$0.frames}.forEach {frameQueue.enqueue($0)}
+                }
+                
+            } catch {
+                print("\nError while skipping packets after seeking to time: \(time) seconds.")
             }
-
-            print("\nSKIPPING TOOK \(etime * 1000) msec")
             
             // If the seek succeeds, we have not reached EOF.
             self.eof = false
@@ -257,13 +261,13 @@ class FFmpegDecoder {
     /// 3. The returned frame will not be dequeued (removed from the queue) by this function. It is the responsibility of the caller
     /// to do so, upon consuming the frame.
     ///
-    private func nextFrame() throws -> FFmpegBufferedFrame {
+    private func nextFrame() throws -> FFmpegFrame {
         
         while frameQueue.isEmpty {
         
             if let packet = try format.readPacket(from: stream) {
                 
-                for frame in try codec.decode(packet: packet) {
+                for frame in try codec.decode(packet: packet).frames {
                     frameQueue.enqueue(frame)
                 }
             }
@@ -309,8 +313,8 @@ class FFmpegDecoder {
                     let truncatedSampleCount = Int32((loopEndTime - frameStartTime) * sampleRate)
                     
                     // Truncate frame, append it to the frame buffer, and break from loop
-                    frame.truncate(sampleCount: truncatedSampleCount)
-                    buffer.appendTerminalFrames(frames: [frame])
+                    frame.keepFirstNSamples(sampleCount: truncatedSampleCount)
+                    buffer.appendTerminalFrames([frame])
                     
                     self.endOfLoop = true
                     break
@@ -319,7 +323,7 @@ class FFmpegDecoder {
                 // Try appending the frame to the frame buffer.
                 // The frame buffer may reject the new frame if appending it would
                 // cause its sample count to exceed the maximum.
-                if buffer.appendFrame(frame: frame) {
+                if buffer.appendFrame(frame) {
                     
                     // The buffer accepted the new frame. Remove it from the queue.
                     _ = frameQueue.dequeue()
@@ -356,19 +360,19 @@ class FFmpegDecoder {
             
             self.endOfLoop = true
             
-            var terminalFrames: [FFmpegBufferedFrame] = frameQueue.dequeueAll()
+            var terminalFrames: [FFmpegFrame] = frameQueue.dequeueAll()
             
             do {
                 
                 let drainFrames = try codec.drain()
-                terminalFrames.append(contentsOf: drainFrames)
+                terminalFrames.append(contentsOf: drainFrames.frames)
                 
             } catch {
                 print("\nDecoder drain error:", error)
             }
           
             // Append these terminal frames to the frame buffer (the frame buffer cannot reject terminal frames).
-            buffer.appendTerminalFrames(frames: terminalFrames)
+            buffer.appendTerminalFrames(terminalFrames)
         }
         
         return buffer

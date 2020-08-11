@@ -80,7 +80,7 @@ class FFmpegPacketTable {
             
             while true {
                 
-                let packet = try FFmpegPacket(fromFormat: pointer)
+                let packet = try FFmpegPacket(readingFromFormat: pointer)
             
                 // Only process packets from our audio stream.
                 if packet.streamIndex == audioStreamIndex {

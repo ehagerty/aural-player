@@ -56,61 +56,43 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     /// - throws: **DecoderError** if an error occurs during decoding.
     ///
-    func decode(packet: FFmpegPacket) throws -> [FFmpegBufferedFrame] {
+    func decode(packet: FFmpegPacket) throws -> FFmpegPacketFrames {
         
         // Send the packet to the decoder for decoding.
-        let resultCode: Int32 = packet.send(to: self)
+        let resultCode: ResultCode = avcodec_send_packet(contextPointer, packet.pointer)
         
-        // The packet may be destroyed at this point as it has already been sent to the codec.
-        packet.destroy()
-
         // If the packet send failed, log a message and throw an error.
         if resultCode.isNegative {
             
-            print("\nCodec.decode(): Failed to decode packet. Error: \(resultCode) \(resultCode.errorDescription))")
+            print("\nCodec.decode(): Failed to send packet. Error: \(resultCode) \(resultCode.errorDescription))")
             throw DecoderError(resultCode)
         }
         
-        return receiveFrames()
-    }
-    
-    ///
-    /// Receives frames from the decoder (after sending one packet to it).
-    ///
-    /// - returns: An ordered list of frames.
-    ///
-    private func receiveFrames() -> [FFmpegBufferedFrame] {
-        
-        // Receive (potentially) multiple frames
-
-        // Resuse a single Frame object multiple times.
-        let frame = FFmpegFrame(sampleFormat: self.sampleFormat)
-        
         // Collect the received frames in an array.
-        var bufferedFrames: [FFmpegBufferedFrame] = []
+        let packetFrames: FFmpegPacketFrames = FFmpegPacketFrames()
         
-        // Receive a decoded frame from the codec.
-        var resultCode: Int32 = frame.receive(from: self)
-        
-        // Keep receiving frames while no errors are encountered
-        while resultCode.isZero, frame.hasSamples {
-            
-            bufferedFrames.append(FFmpegBufferedFrame(frame))
-            frame.unreferenceBuffers()
-            
-            resultCode = frame.receive(from: self)
+        // Keep receiving decoded frames while no errors are encountered
+        while let frame = FFmpegFrame(readingFrom: contextPointer, withSampleFormat: self.sampleFormat) {
+            packetFrames.appendFrame(frame)
         }
         
-        // The frame is no longer needed.
-        frame.destroy()
-        
-        return bufferedFrames
+        return packetFrames
     }
     
+    ///
+    /// Decode the given packet and drop (ignore) the received frames.
+    ///
+    /// ```
+    /// This is useful after performing a seek, when the
+    /// resulting seek position is less than (before) the target position.
+    /// In such a case, it may be necessary to drop a few packets
+    /// till the desired seek position is reached.
+    /// ```
+    ///
     func decodeAndDrop(packet: FFmpegPacket) {
         
         // Send the packet to the decoder for decoding.
-        var resultCode: Int32 = packet.send(to: self)
+        var resultCode: ResultCode = avcodec_send_packet(contextPointer, packet.pointer)
         if resultCode.isNegative {return}
         
         var avFrame: AVFrame = AVFrame()
@@ -125,20 +107,30 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     /// Call this function after reaching EOF within a stream.
     ///
+    /// - returns: All remaining (buffered) frames, ordered.
+    ///
     /// - throws: **DecoderError** if an error occurs while draining the codec.
     ///
-    func drain() throws -> [FFmpegBufferedFrame] {
+    func drain() throws -> FFmpegPacketFrames {
         
         // Send the "flush packet" to the decoder
         let resultCode: Int32 = avcodec_send_packet(contextPointer, nil)
         
         if resultCode.isNonZero {
             
-            print("\nCodec.decode(): Failed to decode packet. Error: \(resultCode) \(resultCode.errorDescription))")
+            print("\nCodec.decode(): Failed to send packet. Error: \(resultCode) \(resultCode.errorDescription))")
             throw DecoderError(resultCode)
         }
         
-        return receiveFrames()
+        // Collect the received frames in an array.
+        let packetFrames: FFmpegPacketFrames = FFmpegPacketFrames()
+        
+        // Keep receiving decoded frames while no errors are encountered
+        while let frame = FFmpegFrame(readingFrom: contextPointer, withSampleFormat: self.sampleFormat) {
+            packetFrames.appendFrame(frame)
+        }
+        
+        return packetFrames
     }
     
     ///

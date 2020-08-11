@@ -270,7 +270,7 @@ class FFmpegFormatContext {
     ///
     func readPacket(from stream: FFmpegStreamProtocol) throws -> FFmpegPacket? {
         
-        let packet = try FFmpegPacket(fromFormat: pointer)
+        let packet = try FFmpegPacket(readingFromFormat: pointer)
         return packet.streamIndex == stream.index ? packet : nil
     }
     
@@ -318,8 +318,6 @@ class FFmpegFormatContext {
             // duration, and frame count.
             timestamp = Int64(time * Double(stream.timeBaseDuration) / duration)
             
-            print("\nTGT FRAME FOR SEEK: \(timestamp)")
-            
             // Validate the target frame (cannot exceed the total frame count)
             if timestamp >= stream.timeBaseDuration {throw SeekError(ERROR_EOF)}
             
@@ -329,7 +327,7 @@ class FFmpegFormatContext {
             // having a smaller timestamp than the one you are seeking."
             //
             // Source - https://stackoverflow.com/questions/20734814/ffmpeg-av-seek-frame-with-avseek-flag-any-causes-grey-screen
-            flags = AVSEEK_FLAG_ANY
+            flags = AVSEEK_FLAG_BACKWARD
         }
         
         // Attempt the seek and capture the result code.

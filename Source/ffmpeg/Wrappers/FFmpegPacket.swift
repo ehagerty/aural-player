@@ -10,7 +10,12 @@ class FFmpegPacket {
     ///
     /// The encapsulated AVPacket object.
     ///
-    var avPacket: AVPacket
+    var avPacket: AVPacket {pointer.pointee}
+    
+    ///
+    /// A pointer to the encapsulated AVPacket object.
+    ///
+    var pointer: UnsafeMutablePointer<AVPacket>!
     
     ///
     /// Index of the stream from which this packet was read.
@@ -38,16 +43,16 @@ class FFmpegPacket {
     var pts: Int64 {avPacket.pts}
     
     ///
-    /// The raw data (unsigned bytes) contained in this packet.
+    /// Pointer to the raw data (unsigned bytes) contained in this packet.
     ///
-    var rawData: UnsafeMutablePointer<UInt8>! {avPacket.data}
+    var rawDataPointer: UnsafeMutablePointer<UInt8>! {avPacket.data}
     
     ///
     /// The raw data encapsulated in a byte buffer, if there is any raw data. Nil if there is no raw data.
     ///
     var data: Data? {
         
-        if let theData = rawData, size > 0 {
+        if let theData = rawDataPointer, size > 0 {
             return Data(bytes: theData, count: Int(size))
         }
         
@@ -61,12 +66,20 @@ class FFmpegPacket {
     ///
     /// - throws: **PacketReadError** if the read fails.
     ///
-    init(fromFormat formatCtx: UnsafeMutablePointer<AVFormatContext>?) throws {
+    init(readingFromFormat formatCtx: UnsafeMutablePointer<AVFormatContext>?) throws {
         
-        self.avPacket = AVPacket()
+        // Allocate memory for the packet.
+        self.pointer = av_packet_alloc()
+        
+        // Check if memory allocation was successful. Can't proceed otherwise.
+        guard pointer != nil else {
+            
+            print("\nPacket.init(): Unable to allocate memory for packet.")
+            throw PacketReadError(-1)
+        }
         
         // Try to read a packet.
-        let readResult: Int32 = av_read_frame(formatCtx, &avPacket)
+        let readResult: Int32 = av_read_frame(formatCtx, pointer)
         
         // If the read fails, log a message and throw an error.
         guard readResult >= 0 else {
@@ -83,11 +96,11 @@ class FFmpegPacket {
     ///
     /// Instantiates a Packet from an AVPacket that has already been read from the source stream.
     ///
-    /// - Parameter avPacket: A pre-existing AVPacket that has already been read.
+    /// - Parameter pointer: A pointer to a pre-existing AVPacket that has already been read.
     ///
-    init(encapsulating avPacket: AVPacket) {
+    init(encapsulating pointer: UnsafeMutablePointer<AVPacket>) {
         
-        self.avPacket = avPacket
+        self.pointer = pointer
         
         // Since this avPacket was not allocated by this object, we
         // cannot deallocate it here. It is the caller's responsibility
@@ -95,17 +108,6 @@ class FFmpegPacket {
         //
         // So, set the destroyed flag, to prevent deallocation.
         destroyed = true
-    }
-
-    ///
-    /// Sends this packet to a codec for decoding.
-    ///
-    /// - Parameter codec: The codec that will decode this packet.
-    ///
-    /// - returns: An integer code indicating the result of the send operation.
-    ///
-    func send(to codec: FFmpegCodec) -> ResultCode {
-        return avcodec_send_packet(codec.contextPointer, &avPacket)
     }
 
     /// Indicates whether or not this object has already been destroyed.
@@ -122,8 +124,8 @@ class FFmpegPacket {
         // thrown.
         if destroyed {return}
         
-        av_packet_unref(&avPacket)
-        av_freep(&avPacket)
+        av_packet_unref(pointer)
+        av_freep(pointer)
         
         destroyed = true
     }

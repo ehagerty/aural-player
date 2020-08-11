@@ -37,7 +37,11 @@ class FFmpegImageStream: FFmpegStreamProtocol {
     /// The packet (optionally) containing an attached picture.
     /// This can be used to read cover art.
     ///
-    lazy var attachedPic: FFmpegPacket = FFmpegPacket(encapsulating: avStream.attached_pic)
+    lazy var attachedPic: FFmpegPacket = {
+        
+        var attachedPicPacket = avStream.attached_pic
+        return FFmpegPacket(encapsulating: &attachedPicPacket)
+    }()
     
     ///
     /// All metadata key / value pairs available for this stream.
