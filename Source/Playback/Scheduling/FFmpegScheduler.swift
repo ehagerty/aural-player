@@ -113,6 +113,9 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
                     trackCompleted(session)
                     return
                 }
+            } else {
+                
+                // TODO: decoder.seekToStart()
             }
             
             // Schedule one buffer for immediate playback
@@ -196,6 +199,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             // 3 - the completion handler will execute even when the player is stopped, i.e. the buffer
             //      has not really completed playback but has been removed from the playback queue.
             
+            // TODO: Fix the last 2 parameters ... seek posn not showing correctly.
             playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, seekPosition != nil)
             
             // Upon scheduling the buffer, increment the counter.

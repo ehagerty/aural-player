@@ -284,10 +284,9 @@ class FFmpegFormatContext {
     ///
     func seek(within stream: FFmpegAudioStream, to time: Double) throws {
         
-        print("\nTARGET SEEK TIME: \(time)")
-        
         // Before attempting the seek, it is necessary to ask the codec
-        // to flush its internal buffers. Otherwise, the seek will likely fail.
+        // to flush its internal buffers. Otherwise, stale frames may
+        // be produced when decoding.
         stream.codec.flushBuffers()
         
         // Represents the target seek position that the format context understands.
