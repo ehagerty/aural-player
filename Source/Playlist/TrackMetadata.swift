@@ -53,6 +53,8 @@ class TrackMetadata {
         self.totalDiscs = metadata.totalDiscs
         
         self.lyrics = metadata.lyrics
+        
+        self.chapters = metadata.chapters
     }
     
     func setGenericMetadata(_ metadata: [String: MetadataEntry]) {

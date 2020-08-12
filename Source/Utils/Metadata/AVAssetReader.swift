@@ -110,7 +110,9 @@ class AVAssetReader {
         let trackInfo = getTrackNumber(from: map)
         let lyrics = nilIfEmpty(getLyrics(from: map))
         
-        return SecondaryMetadata(discNumber: discInfo?.number, totalDiscs: discInfo?.total, trackNumber: trackInfo?.number, totalTracks: trackInfo?.total, lyrics: lyrics)
+//        let chapters = getChapters(track)
+        
+        return SecondaryMetadata(discNumber: discInfo?.number, totalDiscs: discInfo?.total, trackNumber: trackInfo?.number, totalTracks: trackInfo?.total, lyrics: lyrics, chapters: [])
     }
     
     private static func getDiscNumber(from map: AVFMetadataMap) -> (number: Int?, total: Int?)? {

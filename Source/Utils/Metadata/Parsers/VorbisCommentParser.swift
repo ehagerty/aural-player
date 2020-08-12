@@ -48,42 +48,19 @@ class VorbisCommentParser: FFMpegMetadataParser {
     }
     
     func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let title = mapForTrack.vorbisMetadata?.essentialFields[key_title] {
-            return title
-        }
-        
-        return nil
+        return mapForTrack.vorbisMetadata?.essentialFields[key_title]
     }
     
     func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        for key in [key_artist, key_artists] {
-            
-            if let artist = mapForTrack.vorbisMetadata?.essentialFields[key] {
-                return artist
-            }
-        }
-        
-        return nil
+        return mapForTrack.vorbisMetadata?.essentialFields[key_artist] ?? mapForTrack.vorbisMetadata?.essentialFields[key_artists]
     }
     
     func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let album = mapForTrack.vorbisMetadata?.essentialFields[key_album] {
-            return album
-        }
-        
-        return nil
+        return mapForTrack.vorbisMetadata?.essentialFields[key_album]
     }
     
     func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let genre = mapForTrack.vorbisMetadata?.essentialFields[key_genre] {
-            return genre
-        }
-        
-        return nil
+        return mapForTrack.vorbisMetadata?.essentialFields[key_genre]
     }
     
     func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
@@ -129,12 +106,7 @@ class VorbisCommentParser: FFMpegMetadataParser {
     }
     
     func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let lyrics = mapForTrack.vorbisMetadata?.essentialFields[key_lyrics] {
-            return lyrics
-        }
-        
-        return nil
+        return mapForTrack.vorbisMetadata?.essentialFields[key_lyrics]
     }
     
     func getGenericMetadata(_ mapForTrack: FFmpegMetadataReaderContext) -> [String : MetadataEntry] {

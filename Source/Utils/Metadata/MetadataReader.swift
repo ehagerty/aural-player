@@ -36,4 +36,6 @@ struct SecondaryMetadata {
     let totalTracks: Int?
     
     let lyrics: String?
+    
+    let chapters: [Chapter]
 }

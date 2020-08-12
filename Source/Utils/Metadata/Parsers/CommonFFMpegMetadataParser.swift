@@ -63,48 +63,23 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
     }
     
     func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let title = mapForTrack.commonMetadata?.essentialFields[key_title] {
-            return title
-        }
-    
-        return nil
+        return mapForTrack.commonMetadata?.essentialFields[key_title]
     }
     
     func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let artist = mapForTrack.commonMetadata?.essentialFields[key_artist] {
-            return artist
-        }
-        
-        return nil
+        return mapForTrack.commonMetadata?.essentialFields[key_artist]
     }
     
     func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let album = mapForTrack.commonMetadata?.essentialFields[key_album] {
-            return album
-        }
-        
-        return nil
+        return mapForTrack.commonMetadata?.essentialFields[key_album]
     }
     
     func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let genre = mapForTrack.commonMetadata?.essentialFields[key_genre] {
-            return genre
-        }
-        
-        return nil
+        return mapForTrack.commonMetadata?.essentialFields[key_genre]
     }
     
     func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let lyrics = mapForTrack.commonMetadata?.essentialFields[key_lyrics] {
-            return lyrics
-        }
-        
-        return nil
+        return mapForTrack.commonMetadata?.essentialFields[key_lyrics]
     }
     
     func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
@@ -155,11 +130,6 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
     }
     
     func readableKey(_ key: String) -> String {
-        
-        if let rKey = genericKeys[key] {
-            return rKey
-        }
-        
-        return key.capitalizingFirstLetter()
+        return genericKeys[key] ?? key.capitalizingFirstLetter()
     }
 }

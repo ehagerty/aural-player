@@ -4,8 +4,6 @@ class FFMpegReader {
     
     private static var allParsers: [FFMpegMetadataParser] = []
     
-    //    private static let theReader: FFmpegMetadataReader = FFmpegMetadataReader()
-    
     // TODO: Is this useful/necessary ?
     private static var wmFileParsers: [FFMpegMetadataParser] = []
     private static var vorbisCommentFileParsers: [FFMpegMetadataParser] = []
@@ -114,7 +112,6 @@ class FFMpegReader {
     
     static func getDuration(from context: FFmpegMetadataReaderContext) -> Double {
         
-        // TODO: Here is where we may need to build a packet table !!! (if isRawFile, ...)
         let fileCtx = context.fileCtx
         guard let audioStream = fileCtx.audioStream else {return 0}
 
@@ -145,13 +142,13 @@ class FFMpegReader {
         }
         
         let lyrics = getLyrics(from: context)
+        let chapters = getChapters(from: context)
         
-        return SecondaryMetadata(discNumber: discNumberAndTotal?.number, totalDiscs: discNumberAndTotal?.total, trackNumber: trackNumberAndTotal?.number, totalTracks: trackNumberAndTotal?.total, lyrics: lyrics)
+        return SecondaryMetadata(discNumber: discNumberAndTotal?.number, totalDiscs: discNumberAndTotal?.total, trackNumber: trackNumberAndTotal?.number, totalTracks: trackNumberAndTotal?.total, lyrics: lyrics, chapters: chapters)
     }
     
     static func getChapters(from context: FFmpegMetadataReaderContext) -> [Chapter] {
-        //        return track.ffmpegMetadata?.chapters.map {Chapter($0.title, $0.startTime, $0.endTime)} ?? []
-        return []
+        return context.fileCtx.chapters.map {Chapter($0.title, $0.startTime, $0.endTime)}
     }
     
     private static func getDiscNumber(from context: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {

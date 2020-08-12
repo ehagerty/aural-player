@@ -41,42 +41,19 @@ class ApeV2Parser: FFMpegMetadataParser {
     }
     
     func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let title = mapForTrack.apeMetadata?.essentialFields[key_title] {
-            return title
-        }
-        
-        return nil
+        return mapForTrack.apeMetadata?.essentialFields[key_title]
     }
     
     func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        for key in [key_artist, key_artists] {
-            
-            if let artist = mapForTrack.apeMetadata?.essentialFields[key] {
-                return artist
-            }
-        }
-        
-        return nil
+        return mapForTrack.apeMetadata?.essentialFields[key_artist] ?? mapForTrack.apeMetadata?.essentialFields[key_artists]
     }
     
     func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let album = mapForTrack.apeMetadata?.essentialFields[key_album] {
-            return album
-        }
-        
-        return nil
+        return mapForTrack.apeMetadata?.essentialFields[key_album]
     }
     
     func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let genre = mapForTrack.apeMetadata?.essentialFields[key_genre] {
-            return genre
-        }
-        
-        return nil
+        return mapForTrack.apeMetadata?.essentialFields[key_genre]
     }
     
     func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {

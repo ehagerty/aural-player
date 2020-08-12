@@ -77,30 +77,15 @@ class WMParser: FFMpegMetadataParser {
     }
     
     func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let title = mapForTrack.wmMetadata?.essentialFields[key_title] {
-            return title
-        }
-        
-        return nil
+        return mapForTrack.wmMetadata?.essentialFields[key_title]
     }
     
     func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let artist = mapForTrack.wmMetadata?.essentialFields[key_artist] {
-            return artist
-        }
-        
-        return nil
+        return mapForTrack.wmMetadata?.essentialFields[key_artist]
     }
     
     func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        
-        if let album = mapForTrack.wmMetadata?.essentialFields[key_album] {
-            return album
-        }
-        
-        return nil
+        return mapForTrack.wmMetadata?.essentialFields[key_album]
     }
     
     func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {

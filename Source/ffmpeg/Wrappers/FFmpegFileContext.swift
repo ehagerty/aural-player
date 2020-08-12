@@ -49,6 +49,24 @@ class FFmpegFileContext {
     lazy var metadata: [String: String] = FFmpegMetadataDictionary(readingFrom: avContext.metadata).dictionary
     
     ///
+    /// All chapter markings available in this file's header.
+    ///
+    lazy var chapters: [FFmpegChapter] = {
+        
+        let numChapters = Int(avContext.nb_chapters)
+        
+        // There may not be any chapters.
+        guard numChapters > 0, let avChapters = avContext.chapters else {return []}
+        
+        // Sort the chapters by start time in ascending order.
+        let theChapters: [AVChapter] = (0..<numChapters).compactMap {avChapters.advanced(by: $0).pointee?.pointee}
+            .sorted(by: {c1, c2 in c1.start < c2.start})
+        
+        // Wrap the AVChapter objects in Chapter objects.
+        return theChapters.enumerated().map {FFmpegChapter(encapsulating: $0.element, atIndex: $0.offset)}
+    }()
+    
+    ///
     /// Attempts to construct a FormatContext instance for the given file.
     ///
     /// - Parameter file: The audio file to be read / decoded by this context.
