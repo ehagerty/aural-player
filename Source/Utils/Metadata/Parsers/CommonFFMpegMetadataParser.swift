@@ -40,7 +40,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         key_comment: "Comment"
     ]
     
-    func mapTrack(_ mapForTrack: FFmpegMetadataMap) {
+    func mapTrack(_ mapForTrack: FFmpegMetadataReaderContext) {
         
         let metadata = FFmpegParserMetadataMap()
         mapForTrack.commonMetadata = metadata
@@ -62,7 +62,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         }
     }
     
-    func getTitle(_ mapForTrack: FFmpegMetadataMap) -> String? {
+    func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
         
         if let title = mapForTrack.commonMetadata?.essentialFields[key_title] {
             return title
@@ -71,7 +71,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getArtist(_ mapForTrack: FFmpegMetadataMap) -> String? {
+    func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
         
         if let artist = mapForTrack.commonMetadata?.essentialFields[key_artist] {
             return artist
@@ -80,7 +80,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getAlbum(_ mapForTrack: FFmpegMetadataMap) -> String? {
+    func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
         
         if let album = mapForTrack.commonMetadata?.essentialFields[key_album] {
             return album
@@ -89,7 +89,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getGenre(_ mapForTrack: FFmpegMetadataMap) -> String? {
+    func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
         
         if let genre = mapForTrack.commonMetadata?.essentialFields[key_genre] {
             return genre
@@ -98,7 +98,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getLyrics(_ mapForTrack: FFmpegMetadataMap) -> String? {
+    func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
         
         if let lyrics = mapForTrack.commonMetadata?.essentialFields[key_lyrics] {
             return lyrics
@@ -107,7 +107,7 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getDiscNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
         
         if let discNumStr = mapForTrack.commonMetadata?.essentialFields[key_disc] {
             return ParserUtils.parseDiscOrTrackNumberString(discNumStr)
@@ -116,11 +116,11 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalDiscs(_ mapForTrack: FFmpegMetadataMap) -> Int? {
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
         return nil
     }
     
-    func getTrackNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
         
         if let trackNumStr = mapForTrack.commonMetadata?.essentialFields[key_track] {
             return ParserUtils.parseDiscOrTrackNumberString(trackNumStr)
@@ -129,11 +129,11 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalTracks(_ mapForTrack: FFmpegMetadataMap) -> Int? {
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
         return nil
     }
     
-    func getGenericMetadata(_ mapForTrack: FFmpegMetadataMap) -> [String : MetadataEntry] {
+    func getGenericMetadata(_ mapForTrack: FFmpegMetadataReaderContext) -> [String : MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         

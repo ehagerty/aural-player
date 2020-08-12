@@ -51,6 +51,8 @@ class FFmpegCodec {
     ///
     var longName: String {String(cString: avCodec.long_name)}
     
+    var isOpen: Bool = false
+    
     ///
     /// Instantiates a Codec object, given a pointer to its parameters.
     ///
@@ -98,6 +100,8 @@ class FFmpegCodec {
             print("\nCodec.open(): Failed to open codec '\(name)'. Error: \(codecOpenResult.errorDescription))")
             throw DecoderInitializationError(codecOpenResult)
         }
+        
+        isOpen = true
     }
     
     /// Indicates whether or not this object has already been destroyed.

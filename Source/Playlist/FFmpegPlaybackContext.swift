@@ -2,9 +2,9 @@ import AVFoundation
 
 class FFmpegPlaybackContext: PlaybackContextProtocol {
     
-    let fileContext: FFmpegFileContext
+//    var fileContext: FFmpegFileContext
     
-    let audioFormat: AVAudioFormat
+    var audioFormat: AVAudioFormat {AVAudioFormat(settings: [:])!}
     
     ///
     /// The maximum number of samples that will be read, decoded, and scheduled for **immediate** playback,
@@ -33,44 +33,46 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     ///
     let sampleCountForDeferredPlayback: Int32
     
-    init(for fileContext: FFmpegFileContext) {
+    init(for file: URL) {
         
-        self.fileContext = fileContext
-        let codec: FFmpegAudioCodec = fileContext.audioCodec
-        
-        let sampleRate: Int32 = codec.sampleRate
-        let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout))!
-        self.audioFormat = AVAudioFormat(standardFormatWithSampleRate: Double(sampleRate), channelLayout: channelLayout)
-        
-        // The effective sample rate, which also takes into account the channel count, gives us a better idea
-        // of the computational cost of decoding and resampling the given file, as opposed to just the
-        // sample rate.
-        let channelCount: Int32 = codec.channelCount
-        let effectiveSampleRate: Int32 = sampleRate * channelCount
-        
-        switch effectiveSampleRate {
-            
-        case 0..<100000:
-            
-            // 44.1 / 48 KHz stereo
-            
-            sampleCountForImmediatePlayback = 5 * sampleRate    // 5 seconds of audio
-            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
-            
-        case 100000..<500000:
-            
-            // 96 / 192 KHz stereo
-            
-            sampleCountForImmediatePlayback = 3 * sampleRate    // 3 seconds of audio
-            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
-            
-        default:
-            
-            // 96 KHz surround and higher sample rates
-            
-            sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
-            sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
-        }
+//        self.fileContext = fileContext
+//        let codec: FFmpegAudioCodec = fileContext.audioCodec
+//
+//        let sampleRate: Int32 = codec.sampleRate
+//        let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout))!
+//        self.audioFormat = AVAudioFormat(standardFormatWithSampleRate: Double(sampleRate), channelLayout: channelLayout)
+//
+//        // The effective sample rate, which also takes into account the channel count, gives us a better idea
+//        // of the computational cost of decoding and resampling the given file, as opposed to just the
+//        // sample rate.
+//        let channelCount: Int32 = codec.channelCount
+//        let effectiveSampleRate: Int32 = sampleRate * channelCount
+//
+//        switch effectiveSampleRate {
+//
+//        case 0..<100000:
+//
+//            // 44.1 / 48 KHz stereo
+//
+//            sampleCountForImmediatePlayback = 5 * sampleRate    // 5 seconds of audio
+//            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
+//
+//        case 100000..<500000:
+//
+//            // 96 / 192 KHz stereo
+//
+//            sampleCountForImmediatePlayback = 3 * sampleRate    // 3 seconds of audio
+//            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
+//
+//        default:
+//
+//            // 96 KHz surround and higher sample rates
+//
+//            sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
+//            sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
+//        }
+        sampleCountForImmediatePlayback = 0
+        sampleCountForDeferredPlayback = 0
     }
     
     func prepareForPlayback() throws {
@@ -79,11 +81,28 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
         // all samples need to be resampled (converted) to a suitable format. So, prepare the resampler for that
         // conversion if required.
         
-        let codec: FFmpegAudioCodec = fileContext.audioCodec
-        try codec.open()
-        
-        if codec.sampleFormat.needsResampling {
-            ObjectGraph.ffmpegResampler.allocateFor(channelCount: codec.channelCount, sampleCount: sampleCountForDeferredPlayback)
-        }
+//        let codec: FFmpegAudioCodec = fileContext.audioCodec
+//
+//        if !codec.isOpen {
+//            try codec.open()
+//
+//        } else {
+//
+//            let time = measureExecutionTime {
+//
+////
+////                fileContext = try FFmpegFileContext(forFile: fileContext.file)
+////                try fileContext.audioCodec.open()
+////            }
+//
+//            fileContext.format.seekToStart(within: fileContext.audioStream)
+//            }
+//
+//            print("\nTook \(time * 1000) msec to seek to START for \(fileContext.file.lastPathComponent)")
+//        }
+//
+//        if codec.sampleFormat.needsResampling {
+//            ObjectGraph.ffmpegResampler.allocateFor(channelCount: codec.channelCount, sampleCount: sampleCountForDeferredPlayback)
+//        }
     }
 }

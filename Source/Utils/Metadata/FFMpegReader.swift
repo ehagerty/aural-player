@@ -22,38 +22,28 @@ class FFMpegReader {
         apeFileParsers = [commonFFMpegParser, apeParser, id3Parser, vorbisParser, wmParser, defaultParser]
     }
     
-    static func buildMap(for context: FFmpegFileContext) -> FFmpegMetadataMap {
+    static func createContext(for fileCtx: FFmpegFileContext) -> FFmpegMetadataReaderContext {
         
-        var metadata: [String: String] = [:]
+        let context = FFmpegMetadataReaderContext(for: fileCtx)
+        allParsers.forEach {$0.mapTrack(context)}
         
-        for (key, value) in context.format.metadata {
-            metadata[key] = value
-        }
-        
-        for (key, value) in context.audioStream.metadata {
-            metadata[key] = value
-        }
-        
-        let map = FFmpegMetadataMap(context, metadata)
-        allParsers.forEach {$0.mapTrack(map)}
-        
-        return map
+        return context
     }
     
     private static func nilIfEmpty(_ string: String?) -> String? {
         return StringUtils.isStringEmpty(string) ? nil : string
     }
     
-    static func getPrimaryMetadata(from map: FFmpegMetadataMap) -> PrimaryMetadata {
+    static func getPrimaryMetadata(from context: FFmpegMetadataReaderContext) -> PrimaryMetadata {
         
-        let title = nilIfEmpty(getTitle(from: map))
-        let artist = nilIfEmpty(getArtist(from: map))
-        let album = nilIfEmpty(getAlbum(from: map))
-        let genre = nilIfEmpty(getGenre(from: map))
+        let title = nilIfEmpty(getTitle(from: context))
+        let artist = nilIfEmpty(getArtist(from: context))
+        let album = nilIfEmpty(getAlbum(from: context))
+        let genre = nilIfEmpty(getGenre(from: context))
         
-        let duration = getDuration(from: map)
+        let duration = getDuration(from: context)
         
-        let art = getArt(from: map)
+        let art = getArt(from: context)
         
         return PrimaryMetadata(title: title, artist: artist, album: album, genre: genre, duration: duration, coverArt: art)
     }
@@ -74,11 +64,11 @@ class FFMpegReader {
         }
     }
     
-    private static func getTitle(from map: FFmpegMetadataMap) -> String? {
+    private static func getTitle(from context: FFmpegMetadataReaderContext) -> String? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let title = parser.getTitle(map) {
+            if let title = parser.getTitle(context) {
                 return title
             }
         }
@@ -86,11 +76,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getArtist(from map: FFmpegMetadataMap) -> String? {
+    private static func getArtist(from context: FFmpegMetadataReaderContext) -> String? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let artist = parser.getArtist(map) {
+            if let artist = parser.getArtist(context) {
                 return artist
             }
         }
@@ -98,11 +88,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getAlbum(from map: FFmpegMetadataMap) -> String? {
+    private static func getAlbum(from context: FFmpegMetadataReaderContext) -> String? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let album = parser.getAlbum(map) {
+            if let album = parser.getAlbum(context) {
                 return album
             }
         }
@@ -110,11 +100,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getGenre(from map: FFmpegMetadataMap) -> String? {
+    private static func getGenre(from context: FFmpegMetadataReaderContext) -> String? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let genre = parser.getGenre(map) {
+            if let genre = parser.getGenre(context) {
                 return genre
             }
         }
@@ -122,39 +112,53 @@ class FFMpegReader {
         return nil
     }
     
-    static func getDuration(from map: FFmpegMetadataMap) -> Double {
+    static func getDuration(from context: FFmpegMetadataReaderContext) -> Double {
         
         // TODO: Here is where we may need to build a packet table !!! (if isRawFile, ...)
-        return map.context.format.duration
+        let fileCtx = context.fileCtx
+        guard let audioStream = fileCtx.audioStream else {return 0}
+
+        let isRawAudioFile = AppConstants.SupportedTypes.rawAudioFileExtensions.contains(context.fileType)
+        
+        if isRawAudioFile {
+            
+            // TODO: Store the packet table somewhere for later use !!!
+            return FFmpegPacketTable(forFile: fileCtx.file)?.duration ?? 0
+            
+        } else {
+            
+            let avContext = fileCtx.avContext
+            return audioStream.duration ?? (avContext.duration > 0 ? (Double(avContext.duration) / Double(AV_TIME_BASE)) : 0)
+        }
     }
     
-    static func getSecondaryMetadata(from map: FFmpegMetadataMap) -> SecondaryMetadata {
+    static func getSecondaryMetadata(from context: FFmpegMetadataReaderContext) -> SecondaryMetadata {
         
-        var discNumberAndTotal = getDiscNumber(from: map)
-        if let discNum = discNumberAndTotal?.number, discNumberAndTotal?.total == nil, let totalDiscs = getTotalDiscs(from: map) {
+        var discNumberAndTotal = getDiscNumber(from: context)
+        if let discNum = discNumberAndTotal?.number, discNumberAndTotal?.total == nil, let totalDiscs = getTotalDiscs(from: context) {
             discNumberAndTotal = (discNum, totalDiscs)
         }
         
-        var trackNumberAndTotal = getTrackNumber(from: map)
-        if let trackNum = trackNumberAndTotal?.number, trackNumberAndTotal?.total == nil, let totalTracks = getTotalTracks(from: map) {
+        var trackNumberAndTotal = getTrackNumber(from: context)
+        if let trackNum = trackNumberAndTotal?.number, trackNumberAndTotal?.total == nil, let totalTracks = getTotalTracks(from: context) {
             trackNumberAndTotal = (trackNum, totalTracks)
         }
         
-        let lyrics = getLyrics(from: map)
+        let lyrics = getLyrics(from: context)
         
         return SecondaryMetadata(discNumber: discNumberAndTotal?.number, totalDiscs: discNumberAndTotal?.total, trackNumber: trackNumberAndTotal?.number, totalTracks: trackNumberAndTotal?.total, lyrics: lyrics)
     }
     
-    static func getChapters(from map: FFmpegMetadataMap) -> [Chapter] {
+    static func getChapters(from context: FFmpegMetadataReaderContext) -> [Chapter] {
         //        return track.ffmpegMetadata?.chapters.map {Chapter($0.title, $0.startTime, $0.endTime)} ?? []
         return []
     }
     
-    private static func getDiscNumber(from map: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
+    private static func getDiscNumber(from context: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let discNum = parser.getDiscNumber(map) {
+            if let discNum = parser.getDiscNumber(context) {
                 return discNum
             }
         }
@@ -162,11 +166,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getTotalDiscs(from map: FFmpegMetadataMap) -> Int? {
+    private static func getTotalDiscs(from context: FFmpegMetadataReaderContext) -> Int? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let totalDiscs = parser.getTotalDiscs(map) {
+            if let totalDiscs = parser.getTotalDiscs(context) {
                 return totalDiscs
             }
         }
@@ -174,11 +178,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getTrackNumber(from map: FFmpegMetadataMap) -> (number: Int?, total: Int?)? {
+    private static func getTrackNumber(from context: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let trackNum = parser.getTrackNumber(map) {
+            if let trackNum = parser.getTrackNumber(context) {
                 return trackNum
             }
         }
@@ -186,11 +190,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getTotalTracks(from map: FFmpegMetadataMap) -> Int? {
+    private static func getTotalTracks(from context: FFmpegMetadataReaderContext) -> Int? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let totalTracks = parser.getTotalTracks(map) {
+            if let totalTracks = parser.getTotalTracks(context) {
                 return totalTracks
             }
         }
@@ -198,11 +202,11 @@ class FFMpegReader {
         return nil
     }
     
-    private static func getLyrics(from map: FFmpegMetadataMap) -> String? {
+    private static func getLyrics(from context: FFmpegMetadataReaderContext) -> String? {
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            if let lyrics = parser.getLyrics(map) {
+            if let lyrics = parser.getLyrics(context) {
                 return lyrics
             }
         }
@@ -210,9 +214,9 @@ class FFMpegReader {
         return nil
     }
     
-    static func getArt(from map: FFmpegMetadataMap) -> CoverArt? {
+    static func getArt(from context: FFmpegMetadataReaderContext) -> CoverArt? {
         
-        guard let imageStream = map.context.imageStream else {return nil}
+        guard let imageStream = context.fileCtx.imageStream else {return nil}
         
         // Check if the attached pic in the image stream
         // has any data.
@@ -231,13 +235,13 @@ class FFMpegReader {
         return nil
     }
     
-    static func getAllMetadata(from map: FFmpegMetadataMap) -> [String: MetadataEntry] {
+    static func getAllMetadata(from context: FFmpegMetadataReaderContext) -> [String: MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         
-        for parser in parsersForTrack(map.fileType) {
+        for parser in parsersForTrack(context.fileType) {
             
-            let parserMetadata = parser.getGenericMetadata(map)
+            let parserMetadata = parser.getGenericMetadata(context)
             parserMetadata.forEach({(k,v) in metadata[k] = v})
         }
         

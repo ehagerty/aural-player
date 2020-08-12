@@ -14,7 +14,7 @@ extension FFmpegScheduler {
         
         print("\nPlaying loop with startTime = \(loop.startTime), endTime = \(loopEndTime)")
         
-        decoder.initialize(with: thePlaybackCtx.fileContext)
+//        decoder.initialize(with: thePlaybackCtx.fileContext)
         
         initiateLoopDecodingAndScheduling(for: session, with: loop)
         

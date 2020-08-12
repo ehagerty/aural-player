@@ -287,7 +287,7 @@ class FFmpegFormatContext {
         // Before attempting the seek, it is necessary to ask the codec
         // to flush its internal buffers. Otherwise, stale frames may
         // be produced when decoding.
-        stream.codec.flushBuffers()
+//        stream.codec.flushBuffers()
         
         // Represents the target seek position that the format context understands.
         var timestamp: Int64 = 0

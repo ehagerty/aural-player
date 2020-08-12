@@ -65,10 +65,10 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         self.playbackCtx = thePlaybackCtx
         
         // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
-        thePlaybackCtx.fileContext.audioStream.printInfo()
-        thePlaybackCtx.fileContext.audioCodec.printInfo()
+//        thePlaybackCtx.fileContext.audioStream.printInfo()
+//        thePlaybackCtx.fileContext.audioCodec.printInfo()
         
-        decoder.initialize(with: thePlaybackCtx.fileContext)
+//        decoder.initialize(with: thePlaybackCtx.fileContext)
         
         initiateDecodingAndScheduling(for: session, from: startPosition == 0 ? nil : startPosition)
         
@@ -113,13 +113,10 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
                     trackCompleted(session)
                     return
                 }
-            } else {
-                
-                // TODO: decoder.seekToStart()
             }
             
             // Schedule one buffer for immediate playback
-            decodeAndScheduleOneBuffer(for: session, from: seekPosition, maxSampleCount: playbackCtx.sampleCountForImmediatePlayback)
+            decodeAndScheduleOneBuffer(for: session, from: seekPosition ?? 0, immediatePlayback: true, maxSampleCount: playbackCtx.sampleCountForImmediatePlayback)
             
             // Schedule a second buffer asynchronously, for later, to avoid a gap in playback.
             // If this is not done, when the first buffer finishes playing, there will be
@@ -154,7 +151,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         if eof {return}
         
         self.schedulingOpQueue.addOperation {
-            self.decodeAndScheduleOneBuffer(for: session, maxSampleCount: maxSampleCount)
+            self.decodeAndScheduleOneBuffer(for: session, immediatePlayback: false, maxSampleCount: maxSampleCount)
         }
     }
 
@@ -179,7 +176,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     /// number of samples may be slightly larger than the maximum, because upon reaching EOF, the decoder will drain the codec's
     /// internal buffers which may result in a few additional samples that will be allowed as this is the terminal buffer.
     ///
-    private func decodeAndScheduleOneBuffer(for session: PlaybackSession, from seekPosition: Double? = nil, maxSampleCount: Int32) {
+    private func decodeAndScheduleOneBuffer(for session: PlaybackSession, from seekPosition: Double? = nil, immediatePlayback: Bool, maxSampleCount: Int32) {
         
         if eof {return}
         
@@ -200,7 +197,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             //      has not really completed playback but has been removed from the playback queue.
             
             // TODO: Fix the last 2 parameters ... seek posn not showing correctly.
-            playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, seekPosition != nil)
+            playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, immediatePlayback)
             
             // Upon scheduling the buffer, increment the counter.
             scheduledBufferCount.increment()

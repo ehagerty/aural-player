@@ -29,11 +29,6 @@ class FFmpegImageStream: FFmpegStreamProtocol {
     let index: Int32
     
     ///
-    /// The codec associated with this stream.
-    ///
-    let codec: ImageCodec
-    
-    ///
     /// The packet (optionally) containing an attached picture.
     /// This can be used to read cover art.
     ///
@@ -59,7 +54,6 @@ class FFmpegImageStream: FFmpegStreamProtocol {
         
         self.pointer = pointer
         self.index = pointer.pointee.index
-        self.codec = try ImageCodec(fromParameters: pointer.pointee.codecpar)
     }
     
     ///

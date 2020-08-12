@@ -43,3 +43,10 @@ func measureExecutionTime(_ task: () -> Void) -> Double {
     task()
     return CFAbsoluteTimeGetCurrent() - startTime
 }
+
+func measureTimeTry(_ task: () throws -> Void) throws -> Double {
+    
+    let startTime = CFAbsoluteTimeGetCurrent()
+    try task()
+    return CFAbsoluteTimeGetCurrent() - startTime
+}

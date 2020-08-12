@@ -53,13 +53,12 @@ class FFmpegTrackInfo {
     }
 }
 
-class FFmpegMetadataMap {
+class FFmpegMetadataReaderContext {
     
-    var context: FFmpegFileContext
+    let fileCtx: FFmpegFileContext
+    let fileType: String
     
-    var fileType: String {context.file.pathExtension.lowercased()}
-    
-    var map: [String: String]
+    var map: [String: String] = [:]
     
     var commonMetadata: FFmpegParserMetadataMap?
     var id3Metadata: FFmpegParserMetadataMap?
@@ -68,10 +67,18 @@ class FFmpegMetadataMap {
     var apeMetadata: FFmpegParserMetadataMap?
     var otherMetadata: FFmpegParserMetadataMap?
     
-    init(_ context: FFmpegFileContext, _ map: [String: String]) {
+    init(for fileCtx: FFmpegFileContext) {
         
-        self.context = context
-        self.map = map
+        self.fileCtx = fileCtx
+        self.fileType = fileCtx.file.pathExtension.lowercased()
+
+        for (key, value) in fileCtx.metadata {
+            map[key] = value
+        }
+        
+        for (key, value) in fileCtx.audioStream?.metadata ?? [:] {
+            map[key] = value
+        }
     }
 }
 

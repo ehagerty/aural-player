@@ -19,7 +19,7 @@ class FFmpegDecoder {
     ///
     /// The context used to read packets and perform seeking within the audio stream.
     ///
-    private var format: FFmpegFormatContext! {file.format}
+    private var format: FFmpegFormatContext!
     
     ///
     /// The audio stream that is to be decoded.
@@ -29,7 +29,7 @@ class FFmpegDecoder {
     ///
     /// The codec that will actually do the decoding.
     ///
-    private var codec: FFmpegAudioCodec! {file.audioCodec}
+    private var codec: FFmpegAudioCodec!
     
     ///
     /// A flag indicating whether or not the codec has reached the end of the currently playing file's audio stream, i.e. EOF..
@@ -86,6 +86,8 @@ class FFmpegDecoder {
         
         // Create a frame buffer with the specified maximum sample count and the codec's sample format for this file.
         let buffer: FFmpegFrameBuffer = FFmpegFrameBuffer(sampleFormat: codec.sampleFormat, maxSampleCount: maxSampleCount)
+        
+        print("\nDecoder: \(maxSampleCount), queueSize: \(frameQueue.size)")
         
         // Keep decoding as long as EOF is not reached.
         while !eof {

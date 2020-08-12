@@ -3,8 +3,6 @@ import Foundation
 class FFmpegTrackContext: TrackContextProtocol {
     
     private let track: Track
-    
-    private let fileContext: FFmpegFileContext
     private let metadataContext: FFmpegMetadataContext
     
     private var thePlaybackContext: FFmpegPlaybackContext!
@@ -13,8 +11,7 @@ class FFmpegTrackContext: TrackContextProtocol {
     required init(for track: Track) throws {
         
         self.track = track
-        self.fileContext = try FFmpegFileContext(forFile: track.file)
-        self.metadataContext = FFmpegMetadataContext(for: track, fileContext: fileContext)
+        self.metadataContext = try FFmpegMetadataContext(for: track)
     }
     
     func loadPrimaryMetadata() {
@@ -32,7 +29,7 @@ class FFmpegTrackContext: TrackContextProtocol {
     func prepareForPlayback() throws {
         
         if thePlaybackContext == nil {
-            thePlaybackContext = FFmpegPlaybackContext(for: fileContext)
+            thePlaybackContext = FFmpegPlaybackContext(for: track.file)
         }
         
         try thePlaybackContext.prepareForPlayback()

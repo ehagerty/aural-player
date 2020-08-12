@@ -37,25 +37,25 @@ protocol AVAssetParser {
 
 protocol FFMpegMetadataParser {
     
-    func mapTrack(_ mapForTrack: FFmpegMetadataMap)
+    func mapTrack(_ mapForTrack: FFmpegMetadataReaderContext)
     
-    func getTitle(_ mapForTrack: FFmpegMetadataMap) -> String?
+    func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String?
     
-    func getArtist(_ mapForTrack: FFmpegMetadataMap) -> String?
+    func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String?
     
-    func getAlbum(_ mapForTrack: FFmpegMetadataMap) -> String?
+    func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String?
     
-    func getGenre(_ mapForTrack: FFmpegMetadataMap) -> String?
+    func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String?
     
-    func getLyrics(_ mapForTrack: FFmpegMetadataMap) -> String?
+    func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String?
     
-    func getDiscNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)?
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)?
     
-    func getTotalDiscs(_ mapForTrack: FFmpegMetadataMap) -> Int?
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataReaderContext) -> Int?
     
-    func getTrackNumber(_ mapForTrack: FFmpegMetadataMap) -> (number: Int?, total: Int?)?
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)?
     
-    func getTotalTracks(_ mapForTrack: FFmpegMetadataMap) -> Int?
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int?
     
-    func getGenericMetadata(_ mapForTrack: FFmpegMetadataMap) -> [String: MetadataEntry]
+    func getGenericMetadata(_ mapForTrack: FFmpegMetadataReaderContext) -> [String: MetadataEntry]
 }

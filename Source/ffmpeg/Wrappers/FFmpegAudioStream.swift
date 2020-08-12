@@ -29,11 +29,6 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     let index: Int32
     
     ///
-    /// The codec associated with this stream.
-    ///
-    let codec: FFmpegAudioCodec
-    
-    ///
     /// The duration of this stream, in seconds, if available. Nil if not available.
     ///
     /// # Notes #
@@ -75,8 +70,6 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
         self.pointer = pointer
         self.index = pointer.pointee.index
         self.duration = pointer.pointee.duration > 0 ? Double(pointer.pointee.duration) * pointer.pointee.time_base.ratio : nil
-        
-        self.codec = try FFmpegAudioCodec(fromParameters: pointer.pointee.codecpar)
     }
     
     ///
