@@ -18,6 +18,8 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     ///
     var avStream: AVStream {pointer.pointee}
     
+    var codecParams: AVCodecParameters {avStream.codecpar.pointee}
+    
     ///
     /// The media type of data contained within this stream (e.g. audio, video, etc)
     ///
@@ -53,6 +55,12 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     ///
     var timeBaseDuration: Int64 {avStream.duration}
     
+    var sampleRate: Int32 {codecParams.sample_rate}
+    
+    var channelCount: Int32 {codecParams.channels}
+    
+    var channelLayout: UInt64 {codecParams.channel_layout}
+    
     ///
     /// All metadata key / value pairs available for this stream.
     ///
@@ -65,7 +73,7 @@ class FFmpegAudioStream: FFmpegStreamProtocol {
     ///
     /// - Parameter mediaType: The media type of this stream (e.g. audio / video, etc)
     ///
-    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) throws {
+    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) {
         
         self.pointer = pointer
         self.index = pointer.pointee.index

@@ -50,7 +50,7 @@ class FFmpegImageStream: FFmpegStreamProtocol {
     ///
     /// - Parameter mediaType: The media type of this stream (e.g. audio / video, etc)
     ///
-    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) throws {
+    init(encapsulating pointer: UnsafeMutablePointer<AVStream>) {
         
         self.pointer = pointer
         self.index = pointer.pointee.index

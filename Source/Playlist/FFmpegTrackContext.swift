@@ -29,7 +29,7 @@ class FFmpegTrackContext: TrackContextProtocol {
     func prepareForPlayback() throws {
         
         if thePlaybackContext == nil {
-            thePlaybackContext = FFmpegPlaybackContext(for: track.file)
+//            thePlaybackContext = FFmpegPlaybackContext(for: track.file)
         }
         
         try thePlaybackContext.prepareForPlayback()

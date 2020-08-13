@@ -225,15 +225,15 @@ class FFmpegFormatContext {
         
             let avStreamPointers: [UnsafeMutablePointer<AVStream>] = (0..<pointer.pointee.nb_streams).compactMap {avStreams.advanced(by: Int($0)).pointee}
             
-            streams = try avStreamPointers.compactMap {streamPointer in
+            streams = avStreamPointers.compactMap {streamPointer in
                 
                 switch streamPointer.pointee.codecpar.pointee.codec_type {
                     
                 // For audio / video streams, wrap the AVStream in a AudioStream / ImageStream.
                     
-                case AVMEDIA_TYPE_AUDIO:    return try FFmpegAudioStream(encapsulating: streamPointer)
+                case AVMEDIA_TYPE_AUDIO:    return FFmpegAudioStream(encapsulating: streamPointer)
                     
-                case AVMEDIA_TYPE_VIDEO:    return try FFmpegImageStream(encapsulating: streamPointer)
+                case AVMEDIA_TYPE_VIDEO:    return FFmpegImageStream(encapsulating: streamPointer)
                     
                 default:                    return nil
                     

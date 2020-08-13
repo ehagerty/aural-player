@@ -30,10 +30,14 @@ class FFmpegFileContext {
     ///
     var pointer: UnsafeMutablePointer<AVFormatContext>!
     
+    let avStreamPointers: [UnsafeMutablePointer<AVStream>]
+    
+    var streamCount: Int {Int(avContext.nb_streams)}
+    
     ///
     /// The first / best audio stream in this file, if one is present. May be nil.
     ///
-    let audioStream: FFmpegAudioStream?
+    lazy var bestAudioStream: FFmpegAudioStream? = findBestStream(ofType: AVMEDIA_TYPE_AUDIO) as? FFmpegAudioStream
     
     ///
     /// The first / best video stream in this file, if one is present. May be nil.
@@ -44,7 +48,7 @@ class FFmpegFileContext {
     /// for our purposes, a video stream is treated as an "image" (i.e still image) stream
     /// with only one packet - containing our cover art.
     ///
-    let imageStream: FFmpegImageStream?
+    lazy var bestImageStream: FFmpegImageStream? = findBestStream(ofType: AVMEDIA_TYPE_VIDEO) as? FFmpegImageStream
     
     lazy var metadata: [String: String] = FFmpegMetadataDictionary(readingFrom: avContext.metadata).dictionary
     
@@ -59,12 +63,14 @@ class FFmpegFileContext {
         guard numChapters > 0, let avChapters = avContext.chapters else {return []}
         
         // Sort the chapters by start time in ascending order.
-        let theChapters: [AVChapter] = (0..<numChapters).compactMap {avChapters.advanced(by: $0).pointee?.pointee}
+        let theChapters: [AVChapter] = (0..<numChapters).compactMap {avChapters[$0]?.pointee}
             .sorted(by: {c1, c2 in c1.start < c2.start})
         
         // Wrap the AVChapter objects in Chapter objects.
         return theChapters.enumerated().map {FFmpegChapter(encapsulating: $0.element, atIndex: $0.offset)}
     }()
+    
+    var duration: Double = 0
     
     ///
     /// Attempts to construct a FormatContext instance for the given file.
@@ -108,13 +114,47 @@ class FFmpegFileContext {
             throw FormatContextInitializationError(description: "Unable to find stream info for file '\(file.path)'. Error: \(resultCode.errorDescription)")
         }
         
-        let avStreamPointers: [UnsafeMutablePointer<AVStream>] = (0..<pointer.pointee.nb_streams).compactMap {avStreamsArrayPointer.advanced(by: Int($0)).pointee}
+        self.avStreamPointers = (0..<pointer.pointee.nb_streams).compactMap {avStreamsArrayPointer.advanced(by: Int($0)).pointee}
+    }
+    
+    func findBestStream(ofType mediaType: AVMediaType) -> FFmpegStreamProtocol? {
         
-        let audioStreamIndex = av_find_best_stream(pointer, AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0)
-        self.audioStream = audioStreamIndex.isNonNegative ? try FFmpegAudioStream(encapsulating: avStreamPointers[Int(audioStreamIndex)]) : nil
+        let streamIndex = av_find_best_stream(pointer, mediaType, -1, -1, nil, 0)
+        guard streamIndex.isNonNegative, streamIndex < streamCount else {return nil}
         
-        let imageStreamIndex = av_find_best_stream(pointer, AVMEDIA_TYPE_VIDEO, -1, -1, nil, 0)
-        self.imageStream = imageStreamIndex.isNonNegative ? try FFmpegImageStream(encapsulating: avStreamPointers[Int(imageStreamIndex)]) : nil
+        switch mediaType {
+        
+        case AVMEDIA_TYPE_AUDIO: return FFmpegAudioStream(encapsulating: avStreamPointers[Int(streamIndex)])
+        
+        case AVMEDIA_TYPE_VIDEO: return FFmpegImageStream(encapsulating: avStreamPointers[Int(streamIndex)])
+        
+        default: return nil
+            
+        }
+    }
+    
+    func findStream(at index: Int, ofType mediaType: AVMediaType) -> FFmpegStreamProtocol? {
+        
+        if index < streamCount {
+            
+            let avStream = avStreamPointers[index].pointee
+            let streamMediaType = avStream.codecpar.pointee.codec_type
+            
+            if streamMediaType == mediaType {
+                
+                switch mediaType {
+                
+                case AVMEDIA_TYPE_AUDIO: return FFmpegAudioStream(encapsulating: avStreamPointers[index])
+                
+                case AVMEDIA_TYPE_VIDEO: return FFmpegImageStream(encapsulating: avStreamPointers[index])
+                
+                default: return nil
+                    
+                }
+            }
+        }
+        
+        return nil
     }
     
     ///
@@ -130,6 +170,42 @@ class FFmpegFileContext {
         
         let packet = try FFmpegPacket(readingFromFormat: pointer)
         return packet.streamIndex == stream.index ? packet : nil
+    }
+    
+    ///
+    /// Seek to a given position within a given stream.
+    ///
+    /// - Parameter stream:     The stream within which we want to perform the seek.
+    /// - Parameter time:       The target seek position within the stream, specified in seconds.
+    ///
+    /// - throws: **PacketReadError**, if an error occurred while attempting to read a packet.
+    ///
+    func seekByFrame(within stream: FFmpegAudioStream, to time: Double) throws {
+            
+        // Validate the duration of the file (which is needed to compute the target frame).
+        if duration <= 0 {throw SeekError(-1)}
+        
+        // We need to determine a target frame, given the seek position in seconds,
+        // duration, and frame count.
+        let timestamp = Int64(time * Double(stream.timeBaseDuration) / duration)
+        
+        // Validate the target frame (cannot exceed the total frame count)
+        if timestamp >= stream.timeBaseDuration {throw SeekError(ERROR_EOF)}
+        
+        // NOTE - AVSEEK_FLAG_BACKWARD "indicates that you want to find the closest keyframe
+        // having a smaller timestamp than the one you are seeking."
+        //
+        // Source - https://stackoverflow.com/questions/20734814/ffmpeg-av-seek-frame-with-avseek-flag-any-causes-grey-screen
+        
+        // Attempt the seek and capture the result code.
+        let seekResult: ResultCode = av_seek_frame(pointer, stream.index, timestamp, AVSEEK_FLAG_BACKWARD)
+        
+        // If the seek failed, log a message and throw an error.
+        guard seekResult.isNonNegative else {
+            
+            print("\nFormatContext.seek(): Unable to seek within stream \(stream.index). Error: \(seekResult) (\(seekResult.errorDescription)))")
+            throw SeekError(seekResult)
+        }
     }
     
     /// Indicates whether or not this object has already been destroyed.

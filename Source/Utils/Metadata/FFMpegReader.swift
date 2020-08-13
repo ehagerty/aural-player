@@ -113,7 +113,7 @@ class FFMpegReader {
     static func getDuration(from context: FFmpegMetadataReaderContext) -> Double {
         
         let fileCtx = context.fileCtx
-        guard let audioStream = fileCtx.audioStream else {return 0}
+        guard let audioStream = context.audioStream else {return 0}
 
         let isRawAudioFile = AppConstants.SupportedTypes.rawAudioFileExtensions.contains(context.fileType)
         
@@ -213,7 +213,7 @@ class FFMpegReader {
     
     static func getArt(from context: FFmpegMetadataReaderContext) -> CoverArt? {
         
-        guard let imageStream = context.fileCtx.imageStream else {return nil}
+        guard let imageStream = context.imageStream else {return nil}
         
         // Check if the attached pic in the image stream
         // has any data.

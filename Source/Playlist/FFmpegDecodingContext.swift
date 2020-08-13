@@ -1,10 +1,14 @@
 import Foundation
 
 ///
-/// Assists in reading and decoding audio data from a codec.
-/// Handles errors and signals special conditions such as end of file (EOF).
+/// Encapsulates an ffmpeg AVFormatContext struct that represents an audio file's container format,
+/// and provides convenient Swift-style access to its functions and member variables.
 ///
-class FFmpegDecoder {
+/// - Demultiplexing: Reads all streams within the audio file.
+/// - Reads and provides audio stream data as encoded / compressed packets (which can be passed to the appropriate codec).
+/// - Performs seeking to arbitrary positions within the audio stream.
+///
+class FFmpegDecodingContext {
     
     ///
     /// The maximum difference between a desired seek position and an actual seek
@@ -12,24 +16,20 @@ class FFmpegDecoder {
     /// i.e. will not require a correction.
     ///
     private static let seekPositionTolerance: Double = 0.01
-    
-    /// A context associated with the currently playing file.
-    private var file: FFmpegFileContext!
-    
+
     ///
-    /// The context used to read packets and perform seeking within the audio stream.
+    /// The encapsulated AVFormatContext object.
     ///
-    private var format: FFmpegFormatContext!
+    var fileCtx: FFmpegFileContext
     
     ///
-    /// The audio stream that is to be decoded.
+    /// The first / best audio stream in this file, if one is present. May be nil.
     ///
-    private var stream: FFmpegAudioStream! {file.audioStream}
+    let stream: FFmpegAudioStream
     
-    ///
-    /// The codec that will actually do the decoding.
-    ///
-    private var codec: FFmpegAudioCodec!
+    let codec: FFmpegAudioCodec
+    
+    let duration: Double
     
     ///
     /// A flag indicating whether or not the codec has reached the end of the currently playing file's audio stream, i.e. EOF..
@@ -49,26 +49,27 @@ class FFmpegDecoder {
     private var frameQueue: Queue<FFmpegFrame> = Queue<FFmpegFrame>()
     
     ///
-    /// Prepares the codec to decode a given audio file.
+    /// Attempts to construct a FormatContext instance for the given file.
     ///
-    /// ```
-    /// This function will be called exactly once when a file is chosen for immediate playback.
-    /// ```
+    /// - Parameter file: The audio file to be read / decoded by this context.
     ///
-    /// - Parameter file: A context through which decoding of the audio file can be performed.
+    /// Fails (returns nil) if:
     ///
-    /// - throws: A **DecoderInitializationError** if the underlying codec cannot be opened.
+    /// - An error occurs while opening the file or reading (demuxing) its streams.
+    /// - No audio stream is found in the file.
     ///
-    func initialize(with file: FFmpegFileContext) {
+    init(for fileContext: FFmpegFileContext) throws {
         
-        self.file = file
+        self.fileCtx = try FFmpegFileContext(for: fileContext.file)
+        self.fileCtx.duration = fileContext.duration
+        self.duration = fileContext.duration
         
-        // Clear any residual (previously queued) frames from the queue.
-        self.frameQueue.clear()
+        guard let theAudioStream = fileContext.bestAudioStream else {
+            throw FormatContextInitializationError(description: "\nUnable to find audio stream in file: '\(fileContext.file.path)'")
+        }
         
-        // Reset the EOF flag.
-        self.eof = false
-        self.endOfLoop = false
+        self.stream = theAudioStream
+        self.codec = try FFmpegAudioCodec(fromParameters: stream.avStream.codecpar)
     }
     
     ///
@@ -171,7 +172,12 @@ class FFmpegDecoder {
         
         do {
             
-            try format.seek(within: stream, to: time)
+            // Before attempting the seek, it is necessary to ask the codec
+            // to flush its internal buffers. Otherwise, stale frames may
+            // be produced when decoding.
+            codec.flushBuffers()
+            
+            try fileCtx.seekByFrame(within: stream, to: time)
 
             // Because ffmpeg's seeking is not always accurate, we need to check where the seek took us to, within the stream, and
             // we may need to skip some packets / samples.
@@ -186,7 +192,7 @@ class FFmpegDecoder {
                 // Keep reading packets till the packet timestamp crosses our target seek time.
                 while lastReadPacketTimestamp < time {
                     
-                    if let packet = try format.readPacket(from: stream) {
+                    if let packet = try fileCtx.readPacket(from: stream) {
                         
                         lastReadPacketTimestamp = Double(packet.pts) * stream.timeBase.ratio
                         packetsRead.append((packet, lastReadPacketTimestamp))
@@ -267,7 +273,7 @@ class FFmpegDecoder {
         
         while frameQueue.isEmpty {
         
-            if let packet = try format.readPacket(from: stream) {
+            if let packet = try fileCtx.readPacket(from: stream) {
                 
                 for frame in try codec.decode(packet: packet).frames {
                     frameQueue.enqueue(frame)
@@ -283,13 +289,6 @@ class FFmpegDecoder {
     ///
     func stop() {
         frameQueue.clear()
-    }
-    
-    ///
-    /// Responds to completion of playback for a file, by performing any necessary cleanup.
-    ///
-    func playbackCompleted() {
-        self.file = nil
     }
     
     func decodeLoop(maxSampleCount: Int32, loopEndTime: Double) -> FFmpegFrameBuffer {
@@ -378,5 +377,30 @@ class FFmpegDecoder {
         }
         
         return buffer
+    }
+
+    /// Indicates whether or not this object has already been destroyed.
+    private var destroyed: Bool = false
+    
+    ///
+    /// Performs cleanup (deallocation of allocated memory space) when
+    /// this object is about to be deinitialized or is no longer needed.
+    ///
+    func destroy() {
+
+        // This check ensures that the deallocation happens
+        // only once. Otherwise, a fatal error will be
+        // thrown.
+        if destroyed {return}
+
+        codec.destroy()
+        fileCtx.destroy()
+        
+        destroyed = true
+    }
+
+    /// When this object is deinitialized, make sure that its allocated memory space is deallocated.
+    deinit {
+        destroy()
     }
 }
