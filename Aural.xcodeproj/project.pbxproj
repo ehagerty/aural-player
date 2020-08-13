@@ -615,7 +615,6 @@
 		3E9A90EC24DDA7B50027D414 /* FFmpegFileContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90DD24DDA7B50027D414 /* FFmpegFileContext.swift */; };
 		3E9A90ED24DDA7B50027D414 /* FFmpegPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90DE24DDA7B50027D414 /* FFmpegPacket.swift */; };
 		3E9A90EE24DDA7B50027D414 /* FFmpegResamplingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90DF24DDA7B50027D414 /* FFmpegResamplingContext.swift */; };
-		3E9A90EF24DDA7B50027D414 /* FFmpegFormatContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90E024DDA7B50027D414 /* FFmpegFormatContext.swift */; };
 		3E9A90F124DDA7B50027D414 /* FFmpegMetadataDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90E224DDA7B50027D414 /* FFmpegMetadataDictionary.swift */; };
 		3E9A90F224DDA7B50027D414 /* FFmpegFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90E324DDA7B50027D414 /* FFmpegFrame.swift */; };
 		3E9A90F324DDA7B50027D414 /* FFmpegSampleFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90E424DDA7B50027D414 /* FFmpegSampleFormat.swift */; };
@@ -1319,7 +1318,6 @@
 		3E9A90DD24DDA7B50027D414 /* FFmpegFileContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegFileContext.swift; sourceTree = "<group>"; };
 		3E9A90DE24DDA7B50027D414 /* FFmpegPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegPacket.swift; sourceTree = "<group>"; };
 		3E9A90DF24DDA7B50027D414 /* FFmpegResamplingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegResamplingContext.swift; sourceTree = "<group>"; };
-		3E9A90E024DDA7B50027D414 /* FFmpegFormatContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegFormatContext.swift; sourceTree = "<group>"; };
 		3E9A90E224DDA7B50027D414 /* FFmpegMetadataDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegMetadataDictionary.swift; sourceTree = "<group>"; };
 		3E9A90E324DDA7B50027D414 /* FFmpegFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegFrame.swift; sourceTree = "<group>"; };
 		3E9A90E424DDA7B50027D414 /* FFmpegSampleFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegSampleFormat.swift; sourceTree = "<group>"; };
@@ -3044,7 +3042,6 @@
 			isa = PBXGroup;
 			children = (
 				3E9A90DD24DDA7B50027D414 /* FFmpegFileContext.swift */,
-				3E9A90E024DDA7B50027D414 /* FFmpegFormatContext.swift */,
 				3E9A90D824DDA7B40027D414 /* FFmpegStreamProtocol.swift */,
 				3E9A90DB24DDA7B50027D414 /* FFmpegAudioStream.swift */,
 				3E9A90D924DDA7B40027D414 /* FFmpegImageStream.swift */,
@@ -3890,7 +3887,6 @@
 				3E5A0480245EBEAA0088438E /* ColorClipboard.swift in Sources */,
 				3E0839A021944E15008D84BA /* FXUnitViewController.swift in Sources */,
 				3E1D93521F626BF9008AC59E /* Playlist.swift in Sources */,
-				3E9A90EF24DDA7B50027D414 /* FFmpegFormatContext.swift in Sources */,
 				3EB7B51B24DDA5E0004A1D9A /* ffmpeg.c in Sources */,
 				3EC7E8AF217B300E00F21695 /* EffectsUnitSliderCellProtocol.swift in Sources */,
 				3E00122A1F26A5100059B2D0 /* SearchQuery.swift in Sources */,

@@ -111,22 +111,7 @@ class FFMpegReader {
     }
     
     static func getDuration(from context: FFmpegMetadataReaderContext) -> Double {
-        
-        let fileCtx = context.fileCtx
-        guard let audioStream = context.audioStream else {return 0}
-
-        let isRawAudioFile = AppConstants.SupportedTypes.rawAudioFileExtensions.contains(context.fileType)
-        
-        if isRawAudioFile {
-            
-            // TODO: Store the packet table somewhere for later use !!!
-            return FFmpegPacketTable(forFile: fileCtx.file)?.duration ?? 0
-            
-        } else {
-            
-            let avContext = fileCtx.avContext
-            return audioStream.duration ?? (avContext.duration > 0 ? (Double(avContext.duration) / Double(AV_TIME_BASE)) : 0)
-        }
+        return context.fileCtx.duration
     }
     
     static func getSecondaryMetadata(from context: FFmpegMetadataReaderContext) -> SecondaryMetadata {

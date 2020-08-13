@@ -33,44 +33,10 @@ class FFmpegPacketTable {
     ///
     /// Will be nil if an error occurs while opening the file and/or reading its packets.
     ///
-    init?(forFile file: URL) {
+    init?(for fileContext: FFmpegFileContext) {
         
-        // Allocate memory for a format context, and ensure that it produced a non-nil pointer.
-        var pointer: UnsafeMutablePointer<AVFormatContext>? = avformat_alloc_context()
-        guard pointer != nil else {return nil}
-        
-        // Try to open the input file.
-        var resultCode: ResultCode = avformat_open_input(&pointer, file.path, nil, nil)
-        guard resultCode.isNonNegative, pointer?.pointee != nil else {return nil}
-        
-        // Try to read information about the streams contained in this file.
-        resultCode = avformat_find_stream_info(pointer, nil)
-        guard resultCode.isNonNegative else {return nil}
-        
-        var audioStreamIndex: Int = -1
-        var timeBase: AVRational?
-        
-        // Iterate through the streams to find the audio stream we want to read.
-        if let avStreams = pointer!.pointee.streams {
-        
-            for streamIndex in 0..<Int(pointer!.pointee.nb_streams) {
-                
-                if let avStreamPointer: UnsafeMutablePointer<AVStream> = avStreams.advanced(by: streamIndex).pointee,
-                    avStreamPointer.pointee.codecpar.pointee.codec_type == AVMEDIA_TYPE_AUDIO {
-                    
-                    // Capture the audio stream's index and time base before exiting the loop.
-                    audioStreamIndex = streamIndex
-                    timeBase = avStreamPointer.pointee.time_base
-                    
-                    break
-                }
-            }
-        }
-        
-        // Ensure that we have a valid stream index and time base.
-        guard audioStreamIndex >= 0, let theTimeBase = timeBase else {return nil}
-        
-        self.timeBase = theTimeBase
+        guard let stream = fileContext.bestAudioStream else {return nil}
+        self.timeBase = stream.timeBase
         
         var lastPacket: FFmpegPacket!
         
@@ -80,11 +46,8 @@ class FFmpegPacketTable {
             
             while true {
                 
-                let packet = try FFmpegPacket(readingFromFormat: pointer)
+                if let packet = try fileContext.readPacket(from: stream) {
             
-                // Only process packets from our audio stream.
-                if packet.streamIndex == audioStreamIndex {
-                    
                     // Store a reference to this packet as the last packet encountered so far.
                     lastPacket = packet
                     
@@ -100,7 +63,7 @@ class FFmpegPacketTable {
             
             if (error as? PacketReadError)?.isEOF ?? false, let theLastPacket = lastPacket {
                 
-                self.duration = Double(theLastPacket.pts + theLastPacket.duration) * theTimeBase.ratio
+                self.duration = Double(theLastPacket.pts + theLastPacket.duration) * timeBase.ratio
                 
             } else {
                 
@@ -108,12 +71,6 @@ class FFmpegPacketTable {
                 return nil
             }
         }
-        
-        // Now that our packet table is built, we no longer need the format context,
-        // so let's close and free its resources.
-        
-        avformat_close_input(&pointer)
-        avformat_free_context(pointer)
     }
     
     ///

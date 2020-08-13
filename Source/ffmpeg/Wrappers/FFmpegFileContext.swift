@@ -136,7 +136,7 @@ class FFmpegFileContext {
     ///
     /// This is an expensive and potentially lengthy computation.
     ///
-    private lazy var packetTable: FFmpegPacketTable? = FFmpegPacketTable(forFile: file)
+    private lazy var packetTable: FFmpegPacketTable? = FFmpegPacketTable(for: self)
     
     ///
     /// Bit rate of the audio stream, 0 if not available.

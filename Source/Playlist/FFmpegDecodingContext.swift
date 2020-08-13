@@ -179,6 +179,12 @@ class FFmpegDecoder {
             codec.flushBuffers()
             
             try fileCtx.seek(within: stream, to: time)
+            
+            if fileCtx.isRawAudioFile {
+                
+                self.eof = false
+                return
+            }
 
             // Because ffmpeg's seeking is not always accurate, we need to check where the seek took us to, within the stream, and
             // we may need to skip some packets / samples.
