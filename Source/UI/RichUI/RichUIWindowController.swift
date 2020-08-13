@@ -46,6 +46,8 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
         fileSystemBrowserView.anchorToView(fileSystemBrowserView.superview!)
         
         Messenger.subscribe(self, .browser_showTab, self.showBrowserTab(_:))
+        
+        showBrowserTab(1)
     }
     
     @IBAction func toggleSidebarAction(_ sender: AnyObject) {

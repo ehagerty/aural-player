@@ -10,7 +10,7 @@ class FFmpegPacket {
     ///
     /// The encapsulated AVPacket object.
     ///
-    var avPacket: AVPacket {pointer.pointee}
+    var avPacket: AVPacket
     
     ///
     /// A pointer to the encapsulated AVPacket object.
@@ -68,15 +68,8 @@ class FFmpegPacket {
     ///
     init(readingFromFormat formatCtx: UnsafeMutablePointer<AVFormatContext>?) throws {
         
-        // Allocate memory for the packet.
-        self.pointer = av_packet_alloc()
-        
-        // Check if memory allocation was successful. Can't proceed otherwise.
-        guard pointer != nil else {
-            
-            print("\nPacket.init(): Unable to allocate memory for packet.")
-            throw PacketReadError(-1)
-        }
+        self.avPacket = AVPacket()
+        setPointer(&avPacket)
         
         // Try to read a packet.
         let readResult: Int32 = av_read_frame(formatCtx, pointer)
@@ -93,6 +86,10 @@ class FFmpegPacket {
         }
     }
     
+    func setPointer(_ ptr: UnsafeMutablePointer<AVPacket>) {
+        self.pointer = ptr
+    }
+    
     ///
     /// Instantiates a Packet from an AVPacket that has already been read from the source stream.
     ///
@@ -101,6 +98,7 @@ class FFmpegPacket {
     init(encapsulating pointer: UnsafeMutablePointer<AVPacket>) {
         
         self.pointer = pointer
+        self.avPacket = pointer.pointee
         
         // Since this avPacket was not allocated by this object, we
         // cannot deallocate it here. It is the caller's responsibility
@@ -124,8 +122,8 @@ class FFmpegPacket {
         // thrown.
         if destroyed {return}
         
-        av_packet_unref(pointer)
-        av_freep(pointer)
+        av_packet_unref(&avPacket)
+        av_freep(&avPacket)
         
         destroyed = true
     }

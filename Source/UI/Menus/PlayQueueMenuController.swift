@@ -125,10 +125,12 @@ class PlayQueueMenuController: NSObject, NSMenuDelegate {
     
     // Removes any selected playlist items from the playlist
     @IBAction func removeSelectedItemsAction(_ sender: Any) {
+        
+        Messenger.publish(.library_removeTracks)
 
-        if !checkIfPlayQueueIsBeingModified() {
-            Messenger.publish(.playQueue_removeTracks)
-        }
+//        if !checkIfPlayQueueIsBeingModified() {
+//            
+//        }
     }
 //
 //    // Invokes the Save file dialog, to allow the user to save all playlist items to a playlist file

@@ -12,31 +12,53 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         tracks.reduce(0.0, {(totalSoFar: Double, track: Track) -> Double in totalSoFar + track.duration})
     }
     
+    let library: LibraryProtocol
+    
     // The underlying linear sequence of tracks for the current playback scope
     let sequence: PlaybackSequence
     
     // Stores the currently playing track, if there is one
     private(set) var currentTrack: Track?
     
-    init(persistentState: PlayQueueState) {
+    private var persistentStateOnStartup: PlayQueueState?
+    
+    init(library: LibraryProtocol, persistentStateOnStartup: PlayQueueState) {
         
-        // TODO: Don't load directly from file ... get tracks from library.
-        // So, library must be loaded first. then get everything from there.
+        self.library = library
+        self.persistentStateOnStartup = persistentStateOnStartup
         
-        self.tracks = persistentState.tracks.compactMap {file in
-            
-            let track = Track(file)
-            track.loadPrimaryMetadata()
-            
-            if !track.isValidTrack {
-                print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
-            }
-            
-            return track.isValidTrack ? track : nil
-        }
+        self.tracks = []
         
-        sequence = PlaybackSequence(persistentState.repeatMode, persistentState.shuffleMode)
+        sequence = PlaybackSequence(persistentStateOnStartup.repeatMode, persistentStateOnStartup.shuffleMode)
         currentTrack = nil
+        
+        Messenger.subscribe(self, .library_doneAddingTracks, {
+            
+            // This should only be done once, the very first time tracks are added to the library (i.e. on app startup).
+            if let persistentState = self.persistentStateOnStartup {
+            
+                self.tracks = persistentState.tracks.compactMap {file in
+                    
+                    if let trackInLibrary = self.library.findTrackByFile(file) {
+                        return trackInLibrary
+                    }
+                    
+                    let track = Track(file)
+                    track.loadPrimaryMetadata()
+                    
+                    if !track.isValidTrack {
+                        print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
+                    }
+                    
+                    return track.isValidTrack ? track : nil
+                }
+                
+                Messenger.publish(.playQueue_tracksAdded)
+                
+                self.persistentStateOnStartup = nil
+                Messenger.unsubscribe(self, .library_doneAddingTracks)
+            }
+        })
     }
     
     func trackAtIndex(_ index: Int) -> Track? {

@@ -46,8 +46,10 @@ class FFmpegPacketTable {
             
             while true {
                 
-                if let packet = try fileContext.readPacket(from: stream) {
-            
+                let packet = try FFmpegPacket(readingFromFormat: fileContext.pointer)
+                
+                if packet.streamIndex == stream.index {
+                    
                     // Store a reference to this packet as the last packet encountered so far.
                     lastPacket = packet
                     
