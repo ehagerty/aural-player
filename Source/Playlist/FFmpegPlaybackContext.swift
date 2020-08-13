@@ -2,9 +2,12 @@ import AVFoundation
 
 class FFmpegPlaybackContext: PlaybackContextProtocol {
     
-    var decoder: FFmpegDecodingContext!
+    let fileContext: FFmpegFileContext
     
-    let audioFormat: AVAudioFormat
+    var decoder: FFmpegDecoder!
+    
+    private var theAudioFormat: AVAudioFormat!
+    var audioFormat: AVAudioFormat {theAudioFormat}
     
     ///
     /// The maximum number of samples that will be read, decoded, and scheduled for **immediate** playback,
@@ -17,7 +20,7 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     ///
     /// 2. This value should generally be smaller than *sampleCountForDeferredPlayback*.
     ///
-    let sampleCountForImmediatePlayback: Int32
+    var sampleCountForImmediatePlayback: Int32 = 0
     
     ///
     /// The maximum number of samples that will be read, decoded, and scheduled for **deferred** playback, i.e. playback that will occur
@@ -31,76 +34,69 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     ///
     /// 2. This value should generally be larger than *sampleCountForImmediatePlayback*.
     ///
-    let sampleCountForDeferredPlayback: Int32
+    var sampleCountForDeferredPlayback: Int32 = 0
     
     init(for fileContext: FFmpegFileContext) {
-        
-        let audioStream = fileContext.bestAudioStream!
-        
-        let sampleRate: Int32 = audioStream.sampleRate
-        let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(audioStream.channelLayout))!
-        self.audioFormat = AVAudioFormat(standardFormatWithSampleRate: Double(sampleRate), channelLayout: channelLayout)
-
-        // The effective sample rate, which also takes into account the channel count, gives us a better idea
-        // of the computational cost of decoding and resampling the given file, as opposed to just the
-        // sample rate.
-        let channelCount: Int32 = audioStream.channelCount
-        let effectiveSampleRate: Int32 = sampleRate * channelCount
-
-        switch effectiveSampleRate {
-
-        case 0..<100000:
-
-            // 44.1 / 48 KHz stereo
-
-            sampleCountForImmediatePlayback = 5 * sampleRate    // 5 seconds of audio
-            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
-
-        case 100000..<500000:
-
-            // 96 / 192 KHz stereo
-
-            sampleCountForImmediatePlayback = 3 * sampleRate    // 3 seconds of audio
-            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
-
-        default:
-
-            // 96 KHz surround and higher sample rates
-
-            sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
-            sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
-        }
+        self.fileContext = fileContext
     }
     
     func prepareForPlayback() throws {
         
-        self.decoder = FFmpegDecodingContext(
+        self.decoder = try FFmpegDecoder(for: fileContext)
+        let codec = decoder.codec
         
-//        let codec: FFmpegAudioCodec = fileContext.audioCodec
-//
-//        if !codec.isOpen {
-//            try codec.open()
-//
-//        } else {
-//
-//            let time = measureExecutionTime {
-//
-////
-////                fileContext = try FFmpegFileContext(forFile: fileContext.file)
-////                try fileContext.audioCodec.open()
-////            }
-//
-//            fileContext.format.seekToStart(within: fileContext.audioStream)
-//            }
-//
-//            print("\nTook \(time * 1000) msec to seek to START for \(fileContext.file.lastPathComponent)")
-//        }
-//
+        if theAudioFormat == nil {
+            
+            let sampleRate: Int32 = codec.sampleRate
+            let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout)) ?? .stereo
+            self.theAudioFormat = AVAudioFormat(standardFormatWithSampleRate: Double(sampleRate), channelLayout: channelLayout)
+
+            // The effective sample rate, which also takes into account the channel count, gives us a better idea
+            // of the computational cost of decoding and resampling the given file, as opposed to just the
+            // sample rate.
+            let channelCount: Int32 = codec.channelCount
+            let effectiveSampleRate: Int32 = sampleRate * channelCount
+
+            switch effectiveSampleRate {
+
+            case 0..<100000:
+
+                // 44.1 / 48 KHz stereo
+
+                sampleCountForImmediatePlayback = 5 * sampleRate    // 5 seconds of audio
+                sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
+
+            case 100000..<500000:
+
+                // 96 / 192 KHz stereo
+
+                sampleCountForImmediatePlayback = 3 * sampleRate    // 3 seconds of audio
+                sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
+
+            default:
+
+                // 96 KHz surround and higher sample rates
+
+                sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
+                sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
+            }
+        }
+
         // If the PCM sample format produced by the codec for this file is not suitable for use with our audio engine,
         // all samples need to be resampled (converted) to a suitable format. So, prepare the resampler for that
         // conversion if required.
-//        if codec.sampleFormat.needsResampling {
-//            ObjectGraph.ffmpegResampler.allocateFor(channelCount: codec.channelCount, sampleCount: sampleCountForDeferredPlayback)
-//        }
+        if codec.sampleFormat.needsResampling {
+            ObjectGraph.ffmpegResampler.allocateFor(channelCount: codec.channelCount, sampleCount: sampleCountForDeferredPlayback)
+        }
     }
+    
+    func playbackCompleted() {
+        
+        // TODO: Cleanup
+    }
+}
+
+extension AVAudioChannelLayout {
+    
+    static let stereo: AVAudioChannelLayout = AVAudioChannelLayout(layoutTag: kAudioChannelLayoutTag_Stereo)!
 }

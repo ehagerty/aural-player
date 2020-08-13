@@ -8,7 +8,7 @@ import Foundation
 /// - Reads and provides audio stream data as encoded / compressed packets (which can be passed to the appropriate codec).
 /// - Performs seeking to arbitrary positions within the audio stream.
 ///
-class FFmpegDecodingContext {
+class FFmpegDecoder {
     
     ///
     /// The maximum difference between a desired seek position and an actual seek
@@ -29,7 +29,7 @@ class FFmpegDecodingContext {
     
     let codec: FFmpegAudioCodec
     
-    let duration: Double
+    var duration: Double {fileCtx.duration}
     
     ///
     /// A flag indicating whether or not the codec has reached the end of the currently playing file's audio stream, i.e. EOF..
@@ -60,9 +60,7 @@ class FFmpegDecodingContext {
     ///
     init(for fileContext: FFmpegFileContext) throws {
         
-        self.fileCtx = try FFmpegFileContext(for: fileContext.file)
-        self.fileCtx.duration = fileContext.duration
-        self.duration = fileContext.duration
+        self.fileCtx = try FFmpegFileContext(copying: fileContext)
         
         guard let theAudioStream = fileContext.bestAudioStream else {
             throw FormatContextInitializationError(description: "\nUnable to find audio stream in file: '\(fileContext.file.path)'")
@@ -70,6 +68,11 @@ class FFmpegDecodingContext {
         
         self.stream = theAudioStream
         self.codec = try FFmpegAudioCodec(fromParameters: stream.avStream.codecpar)
+        try codec.open()
+        
+        // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
+        stream.printInfo()
+        codec.printInfo()
     }
     
     ///
@@ -87,8 +90,6 @@ class FFmpegDecodingContext {
         
         // Create a frame buffer with the specified maximum sample count and the codec's sample format for this file.
         let buffer: FFmpegFrameBuffer = FFmpegFrameBuffer(sampleFormat: codec.sampleFormat, maxSampleCount: maxSampleCount)
-        
-        print("\nDecoder: \(maxSampleCount), queueSize: \(frameQueue.size)")
         
         // Keep decoding as long as EOF is not reached.
         while !eof {
@@ -174,10 +175,10 @@ class FFmpegDecodingContext {
             
             // Before attempting the seek, it is necessary to ask the codec
             // to flush its internal buffers. Otherwise, stale frames may
-            // be produced when decoding.
+            // be produced when decoding or the seek may fail.
             codec.flushBuffers()
             
-            try fileCtx.seekByFrame(within: stream, to: time)
+            try fileCtx.seek(within: stream, to: time)
 
             // Because ffmpeg's seeking is not always accurate, we need to check where the seek took us to, within the stream, and
             // we may need to skip some packets / samples.

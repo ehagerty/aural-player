@@ -5,7 +5,9 @@ class AVFTrackContext: TrackContextProtocol {
     private let track: Track
     
     private let metadataContext: AVFMetadataContext
-    var playbackContext: PlaybackContextProtocol?
+    
+    private var thePlaybackContext: AVFPlaybackContext!
+    var playbackContext: PlaybackContextProtocol? {thePlaybackContext}
     
     required init(for track: Track) throws {
         
@@ -26,6 +28,9 @@ class AVFTrackContext: TrackContextProtocol {
     }
     
     func prepareForPlayback() throws {
-        self.playbackContext = try AVFPlaybackContext(for: track.file)
+        self.thePlaybackContext = try AVFPlaybackContext(for: track.file)
+        
+        // TODO: Update track duration and send out track updated notification.
+//        track.metadata.duration = self.thePlaybackContext.computedDuration
     }
 }

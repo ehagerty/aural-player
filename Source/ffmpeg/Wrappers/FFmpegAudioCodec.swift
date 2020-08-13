@@ -140,7 +140,6 @@ class FFmpegAudioCodec: FFmpegCodec {
     ///
     func flushBuffers() {
         avcodec_flush_buffers(contextPointer)
-        print("\nFlushed buffers for codec: \(longName)")
     }
     
     ///

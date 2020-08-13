@@ -14,8 +14,6 @@ extension FFmpegScheduler {
         
         print("\nPlaying loop with startTime = \(loop.startTime), endTime = \(loopEndTime)")
         
-//        decoder.initialize(with: thePlaybackCtx.fileContext)
-        
         initiateLoopDecodingAndScheduling(for: session, with: loop)
         
         // Check that at least one audio buffer was successfully scheduled, before beginning playback.
@@ -30,7 +28,6 @@ extension FFmpegScheduler {
             
             // If a seek position was specified, ask the decoder to seek
             // within the stream.
-                
             try decoder.seek(to: loop.startTime)
             
             // Schedule one buffer for immediate playback
@@ -100,10 +97,10 @@ extension FFmpegScheduler {
         
         // Ask the decoder to decode up to the given number of samples.
         let frameBuffer: FFmpegFrameBuffer = decoder.decodeLoop(maxSampleCount: maxSampleCount, loopEndTime: session.loop!.endTime!)
-        
+
         // Transfer the decoded samples into an audio buffer that the audio engine can schedule for playback.
         if let audioBuffer: AVAudioPCMBuffer = frameBuffer.constructAudioBuffer(format: playbackCtx.audioFormat) {
-            
+
             // Pass off the audio buffer to the audio engine. The completion handler is executed when
             // the buffer has finished playing.
             //
@@ -113,9 +110,9 @@ extension FFmpegScheduler {
             // 2 - the completion handler will be invoked by a background thread.
             // 3 - the completion handler will execute even when the player is stopped, i.e. the buffer
             //      has not really completed playback but has been removed from the playback queue.
-            
+
             playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.loopBufferCompletionHandler(session), seekPosition, seekPosition != nil)
-            
+
             // Upon scheduling the buffer, increment the counter.
             scheduledBufferCount.increment()
         }

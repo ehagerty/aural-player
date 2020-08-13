@@ -70,7 +70,96 @@ class FFmpegFileContext {
         return theChapters.enumerated().map {FFmpegChapter(encapsulating: $0.element, atIndex: $0.offset)}
     }()
     
+    ///
+    /// Whether or not this file is a raw audio file. This simply means that
+    /// the file has not been muxed into a container and therefore does not
+    /// contain accurate duration information.
+    ///
+    /// e.g. dts, aac, ac3.
+    ///
+    /// ```
+    /// This is determined by simply checking the file's
+    /// extension.
+    /// ```
+    ///
+    let isRawAudioFile: Bool
+    
+    ///
+    /// Duration of the audio stream in this file, in seconds.
+    ///
+    /// ```
+    /// This is determined using various methods (strictly in the following order of precedence):
+    ///
+    /// For raw audio files,
+    ///
+    ///     A packet table is constructed, which computes the duration by brute force (reading all
+    ///     of the stream's packets and using their presentation timestamps).
+    ///
+    /// For files in containers,
+    ///
+    ///     - If the stream itself has valid duration information, that is used.
+    ///     - Otherwise, if avContext has valid duration information, it is used to estimate the duration.
+    ///     - Failing the above 2 methods, the duration is defaulted to a 0 value (indicating an unknown value)
+    /// ```
+    ///
     var duration: Double = 0
+
+    ///
+    /// A duration estimated from **avContext**, if it has valid duration information. Nil otherwise.
+    /// Specified in seconds.
+    ///
+    private lazy var estimatedDuration: Double? = avContext.duration > 0 ? (Double(avContext.duration) / Double(AV_TIME_BASE)) : nil
+    
+    ///
+    /// A duration computed with brute force, by building a packet table.
+    /// Specified in seconds.
+    ///
+    /// # Notes #
+    ///
+    /// This is an expensive and potentially lengthy computation.
+    ///
+    private lazy var bruteForceDuration: Double? = packetTable?.duration
+    
+    ///
+    /// A packet table that contains position and timestamp information
+    /// for every single packet in the audio stream.
+    ///
+    /// It provides 2 important properties:
+    ///
+    /// 1 - Duration of the audio stream
+    /// 2 - The byte position and presentation timestamp of each packet,
+    /// which allows efficient arbitrary seeking.
+    ///
+    /// # Notes #
+    ///
+    /// Will be nil if an error occurs while opening the file and/or reading its packets.
+    ///
+    /// This is an expensive and potentially lengthy computation.
+    ///
+    private lazy var packetTable: FFmpegPacketTable? = FFmpegPacketTable(forFile: file)
+    
+    ///
+    /// Bit rate of the audio stream, 0 if not available.
+    /// May be computed if not directly known.
+    ///
+    var bitRate: Int64
+    
+    ///
+    /// Size of this file, in bytes.
+    ///
+    lazy var fileSize: UInt64 = {
+        
+        do {
+            
+            let fileAttributes = try FileManager.default.attributesOfItem(atPath: filePath)
+            return fileAttributes[FileAttributeKey.size] as? UInt64 ?? 0
+            
+        } catch let error as NSError {
+            
+            NSLog("Error getting size of file '%@': %@", filePath, error.description)
+            return 0
+        }
+    }()
     
     ///
     /// Attempts to construct a FormatContext instance for the given file.
@@ -115,6 +204,69 @@ class FFmpegFileContext {
         }
         
         self.avStreamPointers = (0..<pointer.pointee.nb_streams).compactMap {avStreamsArrayPointer.advanced(by: Int($0)).pointee}
+        
+        // Compute the duration of the audio stream, trying various methods. See documentation of **duration**
+        // for a detailed description.
+        self.isRawAudioFile = AppConstants.SupportedTypes.rawAudioFileExtensions.contains(file.pathExtension.lowercased())
+        self.bitRate = pointer.pointee.bit_rate
+        
+        self.duration = (isRawAudioFile ? bruteForceDuration : bestAudioStream?.duration ?? estimatedDuration) ?? 0
+        if self.bitRate == 0 {self.bitRate = duration == 0 ? 0 : Int64(round(Double(fileSize) / duration))}
+    }
+    
+    ///
+    /// Copy constructor.
+    ///
+    /// - Parameter fileContext: The file context whose copy is to be made.
+    ///
+    /// Fails (returns nil) if:
+    ///
+    /// - An error occurs while opening the file or reading (demuxing) its streams.
+    /// - No audio stream is found in the file.
+    ///
+    init(copying fileContext: FFmpegFileContext) throws {
+        
+        self.file = fileContext.file
+        self.filePath = file.path
+        
+        // MARK: Open the file ----------------------------------------------------------------------------------
+        
+        // Allocate memory for this format context.
+        self.pointer = avformat_alloc_context()
+        
+        guard self.pointer != nil else {
+            throw FormatContextInitializationError(description: "Unable to allocate memory for format context for file '\(filePath)'.")
+        }
+        
+        // Try to open the audio file so that it can be read.
+        var resultCode: ResultCode = avformat_open_input(&pointer, file.path, nil, nil)
+        
+        // If the file open failed, log a message and return nil.
+        guard resultCode.isNonNegative, pointer?.pointee != nil else {
+            throw FormatContextInitializationError(description: "Unable to open file '\(filePath)'. Error: \(resultCode.errorDescription)")
+        }
+        
+        // MARK: Read the streams ----------------------------------------------------------------------------------
+        
+        // Try to read information about the streams contained in this file.
+        resultCode = avformat_find_stream_info(pointer, nil)
+        
+        // If the read failed, log a message and return nil.
+        guard resultCode.isNonNegative, let avStreamsArrayPointer = pointer.pointee.streams else {
+            throw FormatContextInitializationError(description: "Unable to find stream info for file '\(file.path)'. Error: \(resultCode.errorDescription)")
+        }
+        
+        self.avStreamPointers = (0..<pointer.pointee.nb_streams).compactMap {avStreamsArrayPointer.advanced(by: Int($0)).pointee}
+        
+        // Compute the duration of the audio stream, trying various methods. See documentation of **duration**
+        // for a detailed description.
+        
+        self.isRawAudioFile = fileContext.isRawAudioFile
+        self.bitRate = fileContext.bitRate
+        self.duration = fileContext.duration
+
+        self.bestAudioStream = fileContext.bestAudioStream
+        self.packetTable = isRawAudioFile ? fileContext.packetTable : nil
     }
     
     func findBestStream(ofType mediaType: AVMediaType) -> FFmpegStreamProtocol? {
@@ -180,29 +332,54 @@ class FFmpegFileContext {
     ///
     /// - throws: **PacketReadError**, if an error occurred while attempting to read a packet.
     ///
-    func seekByFrame(within stream: FFmpegAudioStream, to time: Double) throws {
+    func seek(within stream: FFmpegAudioStream, to time: Double) throws {
+        
+        // Represents the target seek position that the format context understands.
+        var timestamp: Int64 = 0
+        
+        // Describes the seeking mode to use (seek by frame, seek by byte, etc)
+        var flags: Int32 = 0
+        
+        if isRawAudioFile {
             
-        // Validate the duration of the file (which is needed to compute the target frame).
-        if duration <= 0 {throw SeekError(-1)}
-        
-        // We need to determine a target frame, given the seek position in seconds,
-        // duration, and frame count.
-        let timestamp = Int64(time * Double(stream.timeBaseDuration) / duration)
-        
-        // Validate the target frame (cannot exceed the total frame count)
-        if timestamp >= stream.timeBaseDuration {throw SeekError(ERROR_EOF)}
-        
-        // NOTE - AVSEEK_FLAG_BACKWARD "indicates that you want to find the closest keyframe
-        // having a smaller timestamp than the one you are seeking."
-        //
-        // Source - https://stackoverflow.com/questions/20734814/ffmpeg-av-seek-frame-with-avseek-flag-any-causes-grey-screen
+            // For raw audio files, we must use the packet table to determine
+            // the byte position of our target packet, given the seek position
+            // in seconds.
+            timestamp = packetTable?.closestPacketBytePosition(for: time) ?? 0
+            
+            // Validate the byte position (cannot be greater than the file size).
+            if timestamp >= fileSize {throw SeekError(ERROR_EOF)}
+            
+            // We need to seek by byte position.
+            flags = AVSEEK_FLAG_BYTE
+            
+        } else {
+            
+            // Validate the duration of the file (which is needed to compute the target frame).
+            if duration <= 0 {throw SeekError(-1)}
+            
+            // We need to determine a target frame, given the seek position in seconds,
+            // duration, and frame count.
+            timestamp = Int64(time * Double(stream.timeBaseDuration) / duration)
+            
+            // Validate the target frame (cannot exceed the total frame count)
+            if timestamp >= stream.timeBaseDuration {throw SeekError(ERROR_EOF)}
+            
+            // We need to seek by frame.
+            //
+            // NOTE - AVSEEK_FLAG_BACKWARD "indicates that you want to find closest keyframe
+            // having a smaller timestamp than the one you are seeking."
+            //
+            // Source - https://stackoverflow.com/questions/20734814/ffmpeg-av-seek-frame-with-avseek-flag-any-causes-grey-screen
+            flags = AVSEEK_FLAG_BACKWARD
+        }
         
         // Attempt the seek and capture the result code.
-        let seekResult: ResultCode = av_seek_frame(pointer, stream.index, timestamp, AVSEEK_FLAG_BACKWARD)
+        let seekResult: ResultCode = av_seek_frame(pointer, stream.index, timestamp, flags)
         
         // If the seek failed, log a message and throw an error.
         guard seekResult.isNonNegative else {
-            
+
             print("\nFormatContext.seek(): Unable to seek within stream \(stream.index). Error: \(seekResult) (\(seekResult.errorDescription)))")
             throw SeekError(seekResult)
         }

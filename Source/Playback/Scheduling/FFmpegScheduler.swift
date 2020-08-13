@@ -2,9 +2,6 @@ import AVFoundation
 
 class FFmpegScheduler: PlaybackSchedulerProtocol {
     
-    /// A helper object that does the actual decoding.
-    let decoder: FFmpegDecoder = FFmpegDecoder()
-    
     ///
     /// The number of audio buffers currently scheduled for playback by the player.
     ///
@@ -26,6 +23,9 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     var playerNode: AuralPlayerNode
     
     var playbackCtx: FFmpegPlaybackContext!
+    
+    /// A helper object that does the actual decoding.
+    var decoder: FFmpegDecoder! {playbackCtx?.decoder}
     
     ///
     /// A **serial** operation queue on which all *deferred* scheduling tasks are enqueued, i.e. tasks scheduling buffers that will be played back at a later time.
@@ -63,12 +63,6 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         
         guard let thePlaybackCtx = session.track.playbackContext as? FFmpegPlaybackContext else {return}
         self.playbackCtx = thePlaybackCtx
-        
-        // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
-//        thePlaybackCtx.fileContext.audioStream.printInfo()
-//        thePlaybackCtx.fileContext.audioCodec.printInfo()
-        
-//        decoder.initialize(with: thePlaybackCtx.fileContext)
         
         initiateDecodingAndScheduling(for: session, from: startPosition == 0 ? nil : startPosition)
         
@@ -182,10 +176,10 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         
         // Ask the decoder to decode up to the given number of samples.
         let frameBuffer: FFmpegFrameBuffer = decoder.decode(maxSampleCount: maxSampleCount)
-        
+
         // Transfer the decoded samples into an audio buffer that the audio engine can schedule for playback.
         if let audioBuffer: AVAudioPCMBuffer = frameBuffer.constructAudioBuffer(format: playbackCtx.audioFormat) {
-            
+
             // Pass off the audio buffer to the audio engine. The completion handler is executed when
             // the buffer has finished playing.
             //
@@ -195,18 +189,16 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             // 2 - the completion handler will be invoked by a background thread.
             // 3 - the completion handler will execute even when the player is stopped, i.e. the buffer
             //      has not really completed playback but has been removed from the playback queue.
-            
+
             // TODO: Fix the last 2 parameters ... seek posn not showing correctly.
             playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, immediatePlayback)
-            
+
             // Upon scheduling the buffer, increment the counter.
             scheduledBufferCount.increment()
         }
     }
     
     func bufferCompleted(_ session: PlaybackSession) {
-        
-        // TODO: Check if a loop is defined or not.
         
         // Audio buffer has completed playback, so decrement the counter.
         self.scheduledBufferCount.decrement()
@@ -234,7 +226,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     // Signal track playback completion
     func trackCompleted(_ session: PlaybackSession) {
         
-        decoder.playbackCompleted()
+        playbackCtx.playbackCompleted()
         Messenger.publish(.player_trackPlaybackCompleted, payload: session)
     }
     
@@ -250,7 +242,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         
         stopScheduling()
         playerNode.stop()
-        decoder.stop()
+        decoder?.stop()
     }
     
     func seekToTime(_ session: PlaybackSession, _ seconds: Double, _ beginPlayback: Bool) {
@@ -299,12 +291,4 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             self.bufferCompleted(session)
         }
     }
-    
-    // Computes a loop segment completion handler closure, given a playback session.
-//    func loopCompletionHandler(_ session: PlaybackSession) -> SessionCompletionHandler {
-//
-//        return {(_ session: PlaybackSession) -> Void in
-//            self.loopSegmentCompleted(session)
-//        }
-//    }
 }
