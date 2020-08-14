@@ -36,6 +36,7 @@ class FFmpegDecoder {
     ///
     var eof: Bool = false
     
+    // TODO: Make this an atomic Bool ???
     var endOfLoop: Bool = false
     
     ///
@@ -300,6 +301,8 @@ class FFmpegDecoder {
         frameQueue.clear()
     }
     
+    private var terminalLoopFrame: FFmpegFrame?
+    
     func decodeLoop(maxSampleCount: Int32, loopEndTime: Double) -> FFmpegFrameBuffer {
         
         // Create a frame buffer with the specified maximum sample count and the codec's sample format for this file.
@@ -315,6 +318,7 @@ class FFmpegDecoder {
                 // Try to obtain a single decoded frame.
                 let frame = try nextFrame()
                 
+                // TODO: All frames won't have PTS (if packet has multiple frames, eg. APE)
                 let frameStartTime = Double(frame.pts) * stream.timeBase.ratio
                 let frameEndTime = frameStartTime + (Double(frame.sampleCount) / sampleRate)
                 
@@ -327,6 +331,8 @@ class FFmpegDecoder {
                     buffer.appendTerminalFrames([frame])
                     
                     self.endOfLoop = true
+                    self.terminalLoopFrame = frame
+                    
                     break
                 }
                 
@@ -386,6 +392,24 @@ class FFmpegDecoder {
         }
         
         return buffer
+    }
+    
+    func loopCompleted() {
+        
+        self.endOfLoop = false
+        self.terminalLoopFrame = nil
+    }
+    
+    func endLoop() {
+        
+        if self.endOfLoop, let terminalFrame = self.terminalLoopFrame, terminalFrame.actualSampleCount > terminalFrame.sampleCount {
+            
+            // Put rest of (truncated) terminal loop frame back on the queue.
+            terminalFrame.keepLastNSamples(sampleCount: terminalFrame.actualSampleCount - terminalFrame.sampleCount)
+            frameQueue.enqueue(terminalFrame)
+        }
+        
+        self.endOfLoop = false
     }
 
     /// Indicates whether or not this object has already been destroyed.

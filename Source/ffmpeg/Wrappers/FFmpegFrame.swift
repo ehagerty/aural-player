@@ -48,6 +48,8 @@ class FFmpegFrame {
     ///
     var sampleCount: Int32 {truncatedSampleCount ?? avFrame.nb_samples}
     
+    var actualSampleCount: Int32 {avFrame.nb_samples}
+    
     ///
     /// The (lesser) number of samples to read, as a result of frame truncation. May be nil (if no truncation has occurred).
     /// For most samples, this value will be nil, i.e. most frames are not truncated.
@@ -180,7 +182,7 @@ class FFmpegFrame {
     ///
     func keepFirstNSamples(sampleCount: Int32) {
         
-        if sampleCount < self.sampleCount {
+        if sampleCount < self.actualSampleCount {
 
             firstSampleIndex = 0
             truncatedSampleCount = sampleCount
@@ -200,9 +202,9 @@ class FFmpegFrame {
     ///
     func keepLastNSamples(sampleCount: Int32) {
         
-        if sampleCount < self.sampleCount {
+        if sampleCount < self.actualSampleCount {
 
-            firstSampleIndex = self.sampleCount - sampleCount
+            firstSampleIndex = self.actualSampleCount - sampleCount
             truncatedSampleCount = sampleCount
         }
     }

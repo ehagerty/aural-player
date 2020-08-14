@@ -113,13 +113,6 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             decodeAndScheduleOneBuffer(for: session, from: seekPosition ?? 0, immediatePlayback: true, maxSampleCount: playbackCtx.sampleCountForImmediatePlayback)
             
             // Schedule a second buffer asynchronously, for later, to avoid a gap in playback.
-            // If this is not done, when the first buffer finishes playing, there will be
-            // a gap in playback equal to the time taken to read/decode the next batch of
-            // samples and construct and schedule the next buffer.
-            //
-            // So, at any given time, while a file is playing, there will always be one
-            // extra buffer in the playback queue.
-            //
             decodeAndScheduleOneBufferAsync(for: session, maxSampleCount: playbackCtx.sampleCountForDeferredPlayback)
             
         } catch {
@@ -140,7 +133,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     /// 2. Since the task is enqueued on an OperationQueue (whose underlying queue is the global DispatchQueue),
     /// this function will not block the caller, i.e. the main thread, while the task executes.
     ///
-    private func decodeAndScheduleOneBufferAsync(for session: PlaybackSession, maxSampleCount: Int32) {
+    func decodeAndScheduleOneBufferAsync(for session: PlaybackSession, maxSampleCount: Int32) {
         
         if eof {return}
         
@@ -170,7 +163,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     /// number of samples may be slightly larger than the maximum, because upon reaching EOF, the decoder will drain the codec's
     /// internal buffers which may result in a few additional samples that will be allowed as this is the terminal buffer.
     ///
-    private func decodeAndScheduleOneBuffer(for session: PlaybackSession, from seekPosition: Double? = nil, immediatePlayback: Bool, maxSampleCount: Int32) {
+    func decodeAndScheduleOneBuffer(for session: PlaybackSession, from seekPosition: Double? = nil, immediatePlayback: Bool, maxSampleCount: Int32) {
         
         if eof {return}
         

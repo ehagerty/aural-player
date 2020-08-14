@@ -2,6 +2,8 @@ import AVFoundation
 
 extension FFmpegScheduler {
     
+    // TODO: Test with loops that extend till EOF, very small loops, etc.
+    
     var endOfLoop: Bool {decoder.endOfLoop}
     
     func playLoop(_ session: PlaybackSession, _ beginPlayback: Bool = true) {
@@ -24,25 +26,18 @@ extension FFmpegScheduler {
         }
     }
     
-    func initiateLoopDecodingAndScheduling(for session: PlaybackSession, with loop: PlaybackLoop) {
+    func initiateLoopDecodingAndScheduling(for session: PlaybackSession, with loop: PlaybackLoop, startingAt time: Double? = nil) {
         
         do {
             
             // If a seek position was specified, ask the decoder to seek
             // within the stream.
-            try decoder.seek(to: loop.startTime)
+            try decoder.seek(to: time ?? loop.startTime)
             
             // Schedule one buffer for immediate playback
             decodeAndScheduleOneLoopBuffer(for: session, from: loop.startTime, maxSampleCount: playbackCtx.sampleCountForImmediatePlayback)
             
             // Schedule a second buffer asynchronously, for later, to avoid a gap in playback.
-            // If this is not done, when the first buffer finishes playing, there will be
-            // a gap in playback equal to the time taken to read/decode the next batch of
-            // samples and construct and schedule the next buffer.
-            //
-            // So, at any given time, while a file is playing, there will always be one
-            // extra buffer in the playback queue.
-            //
             decodeAndScheduleOneLoopBufferAsync(for: session, maxSampleCount: playbackCtx.sampleCountForDeferredPlayback)
             
         } catch {
@@ -148,6 +143,8 @@ extension FFmpegScheduler {
     }
     
     func loopCompleted(_ session: PlaybackSession) {
+        
+        decoder.loopCompleted()
         playLoop(session)
     }
     
@@ -159,15 +156,35 @@ extension FFmpegScheduler {
         }
     }
     
-    func playLoop(_ playbackSession: PlaybackSession, _ playbackStartTime: Double, _ beginPlayback: Bool) {
+    func playLoop(_ session: PlaybackSession, _ playbackStartTime: Double, _ beginPlayback: Bool) {
         
+        stop()
+        scheduledBufferCount.value = 0
+        
+        guard let thePlaybackCtx = session.track.playbackContext as? FFmpegPlaybackContext,
+            let loop = session.loop, let loopEndTime = loop.endTime else {return}
+        
+        self.playbackCtx = thePlaybackCtx
+        
+        print("\nPlaying loop with startTime = \(loop.startTime), endTime = \(loopEndTime), but starting at: \(playbackStartTime)")
+        
+        initiateLoopDecodingAndScheduling(for: session, with: loop, startingAt: playbackStartTime)
+        
+        // Check that at least one audio buffer was successfully scheduled, before beginning playback.
+        if beginPlayback && scheduledBufferCount.isPositive {
+            playerNode.play()
+        }
     }
     
-    func endLoop(_ playbackSession: PlaybackSession, _ loopEndTime: Double) {
+    func endLoop(_ session: PlaybackSession, _ loopEndTime: Double) {
         
-        // Check if endOfLoop is true ... if true, use (stored) terminal frame and schedule the latter part of it
-        // that was truncated before.
-        
-        // If endOfLoop is false, this is easier !!! Just continue scheduling. Maybe do nothing ???
+        // TODO: Handle race conditions (if loop completes just before endLoop() is called)
+        // If loop completes after endLoop() is called, it's harmless as the PlaybackSession will no longer be current.
+        // TODO: Does PlaybackSession need to become thread-safe ???
+        decoder.endLoop()
+
+        // Schedule a second buffer, for later, to avoid a gap in playback.
+        decodeAndScheduleOneBufferAsync(for: session, maxSampleCount: playbackCtx.sampleCountForDeferredPlayback)
+        decodeAndScheduleOneBufferAsync(for: session, maxSampleCount: playbackCtx.sampleCountForDeferredPlayback)
     }
 }
