@@ -181,7 +181,9 @@ class FFmpegDecoder {
             try fileCtx.seek(within: stream, to: time)
             
             if fileCtx.isRawAudioFile {
-                
+
+                // TODO: Need to truncate / discard frames before returning, if error exceeds tolerance ???
+
                 self.eof = false
                 return
             }

@@ -18,8 +18,8 @@ struct AppConstants {
         
         // MARK: Supported file extensions ------------------------------------------------------------------------
         
-        static let nativeAudioExtensions: [String] = ["aac", "adts", "ac3", "aif", "aiff", "aifc", "caf", "mp3", "m4a", "m4b", "m4r", "snd", "au", "sd2", "wav"]
-        static let nonNativeAudioExtensions: [String] = ["flac", "oga", "opus", "wma", "dsf", "mpc", "mp2", "ape", "wv", "dts", "mka", "ogg"]
+        static let nativeAudioExtensions: [String] = ["aac", "adts", "aif", "aiff", "aifc", "caf", "mp3", "m4a", "m4b", "m4r", "snd", "au", "sd2", "wav"]
+        static let nonNativeAudioExtensions: [String] = ["flac", "oga", "opus", "wma", "dsf", "mpc", "mp2", "ape", "wv", "dts", "mka", "ogg", "ac3"]
 
         static let allAudioExtensions: [String] = {nativeAudioExtensions + nonNativeAudioExtensions}()
         

@@ -69,7 +69,7 @@ class FFmpegPacket {
     init(readingFromFormat formatCtx: UnsafeMutablePointer<AVFormatContext>?) throws {
         
         self.avPacket = AVPacket()
-        setPointer(&avPacket)
+        self.pointer = withUnsafeMutablePointer(to: &avPacket, {(ptr: UnsafeMutablePointer<AVPacket>) in ptr})
         
         // Try to read a packet.
         let readResult: Int32 = av_read_frame(formatCtx, pointer)
@@ -84,10 +84,6 @@ class FFmpegPacket {
             
             throw PacketReadError(readResult)
         }
-    }
-    
-    func setPointer(_ ptr: UnsafeMutablePointer<AVPacket>) {
-        self.pointer = ptr
     }
     
     ///

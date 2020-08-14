@@ -9,7 +9,9 @@ extension FFmpegScheduler {
         stop()
         scheduledBufferCount.value = 0
         
-        guard let thePlaybackCtx = session.track.playbackContext as? FFmpegPlaybackContext, let loop = session.loop, let loopEndTime = loop.endTime else {return}
+        guard let thePlaybackCtx = session.track.playbackContext as? FFmpegPlaybackContext,
+            let loop = session.loop, let loopEndTime = loop.endTime else {return}
+        
         self.playbackCtx = thePlaybackCtx
         
         print("\nPlaying loop with startTime = \(loop.startTime), endTime = \(loopEndTime)")
@@ -120,6 +122,8 @@ extension FFmpegScheduler {
     
     func loopBufferCompleted(_ session: PlaybackSession) {
         
+        // TODO: If loop no longer exists, resume normal scheduling.
+        
         // Audio buffer has completed playback, so decrement the counter.
         self.scheduledBufferCount.decrement()
         
@@ -161,5 +165,9 @@ extension FFmpegScheduler {
     
     func endLoop(_ playbackSession: PlaybackSession, _ loopEndTime: Double) {
         
+        // Check if endOfLoop is true ... if true, use (stored) terminal frame and schedule the latter part of it
+        // that was truncated before.
+        
+        // If endOfLoop is false, this is easier !!! Just continue scheduling. Maybe do nothing ???
     }
 }
