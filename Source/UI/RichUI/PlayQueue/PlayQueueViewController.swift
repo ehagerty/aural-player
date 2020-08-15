@@ -49,11 +49,18 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     func tracksAdded(_ notification: PlayQueueTracksAddedNotification) {
         
         let numRowsBeforeAdd = self.rowCount
-        playQueueView.noteNumberOfRowsChanged()
         
-        // No need to refresh if tracks were added at the end of the queue
-        if let minRefreshIndex = notification.trackIndices.min(), minRefreshIndex < numRowsBeforeAdd {
-            playQueueView.reloadData(forRowIndexes: IndexSet(minRefreshIndex..<playQueue.size), columnIndexes: allColumns)
+        if numRowsBeforeAdd == 0 {
+            playQueueView.reloadData()
+            
+        } else {
+            
+            playQueueView.noteNumberOfRowsChanged()
+            
+            // No need to refresh if tracks were added at the end of the queue
+            if let minRefreshIndex = notification.trackIndices.min(), minRefreshIndex < numRowsBeforeAdd {
+                playQueueView.reloadData(forRowIndexes: IndexSet(minRefreshIndex..<playQueue.size), columnIndexes: allColumns)
+            }
         }
         
         updateSummary()
