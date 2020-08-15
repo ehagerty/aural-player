@@ -51,10 +51,12 @@ struct FFmpegSampleFormat {
     let isIntegral: Bool
     
     ///
-    /// Whether or not samples of this format require resampling in order to
-    /// be able to fed into AVAudioEngine for playback.
+    /// Whether or not samples of this format require conversion in order to
+    /// be able to be fed into AVAudioEngine for playback.
     ///
-    let needsResampling: Bool
+    /// Will be true unless the sample format is 32-bit float non-interleaved (i.e. the standard Core Audio format).
+    ///
+    let needsFormatConversion: Bool
     
     ///
     /// Instantiates a SampleFormat from an AVSampleFormat.
@@ -82,9 +84,8 @@ struct FFmpegSampleFormat {
         self.isIntegral = [AV_SAMPLE_FMT_U8, AV_SAMPLE_FMT_U8P, AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16P,
         AV_SAMPLE_FMT_S32, AV_SAMPLE_FMT_S32P, AV_SAMPLE_FMT_S64, AV_SAMPLE_FMT_S64P].contains(avFormat)
         
-        // Apparently, AVAudioEngine can only play 32-bit floating point samples.
-        // TODO: Investigate further, if this is really true.
-        self.needsResampling = avFormat != AV_SAMPLE_FMT_FLTP
+        // Apparently, AVAudioEngine can only play 32-bit non-interleaved floating point samples.
+        self.needsFormatConversion = avFormat != AV_SAMPLE_FMT_FLTP
     }
     
     ///

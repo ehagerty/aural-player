@@ -13,12 +13,12 @@ class FFmpegFrameBuffer {
     /// An ordered list of buffered frames. The ordering is important as it reflects the order of
     /// the corresponding samples in the audio file from which they were read.
     ///
-    private var frames: [FFmpegFrame] = []
+    var frames: [FFmpegFrame] = []
     
     ///
     /// The PCM format of the samples in this buffer.
     ///
-    private let sampleFormat: FFmpegSampleFormat
+    let audioFormat: FFmpegAudioFormat
     
     ///
     /// A counter that keeps track of how many samples have been accumulated in this buffer.
@@ -28,7 +28,25 @@ class FFmpegFrameBuffer {
     /// It is updated as individual frames are appended to this buffer.
     /// ```
     ///
-    private var sampleCount: Int32 = 0
+    var sampleCount: Int32 = 0
+    
+    ///
+    /// Computes the maximum of the sample counts of all the contained frames.
+    ///
+    /// ```
+    /// This value is useful when allocating reusable memory space for
+    /// a sample format conversion, i.e. space large enough to accomodate
+    /// any of the frames contained in this buffer.
+    /// ```
+    ///
+    var maxFrameSampleCount: Int32 {frames.map{$0.sampleCount}.max() ?? 0}
+    
+    ///
+    /// Whether or not samples in this buffer require conversion before they can be fed into AVAudioEngine for playback.
+    ///
+    /// Will be true unless the sample format is 32-bit float non-interleaved (i.e. the standard Core Audio format).
+    ///
+    var needsFormatConversion: Bool {audioFormat.needsFormatConversion}
     
     ///
     /// A limit on the number of samples to be accumulated.
@@ -37,11 +55,11 @@ class FFmpegFrameBuffer {
     /// It is set exactly once when this buffer is instantiated.
     /// ```
     ///
-    private let maxSampleCount: Int32
+    let maxSampleCount: Int32
     
-    init(sampleFormat: FFmpegSampleFormat, maxSampleCount: Int32) {
-        
-        self.sampleFormat = sampleFormat
+    init(audioFormat: FFmpegAudioFormat, maxSampleCount: Int32) {
+    
+        self.audioFormat = audioFormat
         self.maxSampleCount = maxSampleCount
     }
     
@@ -92,60 +110,54 @@ class FFmpegFrameBuffer {
     }
     
     ///
-    /// Constructs a **playable** audio buffer from the samples in this buffer's frames.
-    /// The returned audio buffer can be scheduled for playback by the audio engine.
+    /// Copies this buffer's samples, as non-interleaved (aka planar) 32-bit floats, to a given (playable) audio buffer.
     ///
-    /// - Parameter format: The format of the audio buffer that is to be constructed.
+    /// - Parameter audioBuffer: The playable audio buffer that will hold the samples contained in this buffer.
     ///
-    /// - returns:  The newly constructed audio buffer. Nil if this buffer contains no samples or
-    ///             if an invalid audio format has been specified.
+    /// # Note #
     ///
-    /// # Notes #
+    /// The caller of this function must first verify that this buffer's samples are indeed of the required (playable) standard
+    /// Core Audio format. In other words, this function does not do any kind of sample format conversion. It copies
+    /// the samples as is.
     ///
-    /// If required, the contained samples will be resampled before being copied to the
-    /// audio buffer.
-    ///
-    func constructAudioBuffer(format: AVAudioFormat) -> AVAudioPCMBuffer? {
+    func copySamples(to audioBuffer: AVAudioPCMBuffer) {
         
-        guard sampleCount > 0 else {return nil}
+        // The audio buffer will always be filled to capacity.
+        audioBuffer.frameLength = audioBuffer.frameCapacity
         
-        // If required by the sample format, command the resampler to
-        // allocate enough space to accommodate the output of resampling
-        // this buffer's samples.
-        if sampleFormat.needsResampling {
-            ObjectGraph.ffmpegResampler.allocateFor(channelCount: Int32(format.channelCount), sampleCount: sampleCount)
-        }
+        // Get pointers to the audio buffer's internal Float data buffers.
+        guard let audioBufferChannels = audioBuffer.floatChannelData else {return}
         
-        if let audioBuffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(sampleCount)) {
+        let channelCount: Int = Int(audioFormat.channelCount)
+        
+        // Keeps track of how many samples have been copied over so far.
+        // This will be used as an offset when performing each copy operation.
+        var sampleCountSoFar: Int = 0
+        
+        for frame in frames {
             
-            // The audio buffer will always be filled to capacity.
-            audioBuffer.frameLength = audioBuffer.frameCapacity
-
-            // Keeps track of how many samples have been copied over so far.
-            // This will be used as an offset when performing each copy operation.
-            var sampleCountSoFar: Int = 0
+            let intSampleCount: Int = Int(frame.sampleCount)
+            let intFirstSampleIndex: Int = Int(frame.firstSampleIndex)
             
-            for frame in frames {
+            for channelIndex in 0..<channelCount {
                 
-                if sampleFormat.needsResampling {
-
-                    // Resample the frame's samples and copy them to the audio buffer.
-                    ObjectGraph.ffmpegResampler.resample(frame, andCopyOutputTo: audioBuffer, startingAt: sampleCountSoFar)
+                // Get the pointers to the source and destination buffers for the copy operation.
+                guard let srcBytesForChannel = frame.dataPointers[channelIndex] else {break}
+                let destFloatsForChannel = audioBufferChannels[channelIndex]
+                
+                // Re-bind this frame's bytes to Float for the copy operation.
+                srcBytesForChannel.withMemoryRebound(to: Float.self, capacity: intSampleCount) {
                     
-                } else {
+                    (srcFloatsForChannel: UnsafeMutablePointer<Float>) in
                     
-                    // Copy over the frame's samples, as is, to the audio buffer (no resampling required).
-                    frame.copySamples(to: audioBuffer, startingAt: sampleCountSoFar)
+                    // Use Accelerate to perform the copy optimally, starting at the given offset.
+                    cblas_scopy(frame.sampleCount, srcFloatsForChannel.advanced(by: intFirstSampleIndex), 1, destFloatsForChannel.advanced(by: sampleCountSoFar), 1)
                 }
-                
-                // Update the sample counter.
-                sampleCountSoFar += Int(frame.sampleCount)
             }
             
-            return audioBuffer
+            // Update the sample counter.
+            sampleCountSoFar += intSampleCount
         }
-        
-        return nil
     }
     
     /// Indicates whether or not this object has already been destroyed.

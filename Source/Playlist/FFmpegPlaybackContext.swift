@@ -43,9 +43,10 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     func prepareForPlayback() throws {
         
         self.decoder = try FFmpegDecoder(for: fileContext)
-        let codec = decoder.codec
         
         if theAudioFormat == nil {
+            
+            let codec = decoder.codec
             
             let sampleRate: Int32 = codec.sampleRate
             let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout)) ?? .stereo
@@ -80,13 +81,6 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
                 sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
                 sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
             }
-        }
-
-        // If the PCM sample format produced by the codec for this file is not suitable for use with our audio engine,
-        // all samples need to be resampled (converted) to a suitable format. So, prepare the resampler for that
-        // conversion if required.
-        if codec.sampleFormat.needsResampling {
-            ObjectGraph.ffmpegResampler.allocateFor(channelCount: codec.channelCount, sampleCount: sampleCountForDeferredPlayback)
         }
     }
     

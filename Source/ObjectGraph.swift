@@ -31,7 +31,7 @@ class ObjectGraph {
     private static var ffmpegScheduler: PlaybackSchedulerProtocol!
     private static var sequencer: SequencerProtocol!
     
-    static var ffmpegResampler: FFmpegResampler!
+    static var sampleConverter: SampleConverterProtocol!
     
     static var sequencerDelegate: SequencerDelegateProtocol!
     static var sequencerInfoDelegate: SequencerInfoDelegateProtocol! {return sequencerDelegate}
@@ -90,10 +90,9 @@ class ObjectGraph {
         } else {
             avfScheduler = LegacyPlaybackScheduler(audioGraph.playerNode)
         }
-        
-        ffmpegScheduler = FFmpegScheduler(audioGraph.playerNode)
-        
-        ffmpegResampler = FFmpegResampler()
+
+        sampleConverter = SampleConverter()
+        ffmpegScheduler = FFmpegScheduler(playerNode: audioGraph.playerNode, sampleConverter: sampleConverter)
         
         // Player
         player = Player(graph: audioGraph, avfScheduler: avfScheduler, ffmpegScheduler: ffmpegScheduler)

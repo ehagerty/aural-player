@@ -118,6 +118,19 @@ class FFmpegResamplingContext {
     }
     
     ///
+    /// Initializes this context.
+    ///
+    /// ```
+    /// Must be called:
+    /// **after** setting all options (eg. channel layout, sample rate), and
+    /// **before** performing a conversion (i.e. calling **convert()**)
+    /// ```
+    ///
+    func initialize() {
+        swr_init(resampleCtx)
+    }
+    
+    ///
     /// Performs the resampling conversion.
     ///
     /// # Important #
@@ -138,8 +151,6 @@ class FFmpegResamplingContext {
                  outputDataPointer: UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>,
                  outputSampleCount: Int32) {
 
-        // Need to initialize the context before the conversion can be performed.
-        swr_init(resampleCtx)
         swr_convert(resampleCtx, outputDataPointer, outputSampleCount, inputDataPointer, inputSampleCount)
     }
 

@@ -20,12 +20,14 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
     var eof: Bool {decoder.eof}
     
     // Player node used for actual playback
-    var playerNode: AuralPlayerNode
+    let playerNode: AuralPlayerNode
     
     var playbackCtx: FFmpegPlaybackContext!
     
     /// A helper object that does the actual decoding.
     var decoder: FFmpegDecoder! {playbackCtx?.decoder}
+    
+    let sampleConverter: SampleConverterProtocol
     
     ///
     /// A **serial** operation queue on which all *deferred* scheduling tasks are enqueued, i.e. tasks scheduling buffers that will be played back at a later time.
@@ -52,8 +54,10 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         return queue
     }()
     
-    init(_ playerNode: AuralPlayerNode) {
+    init(playerNode: AuralPlayerNode, sampleConverter: SampleConverterProtocol) {
+        
         self.playerNode = playerNode
+        self.sampleConverter = sampleConverter
     }
     
     func playTrack(_ session: PlaybackSession, _ startPosition: Double) {
@@ -171,7 +175,14 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
         let frameBuffer: FFmpegFrameBuffer = decoder.decode(maxSampleCount: maxSampleCount)
 
         // Transfer the decoded samples into an audio buffer that the audio engine can schedule for playback.
-        if let audioBuffer: AVAudioPCMBuffer = frameBuffer.constructAudioBuffer(format: playbackCtx.audioFormat) {
+        if let playbackBuffer = AVAudioPCMBuffer(pcmFormat: playbackCtx.audioFormat, frameCapacity: AVAudioFrameCount(frameBuffer.sampleCount)) {
+            
+            if frameBuffer.needsFormatConversion {
+                sampleConverter.convert(samplesIn: frameBuffer, andCopyTo: playbackBuffer)
+                
+            } else {
+                frameBuffer.copySamples(to: playbackBuffer)
+            }
 
             // Pass off the audio buffer to the audio engine. The completion handler is executed when
             // the buffer has finished playing.
@@ -184,7 +195,7 @@ class FFmpegScheduler: PlaybackSchedulerProtocol {
             //      has not really completed playback but has been removed from the playback queue.
 
             // TODO: Fix the last 2 parameters ... seek posn not showing correctly.
-            playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, immediatePlayback)
+            playerNode.scheduleBuffer(playbackBuffer, for: session, completionHandler: self.bufferCompletionHandler(session), seekPosition, immediatePlayback)
 
             // Upon scheduling the buffer, increment the counter.
             scheduledBufferCount.increment()

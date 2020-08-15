@@ -96,7 +96,14 @@ extension FFmpegScheduler {
         let frameBuffer: FFmpegFrameBuffer = decoder.decodeLoop(maxSampleCount: maxSampleCount, loopEndTime: session.loop!.endTime!)
 
         // Transfer the decoded samples into an audio buffer that the audio engine can schedule for playback.
-        if let audioBuffer: AVAudioPCMBuffer = frameBuffer.constructAudioBuffer(format: playbackCtx.audioFormat) {
+        if let playbackBuffer = AVAudioPCMBuffer(pcmFormat: playbackCtx.audioFormat, frameCapacity: AVAudioFrameCount(frameBuffer.sampleCount)) {
+            
+            if frameBuffer.needsFormatConversion {
+                sampleConverter.convert(samplesIn: frameBuffer, andCopyTo: playbackBuffer)
+                
+            } else {
+                frameBuffer.copySamples(to: playbackBuffer)
+            }
 
             // Pass off the audio buffer to the audio engine. The completion handler is executed when
             // the buffer has finished playing.
@@ -108,7 +115,7 @@ extension FFmpegScheduler {
             // 3 - the completion handler will execute even when the player is stopped, i.e. the buffer
             //      has not really completed playback but has been removed from the playback queue.
 
-            playerNode.scheduleBuffer(audioBuffer, for: session, completionHandler: self.loopBufferCompletionHandler(session), seekPosition, seekPosition != nil)
+            playerNode.scheduleBuffer(playbackBuffer, for: session, completionHandler: self.loopBufferCompletionHandler(session), seekPosition, seekPosition != nil)
 
             // Upon scheduling the buffer, increment the counter.
             scheduledBufferCount.increment()
@@ -116,8 +123,6 @@ extension FFmpegScheduler {
     }
     
     func loopBufferCompleted(_ session: PlaybackSession) {
-        
-        // TODO: If loop no longer exists, resume normal scheduling.
         
         // Audio buffer has completed playback, so decrement the counter.
         self.scheduledBufferCount.decrement()
