@@ -1,8 +1,8 @@
 {
   "images" : [
     {
+      "filename" : "toggleEffectsView-off.png",
       "idiom" : "universal",
-      "filename" : "toggleEffectsView-on.png",
       "scale" : "1x"
     },
     {
@@ -15,7 +15,7 @@
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

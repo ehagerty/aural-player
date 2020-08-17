@@ -82,7 +82,7 @@
                     </connections>
                 </slider>
                 <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qdz-h2-lvO" userLabel="Volume Value Label" customClass="BottomTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="874" y="27" width="30" height="18"/>
+                    <rect key="frame" x="844" y="27" width="30" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="26" id="78P-bI-rvG"/>
                         <constraint firstAttribute="height" constant="18" id="vcH-EM-B84"/>
@@ -94,7 +94,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Fw-9q-fz0" userLabel="SeekTime">
-                    <rect key="frame" x="661" y="10" width="150" height="22"/>
+                    <rect key="frame" x="635" y="11" width="150" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="146" id="k7D-zY-Md3"/>
                         <constraint firstAttribute="height" constant="22" id="tHJ-oT-HEW"/>
@@ -106,7 +106,7 @@
                     </textFieldCell>
                 </textField>
                 <button toolTip="Mute / Unmute" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WJ8-c7-cak" userLabel="Volume Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="833" y="15" width="18" height="14"/>
+                    <rect key="frame" x="803" y="16" width="18" height="14"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="1Q1-nK-8Yc"/>
                         <constraint firstAttribute="height" constant="14" id="Gpo-gM-9j1"/>
@@ -122,13 +122,30 @@
                         <action selector="muteOrUnmuteAction:" target="uUb-lU-oMt" id="71w-Z5-HZm"/>
                     </connections>
                 </button>
+                <button toolTip="Mute / Unmute" wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N51-y4-ny9" userLabel="Effects Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="831" y="15" width="18" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="OL0-MF-zxu"/>
+                        <constraint firstAttribute="width" constant="18" id="sHd-IJ-sTn"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="EffectsView-Off" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Q1X-4g-ygf">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="EffectsView-Off"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="muteOrUnmuteAction:" target="uUb-lU-oMt" id="vKm-b5-nAr"/>
+                    </connections>
+                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Fsb-qb-ycN" userLabel="Seek Backward Button">
                     <rect key="frame" x="370" y="15" width="16" height="13"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="16" id="JOc-wc-KEb"/>
                         <constraint firstAttribute="height" constant="13" id="gYW-m1-dQN"/>
                     </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekBackward" imagePosition="only" alignment="center" inset="2" id="r7R-Gj-gxS">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekBackward" imagePosition="only" alignment="center" continuous="YES" inset="2" id="r7R-Gj-gxS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -268,7 +285,7 @@ G1BhbiBTbGlkZXI
                         <constraint firstAttribute="height" constant="13" id="85o-dg-8NH"/>
                         <constraint firstAttribute="width" constant="16" id="YQS-tU-arZ"/>
                     </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekForward" imagePosition="only" alignment="center" inset="2" id="ATB-E9-cEI">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="SeekForward" imagePosition="only" alignment="center" continuous="YES" inset="2" id="ATB-E9-cEI">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -285,15 +302,15 @@ G1BhbiBTbGlkZXI
                 <constraint firstItem="od7-ff-tlV" firstAttribute="trailing" secondItem="76u-TW-Jjc" secondAttribute="leading" constant="-15" id="5wP-fJ-9Oq"/>
                 <constraint firstItem="lsa-eQ-v8N" firstAttribute="top" secondItem="od7-ff-tlV" secondAttribute="top" id="9Rw-92-Eaw"/>
                 <constraint firstItem="ksM-B1-yLO" firstAttribute="leading" secondItem="AL4-YV-WF4" secondAttribute="trailing" constant="10" id="AOB-7H-JdR"/>
-                <constraint firstAttribute="bottom" secondItem="3Fw-9q-fz0" secondAttribute="bottom" constant="10" id="J7a-HY-TD0"/>
+                <constraint firstAttribute="bottom" secondItem="3Fw-9q-fz0" secondAttribute="bottom" constant="11" id="J7a-HY-TD0"/>
                 <constraint firstAttribute="trailing" secondItem="g9v-No-c4E" secondAttribute="trailing" id="Jni-ke-DWJ"/>
                 <constraint firstItem="76u-TW-Jjc" firstAttribute="centerX" secondItem="4lG-eV-Tui" secondAttribute="centerX" id="LB6-xb-Ybe"/>
                 <constraint firstAttribute="bottom" secondItem="hxu-OD-ArC" secondAttribute="bottom" constant="15" id="SAC-KW-sdC"/>
                 <constraint firstItem="o3b-qU-qP1" firstAttribute="leading" secondItem="4lG-eV-Tui" secondAttribute="leading" id="SSF-KX-DOl"/>
-                <constraint firstAttribute="trailing" secondItem="WJ8-c7-cak" secondAttribute="trailing" constant="15" id="U8y-Ya-CJo"/>
+                <constraint firstAttribute="trailing" secondItem="WJ8-c7-cak" secondAttribute="trailing" constant="45" id="U8y-Ya-CJo"/>
                 <constraint firstItem="od7-ff-tlV" firstAttribute="top" secondItem="76u-TW-Jjc" secondAttribute="top" constant="1" id="Ufp-ge-UTA"/>
                 <constraint firstItem="AL4-YV-WF4" firstAttribute="top" secondItem="TqZ-gy-2zk" secondAttribute="top" constant="2" id="Xg8-TD-SRP"/>
-                <constraint firstAttribute="bottom" secondItem="WJ8-c7-cak" secondAttribute="bottom" constant="15" id="XhM-Fb-fmk"/>
+                <constraint firstAttribute="bottom" secondItem="WJ8-c7-cak" secondAttribute="bottom" constant="16" id="XhM-Fb-fmk"/>
                 <constraint firstItem="Qdz-h2-lvO" firstAttribute="leading" secondItem="WJ8-c7-cak" secondAttribute="trailing" constant="25" id="Xtn-X9-Ucg"/>
                 <constraint firstItem="AL4-YV-WF4" firstAttribute="leading" secondItem="TqZ-gy-2zk" secondAttribute="trailing" constant="10" id="Yhm-SW-EnC"/>
                 <constraint firstItem="g9v-No-c4E" firstAttribute="leading" secondItem="4lG-eV-Tui" secondAttribute="leading" id="ZAy-XX-DQ9"/>
@@ -303,11 +320,13 @@ G1BhbiBTbGlkZXI
                 <constraint firstItem="CrW-nO-QEy" firstAttribute="leading" secondItem="lsa-eQ-v8N" secondAttribute="trailing" constant="13" id="fex-39-IpP"/>
                 <constraint firstItem="TqZ-gy-2zk" firstAttribute="bottom" secondItem="4lG-eV-Tui" secondAttribute="bottom" constant="-9" id="glB-83-xbO"/>
                 <constraint firstAttribute="top" secondItem="o3b-qU-qP1" secondAttribute="top" constant="6" id="jGa-cG-fHF"/>
-                <constraint firstItem="WJ8-c7-cak" firstAttribute="leading" secondItem="3Fw-9q-fz0" secondAttribute="trailing" constant="24" id="jbc-Od-f4n"/>
+                <constraint firstItem="WJ8-c7-cak" firstAttribute="leading" secondItem="3Fw-9q-fz0" secondAttribute="trailing" constant="20" id="jbc-Od-f4n"/>
                 <constraint firstItem="ksM-B1-yLO" firstAttribute="top" secondItem="AL4-YV-WF4" secondAttribute="top" constant="1" id="m04-f6-TYm"/>
+                <constraint firstAttribute="bottom" secondItem="N51-y4-ny9" secondAttribute="bottom" constant="15" id="mXL-zS-eJ3"/>
                 <constraint firstItem="CrW-nO-QEy" firstAttribute="bottom" secondItem="lsa-eQ-v8N" secondAttribute="bottom" id="nhw-c3-uIm"/>
                 <constraint firstItem="od7-ff-tlV" firstAttribute="bottom" secondItem="Fsb-qb-ycN" secondAttribute="bottom" id="pnI-jg-csk"/>
                 <constraint firstItem="lsa-eQ-v8N" firstAttribute="leading" secondItem="76u-TW-Jjc" secondAttribute="trailing" constant="15" id="rX7-gT-Y20"/>
+                <constraint firstItem="N51-y4-ny9" firstAttribute="leading" secondItem="WJ8-c7-cak" secondAttribute="trailing" constant="10" id="xC5-3x-2ef"/>
             </constraints>
             <point key="canvasLocation" x="-2825" y="395"/>
         </view>
@@ -353,6 +372,7 @@ G1BhbiBTbGlkZXI
         </menu>
     </objects>
     <resources>
+        <image name="EffectsView-Off" width="25" height="25"/>
         <image name="LoopOff" width="38" height="13"/>
         <image name="NextTrack" width="14" height="14"/>
         <image name="Pause" width="11" height="16"/>
