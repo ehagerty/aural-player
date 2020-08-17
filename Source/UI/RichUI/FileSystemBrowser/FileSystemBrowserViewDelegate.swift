@@ -4,7 +4,7 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
     
     let mainFont_13: NSFont = NSFont(name: "Play Regular", size: 13)!
     
-    private var fsRoot: FileSystemItem!
+    private lazy var fsRoot: FileSystemItem = FileSystemItem(url: AppConstants.FilesAndPaths.musicDir)
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
         return 30
@@ -14,7 +14,6 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
         
         if item == nil {
 
-            fsRoot = FileSystemItem(url: URL(fileURLWithPath: "/Users/kven/Music/Grimes"))
             return fsRoot.children.count
 
         } else if let fsItem = item as? FileSystemItem {

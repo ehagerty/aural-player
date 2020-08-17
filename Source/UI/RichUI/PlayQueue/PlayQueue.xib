@@ -167,7 +167,7 @@
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RRP-yP-9NB" userLabel="Summary">
-                    <rect key="frame" x="0.0" y="0.0" width="598" height="30"/>
+                    <rect key="frame" x="10" y="0.0" width="598" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="rd3-z9-nhT"/>
                     </constraints>
@@ -179,9 +179,9 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="RRP-yP-9NB" firstAttribute="leading" secondItem="Kx7-r2-ltB" secondAttribute="leading" id="6Mc-nq-Pwe"/>
+                <constraint firstItem="RRP-yP-9NB" firstAttribute="leading" secondItem="Kx7-r2-ltB" secondAttribute="leading" constant="10" id="6Mc-nq-Pwe"/>
                 <constraint firstAttribute="bottom" secondItem="RRP-yP-9NB" secondAttribute="bottom" id="GxE-ER-YtJ"/>
-                <constraint firstAttribute="trailing" secondItem="RRP-yP-9NB" secondAttribute="trailing" id="HoY-Vs-0dG"/>
+                <constraint firstAttribute="trailing" secondItem="RRP-yP-9NB" secondAttribute="trailing" constant="-10" id="HoY-Vs-0dG"/>
                 <constraint firstAttribute="bottom" secondItem="jdx-yZ-DS5" secondAttribute="bottom" constant="30" id="IpP-Xw-2KH"/>
                 <constraint firstAttribute="trailing" secondItem="jdx-yZ-DS5" secondAttribute="trailing" id="TDA-61-fPB"/>
                 <constraint firstItem="jdx-yZ-DS5" firstAttribute="top" secondItem="Kx7-r2-ltB" secondAttribute="top" id="U82-9e-1fg"/>
