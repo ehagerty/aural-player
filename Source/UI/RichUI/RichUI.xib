@@ -40,39 +40,39 @@
                     <splitView dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="iiK-KV-OLC" userLabel="Vertical SplitView">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="609"/>
                         <subviews>
-                            <customView id="gXp-vx-rNg" userLabel="PlayerContainer">
+                            <customView misplaced="YES" id="gXp-vx-rNg" userLabel="NowPlayingContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="1000" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="QbF-dg-H22"/>
+                                    <constraint firstAttribute="height" constant="80" id="QbF-dg-H22"/>
                                 </constraints>
                             </customView>
-                            <customView id="wsq-ma-gWv" userLabel="BrowserContainer">
-                                <rect key="frame" x="0.0" y="61" width="1000" height="548"/>
+                            <customView misplaced="YES" id="wsq-ma-gWv" userLabel="BrowserContainer">
+                                <rect key="frame" x="0.0" y="61" width="1000" height="488"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-7J-CYT" userLabel="LeftRight SplitView">
-                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="548"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1000" height="477"/>
                                         <subviews>
-                                            <customView id="Lda-3H-PUQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="200" height="548"/>
+                                            <customView misplaced="YES" id="Lda-3H-PUQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="200" height="477"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="TGf-Gr-Na7"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="tUv-04-ehq"/>
                                                 </constraints>
                                             </customView>
-                                            <customView id="bU4-oH-OvX">
-                                                <rect key="frame" x="201" y="0.0" width="799" height="548"/>
+                                            <customView misplaced="YES" id="bU4-oH-OvX">
+                                                <rect key="frame" x="201" y="0.0" width="799" height="477"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tabView drawsBackground="NO" allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="oOy-Uj-Vc4" userLabel="BrowserTabView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="799" height="548"/>
+                                                        <rect key="frame" x="0.0" y="30" width="799" height="477"/>
                                                         <font key="font" metaFont="system"/>
                                                         <tabViewItems>
                                                             <tabViewItem label="Tab" identifier="" id="X1Z-no-G3Z" userLabel="PlayQueue Tab">
                                                                 <view key="view" id="WCI-Gr-I9f">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="548"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="799" height="477"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 </view>
                                                             </tabViewItem>
@@ -112,9 +112,17 @@
                                     <constraint firstAttribute="trailing" secondItem="mCq-7J-CYT" secondAttribute="trailing" id="y3c-OB-F9V"/>
                                 </constraints>
                             </customView>
+                            <customView misplaced="YES" id="6tC-Bx-Vwa" userLabel="PlayerContainer">
+                                <rect key="frame" x="0.0" y="550" width="1000" height="59"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Zp2-8j-gMx"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <holdingPriorities>
                             <real value="251"/>
+                            <real value="250"/>
                             <real value="250"/>
                         </holdingPriorities>
                     </splitView>

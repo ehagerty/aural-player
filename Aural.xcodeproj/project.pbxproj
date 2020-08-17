@@ -284,6 +284,7 @@
 		3E23E0A5246EB88F00367E2B /* AudioFilePreparationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E0A4246EB88F00367E2B /* AudioFilePreparationAction.swift */; };
 		3E23E0AD246EC30400367E2B /* StartPlaybackAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E0AC246EC30400367E2B /* StartPlaybackAction.swift */; };
 		3E23F2D122A6E6DB00A48C8C /* MediaKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23F2D022A6E6DB00A48C8C /* MediaKeyHandler.swift */; };
+		3E24C79D24EAACF3009C93AF /* NowPlaying.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E24C79C24EAACF3009C93AF /* NowPlaying.xib */; };
 		3E24ED411FBB246C0023F9F9 /* PitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24ED401FBB246C0023F9F9 /* PitchViewController.swift */; };
 		3E24ED431FBB28700023F9F9 /* TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24ED421FBB28700023F9F9 /* TimeViewController.swift */; };
 		3E24ED451FBB2B430023F9F9 /* ReverbViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24ED441FBB2B430023F9F9 /* ReverbViewController.swift */; };
@@ -1017,6 +1018,7 @@
 		3E23E0A4246EB88F00367E2B /* AudioFilePreparationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePreparationAction.swift; sourceTree = "<group>"; };
 		3E23E0AC246EC30400367E2B /* StartPlaybackAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPlaybackAction.swift; sourceTree = "<group>"; };
 		3E23F2D022A6E6DB00A48C8C /* MediaKeyHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaKeyHandler.swift; sourceTree = "<group>"; };
+		3E24C79C24EAACF3009C93AF /* NowPlaying.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NowPlaying.xib; sourceTree = "<group>"; };
 		3E24ED401FBB246C0023F9F9 /* PitchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PitchViewController.swift; sourceTree = "<group>"; };
 		3E24ED421FBB28700023F9F9 /* TimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeViewController.swift; sourceTree = "<group>"; };
 		3E24ED441FBB2B430023F9F9 /* ReverbViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReverbViewController.swift; sourceTree = "<group>"; };
@@ -1606,6 +1608,14 @@
 				3E23E098246E6F4900367E2B /* HaltPlaybackAction.swift */,
 			);
 			path = PlaybackChain;
+			sourceTree = "<group>";
+		};
+		3E24C79B24EAACD4009C93AF /* NowPlaying */ = {
+			isa = PBXGroup;
+			children = (
+				3E24C79C24EAACF3009C93AF /* NowPlaying.xib */,
+			);
+			path = NowPlaying;
 			sourceTree = "<group>";
 		};
 		3E444F9724AA73490090AED8 /* Playlist */ = {
@@ -3184,6 +3194,7 @@
 			children = (
 				3ED404A924ACEFA4000BF125 /* RichUI.xib */,
 				3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */,
+				3E24C79B24EAACD4009C93AF /* NowPlaying */,
 				3E82888324ADD17D0032D0CE /* Player */,
 				3E82888824AE04B00032D0CE /* Sidebar */,
 				3E7651B924B9B926002FB8B4 /* Library */,
@@ -3474,6 +3485,7 @@
 				3E0C9939216C82B600E396DB /* DelayPresetsEditor.xib in Resources */,
 				3EB1701321748DBC00B82D3A /* JumpToTimeEditorDialog.xib in Resources */,
 				3EF5E5C11FBDB637004270A4 /* Genres.xib in Resources */,
+				3E24C79D24EAACF3009C93AF /* NowPlaying.xib in Resources */,
 				3E3F29632159B69900581EFE /* LayoutsEditor.xib in Resources */,
 				3E02739D1FD91B46000F0844 /* StringInputPopover.xib in Resources */,
 				3E36E8681FC00F450005C62E /* ViewPreferences.xib in Resources */,
