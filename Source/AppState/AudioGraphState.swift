@@ -74,7 +74,6 @@ fileprivate func deserializeMasterPreset(_ map: NSDictionary) -> MasterPreset {
 
 class EQUnitState: FXUnitState<EQPreset>, PersistentState {
     
-    var type: EQType = AppDefaults.eqType
     var globalGain: Float = AppDefaults.eqGlobalGain
     var bands: [Float] = [Float]() // Index -> Gain
     
@@ -83,7 +82,6 @@ class EQUnitState: FXUnitState<EQPreset>, PersistentState {
         let eqState: EQUnitState = EQUnitState()
         
         eqState.state = mapEnum(map, "state", AppDefaults.eqState)
-        eqState.type = mapEnum(map, "type", AppDefaults.eqType)
         eqState.globalGain = mapNumeric(map, "globalGain", AppDefaults.eqGlobalGain)
         
         if let bands: NSArray = map["bands"] as? NSArray {

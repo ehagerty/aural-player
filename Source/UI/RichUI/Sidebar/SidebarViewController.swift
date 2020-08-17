@@ -19,7 +19,7 @@ class SidebarViewController: AuralViewController, NSOutlineViewDelegate, NSOutli
     override func initializeUI() {
         
         categories.forEach {sidebarView.expandItem($0)}
-        sidebarView.selectRowIndexes(IndexSet(integer: 1), byExtendingSelection: false)
+        sidebarView.selectRowIndexes(IndexSet(integer: 2), byExtendingSelection: false)
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {

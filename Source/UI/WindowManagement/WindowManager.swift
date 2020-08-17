@@ -65,8 +65,6 @@ class WindowManager {
         if showRichUI {
             
             richUIWindow.delegate = richUIWindowDelegate
-            
-            mainWindow.hide()
             richUIWindow.show()
             
         } else {
@@ -194,7 +192,7 @@ class WindowManager {
     // Shows the effects window
     private static func showEffects() {
         
-        mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.above)
+        richUIWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.above)
         effectsWindow.setIsVisible(true)
         effectsWindow.orderFront(self)
     }

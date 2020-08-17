@@ -91,7 +91,7 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     
     // Shows/hides the effects window
     @IBAction func toggleEffectsAction(_ sender: AnyObject) {
-        Messenger.publish(.windowManager_toggleEffectsWindow)
+        WindowManager.toggleEffects()
     }
     
     // Shows/hides the chapters list window
