@@ -2,14 +2,14 @@ import AVFoundation
 
 class EQUnit: FXUnit, EQUnitProtocol {
     
-    private let node: ParametricEQ
+    private let node: ParametricEQNode
     let presets: EQPresets = EQPresets()
     
     init(_ appState: AudioGraphState) {
         
         let eqState = appState.eqUnit
         
-        node = ParametricEQ(eqState.type)
+        node = ParametricEQNode()
         super.init(.eq, eqState.state)
         
         bands = eqState.bands
@@ -24,12 +24,6 @@ class EQUnit: FXUnit, EQUnitProtocol {
         node.bypass = !isActive
     }
     
-    var type: EQType {
-        
-        get {return node.type}
-        set(newType) {node.chooseType(newType)}
-    }
-    
     var globalGain: Float {
         
         get {return node.globalGain}
@@ -42,9 +36,7 @@ class EQUnit: FXUnit, EQUnitProtocol {
         set(newValue) {node.setBands(newValue)}
     }
     
-    override var avNodes: [AVAudioNode] {
-        return node.allNodes
-    }
+    override var avNodes: [AVAudioNode] {[node]}
     
     func setBand(_ index: Int , gain: Float) {
         node.setBand(index, gain: gain)
@@ -100,17 +92,10 @@ class EQUnit: FXUnit, EQUnitProtocol {
         let unitState = EQUnitState()
 
         unitState.state = state
-        unitState.type = type
         unitState.bands = bands
         unitState.globalGain = globalGain
         unitState.userPresets = presets.userDefinedPresets
 
         return unitState
     }
-}
-
-enum EQType: String {
-    
-    case tenBand
-    case fifteenBand
 }

@@ -12,12 +12,6 @@ class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
         super.init(unit)
     }
     
-    var type: EQType {
-        
-        get {return unit.type}
-        set(newType) {unit.type = newType}
-    }
-    
     var globalGain: Float {
         
         get {return unit.globalGain}

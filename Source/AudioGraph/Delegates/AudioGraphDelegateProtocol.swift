@@ -85,8 +85,6 @@ protocol MasterUnitDelegateProtocol: FXUnitDelegateProtocol {
 
 protocol EQUnitDelegateProtocol: FXUnitDelegateProtocol {
     
-    var type: EQType {get set}
-    
     var globalGain: Float {get set}
     
     var bands: [Float] {get set}
