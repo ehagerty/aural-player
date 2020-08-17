@@ -6,19 +6,12 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
     
     @IBOutlet weak var playbackView: PlaybackView!
     
-    @IBOutlet weak var albumArtView: NSImageView!
-    
-    @IBOutlet weak var lblTitle: NSTextField!
-    @IBOutlet weak var lblArtist: NSTextField!
-    
     // Delegate that conveys all playback requests to the player / playback sequencer
     private let player: PlaybackDelegateProtocol = ObjectGraph.playbackDelegate
     
     private lazy var alertDialog: AlertWindowController = WindowFactory.alertWindowController
     
     override func viewDidLoad() {
-        
-//        albumArtView.cornerRadius = 2
         
         // MARK: Notifications --------------------------------------------------------------
         
@@ -157,33 +150,13 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
     // The "errorState" arg indicates whether the player is in an error state (i.e. the new track cannot be played back). If so, update the UI accordingly.
     private func trackChanged(_ newTrack: Track?) {
         
-        if let track = newTrack {
-            
-            albumArtView.image = track.art?.image ?? Images.imgPlayingArt
-            
-            lblTitle.stringValue = track.title ?? track.defaultDisplayName
-            
-            let artist = track.artist
-            let album = track.album
-            
-            if let theArtist = artist, let theAlbum = album {
-                lblArtist.stringValue = "\(theArtist) -- \(theAlbum)"
-                
-            } else if let theArtist = artist {
-                lblArtist.stringValue = theArtist
-                
-            } else if let theAlbum = album {
-                lblArtist.stringValue = theAlbum
-                
-            } else {
-                lblArtist.stringValue = ""
-            }
-            
-        } else {  // No track
-            
-            albumArtView.image = Images.imgPlayingArt
-            [lblTitle, lblArtist].forEach {$0?.stringValue = ""}
-        }
+//        if let track = newTrack {
+//            
+//
+//
+//        } else {  // No track
+//
+//        }
         
         playbackView.trackChanged(player.state, player.playbackLoop, newTrack)
         

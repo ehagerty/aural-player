@@ -21,7 +21,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="1000" height="649"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
-            <value key="minSize" type="size" width="1000" height="400"/>
+            <value key="minSize" type="size" width="800" height="400"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="1000" height="649"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,7 +54,7 @@
                                     <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-7J-CYT" userLabel="LeftRight SplitView">
                                         <rect key="frame" x="0.0" y="0.0" width="1000" height="477"/>
                                         <subviews>
-                                            <customView misplaced="YES" id="Lda-3H-PUQ">
+                                            <customView id="Lda-3H-PUQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="200" height="477"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <constraints>
@@ -62,12 +62,12 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="tUv-04-ehq"/>
                                                 </constraints>
                                             </customView>
-                                            <customView misplaced="YES" id="bU4-oH-OvX">
+                                            <customView id="bU4-oH-OvX">
                                                 <rect key="frame" x="201" y="0.0" width="799" height="477"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tabView drawsBackground="NO" allowsTruncatedLabels="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="oOy-Uj-Vc4" userLabel="BrowserTabView">
-                                                        <rect key="frame" x="0.0" y="30" width="799" height="477"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="799" height="477"/>
                                                         <font key="font" metaFont="system"/>
                                                         <tabViewItems>
                                                             <tabViewItem label="Tab" identifier="" id="X1Z-no-G3Z" userLabel="PlayQueue Tab">

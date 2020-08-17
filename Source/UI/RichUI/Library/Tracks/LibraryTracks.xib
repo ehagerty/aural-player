@@ -19,13 +19,13 @@
             <rect key="frame" x="0.0" y="0.0" width="598" height="398"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KzJ-ZU-J2x" userLabel="LibraryTracks">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="77" horizontalPageScroll="10" verticalLineScroll="77" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KzJ-ZU-J2x" userLabel="LibraryTracks">
                     <rect key="frame" x="0.0" y="30" width="598" height="368"/>
                     <clipView key="contentView" drawsBackground="NO" id="OvZ-Df-otW">
                         <rect key="frame" x="0.0" y="0.0" width="598" height="353"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" headerView="F0I-M8-5P2" viewBased="YES" id="vSn-tY-x9I" userLabel="LibraryTracks" customClass="LibraryTableView" customModule="Aural" customModuleProvider="target">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="75" rowSizeStyle="automatic" headerView="F0I-M8-5P2" viewBased="YES" id="vSn-tY-x9I" userLabel="LibraryTracks" customClass="LibraryTableView" customModule="Aural" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="778" height="328"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -260,11 +260,11 @@
                     </tableHeaderView>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1VS-SE-yL0" userLabel="Summary">
-                    <rect key="frame" x="0.0" y="0.0" width="598" height="30"/>
+                    <rect key="frame" x="13" y="0.0" width="587" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="xfE-8Q-q1e"/>
+                        <constraint firstAttribute="height" constant="25" id="xfE-8Q-q1e"/>
                     </constraints>
-                    <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="bezel" title=" 383 Tracks" drawsBackground="YES" id="qOc-Sg-99B">
+                    <textFieldCell key="cell" lineBreakMode="clipping" title=" 383 Tracks" id="qOc-Sg-99B">
                         <font key="font" size="13" name="Play-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -278,7 +278,7 @@
                 <constraint firstAttribute="bottom" secondItem="KzJ-ZU-J2x" secondAttribute="bottom" constant="30" id="kIN-Cv-6Px"/>
                 <constraint firstItem="KzJ-ZU-J2x" firstAttribute="top" secondItem="jss-FK-3n6" secondAttribute="top" id="lSv-AO-mP1"/>
                 <constraint firstAttribute="trailing" secondItem="1VS-SE-yL0" secondAttribute="trailing" id="nrj-3I-Svf"/>
-                <constraint firstItem="1VS-SE-yL0" firstAttribute="leading" secondItem="jss-FK-3n6" secondAttribute="leading" id="nsw-VB-rpQ"/>
+                <constraint firstItem="1VS-SE-yL0" firstAttribute="leading" secondItem="jss-FK-3n6" secondAttribute="leading" constant="15" id="nsw-VB-rpQ"/>
             </constraints>
             <point key="canvasLocation" x="252" y="-1021"/>
         </view>

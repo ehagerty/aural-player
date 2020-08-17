@@ -10,6 +10,7 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
     private var theWindow: NSWindow {self.window!}
     override var windowNibName: String? {return "RichUI"}
     
+    private lazy var nowPlayingController: NowPlayingViewController = NowPlayingViewController()
     private lazy var playerController: RichUIPlayerViewController = RichUIPlayerViewController()
     
     private lazy var sidebarController: SidebarViewController = SidebarViewController()
@@ -30,8 +31,12 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
         containerView.addSubview(sidebarView)
         sidebarView.anchorToView(sidebarView.superview!)
         
-        let playerContainerView = playerBrowserSplitView.arrangedSubviews[0]
+        let nowPlayingContainerView = playerBrowserSplitView.arrangedSubviews[0]
+        let nowPlayingView = nowPlayingController.view
+        nowPlayingContainerView.addSubview(nowPlayingView)
+        nowPlayingView.anchorToView(nowPlayingView.superview!)
         
+        let playerContainerView = playerBrowserSplitView.arrangedSubviews[2]
         let playerView = playerController.view
         playerContainerView.addSubview(playerView)
         playerView.anchorToView(playerView.superview!)
