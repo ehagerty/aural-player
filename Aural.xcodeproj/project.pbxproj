@@ -779,6 +779,7 @@
 		3EDFFA0B1FC0283F00158177 /* ViewPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDFFA0A1FC0283F00158177 /* ViewPreferencesViewController.swift */; };
 		3EDFFA0D1FC0286E00158177 /* HistoryPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDFFA0C1FC0286E00158177 /* HistoryPreferencesViewController.swift */; };
 		3EE09325245C5FEE0045F8A3 /* ColorSchemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE09324245C5FEE0045F8A3 /* ColorSchemeViewController.swift */; };
+		3EE32D7824EA3D7F007900F4 /* LibraryMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE32D7724EA3D7F007900F4 /* LibraryMenuController.swift */; };
 		3EE4D43E21D6E2F0000110FC /* Alerts.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EE4D43D21D6E2F0000110FC /* Alerts.xib */; };
 		3EE4D44021D6E5DA000110FC /* AlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4D43F21D6E5DA000110FC /* AlertWindowController.swift */; };
 		3EE4EC222470F9F30075374E /* SequenceScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC212470F9F30075374E /* SequenceScope.swift */; };
@@ -1490,6 +1491,7 @@
 		3EDFFA0A1FC0283F00158177 /* ViewPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPreferencesViewController.swift; sourceTree = "<group>"; };
 		3EDFFA0C1FC0286E00158177 /* HistoryPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryPreferencesViewController.swift; sourceTree = "<group>"; };
 		3EE09324245C5FEE0045F8A3 /* ColorSchemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeViewController.swift; sourceTree = "<group>"; };
+		3EE32D7724EA3D7F007900F4 /* LibraryMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMenuController.swift; sourceTree = "<group>"; };
 		3EE4D43D21D6E2F0000110FC /* Alerts.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Alerts.xib; sourceTree = "<group>"; };
 		3EE4D43F21D6E5DA000110FC /* AlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertWindowController.swift; sourceTree = "<group>"; };
 		3EE4EC212470F9F30075374E /* SequenceScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceScope.swift; sourceTree = "<group>"; };
@@ -1699,6 +1701,7 @@
 				3E5F00CF2153A09500A76C23 /* BookmarksMenuController.swift */,
 				3E850D581FB446940017CD02 /* PlaylistMenuController.swift */,
 				3EF661FE24B3982D00BFF16A /* PlayQueueMenuController.swift */,
+				3EE32D7724EA3D7F007900F4 /* LibraryMenuController.swift */,
 				3EDDF6AF1FB54AB800DF2E9A /* PlaybackMenuController.swift */,
 				3EB029131FB58CEC00A2D920 /* SoundMenuController.swift */,
 				3EDDF6A81FB4FAA600DF2E9A /* ViewMenuController.swift */,
@@ -3538,6 +3541,7 @@
 				3E9847821F5CF23D001A2D28 /* HelpMenuController.swift in Sources */,
 				3ECF12F824578E95007209BC /* TextSizeMenuController.swift in Sources */,
 				3E24ED451FBB2B430023F9F9 /* ReverbViewController.swift in Sources */,
+				3EE32D7824EA3D7F007900F4 /* LibraryMenuController.swift in Sources */,
 				3E17A8B721871D7700CADE89 /* EQView.swift in Sources */,
 				3E3FB7FD215B5BBB00974A59 /* FavoritesDelegate.swift in Sources */,
 				3E4BBA5C1F030E5B0025F371 /* UIConstants.swift in Sources */,

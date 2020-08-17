@@ -19,6 +19,8 @@ protocol PlayQueueDelegateProtocol {
     
     // MARK: Mutating functions ---------------------------------------------------------------
     
+    func addTracks(from files: [URL])
+    
     // Adds tracks to the end of the queue, i.e. "Play Later"
     func enqueueToPlayLater(_ tracks: [Track]) -> ClosedRange<Int>
     

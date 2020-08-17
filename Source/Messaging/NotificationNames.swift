@@ -139,6 +139,18 @@ extension Notification.Name {
     
     // MARK: Notifications published by the play queue.
     
+    // Signifies that the play queue has begun adding a set of tracks.
+    static let playQueue_startedAddingTracks = Notification.Name("playQueue_startedAddingTracks")
+    
+    // Signifies that the play queue has finished adding a set of tracks.
+    static let playQueue_doneAddingTracks = Notification.Name("playQueue_doneAddingTracks")
+    
+    // Signifies that some chosen tracks could not be added to the play queue (i.e. an error condition).
+    static let playQueue_tracksNotAdded = Notification.Name("playQueue_tracksNotAdded")
+    
+    // Signifies that a new track has been added to the play queue.
+    static let playQueue_trackAdded = Notification.Name("playQueue_trackAdded")
+    
     static let playQueue_tracksAdded = Notification.Name("playQueue_tracksAdded")
     
     static let playQueue_tracksRemoved = Notification.Name("playQueue_tracksRemoved")
@@ -413,19 +425,26 @@ extension Notification.Name {
     
     // ----------------------------------------------------------------------------------------
     
-    static let playQueue_moveTracksUp = Notification.Name("playQueue_moveTracksUp")
-    static let playQueue_moveTracksDown = Notification.Name("playQueue_moveTracksDown")
-    static let playQueue_moveTracksToTop = Notification.Name("playQueue_moveTracksToTop")
-    static let playQueue_moveTracksToBottom = Notification.Name("playQueue_moveTracksToBottom")
-
     // ----------------------------------------------------------------------------------------
     
     static let library_removeTracks = Notification.Name("library_removeTracks")
     
     // MARK: Play Queue commands
     
-    // Commands the play queue to remove any selected tracks selected in the current playlist view.
+    // Commands the play queue to display a file dialog to let the user add new tracks.
+    static let playQueue_addTracks = Notification.Name("playQueue_addTracks")
+    
+    // Commands the play queue to remove any selected tracks.
     static let playQueue_removeTracks = Notification.Name("playQueue_removeTracks")
+    static let playQueue_clear = Notification.Name("playQueue_clear")
+    
+    // Commands the play queue to remove any selected tracks.
+    static let playQueue_exportAsPlaylistFile = Notification.Name("playQueue_exportAsPlaylistFile")
+    
+    static let playQueue_moveTracksUp = Notification.Name("playQueue_moveTracksUp")
+    static let playQueue_moveTracksDown = Notification.Name("playQueue_moveTracksDown")
+    static let playQueue_moveTracksToTop = Notification.Name("playQueue_moveTracksToTop")
+    static let playQueue_moveTracksToBottom = Notification.Name("playQueue_moveTracksToBottom")
     
     // ----------------------------------------------------------------------------------------
     

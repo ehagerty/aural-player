@@ -645,7 +645,7 @@ CA
                         <items>
                             <menuItem title="  Add files / folders" image="Add-Small" keyEquivalent="o" id="fru-he-3Cc">
                                 <connections>
-                                    <action selector="addFilesAction:" target="sXT-Pr-clR" id="REU-Fe-HlL"/>
+                                    <action selector="addFilesAction:" target="EvH-oo-9ua" id="mAB-gd-nm2"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Export as playlist file" image="Save-Small" keyEquivalent="s" id="iwj-Ff-5kU">
@@ -740,13 +740,13 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="vne-Bl-t3s"/>
-                            <menuItem title=" Scroll to top of playlist" image="ScrollToTop-Small" keyEquivalent="" id="xau-Ke-pjh">
+                            <menuItem title=" Scroll to top" image="ScrollToTop-Small" keyEquivalent="" id="xau-Ke-pjh">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="scrollToTopAction:" target="sXT-Pr-clR" id="ArC-ey-KbW"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Scroll to bottom of playlist" image="ScrollToBottom-Small" keyEquivalent="" id="j0e-BX-nfx" userLabel="Scroll to bottom of playlist">
+                            <menuItem title=" Scroll to bottom" image="ScrollToBottom-Small" keyEquivalent="" id="j0e-BX-nfx" userLabel="Scroll to bottom of playlist">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
                                     <action selector="scrollToBottomAction:" target="sXT-Pr-clR" id="KJa-Xh-GST"/>
@@ -767,6 +767,107 @@ CA
                         </items>
                         <connections>
                             <outlet property="delegate" destination="sXT-Pr-clR" id="kRH-sx-vSW"/>
+                        </connections>
+                    </menu>
+                </menuItem>
+                <menuItem title="Library" id="Dut-s4-yMS">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Library" autoenablesItems="NO" id="0br-xG-wDz">
+                        <items>
+                            <menuItem title="  Add files / folders" image="Add-Small" keyEquivalent="o" id="jfS-cf-MnL">
+                                <connections>
+                                    <action selector="addFilesAction:" target="sXT-Pr-clR" id="XZq-ja-9n0"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Clear the library" image="Clear-Small" id="S5Y-ns-2JX">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <connections>
+                                    <action selector="clearPlaylistAction:" target="sXT-Pr-clR" id="uoq-o1-kaO"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="nas-Z1-0q1"/>
+                            <menuItem title="  Play selected track" image="Play-Small" id="YKq-Va-vIK" userLabel="Play selected track/group">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="playSelectedItemAction:" target="sXT-Pr-clR" id="i5P-AA-OGZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="YFj-8Z-1g2"/>
+                            <menuItem title=" Clear selection" image="InvertSelection-Small" id="WS5-L7-I8R" userLabel="Clear selection">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="clearSelectionAction:" target="sXT-Pr-clR" id="mAh-VC-CRB"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Invert selection" image="InvertSelection-Small" id="6Bt-JE-fxF" userLabel="Invert selection">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="invertSelectionAction:" target="sXT-Pr-clR" id="Nan-AL-qhu"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Crop selection" image="CropSelection-Small" id="wol-oV-8bJ" userLabel="Crop selection">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="cropSelectionAction:" target="sXT-Pr-clR" id="HPj-gv-wUa"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Remove selected tracks" image="Remove-Small" id="qrL-L7-SKn" userLabel="Remove selected tracks">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="removeSelectedItemsAction:" target="EvH-oo-9ua" id="fTW-qr-7mm"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ohM-yR-Fxw"/>
+                            <menuItem title=" Search library" image="Search-Small" keyEquivalent="f" id="Blz-9C-h0C">
+                                <connections>
+                                    <action selector="playlistSearchAction:" target="sXT-Pr-clR" id="KwW-f3-7BX"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Sort library" image="Sort-Small" keyEquivalent="s" id="12M-OQ-1eu" userLabel="Sort playlist">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="playlistSortAction:" target="sXT-Pr-clR" id="IsX-NJ-yt8"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="CaO-64-XH3"/>
+                            <menuItem title=" Scroll to top" image="ScrollToTop-Small" keyEquivalent="" id="EfX-2l-ekn">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="scrollToTopAction:" target="sXT-Pr-clR" id="fpF-og-3gh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Scroll to bottom" image="ScrollToBottom-Small" keyEquivalent="" id="4XL-By-vdA" userLabel="Scroll to bottom of playlist">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="scrollToBottomAction:" target="sXT-Pr-clR" id="4il-v5-wge"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Page up" image="PageUp-Small" keyEquivalent="" id="58T-ec-1Qi" userLabel="Page up">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="pageUpAction:" target="sXT-Pr-clR" id="Txi-bP-ZIH"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title=" Page down" image="PageDown-Small" keyEquivalent="" id="1Aw-AR-MJJ" userLabel="Page down">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="pageDownAction:" target="sXT-Pr-clR" id="sYq-LK-R8p"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                        <connections>
+                            <outlet property="delegate" destination="sXT-Pr-clR" id="pHA-0A-Rbh"/>
                         </connections>
                     </menu>
                 </menuItem>

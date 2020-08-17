@@ -28,6 +28,8 @@ class TrackMetadata {
     var chapters: [Chapter] = []
     var hasChapters: Bool {!chapters.isEmpty}
     
+    var hasPrimaryMetadata: Bool = false
+    
     init(for file: URL) {
         self.defaultDisplayName = file.deletingPathExtension().lastPathComponent
     }
@@ -42,6 +44,8 @@ class TrackMetadata {
         self.genre = metadata.genre
         
         self.art = metadata.coverArt
+        
+        hasPrimaryMetadata = true
     }
     
     func setSecondaryMetadata(_ metadata: SecondaryMetadata) {

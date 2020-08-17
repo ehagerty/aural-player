@@ -24,16 +24,23 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     
     private var lastRow: Int {rowCount - 1}
     
+    private let allColumns: IndexSet = [0, 1, 2]
+    
+    private lazy var fileOpenDialog = DialogsAndAlerts.openDialog
+    
     override func viewDidLoad() {
         
         playQueueView.enableDragDrop_reorderingAndFiles()
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
+        
+        Messenger.subscribeAsync(self, .playQueue_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
         
         // Only respond if the playing track was updated
         Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:), queue: .main)
         
+        Messenger.subscribe(self, .playQueue_addTracks, self.addTracks)
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
         
         Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
@@ -43,8 +50,21 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         updateSummary()
     }
+
+    // Invokes the Open file dialog, to allow the user to add tracks/playlists to the play queue.
+    func addTracks() {
+        
+        if fileOpenDialog.runModal() == NSApplication.ModalResponse.OK {
+            playQueue.addTracks(from: fileOpenDialog.urls)
+        }
+    }
     
-    private let allColumns: IndexSet = [0, 1, 2]
+    // NOTE - Assumes track was added at the end of the queue.
+    func trackAdded(_ notification: PlayQueueTrackAddedNotification) {
+        
+        playQueueView.noteNumberOfRowsChanged()
+        updateSummary()
+    }
     
     func tracksAdded(_ notification: PlayQueueTracksAddedNotification) {
         
@@ -90,7 +110,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
 
         if needToShowTrack {
 
-            if let newTrack = notification.endTrack, let newTrackIndex = playQueue.indexOfTrack(newTrack), newTrackIndex >= playQueueView.numberOfRows {
+            if let newTrack = notification.endTrack, let newTrackIndex = playQueue.indexOfTrack(newTrack), newTrackIndex >= rowCount {
 
                 // This means the track is in the playlist but has not yet been added to the playlist view (Bookmark/Recently played/Favorite item), and will be added shortly (this is a race condition). So, dispatch an async delayed handler to show the track in the playlist, after it is expected to be added.
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {

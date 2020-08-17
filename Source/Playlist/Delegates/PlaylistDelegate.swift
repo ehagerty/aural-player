@@ -18,7 +18,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
     private let trackAddQueue: OperationQueue = OperationQueue()
     private let trackUpdateQueue: OperationQueue = OperationQueue()
     
-    private var addSession: TrackAddSession!
+    private var addSession: TrackAddSession<TrackAddResult>!
     
     private let concurrentAddOpCount = roundedInt(Double(SystemUtils.numberOfActiveCores) * 1.5)
     
@@ -138,7 +138,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
     private func addFiles_async(_ files: [URL], _ gapsByFile: [URL: (PlaybackGap?, PlaybackGap?)],
                                 _ autoplayOptions: AutoplayOptions, _ userAction: Bool = true) {
         
-        addSession = TrackAddSession(files.count, autoplayOptions)
+        addSession = TrackAddSession<TrackAddResult>(files.count, autoplayOptions)
         
         // Move to a background thread to unblock the main thread
         DispatchQueue.global(qos: .userInteractive).async {
@@ -495,7 +495,7 @@ class AutoplayOptions {
     static let defaultOptions: AutoplayOptions = AutoplayOptions(false)
 }
 
-class TrackAddSession {
+class TrackAddSession<T> where T: Any {
     
     var tracks: [Track] = []
     
@@ -508,7 +508,7 @@ class TrackAddSession {
     var tracksProcessed: Int = 0
     var tracksAdded: Int = 0
     var totalTracks: Int = 0
-    var results: [TrackAddResult] = []
+    var results: [T] = []
     var errors: [DisplayableError] = []
     
     init(_ numTracks: Int, _ autoplayOptions: AutoplayOptions) {

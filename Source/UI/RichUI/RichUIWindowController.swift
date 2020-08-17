@@ -18,6 +18,9 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
     private lazy var libraryTracksController: LibraryTracksViewController = LibraryTracksViewController()
     private lazy var fileSystemBrowserController: FileSystemBrowserViewController = FileSystemBrowserViewController()
     
+    private var playQueueMenu: NSMenuItem!
+    private var libraryMenu: NSMenuItem!
+    
     override func windowDidLoad() {
         
         playerBrowserSplitView.delegate = self
@@ -45,6 +48,12 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
         browserTabView.tabViewItem(at: 2).view?.addSubview(fileSystemBrowserView)
         fileSystemBrowserView.anchorToView(fileSystemBrowserView.superview!)
         
+        if let mainMenu = NSApplication.shared.mainMenu {
+            
+            self.playQueueMenu = mainMenu.item(withTitle: "Play Queue")
+            self.libraryMenu = mainMenu.item(withTitle: "Library")
+        }
+        
         Messenger.subscribe(self, .browser_showTab, self.showBrowserTab(_:))
         
         showBrowserTab(1)
@@ -58,7 +67,25 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
     }
 
     private func showBrowserTab(_ tabIndex: Int) {
+        
         browserTabView.selectTabViewItem(at: tabIndex)
+        
+        switch tabIndex {
+            
+        case 0:
+            
+            playQueueMenu.show()
+            libraryMenu.hide()
+            
+        case 1:
+            
+            playQueueMenu.hide()
+            libraryMenu.show()
+            
+        default:
+            
+            return
+        }
     }
     
     func splitView(_ splitView: NSSplitView, effectiveRect proposedEffectiveRect: NSRect, forDrawnRect drawnRect: NSRect, ofDividerAt dividerIndex: Int) -> NSRect {

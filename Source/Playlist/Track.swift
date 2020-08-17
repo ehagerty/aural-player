@@ -14,6 +14,7 @@ class Track: Hashable, PlaylistItem {
     var playbackContext: PlaybackContextProtocol? {context.playbackContext}
     
     let metadata: TrackMetadata
+    var hasPrimaryMetadata: Bool {metadata.hasPrimaryMetadata}
     
     var isValidTrack: Bool = true
     var validationError: Error?

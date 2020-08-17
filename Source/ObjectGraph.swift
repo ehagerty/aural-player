@@ -137,10 +137,8 @@ class ObjectGraph {
         library = Library()
         libraryDelegate = LibraryDelegate(library, appState.library, preferences)
         
-//        MetadataUtils.initialize(libraryDelegate, avAssetReader, ffmpegReader)
-        
         playQueue = PlayQueue(library: library, persistentStateOnStartup: appState.playQueue)
-        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue)
+        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue, library: library)
         
         let profiles = PlaybackProfiles()
         

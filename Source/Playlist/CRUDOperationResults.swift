@@ -15,6 +15,14 @@ struct TrackAddResult {
     let groupingPlaylistResults: [GroupType: GroupedTrackAddResult]
 }
 
+struct PlayQueueTrackAddResult {
+    
+    let track: Track
+    
+    // Index of the added track, within the play queue
+    let index: Int
+}
+
 // Contains the result of adding a track to a single grouping playlist
 struct GroupedTrackAddResult {
     

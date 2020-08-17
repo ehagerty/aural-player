@@ -16,7 +16,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     private let trackAddQueue: OperationQueue = OperationQueue()
     private let trackUpdateQueue: OperationQueue = OperationQueue()
     
-    private var addSession: TrackAddSession!
+    private var addSession: TrackAddSession<TrackAddResult>!
     
     private let concurrentAddOpCount = roundedInt(Double(SystemUtils.numberOfActiveCores) * 1.5)
     
@@ -81,7 +81,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     // Adds files to the playlist asynchronously, emitting event notifications as the work progresses
     private func addFiles_async(_ files: [URL], _ userAction: Bool = true) {
         
-        addSession = TrackAddSession(files.count, .defaultOptions)
+        addSession = TrackAddSession<TrackAddResult>(files.count, .defaultOptions)
         
         // Move to a background thread to unblock the main thread
         DispatchQueue.global(qos: .userInteractive).async {
@@ -205,10 +205,12 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     
     private func processBatch(_ batch: AddBatch) {
         
-        // Process all tracks in batch concurrently and wait until the entire batch finishes.
-        trackAddQueue.addOperations(batch.map {index in BlockOperation {self.addSession.tracks[index].loadPrimaryMetadata()}}, waitUntilFinished: true)
+        let addSessionTracks: [Track] = batch.map({addSession.tracks[$0]})
         
-        for track in batch.map({addSession.tracks[$0]}) {
+        // Process all tracks in batch concurrently and wait until the entire batch finishes.
+        trackAddQueue.addOperations(addSessionTracks.map {track in BlockOperation {track.loadPrimaryMetadata()}}, waitUntilFinished: true)
+        
+        for track in addSessionTracks {
             
             if track.isValidTrack, let result = self.library.addTrack(track) {
                 
