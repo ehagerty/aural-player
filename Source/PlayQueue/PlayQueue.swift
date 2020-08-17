@@ -53,7 +53,9 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
                     return track.isValidTrack ? track : nil
                 }
                 
-                Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: 0...self.tracks.lastIndex))
+                if self.tracks.isNonEmpty {
+                    Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: 0...self.tracks.lastIndex))
+                }
                 
                 self.persistentStateOnStartup = nil
                 Messenger.unsubscribe(self, .library_doneAddingTracks)

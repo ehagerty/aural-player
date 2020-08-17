@@ -105,14 +105,12 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
             }
         }
         
-//        else if let files = info.draggingPasteboard.readObjects(forClasses: [NSURL.self]) as? [URL] {
-//
-//            // Files added from Finder, add them to the playlist as URLs
-////            playQueue.addFiles(files)
-////            return true
-//
-//            return false
-//        }
+        else if let files = info.draggingPasteboard.readObjects(forClasses: [NSURL.self]) as? [URL] {
+
+            // Files added from Finder, add them to the playlist as URLs
+            playQueue.addTracks(from: files)
+            return true
+        }
         
         return false
     }

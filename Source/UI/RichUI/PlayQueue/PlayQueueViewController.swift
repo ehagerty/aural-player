@@ -42,6 +42,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         Messenger.subscribe(self, .playQueue_addTracks, self.addTracks)
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
+        Messenger.subscribe(self, .playQueue_clear, self.clear)
         
         Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
         Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
@@ -189,6 +190,12 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
         
         updateSummary()
         clearSelection()
+    }
+    
+    func clear() {
+        
+        playQueue.clear()
+        playQueueView.reloadData()
     }
     
     // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
