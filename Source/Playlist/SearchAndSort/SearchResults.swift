@@ -59,16 +59,16 @@ class SearchResults {
 
     // Sorts in ascending order by group index (and track index if group indexes are equal)
     // For display in grouping/hierarchical views
-    func sortByGroupAndTrackIndex() {
-        
-        results.sort(by: {r1, r2 -> Bool in
-            
-            let g1 = r1.location.groupInfo!.groupIndex
-            let g2 = r2.location.groupInfo!.groupIndex
-            
-            return g1 == g2 ? r1.location.groupInfo!.trackIndex < r2.location.groupInfo!.trackIndex : g1 < g2
-        })
-    }
+//    func sortByGroupAndTrackIndex() {
+//        
+//        results.sort(by: {r1, r2 -> Bool in
+//            
+//            let g1 = r1.location.groupInfo!.groupIndex
+//            let g2 = r2.location.groupInfo!.groupIndex
+//            
+//            return g1 == g2 ? r1.location.groupInfo!.trackIndex < r2.location.groupInfo!.trackIndex : g1 < g2
+//        })
+//    }
 }
 
 // Represents a single result (track) in a playlist search
@@ -107,7 +107,7 @@ struct SearchResultLocation: Equatable {
     let track: Track
     
     // Only for grouping playlists
-    var groupInfo: GroupedTrack?
+//    var groupInfo: GroupedTrack?
     
     // Two locations are equal if they describe the location of the same track
     public static func ==(lhs: SearchResultLocation, rhs: SearchResultLocation) -> Bool {

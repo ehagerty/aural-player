@@ -101,7 +101,7 @@ protocol SequencingProtocol {
      
         NOTE - When a group is specified, it is implied that the playlist from which this request originated was a grouping/hierarchical playlist, because such a playlist does not provide a single index to locate an item. It provides either a track or a group. Hence, this function is intended to be called only when playback originates from one of the grouping/hierarchical playlists.
      */
-    func select(_ group: Group) -> Track?
+//    func select(_ group: Group) -> Track?
     
     // Returns the currently selected track (which could be playing / paused / waiting / transcoding)
     var currentTrack: Track? {get}

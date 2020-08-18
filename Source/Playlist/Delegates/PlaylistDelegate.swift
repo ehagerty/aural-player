@@ -68,33 +68,33 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         return playlist.search(searchQuery, playlistType)
     }
     
-    func groupingInfoForTrack(_ track: Track, _ groupType: GroupType) -> GroupedTrack? {
-        return playlist.groupingInfoForTrack(groupType, track)
-    }
+//    func groupingInfoForTrack(_ track: Track, _ groupType: GroupType) -> GroupedTrack? {
+//        return playlist.groupingInfoForTrack(groupType, track)
+//    }
     
     func displayNameForTrack(_ playlistType: PlaylistType, _ track: Track) -> String {
         return playlist.displayNameForTrack(playlistType, track)
     }
     
-    func groupAtIndex(_ type: GroupType, _ index: Int) -> Group? {
-        return playlist.groupAtIndex(type, index)
-    }
+//    func groupAtIndex(_ type: GroupType, _ index: Int) -> Group? {
+//        return playlist.groupAtIndex(type, index)
+//    }
     
-    func groupingInfoForTrack(_ type: GroupType, _ track: Track) -> GroupedTrack? {
-        return playlist.groupingInfoForTrack(type, track)
-    }
+//    func groupingInfoForTrack(_ type: GroupType, _ track: Track) -> GroupedTrack? {
+//        return playlist.groupingInfoForTrack(type, track)
+//    }
     
-    func indexOfGroup(_ group: Group) -> Int? {
-        return playlist.indexOfGroup(group)
-    }
-    
-    func numberOfGroups(_ type: GroupType) -> Int {
-        return playlist.numberOfGroups(type)
-    }
-    
-    func allGroups(_ type: GroupType) -> [Group] {
-        return playlist.allGroups(type)
-    }
+//    func indexOfGroup(_ group: Group) -> Int? {
+//        return playlist.indexOfGroup(group)
+//    }
+//
+//    func numberOfGroups(_ type: GroupType) -> Int {
+//        return playlist.numberOfGroups(type)
+//    }
+//
+//    func allGroups(_ type: GroupType) -> [Group] {
+//        return playlist.allGroups(type)
+//    }
     
     func getGapsAroundTrack(_ track: Track) -> (hasGaps: Bool, beforeTrack: PlaybackGap?, afterTrack: PlaybackGap?) {
         
@@ -282,7 +282,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
                 
                 let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
                 Messenger.publish(PlaylistTrackAddedNotification(trackIndex: result.flatPlaylistResult,
-                                                         groupingInfo: result.groupingPlaylistResults, addOperationProgress: progress))
+                                                         addOperationProgress: progress))
                 
                 if batchIndex == 0 && addSession.autoplayOptions.autoplay {
                     autoplay(addSession.autoplayOptions.autoplayType, track, addSession.autoplayOptions.interruptPlayback)
@@ -318,7 +318,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         // Non-nil result indicates success
         guard let result = self.playlist.addTrack(track) else {return nil}
             
-        let trackAddedNotification = PlaylistTrackAddedNotification(trackIndex: result.flatPlaylistResult, groupingInfo: result.groupingPlaylistResults, addOperationProgress: TrackAddOperationProgress(tracksAdded: 1, totalTracks: 1))
+        let trackAddedNotification = PlaylistTrackAddedNotification(trackIndex: result.flatPlaylistResult, addOperationProgress: TrackAddOperationProgress(tracksAdded: 1, totalTracks: 1))
         
         Messenger.publish(trackAddedNotification)
         Messenger.publish(.history_itemsAdded, payload: [resolvedFile])
@@ -354,12 +354,12 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         changeListeners.forEach({$0.tracksRemoved(results)})
     }
     
-    func removeTracksAndGroups(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) {
-        
-        let results: TrackRemovalResults = playlist.removeTracksAndGroups(tracks, groups, groupType)
-        Messenger.publish(.playlist_tracksRemoved, payload: results)
-        changeListeners.forEach({$0.tracksRemoved(results)})
-    }
+//    func removeTracksAndGroups(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) {
+//
+//        let results: TrackRemovalResults = playlist.removeTracksAndGroups(tracks, groups, groupType)
+//        Messenger.publish(.playlist_tracksRemoved, payload: results)
+//        changeListeners.forEach({$0.tracksRemoved(results)})
+//    }
     
     func moveTracksUp(_ indexes: IndexSet) -> ItemMoveResults {
         return doMoveTracks({playlist.moveTracksUp(indexes)})
@@ -377,31 +377,31 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         return doMoveTracks({playlist.moveTracksToBottom(indexes)})
     }
     
-    func moveTracksAndGroupsUp(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
-        return doMoveTracks({playlist.moveTracksAndGroupsUp(tracks, groups, groupType)})
-    }
-    
-    func moveTracksAndGroupsToTop(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
-        return doMoveTracks({playlist.moveTracksAndGroupsToTop(tracks, groups, groupType)})
-    }
-    
-    func moveTracksAndGroupsDown(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
-        return doMoveTracks({playlist.moveTracksAndGroupsDown(tracks, groups, groupType)})
-    }
-    
-    func moveTracksAndGroupsToBottom(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
-        return doMoveTracks({playlist.moveTracksAndGroupsToBottom(tracks, groups, groupType)})
-    }
+//    func moveTracksAndGroupsUp(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
+//        return doMoveTracks({playlist.moveTracksAndGroupsUp(tracks, groups, groupType)})
+//    }
+//
+//    func moveTracksAndGroupsToTop(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
+//        return doMoveTracks({playlist.moveTracksAndGroupsToTop(tracks, groups, groupType)})
+//    }
+//
+//    func moveTracksAndGroupsDown(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
+//        return doMoveTracks({playlist.moveTracksAndGroupsDown(tracks, groups, groupType)})
+//    }
+//
+//    func moveTracksAndGroupsToBottom(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults {
+//        return doMoveTracks({playlist.moveTracksAndGroupsToBottom(tracks, groups, groupType)})
+//    }
     
     func dropTracks(_ sourceIndexes: IndexSet, _ dropIndex: Int) -> ItemMoveResults {
         return doMoveTracks({playlist.dropTracks(sourceIndexes, dropIndex)})
     }
     
-    func dropTracksAndGroups(_ tracks: [Track], _ groups: [Group],
-                             _ groupType: GroupType, _ dropParent: Group?, _ dropIndex: Int) -> ItemMoveResults {
-        
-        return doMoveTracks({playlist.dropTracksAndGroups(tracks, groups, groupType, dropParent, dropIndex)})
-    }
+//    func dropTracksAndGroups(_ tracks: [Track], _ groups: [Group],
+//                             _ groupType: GroupType, _ dropParent: Group?, _ dropIndex: Int) -> ItemMoveResults {
+//
+//        return doMoveTracks({playlist.dropTracksAndGroups(tracks, groups, groupType, dropParent, dropIndex)})
+//    }
     
     private func doMoveTracks(_ moveOperation: () -> ItemMoveResults) -> ItemMoveResults {
         

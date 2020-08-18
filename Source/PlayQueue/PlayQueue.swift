@@ -176,7 +176,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         
         return SearchResults(tracks.compactMap {executeQuery($0, searchQuery)}.map {
             
-            SearchResult(location: SearchResultLocation(trackIndex: -1, track: $0.track, groupInfo: nil),
+            SearchResult(location: SearchResultLocation(trackIndex: -1, track: $0.track),
                          match: ($0.matchedField, $0.matchedFieldValue))
         })
     }
@@ -250,15 +250,14 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         return nil
     }
     
-    func select(_ group: Group) -> Track? {
+//    func select(_ group: Group) -> Track? {
 //
 //        // Reset the sequence based on the group's size
 //        sequence.resizeAndStart(size: group.size, withTrackIndex: nil)
 //
 //        // Begin playing the subsequent track (first track determined by the sequence)
 //        return subsequent()
-        return nil
-    }
+//    }
     
     // MARK: Sequence iteration functions -------------------------------------------------------------------------------------
     

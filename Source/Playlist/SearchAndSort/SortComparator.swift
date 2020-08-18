@@ -16,34 +16,34 @@ class SortComparator {
         return sort.tracksSort?.options.contains(.useNameIfNoMetadata) ?? false
     }
     
-    func compareGroups(_ aGroup: Group, _ anotherGroup: Group) -> Bool {
-        
-        if let groupsSort = sort.groupsSort {
-            
-            let comparison = doCompareGroups(aGroup, anotherGroup, groupsSort.fields[0])
-            return groupsSort.order == .ascending ? comparison == .orderedAscending : comparison == .orderedDescending
-        }
-        
-        return true
-    }
-    
-    private func doCompareGroups(_ aGroup: Group, _ anotherGroup: Group, _ field: SortField) -> ComparisonResult {
-        
-        switch field {
-            
-        case .name:
-            
-            return aGroup.name.compare(anotherGroup.name)
-            
-        case .duration:
-            
-            return aGroup.duration.compare(anotherGroup.duration)
-            
-        // Impossible
-        default: return .orderedSame
-            
-        }
-    }
+//    func compareGroups(_ aGroup: Group, _ anotherGroup: Group) -> Bool {
+//        
+//        if let groupsSort = sort.groupsSort {
+//            
+//            let comparison = doCompareGroups(aGroup, anotherGroup, groupsSort.fields[0])
+//            return groupsSort.order == .ascending ? comparison == .orderedAscending : comparison == .orderedDescending
+//        }
+//        
+//        return true
+//    }
+//    
+//    private func doCompareGroups(_ aGroup: Group, _ anotherGroup: Group, _ field: SortField) -> ComparisonResult {
+//        
+//        switch field {
+//            
+//        case .name:
+//            
+//            return aGroup.name.compare(anotherGroup.name)
+//            
+//        case .duration:
+//            
+//            return aGroup.duration.compare(anotherGroup.duration)
+//            
+//        // Impossible
+//        default: return .orderedSame
+//            
+//        }
+//    }
 
     // MARK: --------- Tracks comparison --------------
     

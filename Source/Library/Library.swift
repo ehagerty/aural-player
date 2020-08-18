@@ -58,7 +58,7 @@ class Library: LibraryProtocol {
         
         return SearchResults(tracks.compactMap {executeQuery($0, searchQuery)}.map {
             
-            SearchResult(location: SearchResultLocation(trackIndex: -1, track: $0.track, groupInfo: nil),
+            SearchResult(location: SearchResultLocation(trackIndex: -1, track: $0.track),
                          match: ($0.matchedField, $0.matchedFieldValue))
         })
     }

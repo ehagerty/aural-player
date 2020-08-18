@@ -2828,8 +2828,8 @@
 		3E642D1524B634A1000152B2 /* Grouping */ = {
 			isa = PBXGroup;
 			children = (
-				3E221FB71F98530700DA3AD8 /* Group.swift */,
 				3E642D1624B634BD000152B2 /* Grouping.swift */,
+				3E221FB71F98530700DA3AD8 /* Group.swift */,
 			);
 			path = Grouping;
 			sourceTree = "<group>";

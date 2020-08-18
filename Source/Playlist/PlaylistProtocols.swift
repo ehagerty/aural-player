@@ -41,23 +41,23 @@ protocol PlaylistAccessorProtocol {
     // Searches the playlist, given certain query parameters, and returns all matching results. The playlistType argument indicates which playlist type the results are to be displayed within. The search results will contain track location information tailored to the specified playlist type.
     func search(_ searchQuery: SearchQuery, _ playlistType: PlaylistType) -> SearchResults
     
-    // Returns the group, of a specific type, at the given index, within the corresponding grouping/hierarchical playlist.
-    func groupAtIndex(_ type: GroupType, _ index: Int) -> Group?
-    
-    // Returns the total number of groups of a specific type, within the corresponding grouping/hierarchical playlist.
-    func numberOfGroups(_ type: GroupType) -> Int
-
-    // Returns all groups of the given type
-    func allGroups(_ type: GroupType) -> [Group]
-    
-    // Given a track and a specific group type, returns all grouping information, such as the parent group and the index of the track within that group.
-    func groupingInfoForTrack(_ type: GroupType, _ track: Track) -> GroupedTrack?
-    
-    // Given a track and a specific group type, returns all grouping information, such as the parent group and the index of the track within that group.
-    func allGroupingInfoForTrack(_ track: Track) -> [GroupType: GroupedTrack]
-    
-    // Returns the index of a group within the appropriate grouping/hierarchical playlist (indicated by the group's type).
-    func indexOfGroup(_ group: Group) -> Int?
+//    // Returns the group, of a specific type, at the given index, within the corresponding grouping/hierarchical playlist.
+//    func groupAtIndex(_ type: GroupType, _ index: Int) -> Group?
+//
+//    // Returns the total number of groups of a specific type, within the corresponding grouping/hierarchical playlist.
+//    func numberOfGroups(_ type: GroupType) -> Int
+//
+//    // Returns all groups of the given type
+//    func allGroups(_ type: GroupType) -> [Group]
+//
+//    // Given a track and a specific group type, returns all grouping information, such as the parent group and the index of the track within that group.
+//    func groupingInfoForTrack(_ type: GroupType, _ track: Track) -> GroupedTrack?
+//
+//    // Given a track and a specific group type, returns all grouping information, such as the parent group and the index of the track within that group.
+//    func allGroupingInfoForTrack(_ track: Track) -> [GroupType: GroupedTrack]
+//
+//    // Returns the index of a group within the appropriate grouping/hierarchical playlist (indicated by the group's type).
+//    func indexOfGroup(_ group: Group) -> Int?
     
     // Returns the display name for a track within a specific playlist. For example, within the Artists playlist, the display name of a track will consist of just its title.
     func displayNameForTrack(_ playlistType: PlaylistType, _ track: Track) -> String
@@ -99,7 +99,7 @@ protocol PlaylistMutatorProtocol: CommonPlaylistMutatorProtocol {
      
         NOTE - All playlist types will be affected by this operation. i.e. the removed tracks will be removed from all playlist types.
      */
-    func removeTracksAndGroups(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> TrackRemovalResults
+//    func removeTracksAndGroups(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> TrackRemovalResults
     
     func setGapsForTrack(_ track: Track, _ gapBeforeTrack: PlaybackGap?, _ gapAfterTrack: PlaybackGap?)
     
@@ -150,9 +150,9 @@ protocol PlaylistMutatorProtocol: CommonPlaylistMutatorProtocol {
      
             - Only the specified type of grouping/hierarchical playlist will be altered. The other playlist types will be unaffected by this operation. Each playlist type's sequence of tracks/groups is independent from that of all other playlist types.
      */
-    func moveTracksAndGroupsUp(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
-    
-    func moveTracksAndGroupsToTop(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
+//    func moveTracksAndGroupsUp(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
+//
+//    func moveTracksAndGroupsToTop(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
     
     /*
         Moves either the specified tracks, or the specified groups (groups take precedence), down one index in the specified grouping/hierarchical playlist type, if they can be moved (they are not already at the bottom).
@@ -167,9 +167,9 @@ protocol PlaylistMutatorProtocol: CommonPlaylistMutatorProtocol {
      
             - Only the specified type of grouping/hierarchical playlist will be altered. The other playlist types will be unaffected by this operation. Each playlist type's sequence of tracks/groups is independent from that of all other playlist types.
      */
-    func moveTracksAndGroupsDown(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
-    
-    func moveTracksAndGroupsToBottom(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
+//    func moveTracksAndGroupsDown(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
+//
+//    func moveTracksAndGroupsToBottom(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType) -> ItemMoveResults
     
     /*
         Sorts a specific playlist type according to the specified sort parameters.
@@ -196,7 +196,7 @@ protocol PlaylistMutatorProtocol: CommonPlaylistMutatorProtocol {
      
         - Only the specified type of grouping/hierarchical playlist will be altered. The other playlist types will be unaffected by this operation. Each playlist type's sequence of tracks/groups is independent from that of all other playlist types.
      */
-    func dropTracksAndGroups(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType, _ dropParent: Group?, _ dropIndex: Int) -> ItemMoveResults
+//    func dropTracksAndGroups(_ tracks: [Track], _ groups: [Group], _ groupType: GroupType, _ dropParent: Group?, _ dropIndex: Int) -> ItemMoveResults
 }
 
 /*
@@ -234,21 +234,21 @@ enum PlaylistType: String, CaseIterable {
     case genres
     
     // Maps a PlaylistType to a corresponding GroupType
-    func toGroupType() -> GroupType? {
-        
-        switch self {
-            
-        // Group type is not applicable for the flat "Tracks" playlist
-        case .tracks: return nil
-            
-        case .artists: return .artist
-            
-        case .albums: return .album
-            
-        case .genres: return .genre
-            
-        }
-    }
+//    func toGroupType() -> GroupType? {
+//        
+//        switch self {
+//            
+//        // Group type is not applicable for the flat "Tracks" playlist
+//        case .tracks: return nil
+//            
+//        case .artists: return .artist
+//            
+//        case .albums: return .album
+//            
+//        case .genres: return .genre
+//            
+//        }
+//    }
     
     // Maps a playlist type to an optional scope type applicable if the playlist type is a grouping/hierarchical playlist, i.e. groups are its root elements.
     // So, the tracks playlist will not have a corresponding group scope, whereas the other playlists will.

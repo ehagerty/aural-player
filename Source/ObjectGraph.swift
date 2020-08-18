@@ -99,11 +99,12 @@ class ObjectGraph {
         
         // Playlist
         let flatPlaylist = FlatPlaylist()
-        let artistsPlaylist = GroupingPlaylist(.artists)
-        let albumsPlaylist = GroupingPlaylist(.albums)
-        let genresPlaylist = GroupingPlaylist(.genres)
+//        let artistsPlaylist = GroupingPlaylist(.artists)
+//        let albumsPlaylist = GroupingPlaylist(.albums)
+//        let genresPlaylist = GroupingPlaylist(.genres)
         
-        playlist = Playlist(flatPlaylist, [artistsPlaylist, albumsPlaylist, genresPlaylist])
+//        playlist = Playlist(flatPlaylist, [artistsPlaylist, albumsPlaylist, genresPlaylist])
+        playlist = Playlist(flatPlaylist)
         
         // Sequencer and delegate
         let repeatMode = appState.playQueue.repeatMode

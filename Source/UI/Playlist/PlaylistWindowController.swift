@@ -27,9 +27,9 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
     
     // The different playlist views
     private lazy var tracksView: NSView = ViewFactory.tracksView
-    private lazy var artistsView: NSView = ViewFactory.artistsView
-    private lazy var albumsView: NSView = ViewFactory.albumsView
-    private lazy var genresView: NSView = ViewFactory.genresView
+//    private lazy var artistsView: NSView = ViewFactory.artistsView
+//    private lazy var albumsView: NSView = ViewFactory.albumsView
+//    private lazy var genresView: NSView = ViewFactory.genresView
     
     @IBOutlet weak var contextMenu: NSMenu!
     
@@ -99,15 +99,18 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
     // Initialize all the tab views (and select the one preferred by the user)
     private func setUpTabGroup() {
         
-        tabGroup.addViewsForTabs([tracksView, artistsView, albumsView, genresView])
-        [1, 2, 3, 0].forEach({tabGroup.selectTabViewItem(at: $0)})
+//        tabGroup.addViewsForTabs([tracksView, artistsView, albumsView, genresView])
+//        [1, 2, 3, 0].forEach({tabGroup.selectTabViewItem(at: $0)})
         
-        if playlistPreferences.viewOnStartup.option == .specific {
-            tabGroup.selectTabViewItem(at: playlistPreferences.viewOnStartup.viewIndex)
-            
-        } else {    // Remember the view from the last app launch
-            tabGroup.selectTabViewItem(at: PlaylistViewState.current.index)
-        }
+        tabGroup.addViewsForTabs([tracksView])
+        [0].forEach({tabGroup.selectTabViewItem(at: $0)})
+        
+//        if playlistPreferences.viewOnStartup.option == .specific {
+//            tabGroup.selectTabViewItem(at: playlistPreferences.viewOnStartup.viewIndex)
+//
+//        } else {    // Remember the view from the last app launch
+//            tabGroup.selectTabViewItem(at: PlaylistViewState.current.index)
+//        }
         
         tabGroup.delegate = self
     }
@@ -246,15 +249,16 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
             
             lblTracksSummary.stringValue = String(format: "%d %@",
                                                   numTracks, numTracks == 1 ? "track" : "tracks")
-            
-        } else if let groupType = PlaylistViewState.groupType {
-
-            let numGroups = summary.numGroups
-            
-            lblTracksSummary.stringValue = String(format: "%d %@   %d %@",
-                                                  numGroups, groupType.rawValue + (numGroups == 1 ? "" : "s"),
-                                                  numTracks, numTracks == 1 ? "track" : "tracks")
         }
+            
+//        } else if let groupType = PlaylistViewState.groupType {
+//
+//            let numGroups = summary.numGroups
+//
+//            lblTracksSummary.stringValue = String(format: "%d %@   %d %@",
+//                                                  numGroups, groupType.rawValue + (numGroups == 1 ? "" : "s"),
+//                                                  numTracks, numTracks == 1 ? "track" : "tracks")
+//        }
         
         // Update spinner with current progress, if tracks are being added
         if let progressPercentage = trackAddProgress?.percentage {

@@ -215,7 +215,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
             if track.isValidTrack, let result = self.library.addTrack(track) {
                 
                 addSession.tracksAdded.increment()
-                addSession.results.append(TrackAddResult(track: track, flatPlaylistResult: result, groupingPlaylistResults: [:]))
+                addSession.results.append(TrackAddResult(track: track, flatPlaylistResult: result))
 
                 let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
                 Messenger.publish(LibraryTrackAddedNotification(trackIndex: result, addOperationProgress: progress))
@@ -275,7 +275,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     func removeTracks(_ indexes: IndexSet) {
         
         let tracks = library.removeTracks(indexes)
-        let results: TrackRemovalResults = TrackRemovalResults(groupingPlaylistResults: [:], flatPlaylistResults: indexes, tracks: tracks)
+        let results: TrackRemovalResults = TrackRemovalResults(flatPlaylistResults: indexes, tracks: tracks)
         
         Messenger.publish(.library_tracksRemoved, payload: results)
     }

@@ -162,7 +162,7 @@ struct TrackPlaybackCommandNotification: NotificationPayload {
     // Only one of these 3 fields will be non-nil, depending on the command type
     var index: Int? = nil
     var track: Track? = nil
-    var group: Group? = nil
+//    var group: Group? = nil
     
     // An (optional) delay before starting playback.
     var delay: Double? = nil
@@ -184,12 +184,12 @@ struct TrackPlaybackCommandNotification: NotificationPayload {
     }
     
     // Initialize the request with a group. This will be done from a grouping/hierarchical playlist.
-    init(group: Group, delay: Double? = nil) {
-        
-        self.group = group
-        self.type = .group
-        self.delay = delay
-    }
+//    init(group: Group, delay: Double? = nil) {
+//        
+//        self.group = group
+//        self.type = .group
+//        self.delay = delay
+//    }
 }
 
 // Enumerates all the possible playback command types. See PlaybackCommandNotification.
@@ -288,7 +288,7 @@ struct PlaylistTrackAddedNotification: NotificationPayload {
     let trackIndex: Int
     
     // Grouping info (parent groups) for the newly added track
-    let groupingInfo: [GroupType: GroupedTrackAddResult]
+//    let groupingInfo: [GroupType: GroupedTrackAddResult]
     
     // The current progress of the track add operation (See TrackAddOperationProgress)
     let addOperationProgress: TrackAddOperationProgress

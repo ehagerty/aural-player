@@ -112,9 +112,9 @@ class PlaybackDelegate: PlaybackDelegateProtocol, PlaylistChangeListenerProtocol
         doPlay({return playQueue.select(track)}, params)
     }
     
-    func play(_ group: Group, _ params: PlaybackParams) {
-        doPlay({return playQueue.select(group)}, params)
-    }
+//    func play(_ group: Group, _ params: PlaybackParams) {
+//        doPlay({return playQueue.select(group)}, params)
+//    }
     
     // Captures the current player state and proceeds with playback according to the playback sequence
     func doPlay(_ trackProducer: TrackProducer, _ params: PlaybackParams = PlaybackParams.defaultParams()) {

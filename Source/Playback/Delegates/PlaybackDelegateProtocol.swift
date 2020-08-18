@@ -36,7 +36,7 @@ protocol PlaybackDelegateProtocol: PlaybackInfoDelegateProtocol {
      
         NOTE - When a group is specified, it is implied that the playlist from which this request originated was a grouping/hierarchical playlist, because such a playlist does not provide a single index to locate an item. It provides either a track or a group. Hence, this function is intended to be called only when playback originates from one of the grouping/hierarchical playlists.
      */
-    func play(_ group: Group, _ params: PlaybackParams)
+//    func play(_ group: Group, _ params: PlaybackParams)
     
     // Restarts the current track, if there is one (i.e. seek to 0)
     func replay()
@@ -128,7 +128,7 @@ extension PlaybackDelegateProtocol {
         play(track, params)
     }
     
-    func play(_ group: Group, _ params: PlaybackParams = PlaybackParams.defaultParams()) {
-        play(group, params)
-    }
+//    func play(_ group: Group, _ params: PlaybackParams = PlaybackParams.defaultParams()) {
+//        play(group, params)
+//    }
 }

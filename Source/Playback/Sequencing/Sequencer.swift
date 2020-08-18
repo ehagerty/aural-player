@@ -44,7 +44,7 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         // Set the scope of the new sequence according to the playlist view type. For ex, if the "Artists" playlist view is selected, the new sequence will consist of all tracks in the "Artists" playlist, and the order of playback will be determined by the ordering within the Artists playlist (in addition to the repeat/shuffle modes).
         
         scope.type = playlistType.toPlaylistScopeType()
-        scope.group = nil
+//        scope.group = nil
         
         // Reset the sequence, with the size of the playlist
         sequence.resizeAndStart(size: playlist.size, withTrackIndex: nil)
@@ -60,7 +60,7 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         currentTrack = nil
         
         // Reset the scope and the scope type depending on which playlist view is currently selected
-        scope.group = nil
+//        scope.group = nil
         scope.type = playlistType.toPlaylistScopeType()
     }
     
@@ -70,7 +70,7 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         
         // "All tracks" playback scope implied. So, reset the scope to allTracks, and reset the sequence size.
         scope.type = .allTracks
-        scope.group = nil
+//        scope.group = nil
         
         return startSequence(playlist.size, index)
     }
@@ -96,33 +96,33 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         }
         
         // Get the parent group of the selected track, and set it as the playback scope
-        if let scopeType = playlistType.toGroupScopeType(), let groupType = playlistType.toGroupType(),
-            let groupInfo = playlist.groupingInfoForTrack(groupType, track) {
-            
-            scope.type = scopeType
-            scope.group = groupInfo.group
-            
-            // Select the specified track within its parent group, for playback
-            return startSequence(groupInfo.group.size, groupInfo.trackIndex)
-        }
+//        if let scopeType = playlistType.toGroupScopeType(), let groupType = playlistType.toGroupType(),
+//            let groupInfo = playlist.groupingInfoForTrack(groupType, track) {
+//
+//            scope.type = scopeType
+//            scope.group = groupInfo.group
+//
+//            // Select the specified track within its parent group, for playback
+//            return startSequence(groupInfo.group.size, groupInfo.trackIndex)
+//        }
         
         return nil
     }
     
-    func select(_ group: Group) -> Track? {
-        
-        // Determine the type of the selected track's parent group (which depends on which playlist view type is selected). This will determine the scope type.
-        scope.type = group.type.toScopeType()
-        
-        // Set the scope to the selected group
-        scope.group = group
-        
-        // Reset the sequence based on the group's size
-        sequence.resizeAndStart(size: group.size, withTrackIndex: nil)
-        
-        // Begin playing the subsequent track (first track determined by the sequence)
-        return subsequent()
-    }
+//    func select(_ group: Group) -> Track? {
+//
+//        // Determine the type of the selected track's parent group (which depends on which playlist view type is selected). This will determine the scope type.
+//        scope.type = group.type.toScopeType()
+//
+//        // Set the scope to the selected group
+//        scope.group = group
+//
+//        // Reset the sequence based on the group's size
+//        sequence.resizeAndStart(size: group.size, withTrackIndex: nil)
+//
+//        // Begin playing the subsequent track (first track determined by the sequence)
+//        return subsequent()
+//    }
     
     // MARK: Sequence iteration functions -------------------------------------------------------------------------------------
     
@@ -181,9 +181,10 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
             // For a single group, the index is the track index within that group
             case .artist, .album, .genre:
                 
-                if let group = scope.group {
-                    return group.trackAtIndex(index)
-                }
+//                if let group = scope.group {
+//                    return group.trackAtIndex(index)
+//                }
+                return nil
                 
             // For the allTracks scope, the index is the absolute index within the flat playlist
             case .allTracks:
@@ -194,9 +195,10 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
                 
             case .allArtists, .allAlbums, .allGenres:
                 
-                if let groupType = scope.type.toGroupType() {
-                    return getGroupedTrackForAbsoluteIndex(groupType, index)
-                }
+//                if let groupType = scope.type.toGroupType() {
+//                    return getGroupedTrackForAbsoluteIndex(groupType, index)
+//                }
+                return nil
             }
         }
         
@@ -221,79 +223,79 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
             -> Track 0 (absolute index 5)
             -> Track 1 (absolute index 6)
     */
-    private func getGroupedTrackForAbsoluteIndex(_ groupType: GroupType, _ absoluteIndex: Int) -> Track? {
-        
-        var groupIndex = 0
-        var tracksSoFar = 0
-        var trackIndexInGroup = 0
-        
-        // Iterate over groups while the tracks count (tracksSoFar) is less than the target absolute index
-        while tracksSoFar < absoluteIndex {
-            
-            if let group = playlist.groupAtIndex(groupType, groupIndex) {
-            
-                // Add the size of the current group, to tracksSoFar
-                tracksSoFar += group.size
-                
-                // Increment the groupIndex to iterate to the next group
-                groupIndex.increment()
-                
-            } else {
-                
-                // Group at index groupIndex not found
-                return nil
-            }
-        }
-        
-        // If you've overshot the target index, go back one group, and use the offset to calculate track index within that previous group
-        if tracksSoFar > absoluteIndex {
-            
-            groupIndex.decrement()
-            
-            if let group = playlist.groupAtIndex(groupType, groupIndex) {
-                
-                trackIndexInGroup = group.size - (tracksSoFar - absoluteIndex)
-                
-            } else {
-                
-                // Group at index groupIndex not found
-                return nil
-            }
-        }
-        
-        // Given the groupIndex and trackIndex, retrieve the desired track
-        if let group = playlist.groupAtIndex(groupType, groupIndex) {
-            return group.trackAtIndex(trackIndexInGroup)
-        }
-        
-        return nil
-    }
-   
-    /*
-        Does the opposite/inverse of what getGroupedTrackForAbsoluteIndex() does.
-        Maps a track within a grouping/hierarchical playlist to its absolute index within that playlist.
-     */
-    private func getAbsoluteIndexForGroupedTrack(_ groupType: GroupType, _ groupIndex: Int, _ trackIndex: Int) -> Int? {
-        
-        // If we're looking inside the first group, the absolute index is simply the track index
-        if groupIndex == 0 {
-            return trackIndex
-        }
-        
-        // Iterate over all the groups, noting the size of each group, till the target group is reached
-        var absIndexSoFar = 0
-        for i in 0..<groupIndex {
-            
-            if let group = playlist.groupAtIndex(groupType, i) {
-                absIndexSoFar += group.size
-            } else {
-                return nil  // group not found
-            }
-        }
-        
-        // The target group has been reached. Now, simply add the track index to absIndexSoFar, and that is the desired value
-        return absIndexSoFar + trackIndex
-    }
+//    private func getGroupedTrackForAbsoluteIndex(_ groupType: GroupType, _ absoluteIndex: Int) -> Track? {
+//
+//        var groupIndex = 0
+//        var tracksSoFar = 0
+//        var trackIndexInGroup = 0
+//
+//        // Iterate over groups while the tracks count (tracksSoFar) is less than the target absolute index
+//        while tracksSoFar < absoluteIndex {
+//
+//            if let group = playlist.groupAtIndex(groupType, groupIndex) {
+//
+//                // Add the size of the current group, to tracksSoFar
+//                tracksSoFar += group.size
+//
+//                // Increment the groupIndex to iterate to the next group
+//                groupIndex.increment()
+//
+//            } else {
+//
+//                // Group at index groupIndex not found
+//                return nil
+//            }
+//        }
+//
+//        // If you've overshot the target index, go back one group, and use the offset to calculate track index within that previous group
+//        if tracksSoFar > absoluteIndex {
+//
+//            groupIndex.decrement()
+//
+//            if let group = playlist.groupAtIndex(groupType, groupIndex) {
+//
+//                trackIndexInGroup = group.size - (tracksSoFar - absoluteIndex)
+//
+//            } else {
+//
+//                // Group at index groupIndex not found
+//                return nil
+//            }
+//        }
+//
+//        // Given the groupIndex and trackIndex, retrieve the desired track
+//        if let group = playlist.groupAtIndex(groupType, groupIndex) {
+//            return group.trackAtIndex(trackIndexInGroup)
+//        }
+//
+//        return nil
+//    }
+//
+//    /*
+//        Does the opposite/inverse of what getGroupedTrackForAbsoluteIndex() does.
+//        Maps a track within a grouping/hierarchical playlist to its absolute index within that playlist.
+//     */
+//    private func getAbsoluteIndexForGroupedTrack(_ groupType: GroupType, _ groupIndex: Int, _ trackIndex: Int) -> Int? {
+//
+//        // If we're looking inside the first group, the absolute index is simply the track index
+//        if groupIndex == 0 {
+//            return trackIndex
+//        }
+//
+//        // Iterate over all the groups, noting the size of each group, till the target group is reached
+//        var absIndexSoFar = 0
+//        for i in 0..<groupIndex {
+//
+//            if let group = playlist.groupAtIndex(groupType, i) {
+//                absIndexSoFar += group.size
+//            } else {
+//                return nil  // group not found
+//            }
+//        }
+//
+//        // The target group has been reached. Now, simply add the track index to absIndexSoFar, and that is the desired value
+//        return absIndexSoFar + trackIndex
+//    }
     
     // MARK: Repeat/Shuffle functions -------------------------------------------------------------------------------------
     
@@ -323,17 +325,17 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         
         guard !addResults.isEmpty else {return}
         
-        if let group = scope.group {
-            
-            // We are only interested in the results matching the scope's group type.
-            let filteredResults: [GroupedTrackAddResult?] = addResults.map {$0.groupingPlaylistResults[group.type]}
-
-            // Look for any results matching both the type and name of the scope group.
-            // If nothing is found, the scope is unaffected by this playlist add operation.
-            if !filteredResults.contains(where: {group == $0?.track.group}) {
-                return
-            }
-        }
+//        if let group = scope.group {
+//
+//            // We are only interested in the results matching the scope's group type.
+//            let filteredResults: [GroupedTrackAddResult?] = addResults.map {$0.groupingPlaylistResults[group.type]}
+//
+//            // Look for any results matching both the type and name of the scope group.
+//            // If nothing is found, the scope is unaffected by this playlist add operation.
+//            if !filteredResults.contains(where: {group == $0?.track.group}) {
+//                return
+//            }
+//        }
         
         updateSequence(true)
     }
@@ -346,9 +348,9 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
 
         // If the scope is a group, it will only have been affected if any tracks within it were moved.
         // NOTE - A group being moved doesn't affect the playback scope if the scope is limited to that group.
-        if let group = scope.group, !moveResults.results.contains(where: {group == ($0 as? TrackMoveResult)?.parentGroup}) {
-            return
-        }
+//        if let group = scope.group, !moveResults.results.contains(where: {group == ($0 as? TrackMoveResult)?.parentGroup}) {
+//            return
+//        }
         
         updateSequence(false)
     }
@@ -362,20 +364,20 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         // If the scope is a group, it will only have been affected if any tracks within it were sorted.
         // NOTE - Groups being sorted doesn't affect the playback scope if the scope is limited to a single group (and no tracks within it were sorted).
         // Check the parent groups of the sorted tracks, and check if the scope group was one of them.
-        if let group = scope.group {
-            
-            // No tracks were sorted (only groups were sorted) ... just return.
-            if !sortResults.tracksSorted {
-                return
-            }
-            
-            // Tracks (within selected groups) were sorted ... if the scope group was not affected, return.
-            if let trackSortGroupsScope = sortResults.affectedGroupsScope, trackSortGroupsScope == .selectedGroups,
-                !sortResults.affectedParentGroups.contains(group) {
-                
-                return
-            }
-        }
+//        if let group = scope.group {
+//
+//            // No tracks were sorted (only groups were sorted) ... just return.
+//            if !sortResults.tracksSorted {
+//                return
+//            }
+//
+//            // Tracks (within selected groups) were sorted ... if the scope group was not affected, return.
+//            if let trackSortGroupsScope = sortResults.affectedGroupsScope, trackSortGroupsScope == .selectedGroups,
+//                !sortResults.affectedParentGroups.contains(group) {
+//
+//                return
+//            }
+//        }
         
         updateSequence(false)
     }
@@ -389,16 +391,16 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
             end()
         }
         
-        if let group = scope.group {
-
-            // We are only interested in the results matching the scope's group type.
-            let filteredResults: [GroupedItemRemovalResult]? = removeResults.groupingPlaylistResults[group.type]
-            
-            // Loop through the results to see if a result for the scope group exists.
-            if let theResults = filteredResults, !theResults.contains(where: {group == ($0 as? GroupedTracksRemovalResult)?.group}) {
-                return
-            }
-        }
+//        if let group = scope.group {
+//
+//            // We are only interested in the results matching the scope's group type.
+//            let filteredResults: [GroupedItemRemovalResult]? = removeResults.groupingPlaylistResults[group.type]
+//
+//            // Loop through the results to see if a result for the scope group exists.
+//            if let theResults = filteredResults, !theResults.contains(where: {group == ($0 as? GroupedTracksRemovalResult)?.group}) {
+//                return
+//            }
+//        }
         
         updateSequence(true)
     }
@@ -418,7 +420,8 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
         if resize {
             
             // Calculate the new sequence size (either the size of the group scope, if there is one, or of the entire playlist).
-            let newSequenceSize: Int = scope.group?.size ?? playlist.size
+//            let newSequenceSize: Int = scope.group?.size ?? playlist.size
+            let newSequenceSize: Int = playlist.size
             newSequenceSize == 0 ? sequence.clear() : sequence.resizeAndStart(size: newSequenceSize, withTrackIndex: playingTrackIndex)
             
         } else {
@@ -439,16 +442,20 @@ class Sequencer: SequencerProtocol, NotificationSubscriber {
                 
                 // Recalculate the absolute index of the playing track, given its parent group and track index within that group
         
-                if let groupType = scope.type.toGroupType(), let groupInfo = playlist.groupingInfoForTrack(groupType, playingTrack) {
-                    return getAbsoluteIndexForGroupedTrack(groupType, groupInfo.groupIndex, groupInfo.trackIndex)
-                }
+//                if let groupType = scope.type.toGroupType(), let groupInfo = playlist.groupingInfoForTrack(groupType, playingTrack) {
+//                    return getAbsoluteIndexForGroupedTrack(groupType, groupInfo.groupIndex, groupInfo.trackIndex)
+//                }
+                
+                return nil
                 
             case .artist, .album, .genre:
                 
                 // The index of the playing track within the group is simply its track index
-                if let group = scope.group {
-                    return group.indexOfTrack(playingTrack)
-                }
+//                if let group = scope.group {
+//                    return group.indexOfTrack(playingTrack)
+//                }
+                
+                return nil
                 
             case .allTracks:
                 

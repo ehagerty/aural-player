@@ -228,7 +228,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         let removedTracks = playQueue.removeTracks(indices)
         
         Messenger.publish(.playQueue_tracksRemoved,
-                          payload: TrackRemovalResults(groupingPlaylistResults: [:], flatPlaylistResults: indices, tracks: removedTracks))
+                          payload: TrackRemovalResults(flatPlaylistResults: indices, tracks: removedTracks))
         
         return removedTracks
     }

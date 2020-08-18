@@ -88,9 +88,10 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
             
         case .group:
             
-            if let group = command.group {
-                playGroup(group, command.delay)
-            }
+//            if let group = command.group {
+//                playGroup(group, command.delay)
+//            }
+            return
         }
     }
     
@@ -106,11 +107,11 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
         player.play(track, params)
     }
     
-    private func playGroup(_ group: Group, _ delay: Double?) {
-        
-        let params = PlaybackParams.defaultParams().withDelay(delay)
-        player.play(group, params)
-    }
+//    private func playGroup(_ group: Group, _ delay: Double?) {
+//        
+//        let params = PlaybackParams.defaultParams().withDelay(delay)
+//        player.play(group, params)
+//    }
     
     // Plays the previous track in the current playback sequence
     @IBAction func previousTrackAction(_ sender: AnyObject) {

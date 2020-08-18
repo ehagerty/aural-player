@@ -7,17 +7,17 @@ import Cocoa
 class Sort {
     
     var tracksSort: TracksSort?
-    var groupsSort: GroupsSort?
+//    var groupsSort: GroupsSort?
     
     func withTracksSort(_ sort: TracksSort) -> Sort {
         self.tracksSort = sort
         return self
     }
     
-    func withGroupsSort(_ sort: GroupsSort) -> Sort {
-        self.groupsSort = sort
-        return self
-    }
+//    func withGroupsSort(_ sort: GroupsSort) -> Sort {
+//        self.groupsSort = sort
+//        return self
+//    }
 }
 
 class GroupsSort {
@@ -43,7 +43,7 @@ class TracksSort {
     
     // These 2 fields are used only when sorting tracks within groups
     var scope: GroupsScope = .allGroups
-    var parentGroups: [Group] = []
+//    var parentGroups: [Group] = []
     
     var options: [TracksSortOptions] = [.useNameIfNoMetadata]
     
@@ -62,10 +62,10 @@ class TracksSort {
         return self
     }
     
-    func withParentGroups(_ groups: [Group]) -> TracksSort {
-        self.parentGroups = groups
-        return self
-    }
+//    func withParentGroups(_ groups: [Group]) -> TracksSort {
+//        self.parentGroups = groups
+//        return self
+//    }
     
     func withNoOptions() -> TracksSort {
         self.options = []
@@ -116,18 +116,18 @@ struct SortResults {
     
     // These 2 fields are only applicable when tracks are sorted within groups.
     let affectedGroupsScope: GroupsScope?
-    let affectedParentGroups: [Group]   // This array will be non-empty only when affectedGroupsScope == .selectedGroups
+//    let affectedParentGroups: [Group]   // This array will be non-empty only when affectedGroupsScope == .selectedGroups
     
-    let groupsSorted: Bool
+//    let groupsSorted: Bool
     
     init(_ playlistType: PlaylistType, _ sort: Sort) {
         
         self.playlistType = playlistType
         
         self.tracksSorted = sort.tracksSort != nil
-        self.groupsSorted = sort.groupsSort != nil
+//        self.groupsSorted = sort.groupsSort != nil
         
         self.affectedGroupsScope = sort.tracksSort?.scope
-        self.affectedParentGroups = sort.tracksSort?.parentGroups ?? []
+//        self.affectedParentGroups = sort.tracksSort?.parentGroups ?? []
     }
 }

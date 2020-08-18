@@ -43,11 +43,11 @@ struct ViewFactory {
         
         fileprivate static let tracksViewController: TracksPlaylistViewController = TracksPlaylistViewController()
         
-        fileprivate static let artistsViewController: ArtistsPlaylistViewController = ArtistsPlaylistViewController()
-        
-        fileprivate static let albumsViewController: AlbumsPlaylistViewController = AlbumsPlaylistViewController()
-        
-        fileprivate static let genresViewController: GenresPlaylistViewController = GenresPlaylistViewController()
+//        fileprivate static let artistsViewController: ArtistsPlaylistViewController = ArtistsPlaylistViewController()
+//
+//        fileprivate static let albumsViewController: AlbumsPlaylistViewController = AlbumsPlaylistViewController()
+//
+//        fileprivate static let genresViewController: GenresPlaylistViewController = GenresPlaylistViewController()
         
         fileprivate static let contextMenuController: PlaylistContextMenuController = PlaylistContextMenuController()
     }
@@ -198,19 +198,19 @@ struct ViewFactory {
     }
     
     // Returns the "Artists" playlist view
-    static var artistsView: NSView {
-        return PlaylistViews.artistsViewController.view
-    }
-    
-    // Returns the "Albums" playlist view
-    static var albumsView: NSView {
-        return PlaylistViews.albumsViewController.view
-    }
-    
-    // Returns the "Genres" playlist view
-    static var genresView: NSView {
-        return PlaylistViews.genresViewController.view
-    }
+//    static var artistsView: NSView {
+//        return PlaylistViews.artistsViewController.view
+//    }
+//    
+//    // Returns the "Albums" playlist view
+//    static var albumsView: NSView {
+//        return PlaylistViews.albumsViewController.view
+//    }
+//    
+//    // Returns the "Genres" playlist view
+//    static var genresView: NSView {
+//        return PlaylistViews.genresViewController.view
+//    }
     
     static var contextMenu: NSMenu {
         return PlaylistViews.contextMenuController.contextMenu

@@ -9,7 +9,7 @@ class SequenceScope {
     var type: SequenceScopeType
     
     // If only a particular artist/album/genre is being played back, holds the specific artist/album/genre group. Nil otherwise.
-    var group: Group?
+//    var group: Group?
     
     init(_ type: SequenceScopeType) {
         self.type = type
@@ -41,21 +41,21 @@ enum SequenceScopeType: String {
     case genre
     
     // Maps a sequence scope type to a GroupType
-    func toGroupType() -> GroupType? {
-        
-        switch self {
-            
-        // No applicable group type for the flat playlist
-        case .allTracks: return nil
-            
-        case .allArtists, .artist: return .artist
-            
-        case .allAlbums, .album: return .album
-            
-        case .allGenres, .genre: return .genre
-            
-        }
-    }
+//    func toGroupType() -> GroupType? {
+//        
+//        switch self {
+//            
+//        // No applicable group type for the flat playlist
+//        case .allTracks: return nil
+//            
+//        case .allArtists, .artist: return .artist
+//            
+//        case .allAlbums, .album: return .album
+//            
+//        case .allGenres, .genre: return .genre
+//            
+//        }
+//    }
     
     // Maps a sequence scope type to a PlaylistType
     func toPlaylistType() -> PlaylistType {

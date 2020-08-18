@@ -41,7 +41,7 @@ class PlaylistViewState {
     }
     
     // The group type corresponding to the current playlist view type
-    static var groupType: GroupType? {current.toGroupType()}
+//    static var groupType: GroupType? {current.toGroupType()}
     
     static var selectedItem: SelectedPlaylistItem? {
         
@@ -51,10 +51,7 @@ class PlaylistViewState {
             // Grouping view
             let item = outlineView.item(atRow: outlineView.selectedRow)
             
-            if let group = item as? Group {
-                return SelectedPlaylistItem(group: group)
-                
-            } else if let track = item as? Track {
+            if let track = item as? Track {
                 // Track
                 return SelectedPlaylistItem(track: track)
             }
@@ -80,10 +77,7 @@ class PlaylistViewState {
             // Grouping view
             for item in selectedRows.compactMap({outlineView.item(atRow: $0)}) {
                 
-                if let group = item as? Group {
-                    items.append(SelectedPlaylistItem(group: group))
-                    
-                } else if let track = item as? Track {
+                if let track = item as? Track {
                     // Track
                     items.append(SelectedPlaylistItem(track: track))
                 }
@@ -112,10 +106,7 @@ class PlaylistViewState {
             // Grouping view
             let item = outlineView.item(atRow: outlineView.selectedRow)
             
-            if let group = item as? Group {
-                _clickedItem = SelectedPlaylistItem(group: group)
-                
-            } else if let track = item as? Track {
+            if let track = item as? Track {
                 _clickedItem = SelectedPlaylistItem(track: track)
             }
             
@@ -135,7 +126,7 @@ struct SelectedPlaylistItem {
     // Only one of these will be non-nil, depending on the type of item
     var index: Int?
     var track: Track?
-    var group: Group?
+//    var group: Group?
     
     // Initialize the object with a track index or a track chapter.
     init(index: Int) {
@@ -152,11 +143,11 @@ struct SelectedPlaylistItem {
     }
     
     // Initialize the object with a group. This represents an item from a grouping/hierarchical playlist.
-    init(group: Group) {
-        
-        self.group = group
-        self.type = .group
-    }
+//    init(group: Group) {
+//
+//        self.group = group
+//        self.type = .group
+//    }
 }
 
 // Enumerates the different types of playlist items (in terms of their location within the playlist)

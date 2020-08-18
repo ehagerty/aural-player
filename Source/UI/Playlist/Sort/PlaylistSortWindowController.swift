@@ -8,9 +8,9 @@ class PlaylistSortWindowController: NSWindowController, ModalDialogDelegate {
     @IBOutlet weak var container: NSBox!
     
     private var tracksPlaylistSortView: SortViewProtocol = TracksPlaylistSortViewController()
-    private var artistsPlaylistSortView: SortViewProtocol = ArtistsPlaylistSortViewController()
-    private var albumsPlaylistSortView: SortViewProtocol = AlbumsPlaylistSortViewController()
-    private var genresPlaylistSortView: SortViewProtocol = GenresPlaylistSortViewController()
+//    private var artistsPlaylistSortView: SortViewProtocol = ArtistsPlaylistSortViewController()
+//    private var albumsPlaylistSortView: SortViewProtocol = AlbumsPlaylistSortViewController()
+//    private var genresPlaylistSortView: SortViewProtocol = GenresPlaylistSortViewController()
     
     // Delegate that relays sort requests to the playlist
     private let playlist: PlaylistDelegateProtocol = ObjectGraph.playlistDelegate
@@ -25,7 +25,8 @@ class PlaylistSortWindowController: NSWindowController, ModalDialogDelegate {
     
     override func windowDidLoad() {
         
-        container.addSubviews(tracksPlaylistSortView.sortView, artistsPlaylistSortView.sortView, albumsPlaylistSortView.sortView, genresPlaylistSortView.sortView)
+//        container.addSubviews(tracksPlaylistSortView.sortView, artistsPlaylistSortView.sortView, albumsPlaylistSortView.sortView, genresPlaylistSortView.sortView)
+        container.addSubviews(tracksPlaylistSortView.sortView)
         WindowManager.registerModalComponent(self)
     }
     
@@ -40,17 +41,19 @@ class PlaylistSortWindowController: NSWindowController, ModalDialogDelegate {
         if !self.isWindowLoaded {_ = theWindow}
         
         // Choose sort view based on current playlist view
-        NSView.hideViews(tracksPlaylistSortView.sortView, artistsPlaylistSortView.sortView, albumsPlaylistSortView.sortView, genresPlaylistSortView.sortView)
+//        NSView.hideViews(tracksPlaylistSortView.sortView, artistsPlaylistSortView.sortView, albumsPlaylistSortView.sortView, genresPlaylistSortView.sortView)
         
         switch PlaylistViewState.current {
 
         case .tracks:       displayedSortView = tracksPlaylistSortView
             
-        case .artists:      displayedSortView = artistsPlaylistSortView
+//        case .artists:      displayedSortView = artistsPlaylistSortView
+//
+//        case .albums:       displayedSortView = albumsPlaylistSortView
+//
+//        case .genres:       displayedSortView = genresPlaylistSortView
             
-        case .albums:       displayedSortView = albumsPlaylistSortView
-            
-        case .genres:       displayedSortView = genresPlaylistSortView
+        default: return modalDialogResponse
 
         }
         
