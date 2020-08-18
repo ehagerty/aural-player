@@ -414,6 +414,8 @@
 		3E5AB1262479A501007E303E /* SequencerPlaylistTypeChangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AB1252479A501007E303E /* SequencerPlaylistTypeChangeTests.swift */; };
 		3E5AB1282479ABEA007E303E /* SequencerPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AB1272479ABEA007E303E /* SequencerPersistenceTests.swift */; };
 		3E5AB12C2479B105007E303E /* ShuffleSequenceIterationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AB12B2479B105007E303E /* ShuffleSequenceIterationTests.swift */; };
+		3E5D681724EBB6B700F25723 /* PlayableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5D681624EBB6B700F25723 /* PlayableItem.swift */; };
+		3E5D681924EC062000F25723 /* PlayQueueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5D681824EC062000F25723 /* PlayQueueTrack.swift */; };
 		3E5E1E5021DB539D007C62B7 /* AboutDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E1E4F21DB539D007C62B7 /* AboutDialog.xib */; };
 		3E5E1E5321DB5688007C62B7 /* AboutDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E1E5221DB5688007C62B7 /* AboutDialogController.swift */; };
 		3E5F00C121536CF000A76C23 /* PitchPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F00C021536CF000A76C23 /* PitchPresets.swift */; };
@@ -1148,6 +1150,8 @@
 		3E5AB1252479A501007E303E /* SequencerPlaylistTypeChangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerPlaylistTypeChangeTests.swift; sourceTree = "<group>"; };
 		3E5AB1272479ABEA007E303E /* SequencerPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerPersistenceTests.swift; sourceTree = "<group>"; };
 		3E5AB12B2479B105007E303E /* ShuffleSequenceIterationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuffleSequenceIterationTests.swift; sourceTree = "<group>"; };
+		3E5D681624EBB6B700F25723 /* PlayableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableItem.swift; sourceTree = "<group>"; };
+		3E5D681824EC062000F25723 /* PlayQueueTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTrack.swift; sourceTree = "<group>"; };
 		3E5D708721D9EBFA00491D6C /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		3E5E1E4F21DB539D007C62B7 /* AboutDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutDialog.xib; sourceTree = "<group>"; };
 		3E5E1E5221DB5688007C62B7 /* AboutDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutDialogController.swift; sourceTree = "<group>"; };
@@ -1901,6 +1905,7 @@
 				3E357B4F1F9C798500C8F7B1 /* FlatPlaylistProtocols.swift */,
 				3E357B511F9C79E900C8F7B1 /* GroupingPlaylistProtocols.swift */,
 				3ED5264E1F2FA27200001A97 /* ChangeListenerProtocols.swift */,
+				3E5D681624EBB6B700F25723 /* PlayableItem.swift */,
 				3E97967C1F00286200690DA2 /* Track.swift */,
 				3E75929124DE81F300B95E8E /* TrackMetadata.swift */,
 				3E06E74824DE6E7F0037A111 /* TrackContextProtocol.swift */,
@@ -3106,6 +3111,7 @@
 				3E7651C324BA21EF002FB8B4 /* Delegate */,
 				3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */,
 				3E929EA424B8F4280010B176 /* PlayQueue.swift */,
+				3E5D681824EC062000F25723 /* PlayQueueTrack.swift */,
 			);
 			path = PlayQueue;
 			sourceTree = "<group>";
@@ -3544,6 +3550,8 @@
 				3EE7D725244EC8D1005D76FA /* ColorState.swift in Sources */,
 				3E2188A61F0767290085BAB3 /* DetailedTrackInfoRowView.swift in Sources */,
 				3EF743B1218C50420060BDE0 /* FilterBandsViewDelegate.swift in Sources */,
+				3E5D681724EBB6B700F25723 /* PlayableItem.swift in Sources */,
+				3E5D681924EC062000F25723 /* PlayQueueTrack.swift in Sources */,
 				3EF5E5D21FBF0373004270A4 /* TracksPlaylistViewDelegate.swift in Sources */,
 				3E066C2B216C6F5300E4FE80 /* TimePresetsEditorViewController.swift in Sources */,
 				3E58CC2B1F0275B200C36DC1 /* TimerUtils.swift in Sources */,

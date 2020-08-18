@@ -301,7 +301,7 @@ enum PlaylistType: String, CaseIterable {
 }
 
 // Marker protocol indicating an item that belongs to a playlist (i.e. either a track or a group)
-protocol PlaylistItem {}
+//protocol PlaylistItem {}
 
 let ascendingIntComparator: (Int, Int) -> Bool = {$0 < $1}
 let descendingIntComparator: (Int, Int) -> Bool = {$0 > $1}

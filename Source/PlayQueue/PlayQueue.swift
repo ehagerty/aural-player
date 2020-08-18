@@ -64,7 +64,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     }
     
     func trackAtIndex(_ index: Int) -> Track? {
-        return tracks.itemAtIndex(index)
+        return tracks.item(at: index)
     }
     
     func indexOfTrack(_ track: Track) -> Int?  {
@@ -110,7 +110,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     
     func removeTracks(_ indexes: IndexSet) -> [Track] {
         
-        let removedTracks = tracks.removeItems(indexes)
+        let removedTracks = tracks.removeItems(at: indexes)
         
         if let playingTrackIndex = sequence.curTrackIndex {
             
@@ -139,19 +139,19 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     }
     
     func moveTracksUp(_ indices: IndexSet) -> [TrackMoveResult] {
-        return doMoveTracks {tracks.moveItemsUp(indices)}
+        return doMoveTracks {tracks.moveItemsUp(from: indices)}
     }
     
     func moveTracksDown(_ indices: IndexSet) -> [TrackMoveResult] {
-        return doMoveTracks {tracks.moveItemsDown(indices)}
+        return doMoveTracks {tracks.moveItemsDown(from: indices)}
     }
     
     func moveTracksToTop(_ indices: IndexSet) -> [TrackMoveResult] {
-        return doMoveTracks {tracks.moveItemsToTop(indices)}
+        return doMoveTracks {tracks.moveItemsToTop(from: indices)}
     }
     
     func moveTracksToBottom(_ indices: IndexSet) -> [TrackMoveResult] {
-        return doMoveTracks {tracks.moveItemsToBottom(indices)}
+        return doMoveTracks {tracks.moveItemsToBottom(from: indices)}
     }
     
     func dropTracks(_ sourceIndexes: IndexSet, _ dropIndex: Int) -> [TrackMoveResult] {
@@ -237,7 +237,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         
         sequence.resizeAndStart(size: size, withTrackIndex: trackIndex)
         
-        if let track = tracks.itemAtIndex(trackIndex) {
+        if let track = tracks.item(at: trackIndex) {
             
             currentTrack = track
             return track
@@ -265,7 +265,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         
         if let subsequentIndex = sequence.subsequent() {
             
-            currentTrack = tracks.itemAtIndex(subsequentIndex)
+            currentTrack = tracks.item(at: subsequentIndex)
             return currentTrack
         }
         
@@ -276,7 +276,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     func next() -> Track? {
         
         // If there is no previous track, don't change the playingTrack variable, because the playing track will continue playing
-        if let nextIndex = sequence.next(), let nextTrack = tracks.itemAtIndex(nextIndex) {
+        if let nextIndex = sequence.next(), let nextTrack = tracks.item(at: nextIndex) {
             
             currentTrack = nextTrack
             return nextTrack
@@ -288,7 +288,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     func previous() -> Track? {
         
         // If there is no previous track, don't change the playingTrack variable, because the playing track will continue playing
-        if let previousIndex = sequence.previous(), let previousTrack = tracks.itemAtIndex(previousIndex) {
+        if let previousIndex = sequence.previous(), let previousTrack = tracks.item(at: previousIndex) {
             
             currentTrack = previousTrack
             return previousTrack
@@ -300,7 +300,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     func peekSubsequent() -> Track? {
         
         if let subsequentIndex = sequence.peekSubsequent() {
-            return tracks.itemAtIndex(subsequentIndex)
+            return tracks.item(at: subsequentIndex)
         }
         
         return nil
@@ -308,7 +308,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     
     func peekNext() -> Track? {
         
-        if let nextIndex = sequence.peekNext(), let nextTrack = tracks.itemAtIndex(nextIndex) {
+        if let nextIndex = sequence.peekNext(), let nextTrack = tracks.item(at: nextIndex) {
             return nextTrack
         }
         
@@ -318,7 +318,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     func peekPrevious() -> Track? {
         
         // If there is no previous track, don't change the playingTrack variable, because the playing track will continue playing
-        if let previousIndex = sequence.peekPrevious(), let previousTrack = tracks.itemAtIndex(previousIndex) {
+        if let previousIndex = sequence.peekPrevious(), let previousTrack = tracks.item(at: previousIndex) {
             return previousTrack
         }
         

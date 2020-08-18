@@ -4,7 +4,7 @@ import AVFoundation
 /*
     Encapsulates all information about a single track
  */
-class Track: Hashable, PlaylistItem {
+class Track: Hashable, PlayableItem {
     
     let file: URL
     

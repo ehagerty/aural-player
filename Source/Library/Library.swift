@@ -17,7 +17,7 @@ class Library: LibraryProtocol {
     var summary: (size: Int, totalDuration: Double) {(size, duration)}
     
     func trackAtIndex(_ index: Int) -> Track? {
-        return tracks.itemAtIndex(index)
+        return tracks.item(at: index)
     }
     
     func indexOfTrack(_ track: Track) -> Int?  {
@@ -51,7 +51,7 @@ class Library: LibraryProtocol {
     }
     
     func removeTracks(_ indices: IndexSet) -> [Track] {
-        return tracks.removeItems(indices)
+        return tracks.removeItems(at: indices)
     }
     
     func search(_ searchQuery: SearchQuery) -> SearchResults {
