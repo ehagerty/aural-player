@@ -21,6 +21,9 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
     
     private var playQueueMenu: NSMenuItem!
     private var libraryMenu: NSMenuItem!
+    private var viewMenuItem: NSMenuItem!
+    
+    @IBOutlet weak var viewMenu: NSMenu!
     
     override func windowDidLoad() {
         
@@ -57,6 +60,9 @@ class RichUIWindowController: NSWindowController, NSSplitViewDelegate, Notificat
             
             self.playQueueMenu = mainMenu.item(withTitle: "Play Queue")
             self.libraryMenu = mainMenu.item(withTitle: "Library")
+            
+            self.viewMenuItem = mainMenu.item(withTitle: "View")
+            mainMenu.setSubmenu(viewMenu, for: viewMenuItem)
         }
         
         Messenger.subscribe(self, .browser_showTab, self.showBrowserTab(_:))

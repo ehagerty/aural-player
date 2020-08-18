@@ -72,7 +72,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        WindowManager.initializeWindows()
+//        WindowManager.initializeWindows()
+        ObjectGraph.interfaceManager.showInterface(type: .unified)
         
         // Update the appLaunched flag
         appLaunched = true
@@ -93,4 +94,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         ObjectGraph.tearDown()
     }
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {true}
 }

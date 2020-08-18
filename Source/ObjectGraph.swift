@@ -66,6 +66,8 @@ class ObjectGraph {
     
     static var mediaKeyHandler: MediaKeyHandler!
     
+    static var interfaceManager: InterfaceManager!
+    
     // Don't let any code invoke this initializer to create instances of ObjectGraph
     private init() {}
     
@@ -185,6 +187,8 @@ class ObjectGraph {
         PlayerViewState.initialize(appState.ui.player)
         PlaylistViewState.initialize(appState.ui.playlist)
         EffectsViewState.initialize(appState.ui.effects)
+        
+        interfaceManager = InterfaceManager()
     }
     
     private static let tearDownOpQueue: OperationQueue = {

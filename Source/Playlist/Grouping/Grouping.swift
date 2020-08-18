@@ -1,6 +1,8 @@
 import Foundation
 
-class Grouping<K, T> where K: Hashable, T: PlayableItem {
+class Grouping<K: Hashable, T: PlayableItem> {
+    
+    var id: String {"<Unknown Grouping ID>"}
     
     private(set) var groups: [Group<K, T>] = []
     private var groupsMap: [K: Group<K, T>] = [:]

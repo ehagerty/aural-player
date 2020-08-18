@@ -11,12 +11,13 @@
                 <outlet property="browserTabView" destination="oOy-Uj-Vc4" id="eGp-5H-G77"/>
                 <outlet property="playerBrowserSplitView" destination="iiK-KV-OLC" id="mXZ-Xb-6oM"/>
                 <outlet property="splitView" destination="mCq-7J-CYT" id="edK-Sm-ts1"/>
+                <outlet property="viewMenu" destination="fnz-PS-fBS" id="coF-Nw-KqK"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="aCb-t2-FOW"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="QvC-M9-y7g">
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="1000" height="649"/>
@@ -161,9 +162,155 @@
             </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="59" y="217.5"/>
         </window>
+        <menu title="View" autoenablesItems="NO" id="fnz-PS-fBS">
+            <items>
+                <menuItem title=" Effects window" state="on" image="ToggleEffectsView-Small" keyEquivalent="2" id="zdg-LC-OP5" userLabel="Effects"/>
+                <menuItem title=" Chapters list window" image="ToggleChaptersList-Small" keyEquivalent="3" id="twf-0x-gJh"/>
+                <menuItem isSeparatorItem="YES" id="Ij3-OT-bMd"/>
+                <menuItem title="  Player view" indentationLevel="1" id="b92-iz-KPo" userLabel="Player view">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="  Player view" autoenablesItems="NO" id="5Zv-mt-QdX">
+                        <items>
+                            <menuItem title="Default view" state="on" id="vqg-3k-sBb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Expanded art view" id="dav-PQ-dG4">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="bDb-Qo-QHc"/>
+                            <menuItem title="Album art" id="hxD-c2-S4h">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Artist" id="Ufq-6h-ARI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Album" id="LNv-tv-wqL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Current chapter title" id="kJK-e7-nID">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Playing track info" id="YIB-cU-PdL" userLabel="Playing track info">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Playback sequence info" hidden="YES" enabled="NO" id="EWR-Dz-seV">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="ZoP-3j-0pP"/>
+                            <menuItem title="Playing track functions" id="DcM-dn-Tgb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Main controls" id="mJa-ij-zib" userLabel="View Player Main Controls">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Time elapsed / remaining" id="bjZ-84-dk3">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="mnt-ca-EF2"/>
+                            <menuItem title="Text size" id="jRe-Ob-tqH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Text size" id="Hg5-Es-aAc">
+                                    <items>
+                                        <menuItem title="Normal" id="rPu-m0-UQv">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Larger" tag="1" id="6D1-hx-KH9">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Largest" tag="2" id="PVc-1P-gZN">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Yof-R9-gcf"/>
+                            <menuItem title="Time elapsed display" id="K90-6M-oby">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Time elapsed display" id="QxF-N3-GzE">
+                                    <items>
+                                        <menuItem title="hh:mm:ss (e.g. &quot;15:36&quot;)" id="EgL-pS-eXC">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Number of seconds (e.g. &quot;79 sec&quot;)" tag="1" id="SPa-lG-QYq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Percentage of track duration (e.g. &quot;12%&quot;)" tag="2" id="TdD-kM-ZL5">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Time remaining display" id="2ZU-J5-ffQ" userLabel="Time remaining format">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Time remaining display" id="MFN-GF-i7h">
+                                    <items>
+                                        <menuItem title="hh:mm:ss (e.g. &quot;- 2:15&quot;)" id="OJq-cB-hoq">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Number of seconds (e.g. &quot;- 17 sec&quot;)" tag="1" id="2ST-3m-oT7">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Percentage of track duration (e.g. &quot;- 3%&quot;)" tag="2" id="oZV-eO-aKU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="xhR-uY-Xo4"/>
+                                        <menuItem title="Track duration as hh:mm:ss (e.g. &quot;5:48&quot;)" tag="3" id="ibZ-lN-R4y">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Track duration as number of seconds (e.g. &quot;348 sec&quot;)" tag="4" id="VLV-mv-Y5U">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="PoX-Lf-mbz"/>
+                <menuItem title="  Color scheme" indentationLevel="1" id="4HW-Cl-OuF" userLabel="Color scheme">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="  Color scheme" showsStateColumn="NO" id="Qjx-8V-xlr">
+                        <items>
+                            <menuItem isSeparatorItem="YES" id="0oP-FP-tsi"/>
+                            <menuItem title="Black attack (default)" indentationLevel="1" id="YwQ-8d-wY8">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Black &amp; aqua" indentationLevel="1" id="bta-Sa-vVw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="White blight" indentationLevel="1" id="vzC-z7-5fo">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Gloomy day" indentationLevel="1" id="KYQ-Xp-qDw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Brownie" indentationLevel="1" id="Oia-fa-Qaa">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="The blues" indentationLevel="1" id="jys-uQ-RAL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="7Xe-FA-Ety"/>
+                            <menuItem title="Customize ..." indentationLevel="1" id="6Yy-Xn-NDt">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="  Save current scheme" indentationLevel="1" id="eqc-WK-zlB" userLabel="Save current scheme">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="  Manage color schemes" indentationLevel="1" id="1v7-Fp-Vdl" userLabel="Manage color schemes">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="104" y="-327"/>
+        </menu>
     </objects>
     <resources>
         <image name="AppTitle" width="107" height="38"/>
         <image name="Sidebar" width="169" height="169"/>
+        <image name="ToggleChaptersList-Small" width="14" height="11"/>
+        <image name="ToggleEffectsView-Small" width="14" height="14"/>
     </resources>
 </document>

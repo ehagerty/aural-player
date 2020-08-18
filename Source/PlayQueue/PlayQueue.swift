@@ -3,6 +3,7 @@ import Foundation
 class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     
     var tracks: [Track] = []
+    var groupings: [String: PlayQueueGrouping] = [:]
     
     // MARK: Accessor functions
     

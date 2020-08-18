@@ -27,7 +27,6 @@ class WindowManager {
     static var chaptersListWindow: NSWindow = WindowFactory.chaptersListWindow
     
     static let windowDelegate: SnappingWindowDelegate = SnappingWindowDelegate()
-    static let richUIWindowDelegate: RichUIWindowDelegate = RichUIWindowDelegate()
     
 //    private static var onTop: Bool = false
     
@@ -51,20 +50,12 @@ class WindowManager {
         }
     }
     
-    class RichUIWindowDelegate: NSObject, NSWindowDelegate {
-     
-        func windowWillClose(_ notification: Notification) {
-            NSApp.terminate(self)
-        }
-    }
-    
     static var showRichUI: Bool = true
     
     static func initializeWindows() {
         
         if showRichUI {
             
-            richUIWindow.delegate = richUIWindowDelegate
             richUIWindow.show()
             
         } else {
