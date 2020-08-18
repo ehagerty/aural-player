@@ -416,6 +416,7 @@
 		3E5AB12C2479B105007E303E /* ShuffleSequenceIterationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5AB12B2479B105007E303E /* ShuffleSequenceIterationTests.swift */; };
 		3E5D681724EBB6B700F25723 /* PlayableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5D681624EBB6B700F25723 /* PlayableItem.swift */; };
 		3E5D681924EC062000F25723 /* PlayQueueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5D681824EC062000F25723 /* PlayQueueTrack.swift */; };
+		3E5D681B24EC083B00F25723 /* PlayQueueGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5D681A24EC083B00F25723 /* PlayQueueGrouping.swift */; };
 		3E5E1E5021DB539D007C62B7 /* AboutDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E5E1E4F21DB539D007C62B7 /* AboutDialog.xib */; };
 		3E5E1E5321DB5688007C62B7 /* AboutDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5E1E5221DB5688007C62B7 /* AboutDialogController.swift */; };
 		3E5F00C121536CF000A76C23 /* PitchPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5F00C021536CF000A76C23 /* PitchPresets.swift */; };
@@ -1152,6 +1153,7 @@
 		3E5AB12B2479B105007E303E /* ShuffleSequenceIterationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShuffleSequenceIterationTests.swift; sourceTree = "<group>"; };
 		3E5D681624EBB6B700F25723 /* PlayableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayableItem.swift; sourceTree = "<group>"; };
 		3E5D681824EC062000F25723 /* PlayQueueTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTrack.swift; sourceTree = "<group>"; };
+		3E5D681A24EC083B00F25723 /* PlayQueueGrouping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueGrouping.swift; sourceTree = "<group>"; };
 		3E5D708721D9EBFA00491D6C /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		3E5E1E4F21DB539D007C62B7 /* AboutDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutDialog.xib; sourceTree = "<group>"; };
 		3E5E1E5221DB5688007C62B7 /* AboutDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutDialogController.swift; sourceTree = "<group>"; };
@@ -3112,6 +3114,7 @@
 				3E929EA224B8EEE10010B176 /* PlayQueueProtocol.swift */,
 				3E929EA424B8F4280010B176 /* PlayQueue.swift */,
 				3E5D681824EC062000F25723 /* PlayQueueTrack.swift */,
+				3E5D681A24EC083B00F25723 /* PlayQueueGrouping.swift */,
 			);
 			path = PlayQueue;
 			sourceTree = "<group>";
@@ -3678,6 +3681,7 @@
 				3E221FB81F98530700DA3AD8 /* Group.swift in Sources */,
 				3E2F104C215569D40099FD06 /* EditorWindowController.swift in Sources */,
 				3E3D489B1F464C02004C0F91 /* Errors.swift in Sources */,
+				3E5D681B24EC083B00F25723 /* PlayQueueGrouping.swift in Sources */,
 				3EBD20081F6C6EC300E1354C /* ParserProtocols.swift in Sources */,
 				3E09D1A121751EC40083C2AF /* PlaybackParams.swift in Sources */,
 				3EE7D723244EBF5A005D76FA /* ColorSchemePreset.swift in Sources */,

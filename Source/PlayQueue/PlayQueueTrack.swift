@@ -22,7 +22,3 @@ class PlayQueueTrack: PlayableItem {
         hasher.combine(id)
     }
 }
-
-class PlayQueueGroup: Group<String, PlayQueueTrack> {}
-
-class PlayQueueGrouping: Grouping<String, PlayQueueTrack> {}
