@@ -5,10 +5,13 @@ class InterfaceManager {
     var currentInterface: InterfaceType = .unified
     var interfaces: [InterfaceType: InterfaceProtocol] = [:]
     
+    let unifiedInterface: UnifiedInterface
+    let modularInterface: ModularInterface
+    
     init(_ appState: UIState, _ preferences: ViewPreferences) {
         
-        let unifiedInterface = UnifiedInterface()
-        let modularInterface = ModularInterface(appState.windowLayout, preferences)
+        self.unifiedInterface = UnifiedInterface()
+        self.modularInterface = ModularInterface(appState.windowLayout, preferences)
         
         interfaces = [modularInterface.type: modularInterface, unifiedInterface.type: unifiedInterface]
     }

@@ -8,7 +8,7 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
-    override var nibName: String? {return "PlayQueue"}
+    override var nibName: String? {return "UnifiedPlayQueue"}
   
     private var selectedRows: IndexSet {playQueueView.selectedRowIndexes}
     
@@ -277,8 +277,6 @@ class PlayQueueViewController: NSViewController, NotificationSubscriber {
     private func removeAndInsertItems(_ results: [TrackMoveResult]) {
         
         for result in results {
-            
-//            playQueueView.moveRow
             
             playQueueView.removeRows(at: IndexSet(integer: result.sourceIndex), withAnimation: result.movedUp ? .slideUp : .slideDown)
             playQueueView.insertRows(at: IndexSet(integer: result.destinationIndex), withAnimation: result.movedUp ? .slideDown : .slideUp)

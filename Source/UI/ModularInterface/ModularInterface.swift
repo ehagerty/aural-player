@@ -21,6 +21,9 @@ class ModularInterface: InterfaceProtocol {
     
     var playlistWindow: NSWindow = WindowFactory.playlistWindow
     
+    lazy var playQueueWindowController: PlayQueueWindowViewController = PlayQueueWindowViewController()
+    lazy var playQueueWindow: NSWindow = playQueueWindowController.window!
+    
     // Helps with lazy loading of chapters list window
     private var chaptersListWindowLoaded: Bool = false
     
@@ -142,13 +145,13 @@ class ModularInterface: InterfaceProtocol {
     private func showEffects() {
         
         mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.above)
-        effectsWindow.setIsVisible(true)
+        effectsWindow.show()
         effectsWindow.orderFront(self)
     }
     
     // Hides the effects window
     private func hideEffects() {
-        effectsWindow.setIsVisible(false)
+        effectsWindow.hide()
     }
     
     // Shows/hides the playlist window
@@ -161,13 +164,20 @@ class ModularInterface: InterfaceProtocol {
     private func showPlaylist() {
         
         mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.above)
-        playlistWindow.setIsVisible(true)
+        playlistWindow.show()
         playlistWindow.orderFront(self)
     }
     
     // Hides the playlist window
     private func hidePlaylist() {
-        playlistWindow.setIsVisible(false)
+        playlistWindow.hide()
+    }
+    
+    func showPlayQueue() {
+
+        mainWindow.addChildWindow(playQueueWindow, ordered: NSWindow.OrderingMode.above)
+        playQueueWindow.show()
+        playQueueWindow.orderFront(self)
     }
     
     func toggleChaptersList() {

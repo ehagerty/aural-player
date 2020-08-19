@@ -6,18 +6,19 @@ import Cocoa
 class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     
     // Fields that display/control seek position within the playing track
-    @IBOutlet weak var lblSeekTime: NSTextField!
+    @IBOutlet weak var lblTimeElapsed: VALabel!
+    @IBOutlet weak var lblTimeRemaining: VALabel!
     
     // Shows the time elapsed for the currently playing track, and allows arbitrary seeking within the track
     @IBOutlet weak var seekSlider: NSSlider!
     @IBOutlet weak var seekSliderCell: SeekSliderCell!
     
     // A clone of the seek slider, used to render the segment playback loop
-//    @IBOutlet weak var seekSliderClone: NSSlider!
-//    @IBOutlet weak var seekSliderCloneCell: SeekSliderCell!
-//
-//    // Used to display the bookmark name prompt popover
-//    @IBOutlet weak var seekPositionMarker: NSView!
+    @IBOutlet weak var seekSliderClone: NSSlider!
+    @IBOutlet weak var seekSliderCloneCell: SeekSliderCell!
+    
+    // Used to display the bookmark name prompt popover
+    @IBOutlet weak var seekPositionMarker: NSView!
     
     // Timer that periodically updates the seek position slider and label
     private var seekTimer: RepeatingTaskExecutor?
@@ -35,10 +36,8 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     override func awakeFromNib() {
         
         // Allow clicks on the seek time display labels to switch to different display formats
-//        lblTimeElapsed.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(self.switchTimeElapsedDisplayAction)))
-//        lblTimeRemaining.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(self.switchTimeRemainingDisplayAction)))
-        
-        seekSliderCell.slider = seekSlider
+        lblTimeElapsed.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(self.switchTimeElapsedDisplayAction)))
+        lblTimeRemaining.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(self.switchTimeRemainingDisplayAction)))
         
         playbackRateChanged(timeUnit.effectiveRate, .noTrack)
         
@@ -72,13 +71,13 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
         seekSlider.enable()
         seekSlider.show()
         
-//        [lblTimeElapsed, lblTimeRemaining].forEach({$0?.showIf(PlayerViewState.showTimeElapsedRemaining)})
+        [lblTimeElapsed, lblTimeRemaining].forEach({$0?.showIf(PlayerViewState.showTimeElapsedRemaining)})
         setSeekTimerState(true)
     }
     
     func noTrackPlaying() {
         
-//        NSView.hideViews(lblTimeElapsed, lblTimeRemaining, seekSlider)
+        NSView.hideViews(lblTimeElapsed, lblTimeRemaining, seekSlider)
         
         seekSliderCell.removeLoop()
         seekSlider.doubleValue = 0
@@ -91,7 +90,10 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
         let seekPosn = player.seekPosition
         seekSlider.doubleValue = seekPosn.percentageElapsed
         
-        lblSeekTime.stringValue = ValueFormatter.formatTrackTimes(seekPosn.timeElapsed, seekPosn.trackDuration, seekPosn.percentageElapsed, PlayerViewState.seekTimeDisplayType)
+        let trackTimes = ValueFormatter.formatTrackTimes(seekPosn.timeElapsed, seekPosn.trackDuration, seekPosn.percentageElapsed, PlayerViewState.timeElapsedDisplayType, PlayerViewState.timeRemainingDisplayType)
+        
+        lblTimeElapsed.stringValue = trackTimes.elapsed
+        lblTimeRemaining.stringValue = trackTimes.remaining
         
         for task in SeekTimerTaskQueue.tasksArray {
             task()
@@ -110,26 +112,26 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     // When the playback loop for the current playing track is changed, the seek slider needs to be updated (redrawn) to show the current loop state
     func playbackLoopChanged(_ playbackLoop: PlaybackLoop?, _ trackDuration: Double) {
         
-//        if let loop = playbackLoop {
-//
-//            // If loop start has not yet been marked, mark it (e.g. when marking chapter loops)
-//
-//            seekSliderClone.doubleValue = loop.startTime * 100 / trackDuration
-//            seekSliderCell.markLoopStart(seekSliderCloneCell.knobCenter)
-//
-//            // Use the seek slider clone to mark the exact position of the center of the slider knob, at both the start and end points of the playback loop (for rendering)
-//            if let loopEndTime = loop.endTime {
-//
-//                seekSliderClone.doubleValue = loopEndTime * 100 / trackDuration
-//                seekSliderCell.markLoopEnd(seekSliderCloneCell.knobCenter)
-//            }
-//
-//        } else {
-//            seekSliderCell.removeLoop()
-//        }
-//
-//        seekSlider.redraw()
-//        updateSeekPosition()
+        if let loop = playbackLoop {
+            
+            // If loop start has not yet been marked, mark it (e.g. when marking chapter loops)
+            
+            seekSliderClone.doubleValue = loop.startTime * 100 / trackDuration
+            seekSliderCell.markLoopStart(seekSliderCloneCell.knobCenter)
+            
+            // Use the seek slider clone to mark the exact position of the center of the slider knob, at both the start and end points of the playback loop (for rendering)
+            if let loopEndTime = loop.endTime {
+                
+                seekSliderClone.doubleValue = loopEndTime * 100 / trackDuration
+                seekSliderCell.markLoopEnd(seekSliderCloneCell.knobCenter)
+            }
+            
+        } else {
+            seekSliderCell.removeLoop()
+        }
+
+        seekSlider.redraw()
+        updateSeekPosition()
     }
     
     func trackChanged(_ loop: PlaybackLoop?, _ newTrack: Track?) {
@@ -146,11 +148,11 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     }
     
     func gapOrTranscodingStarted() {
-//        NSView.hideViews(seekSlider, lblTimeElapsed, lblTimeRemaining)
+        NSView.hideViews(seekSlider, lblTimeElapsed, lblTimeRemaining)
     }
     
     func showOrHideTimeElapsedRemaining() {
-//        [lblTimeElapsed, lblTimeRemaining].forEach({$0?.showIf(PlayerViewState.showTimeElapsedRemaining)})
+        [lblTimeElapsed, lblTimeRemaining].forEach({$0?.showIf(PlayerViewState.showTimeElapsedRemaining)})
     }
     
     // When the playback rate changes (caused by the Time Stretch fx unit), the seek timer interval needs to be updated, to ensure that the seek position fields are updated fast/slow enough to match the new playback rate.
@@ -172,8 +174,8 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     
     func changeTextSize(_ size: TextSize) {
         
-//        lblTimeElapsed.font = Fonts.Player.trackTimesFont
-//        lblTimeRemaining.font = Fonts.Player.trackTimesFont
+        lblTimeElapsed.font = Fonts.Player.trackTimesFont
+        lblTimeRemaining.font = Fonts.Player.trackTimesFont
     }
     
     func applyColorScheme(_ scheme: ColorScheme) {
@@ -184,8 +186,8 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     
     func changeSliderValueTextColor(_ color: NSColor) {
         
-//        lblTimeElapsed.textColor = Colors.Player.trackTimesTextColor
-//        lblTimeRemaining.textColor = Colors.Player.trackTimesTextColor
+        lblTimeElapsed.textColor = Colors.Player.trackTimesTextColor
+        lblTimeRemaining.textColor = Colors.Player.trackTimesTextColor
     }
     
     func changeSliderColors() {
@@ -196,7 +198,7 @@ class SeekSliderView: NSView, ColorSchemeable, TextSizeable {
     func positionSeekPositionMarkerView() {
         
         // Slider knob position
-//        let knobRect = seekSliderCell.knobRect(flipped: false)
-//        seekPositionMarker.setFrameOrigin(NSPoint(x: seekSlider.frame.minX + knobRect.minX, y: seekSlider.frame.minY + knobRect.minY))
+        let knobRect = seekSliderCell.knobRect(flipped: false)
+        seekPositionMarker.setFrameOrigin(NSPoint(x: seekSlider.frame.minX + knobRect.minX, y: seekSlider.frame.minY + knobRect.minY))
     }
 }

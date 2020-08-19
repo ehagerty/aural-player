@@ -34,6 +34,8 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     
     private let player: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
+    private let modularInterface: ModularInterface = ObjectGraph.interfaceManager.modularInterface
+    
     func menuNeedsUpdate(_ menu: NSMenu) {
         
         manageLayoutsMenuItem.enableIf(!WindowLayouts.userDefinedLayouts.isEmpty)
@@ -87,6 +89,10 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     // Shows/hides the playlist window
     @IBAction func togglePlaylistAction(_ sender: AnyObject) {
         Messenger.publish(.windowManager_togglePlaylistWindow)
+    }
+    
+    @IBAction func togglePlayQueueAction(_ sender: AnyObject) {
+        modularInterface.showPlayQueue()
     }
     
     // Shows/hides the effects window

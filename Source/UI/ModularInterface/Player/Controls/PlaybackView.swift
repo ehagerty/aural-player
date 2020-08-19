@@ -49,9 +49,9 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
         btnPreviousTrack.toolTipFunction = {
             () -> String? in
 
-//            if let prevTrack = self.sequencer.peekPrevious() {
-//                return String(format: "Previous track: '%@'", prevTrack.defaultDisplayName)
-//            }
+            if let prevTrack = self.sequencer.peekPrevious() {
+                return String(format: "Previous track: '%@'", prevTrack.defaultDisplayName)
+            }
 
             return nil
         }
@@ -59,9 +59,9 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
         btnNextTrack.toolTipFunction = {
             () -> String? in
 
-//            if let nextTrack = self.sequencer.peekNext() {
-//                return String(format: "Next track: '%@'", nextTrack.defaultDisplayName)
-//            }
+            if let nextTrack = self.sequencer.peekNext() {
+                return String(format: "Next track: '%@'", nextTrack.defaultDisplayName)
+            }
 
             return nil
         }
@@ -122,7 +122,7 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
     func applyColorScheme(_ scheme: ColorScheme) {
         
         // This call will also take care of toggle buttons
-//        changeFunctionButtonColor(scheme.general.functionButtonColor)
+        changeFunctionButtonColor(scheme.general.functionButtonColor)
         sliderView.applyColorScheme(scheme)
     }
     
@@ -138,9 +138,9 @@ class PlaybackView: NSView, ColorSchemeable, TextSizeable {
         
         // TODO: Put these buttons in an array on initialization and refer to the array here
         
-//        [btnLoop, btnPlayPause, btnPreviousTrack, btnNextTrack, btnSeekBackward, btnSeekForward].forEach({
-//            ($0 as? Tintable)?.reTint()
-//        })
+        [btnLoop, btnPlayPause, btnPreviousTrack, btnNextTrack, btnSeekBackward, btnSeekForward].forEach({
+            ($0 as? Tintable)?.reTint()
+        })
     }
     
     func changeToggleButtonOffStateColor(_ color: NSColor) {
