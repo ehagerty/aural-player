@@ -566,7 +566,7 @@
 		3E850D591FB446940017CD02 /* PlaylistMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E850D581FB446940017CD02 /* PlaylistMenuController.swift */; };
 		3E850D5C1FB44DE70017CD02 /* PlaylistSearchWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E850D5B1FB44DE70017CD02 /* PlaylistSearchWindowController.swift */; };
 		3E850D5E1FB44DF30017CD02 /* PlaylistSearch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E850D5D1FB44DF30017CD02 /* PlaylistSearch.xib */; };
-		3E850D601FB459230017CD02 /* Playlist.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E850D5F1FB459230017CD02 /* Playlist.xib */; };
+		3E850D601FB459230017CD02 /* Library.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E850D5F1FB459230017CD02 /* Library.xib */; };
 		3E850D631FB45BA90017CD02 /* PlaylistWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E850D621FB45BA90017CD02 /* PlaylistWindowController.swift */; };
 		3E85F25A1EFA78D6007BE830 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85F2591EFA78D6007BE830 /* AppDelegate.swift */; };
 		3E85F25C1EFA78D6007BE830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E85F25B1EFA78D6007BE830 /* Assets.xcassets */; };
@@ -1282,7 +1282,7 @@
 		3E850D581FB446940017CD02 /* PlaylistMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistMenuController.swift; sourceTree = "<group>"; };
 		3E850D5B1FB44DE70017CD02 /* PlaylistSearchWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistSearchWindowController.swift; sourceTree = "<group>"; };
 		3E850D5D1FB44DF30017CD02 /* PlaylistSearch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistSearch.xib; sourceTree = "<group>"; };
-		3E850D5F1FB459230017CD02 /* Playlist.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Playlist.xib; sourceTree = "<group>"; };
+		3E850D5F1FB459230017CD02 /* Library.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Library.xib; sourceTree = "<group>"; };
 		3E850D621FB45BA90017CD02 /* PlaylistWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistWindowController.swift; sourceTree = "<group>"; };
 		3E85F2561EFA78D6007BE830 /* Aural.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aural.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E85F2591EFA78D6007BE830 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1647,6 +1647,18 @@
 			path = Effects;
 			sourceTree = "<group>";
 		};
+		3E2F97F624ED067A00463F9A /* ModularInterface */ = {
+			isa = PBXGroup;
+			children = (
+				3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */,
+				3E50AD99246137FB00B31339 /* MainWindow */,
+				3E50AD9A2461380900B31339 /* Player */,
+				3E50AD9C2461386E00B31339 /* Library */,
+				3E50AD9B2461383900B31339 /* Effects */,
+			);
+			path = ModularInterface;
+			sourceTree = "<group>";
+		};
 		3E444F9724AA73490090AED8 /* Playlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -1705,14 +1717,11 @@
 			isa = PBXGroup;
 			children = (
 				3E5D681C24EC33D300F25723 /* InterfaceManagement */,
+				3E2F97F624ED067A00463F9A /* ModularInterface */,
 				3ED404A824ACEF63000BF125 /* RichUI */,
 				3E50AD97246137A700B31339 /* Menus */,
 				3E50AD98246137E200B31339 /* WindowManagement */,
 				3EF62FEF244C424E00AD7172 /* ColorSchemes */,
-				3E50AD99246137FB00B31339 /* MainWindow */,
-				3E50AD9A2461380900B31339 /* Player */,
-				3E50AD9C2461386E00B31339 /* Playlist */,
-				3E50AD9B2461383900B31339 /* Effects */,
 				3E50AD9D2461388100B31339 /* Preferences */,
 				3E50AD9F246138E200B31339 /* AboutDialog */,
 				3E50AD9E246138B600B31339 /* Editors */,
@@ -1820,10 +1829,10 @@
 			path = Effects;
 			sourceTree = "<group>";
 		};
-		3E50AD9C2461386E00B31339 /* Playlist */ = {
+		3E50AD9C2461386E00B31339 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				3E850D5F1FB459230017CD02 /* Playlist.xib */,
+				3E850D5F1FB459230017CD02 /* Library.xib */,
 				3E850D621FB45BA90017CD02 /* PlaylistWindowController.swift */,
 				3EC2A0F7249F7BF5008E85E9 /* PlaylistGestureHandler.swift */,
 				3EF5E5C71FBDBE9C004270A4 /* PlaylistContextMenuController.swift */,
@@ -1832,13 +1841,13 @@
 				3EAB1BD624A8CC67007D130F /* FlatPlaylistTableViews.swift */,
 				3EAB1BD424A8BC0F007D130F /* GroupingPlaylistTableViews.swift */,
 				3EF5E5CB1FBE55D2004270A4 /* PlaylistViewState.swift */,
-				3E50ADC72461412000B31339 /* TracksPlaylist */,
+				3E50ADC72461412000B31339 /* TracksView */,
 				3E50ADC82461412F00B31339 /* GroupingPlaylists */,
 				3E50ADC92461417800B31339 /* ChaptersList */,
 				3E50ADCA2461419B00B31339 /* Search */,
 				3E50ADCB246141A800B31339 /* Sort */,
 			);
-			path = Playlist;
+			path = Library;
 			sourceTree = "<group>";
 		};
 		3E50AD9D2461388100B31339 /* Preferences */ = {
@@ -2356,7 +2365,7 @@
 			path = InfoPopup;
 			sourceTree = "<group>";
 		};
-		3E50ADC72461412000B31339 /* TracksPlaylist */ = {
+		3E50ADC72461412000B31339 /* TracksView */ = {
 			isa = PBXGroup;
 			children = (
 				3EF5E5B31FBDA3DB004270A4 /* Tracks.xib */,
@@ -2364,7 +2373,7 @@
 				3EF5E5D11FBF0373004270A4 /* TracksPlaylistViewDelegate.swift */,
 				3E722F7A1EFCF4EC00916BF2 /* TracksPlaylistViewDataSource.swift */,
 			);
-			path = TracksPlaylist;
+			path = TracksView;
 			sourceTree = "<group>";
 		};
 		3E50ADC82461412F00B31339 /* GroupingPlaylists */ = {
@@ -2811,7 +2820,6 @@
 			children = (
 				3E5D681D24EC33E700F25723 /* InterfaceManager.swift */,
 				3E5D681F24EC3FE600F25723 /* UnifiedInterface.swift */,
-				3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */,
 			);
 			path = InterfaceManagement;
 			sourceTree = "<group>";
@@ -3541,7 +3549,7 @@
 				3E0ED6C11FBB1D21008268B3 /* Recorder.xib in Resources */,
 				3E309B741FB70BB800C61E72 /* InfoPopup.xib in Resources */,
 				3EF5E5BE1FBDB3F8004270A4 /* Albums.xib in Resources */,
-				3E850D601FB459230017CD02 /* Playlist.xib in Resources */,
+				3E850D601FB459230017CD02 /* Library.xib in Resources */,
 				3EBD557D21590B9A00286439 /* Master.xib in Resources */,
 				3E7651BB24B9B942002FB8B4 /* LibraryTracks.xib in Resources */,
 				3EB7B50E24DDA48B004A1D9A /* libswresample in Resources */,

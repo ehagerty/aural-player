@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="LibraryTracksViewController" customModule="Aural" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="UnifiedLibraryTracksViewController" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="lblTracksSummary" destination="1VS-SE-yL0" id="3ow-gI-nGA"/>
                 <outlet property="libraryView" destination="vSn-tY-x9I" id="QbL-Zo-juv"/>
@@ -25,7 +25,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="598" height="353"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="75" rowSizeStyle="automatic" headerView="F0I-M8-5P2" viewBased="YES" id="vSn-tY-x9I" userLabel="LibraryTracks" customClass="LibraryTableView" customModule="Aural" customModuleProvider="target">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="75" rowSizeStyle="automatic" headerView="F0I-M8-5P2" viewBased="YES" id="vSn-tY-x9I" userLabel="LibraryTracks" customClass="UnifiedLibraryTableView" customModule="Aural" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="778" height="328"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -282,7 +282,7 @@
             </constraints>
             <point key="canvasLocation" x="252" y="-1021"/>
         </view>
-        <customObject id="aAC-sk-WD8" customClass="LibraryTracksViewDelegate" customModule="Aural" customModuleProvider="target">
+        <customObject id="aAC-sk-WD8" customClass="UnifiedLibraryTracksViewDelegate" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="albumColumnMenuItem" destination="8II-CD-U8H" id="LAr-fC-vRb"/>
                 <outlet property="artistColumnMenuItem" destination="uKa-NR-lfC" id="v7V-bF-VMA"/>

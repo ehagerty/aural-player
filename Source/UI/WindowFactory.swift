@@ -11,7 +11,7 @@ class WindowFactory {
     
     private static var effectsWindowController: EffectsWindowController = EffectsWindowController()
     
-    private static var playlistWindowController: PlaylistWindowController = PlaylistWindowController()
+    private static var playlistWindowController: LibraryWindowController = LibraryWindowController()
     
     private static let chaptersListWindowController: ChaptersListWindowController = ChaptersListWindowController()
     

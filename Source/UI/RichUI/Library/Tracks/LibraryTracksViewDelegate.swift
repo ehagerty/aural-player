@@ -1,6 +1,6 @@
 import Cocoa
 
-class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate {
+class UnifiedLibraryTracksViewDelegate: NSObject, NSTableViewDelegate, NSTableViewDataSource, NSMenuDelegate {
     
     @IBOutlet weak var libraryView: NSTableView!
     

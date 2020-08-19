@@ -41,7 +41,7 @@ struct ViewFactory {
     // Sub-views for the different individual playlist views displayed in the playlist window's tab group
     fileprivate struct PlaylistViews {
         
-        fileprivate static let tracksViewController: TracksPlaylistViewController = TracksPlaylistViewController()
+//        fileprivate static let tracksViewController: TracksPlaylistViewController = TracksPlaylistViewController()
         
 //        fileprivate static let artistsViewController: ArtistsPlaylistViewController = ArtistsPlaylistViewController()
 //
@@ -193,9 +193,9 @@ struct ViewFactory {
     }
     
     // Returns the "Tracks" playlist view
-    static var tracksView: NSView {
-        return PlaylistViews.tracksViewController.view
-    }
+//    static var tracksView: NSView {
+//        return PlaylistViews.tracksViewController.view
+//    }
     
     // Returns the "Artists" playlist view
 //    static var artistsView: NSView {

@@ -12,7 +12,7 @@ class AuralViewController: NSViewController, NotificationSubscriber {
     func initializeSubscriptions() {}
 }
 
-class LibraryTracksViewController: AuralViewController {
+class UnifiedLibraryTracksViewController: AuralViewController {
     
     @IBOutlet weak var libraryView: NSTableView!
     @IBOutlet weak var lblTracksSummary: NSTextField!

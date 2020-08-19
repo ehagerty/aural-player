@@ -1,6 +1,6 @@
 import Cocoa
 
-class LibraryTableView: NSTableView {
+class UnifiedLibraryTableView: NSTableView {
     
     override func menu(for event: NSEvent) -> NSMenu? {
         
