@@ -9,6 +9,16 @@ class TrackMetadata {
 
     var title: String?
     var artist: String?
+    
+    var artistTitleString: String? {
+        
+        if let theArtist = artist, let theTitle = title {
+            return "\(theArtist) - \(theTitle)"
+        }
+        
+        return title
+    }
+    
     var album: String?
     var genre: String?
     

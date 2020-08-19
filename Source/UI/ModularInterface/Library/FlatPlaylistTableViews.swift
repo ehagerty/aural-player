@@ -38,7 +38,7 @@ class PlaylistRowView: NSTableRowView {
             let selectionRect = self.bounds.insetBy(dx: 1, dy: 0)
             let selectionPath = NSBezierPath.init(roundedRect: selectionRect, xRadius: 2, yRadius: 2)
             
-            Colors.Constants.white25Percent.setFill()
+            Colors.Constants.white15Percent.setFill()
 //            Colors.Playlist.selectionBoxColor.setFill()
             selectionPath.fill()
         }

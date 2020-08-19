@@ -20,8 +20,6 @@
                 <outlet property="contextMenu" destination="5mK-N5-S6w" id="MXz-2o-VC4"/>
                 <outlet property="controlButtonsSuperview" destination="wWy-mP-FPA" id="Utv-PF-0Fk"/>
                 <outlet property="controlsBox" destination="4ZZ-7d-wdS" id="IQj-6b-tmO"/>
-                <outlet property="lblDurationSummary" destination="QXQ-hF-zKn" id="WZd-Es-pDr"/>
-                <outlet property="lblTracksSummary" destination="VLw-7p-b04" id="3rg-1b-OfJ"/>
                 <outlet property="playlistContainerBox" destination="Syt-ea-ETd" id="Vz1-0Q-UEr"/>
                 <outlet property="progressSpinner" destination="TgI-fO-gfa" id="8jx-XV-Zgn"/>
                 <outlet property="rootContainerBox" destination="2Bk-G6-skT" id="zcQ-Na-cgj"/>
@@ -345,12 +343,12 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tabView wantsLayer="YES" drawsBackground="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="WTT-JW-9R7" userLabel="Playlist Views Tab Group" customClass="AuralTabView" customModule="Aural" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="29" width="500" height="186"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="500" height="215"/>
                                     <font key="font" metaFont="system"/>
                                     <tabViewItems>
                                         <tabViewItem label="Tracks" identifier="1" id="AVY-Y2-lG8" userLabel="Tracks Tab" customClass="AuralTabViewItem" customModule="Aural" customModuleProvider="target">
                                             <view key="view" id="R3K-O5-tIq">
-                                                <rect key="frame" x="0.0" y="0.0" width="500" height="186"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="500" height="215"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <connections>
@@ -402,42 +400,14 @@
                                         </ciFilter>
                                     </contentFilters>
                                 </progressIndicator>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VLw-7p-b04" userLabel="Tracks summary" customClass="BottomTextLabel" customModule="Aural" customModuleProvider="target">
-                                    <rect key="frame" x="6" y="2" width="204" height="23"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="200" id="nCr-fa-5NI"/>
-                                        <constraint firstAttribute="height" constant="23" id="wbx-Yh-AuW"/>
-                                    </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="0 tracks" id="Y4c-xx-vs7" customClass="VALabelCell" customModule="Aural" customModuleProvider="target">
-                                        <font key="font" size="13" name="Play-Regular"/>
-                                        <color key="textColor" white="0.70157877599999996" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </textFieldCell>
-                                </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QXQ-hF-zKn" userLabel="Duration summary" customClass="BottomTextLabel" customModule="Aural" customModuleProvider="target">
-                                    <rect key="frame" x="291" y="2" width="204" height="23"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="200" id="Dph-rN-D1k"/>
-                                        <constraint firstAttribute="height" constant="23" id="h0n-sa-1Fx"/>
-                                    </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="0:00" id="s2h-am-6V7" customClass="VALabelCell" customModule="Aural" customModuleProvider="target">
-                                        <font key="font" size="13" name="Play-Regular"/>
-                                        <color key="textColor" white="0.70157877599999996" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </textFieldCell>
-                                </textField>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="QXQ-hF-zKn" firstAttribute="trailing" secondItem="11G-bl-tTJ" secondAttribute="trailing" constant="-7" id="7Kc-0p-L0a"/>
-                                <constraint firstItem="QXQ-hF-zKn" firstAttribute="baseline" secondItem="VLw-7p-b04" secondAttribute="baseline" id="Buk-ek-que"/>
-                                <constraint firstItem="QXQ-hF-zKn" firstAttribute="top" secondItem="WTT-JW-9R7" secondAttribute="bottom" constant="4" id="G8a-pl-wNU"/>
                                 <constraint firstItem="WTT-JW-9R7" firstAttribute="leading" secondItem="11G-bl-tTJ" secondAttribute="leading" id="Obq-S1-x2R"/>
-                                <constraint firstItem="TgI-fO-gfa" firstAttribute="centerY" secondItem="VLw-7p-b04" secondAttribute="centerY" id="T2J-J2-EPn"/>
-                                <constraint firstItem="VLw-7p-b04" firstAttribute="leading" secondItem="11G-bl-tTJ" secondAttribute="leading" constant="8" id="UOe-Xd-abA"/>
+                                <constraint firstAttribute="bottom" secondItem="TgI-fO-gfa" secondAttribute="bottom" constant="6" id="g9X-cD-y4L"/>
                                 <constraint firstItem="TgI-fO-gfa" firstAttribute="centerX" secondItem="11G-bl-tTJ" secondAttribute="centerX" id="hzF-Bd-2mE"/>
                                 <constraint firstAttribute="trailing" secondItem="WTT-JW-9R7" secondAttribute="trailing" id="jiN-dj-VPK"/>
+                                <constraint firstItem="WTT-JW-9R7" firstAttribute="bottom" secondItem="11G-bl-tTJ" secondAttribute="bottom" id="n6c-C1-Yjb"/>
                                 <constraint firstItem="WTT-JW-9R7" firstAttribute="top" secondItem="11G-bl-tTJ" secondAttribute="top" id="oRy-Do-F0n"/>
-                                <constraint firstAttribute="bottom" secondItem="QXQ-hF-zKn" secondAttribute="bottom" constant="2" id="wGz-5g-6Ps"/>
                             </constraints>
                         </view>
                         <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

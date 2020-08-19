@@ -37,10 +37,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     // The tab group that switches between the 4 playlist views
     @IBOutlet weak var tabGroup: AuralTabView!
     
-    // Fields that display playlist summary info
-    @IBOutlet weak var lblTracksSummary: VALabel!
-    @IBOutlet weak var lblDurationSummary: VALabel!
-    
     // Spinner that shows progress when tracks are being added to the playlist
     @IBOutlet weak var progressSpinner: NSProgressIndicator!
     
@@ -131,17 +127,9 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         Messenger.subscribeAsync(self, .playlist_doneAddingTracks, self.doneAddingTracks, queue: .main)
         
         Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
-        Messenger.subscribeAsync(self, .playlist_tracksRemoved, self.tracksRemoved, queue: .main)
         Messenger.subscribeAsync(self, .playlist_tracksNotAdded, self.tracksNotAdded(_:), queue: .main)
         
-        // Respond only if track duration has changed (affecting the summary)
-        Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:),
-                                 filter: {msg in msg.updatedFields.contains(.duration)},
-                                 queue: .main)
-        
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackChanged, queue: .main)
-        
-        Messenger.subscribe(self, .playlist_viewChanged, self.playlistTypeChanged)
         
         // MARK: Commands -------------------------------------------------------------------------------------
         
@@ -168,8 +156,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         Messenger.subscribe(self, .changeTabButtonTextColor, self.changeTabButtonTextColor(_:))
         Messenger.subscribe(self, .changeSelectedTabButtonColor, self.changeSelectedTabButtonColor(_:))
         Messenger.subscribe(self, .changeSelectedTabButtonTextColor, self.changeSelectedTabButtonTextColor(_:))
-        
-        Messenger.subscribe(self, .playlist_changeSummaryInfoColor, self.changeSummaryInfoColor(_:))
     }
     
     @IBAction func closeWindowAction(_ sender: AnyObject) {
@@ -214,7 +200,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         progressSpinner.stopAnimation(self)
         progressSpinner.hide()
-        updatePlaylistSummary()
     }
     
     // Handles an error when tracks could not be added to the playlist
@@ -228,54 +213,17 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     // Handles a notification that a single track has been added to the playlist
     func trackAdded(_ notification: PlaylistTrackAddedNotification) {
-        updatePlaylistSummary(notification.addOperationProgress)
-    }
-    
-    func tracksRemoved() {
-        updatePlaylistSummary()
-    }
-    
-    // Track duration may have changed, affecting the total playlist duration (i.e. summary)
-    func trackInfoUpdated(_ notification: TrackInfoUpdatedNotification) {
-        updatePlaylistSummary()
-    }
-    
-    // If tracks are currently being added to the playlist, the optional progress argument contains progress info that the spinner control uses for its animation
-    private func updatePlaylistSummary(_ trackAddProgress: TrackAddOperationProgress? = nil) {
-        
-        let summary = playlist.summary(PlaylistViewState.current)
-        lblDurationSummary.stringValue = ValueFormatter.formatSecondsToHMS(summary.totalDuration)
-        
-        let numTracks = summary.size
-        
-        if PlaylistViewState.current == .tracks {
-            
-            lblTracksSummary.stringValue = String(format: "%d %@",
-                                                  numTracks, numTracks == 1 ? "track" : "tracks")
-        }
-            
-//        } else if let groupType = PlaylistViewState.groupType {
-//
-//            let numGroups = summary.numGroups
-//
-//            lblTracksSummary.stringValue = String(format: "%d %@   %d %@",
-//                                                  numGroups, groupType.rawValue + (numGroups == 1 ? "" : "s"),
-//                                                  numTracks, numTracks == 1 ? "track" : "tracks")
-//        }
         
         // Update spinner with current progress, if tracks are being added
-        if let progressPercentage = trackAddProgress?.percentage {
-            progressSpinner.doubleValue = progressPercentage
-        }
+        progressSpinner.doubleValue = notification.addOperationProgress.percentage
     }
-    
+
     // Removes selected items from the current playlist view. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
     @IBAction func removeTracksAction(_ sender: AnyObject) {
         
         guard !checkIfPlaylistIsBeingModified() else {return}
         
         Messenger.publish(.playlist_removeTracks, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
-        updatePlaylistSummary()
     }
     
     // Invokes the Save file dialog, to allow the user to save all playlist items to a playlist file
@@ -302,8 +250,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         // Tell all playlist views to refresh themselves
         Messenger.publish(.playlist_refresh, payload: PlaylistViewSelector.allViews)
-        
-        updatePlaylistSummary()
     }
     
     private func clearPlaylist() {
@@ -377,11 +323,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     private func changeTextSize(_ textSize: TextSize) {
         
-        lblTracksSummary.font = Fonts.Playlist.summaryFont
-        lblDurationSummary.font = Fonts.Playlist.summaryFont
-        
         redrawTabButtons()
-        
         viewMenuButton.font = Fonts.Playlist.menuFont
     }
     
@@ -390,7 +332,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         changeBackgroundColor(scheme.general.backgroundColor)
         changeViewControlButtonColor(scheme.general.viewControlButtonColor)
         changeFunctionButtonColor(scheme.general.functionButtonColor)
-        changeSummaryInfoColor(scheme.playlist.summaryInfoColor)
     }
     
     private func changeBackgroundColor(_ color: NSColor) {
@@ -412,10 +353,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     private func changeFunctionButtonColor(_ color: NSColor) {
         functionButtons.forEach {$0.reTint()}
-    }
-    
-    private func changeSummaryInfoColor(_ color: NSColor) {
-        [lblTracksSummary, lblDurationSummary].forEach {$0.textColor = color}
     }
     
     private func redrawTabButtons() {
@@ -452,12 +389,5 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     private func viewChaptersList() {
 //        WindowManager.showChaptersList()
-    }
-    
-    // MARK: Message handling
-    
-    // Updates the summary in response to a change in the tab group selected tab
-    func playlistTypeChanged() {
-        updatePlaylistSummary()
     }
 }

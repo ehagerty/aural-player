@@ -64,6 +64,10 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
             // Otherwise, create a text cell with the track index
             return createIndexTextCell(tableView, indexText, row)
             
+        case .library_artistTitle:
+            
+            return createTextCell(tableView, .library_artistTitle, track.artistTitleString ?? track.defaultDisplayName, row)
+            
         case .library_title:
 
             return createTextCell(tableView, .library_title, track.title ?? track.defaultDisplayName, row)

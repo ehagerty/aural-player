@@ -6,6 +6,15 @@ import Cocoa
 class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelegate {
     
     @IBOutlet weak var libraryView: NSTableView!
+    @IBOutlet weak var headerView: NSTableHeaderView!
+    
+    @IBOutlet weak var indexColumn: NSTableColumn!
+    @IBOutlet weak var artistTitleColumn: NSTableColumn!
+    @IBOutlet weak var durationColumn: NSTableColumn!
+    @IBOutlet weak var titleColumn: NSTableColumn!
+    @IBOutlet weak var artistColumn: NSTableColumn!
+    @IBOutlet weak var albumColumn: NSTableColumn!
+    @IBOutlet weak var genreColumn: NSTableColumn!
     
     @IBOutlet weak var artistColumnMenuItem: NSMenuItem!
     @IBOutlet weak var albumColumnMenuItem: NSMenuItem!
@@ -18,22 +27,17 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     private let invalidDragOperation: NSDragOperation = []
     
     override func awakeFromNib() {
-        
-        artistColumnMenuItem.action = #selector(self.toggleArtistColumnAction(_:))
-        artistColumnMenuItem.target = self
-        
-        albumColumnMenuItem.action = #selector(self.toggleAlbumColumnAction(_:))
-        albumColumnMenuItem.target = self
-        
-        genreColumnMenuItem.action = #selector(self.toggleGenreColumnAction(_:))
-        genreColumnMenuItem.target = self
+
+        // TODO: Later, control this based on saved app state (remembered) and/or preferences.
+        [indexColumn, titleColumn, artistColumn, albumColumn, genreColumn].forEach {$0.hide()}
+//        libraryView.headerView = nil
     }
     
-    var isShowingArtistColumn: Bool {!libraryView.tableColumn(withIdentifier: .library_artist)!.isHidden}
+    var isShowingArtistColumn: Bool {artistColumn.isShown}
     
-    var isShowingAlbumColumn: Bool {!libraryView.tableColumn(withIdentifier: .library_album)!.isHidden}
+    var isShowingAlbumColumn: Bool {albumColumn.isShown}
     
-    var isShowingGenreColumn: Bool {!libraryView.tableColumn(withIdentifier: .library_genre)!.isHidden}
+    var isShowingGenreColumn: Bool {genreColumn.isShown}
     
     func menuWillOpen(_ menu: NSMenu) {
         
@@ -107,6 +111,9 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         var widths: [CGFloat] = [0]
         
         switch column {
+            
+            // TODO: Using column index won't work because columns can be reordered.
+            // Use the column identifier instead.
 
         case 1:
 

@@ -104,6 +104,23 @@ extension NSTableView {
     }
 }
 
+extension NSTableColumn {
+    
+    var isShown: Bool {!self.isHidden}
+    
+    func show() {
+        self.isHidden = false
+    }
+    
+    func hide() {
+        self.isHidden = true
+    }
+    
+    func toggleShowOrHide() {
+        self.isHidden.toggle()
+    }
+}
+
 /*
     Custom view for a NSTableView row that displays a single playlist track. Customizes the selection look and feel.
  */
@@ -184,9 +201,11 @@ extension NSUserInterfaceItemIdentifier {
     
     static let library_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_index")
     
-    static let library_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_title")
+    static let library_artistTitle: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_artistTitle")
     
     static let library_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_duration")
+    
+    static let library_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_title")
     
     static let library_artist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_artist")
     

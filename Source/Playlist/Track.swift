@@ -24,6 +24,9 @@ class Track: Hashable, PlayableItem {
     
     var title: String? {metadata.title}
     var artist: String? {metadata.artist}
+    
+    var artistTitleString: String? {metadata.artistTitleString}
+    
     var album: String? {metadata.album}
     var genre: String? {metadata.genre}
     
