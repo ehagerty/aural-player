@@ -178,7 +178,6 @@ class ObjectGraph {
         
         // UI-related utility classes
         
-        WindowManager.initialize(appState.ui.windowLayout, preferences.viewPreferences)
         UIUtils.initialize(preferences.viewPreferences)
         
         WindowLayouts.loadUserDefinedLayouts(appState.ui.windowLayout.userLayouts)
@@ -188,7 +187,7 @@ class ObjectGraph {
         PlaylistViewState.initialize(appState.ui.playlist)
         EffectsViewState.initialize(appState.ui.effects)
         
-        interfaceManager = InterfaceManager()
+        interfaceManager = InterfaceManager(appState.ui, preferences.viewPreferences)
     }
     
     private static let tearDownOpQueue: OperationQueue = {
@@ -212,7 +211,7 @@ class ObjectGraph {
         appState.playbackProfiles = playbackDelegate.profiles.all()
         
         appState.ui = UIState()
-        appState.ui.windowLayout = WindowManager.persistentState
+//        appState.ui.windowLayout = WindowManager.persistentState
         appState.ui.colorSchemes = ColorSchemes.persistentState
         appState.ui.player = PlayerViewState.persistentState
         appState.ui.playlist = PlaylistViewState.persistentState

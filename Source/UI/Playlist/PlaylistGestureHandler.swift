@@ -16,11 +16,11 @@ class PlaylistGestureHandler {
         
         // TODO: Enable top/bottom gestures for chapters list window too !!!
         
-        if event.type == .swipe, !WindowManager.isShowingModalComponent && event.window === WindowManager.playlistWindow,
-            let swipeDirection = UIUtils.determineSwipeDirection(event) {
-            
-            swipeDirection.isHorizontal ? handleTabToggle(swipeDirection) : handleScrolling(swipeDirection)
-        }
+//        if event.type == .swipe, !WindowManager.isShowingModalComponent && event.window === WindowManager.playlistWindow,
+//            let swipeDirection = UIUtils.determineSwipeDirection(event) {
+//            
+//            swipeDirection.isHorizontal ? handleTabToggle(swipeDirection) : handleScrolling(swipeDirection)
+//        }
     }
     
     private static func handleScrolling(_ swipeDirection: GestureDirection) {

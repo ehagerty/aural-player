@@ -313,6 +313,9 @@
 		3E2F104C215569D40099FD06 /* EditorWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2F104B215569D40099FD06 /* EditorWindowController.swift */; };
 		3E2F104F21556A2D0099FD06 /* BookmarksEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2F104E21556A2D0099FD06 /* BookmarksEditor.xib */; };
 		3E2F10532155742E0099FD06 /* BookmarksEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2F10522155742E0099FD06 /* BookmarksEditorViewController.swift */; };
+		3E2F97F024ECDDF900463F9A /* ModularInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */; };
+		3E2F97F324ED013E00463F9A /* RichUIEffects.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2F97F224ED013E00463F9A /* RichUIEffects.xib */; };
+		3E2F97F524ED017100463F9A /* RichUIEffectsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2F97F424ED017100463F9A /* RichUIEffectsWindowController.swift */; };
 		3E309B741FB70BB800C61E72 /* InfoPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E309B731FB70BB800C61E72 /* InfoPopup.xib */; };
 		3E309B781FB70D1F00C61E72 /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E309B771FB70D1F00C61E72 /* InfoPopupViewController.swift */; };
 		3E30F5892488BAE400EF7F8C /* TestablePlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E30F5882488BAE400EF7F8C /* TestablePlaylist.swift */; };
@@ -1054,6 +1057,9 @@
 		3E2F104B215569D40099FD06 /* EditorWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorWindowController.swift; sourceTree = "<group>"; };
 		3E2F104E21556A2D0099FD06 /* BookmarksEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarksEditor.xib; sourceTree = "<group>"; };
 		3E2F10522155742E0099FD06 /* BookmarksEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksEditorViewController.swift; sourceTree = "<group>"; };
+		3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularInterface.swift; sourceTree = "<group>"; };
+		3E2F97F224ED013E00463F9A /* RichUIEffects.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUIEffects.xib; sourceTree = "<group>"; };
+		3E2F97F424ED017100463F9A /* RichUIEffectsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUIEffectsWindowController.swift; sourceTree = "<group>"; };
 		3E309B731FB70BB800C61E72 /* InfoPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoPopup.xib; sourceTree = "<group>"; };
 		3E309B771FB70D1F00C61E72 /* InfoPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
 		3E30F5882488BAE400EF7F8C /* TestablePlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestablePlaylist.swift; sourceTree = "<group>"; };
@@ -1413,7 +1419,7 @@
 		3EB662C924BE3774006C946B /* EffectsPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectsPanel.xib; path = Source/UI/RichUI/EffectsPanel.xib; sourceTree = SOURCE_ROOT; };
 		3EB662CB24BE3788006C946B /* EffectsPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsPanelController.swift; path = Source/UI/RichUI/EffectsPanelController.swift; sourceTree = SOURCE_ROOT; };
 		3EB662CC24BE3788006C946B /* EffectsEditorViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsEditorViewDelegate.swift; path = Source/UI/RichUI/EffectsEditorViewDelegate.swift; sourceTree = SOURCE_ROOT; };
-		3EB662CD24BE3789006C946B /* EffectsEditorTableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsEditorTableViews.swift; path = Source/UI/Effects/EffectsEditorTableViews.swift; sourceTree = SOURCE_ROOT; };
+		3EB662CD24BE3789006C946B /* EffectsEditorTableViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EffectsEditorTableViews.swift; path = Source/UI/RichUI/Effects/EffectsEditorTableViews.swift; sourceTree = SOURCE_ROOT; };
 		3EB7B50A24DDA48B004A1D9A /* libswresample */ = {isa = PBXFileReference; lastKnownFileType = folder; path = libswresample; sourceTree = "<group>"; };
 		3EB7B50B24DDA48B004A1D9A /* libavcodec */ = {isa = PBXFileReference; lastKnownFileType = folder; path = libavcodec; sourceTree = "<group>"; };
 		3EB7B50C24DDA48B004A1D9A /* libavutil */ = {isa = PBXFileReference; lastKnownFileType = folder; path = libavutil; sourceTree = "<group>"; };
@@ -1631,6 +1637,16 @@
 			path = NowPlaying;
 			sourceTree = "<group>";
 		};
+		3E2F97F124ED012100463F9A /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				3E2F97F224ED013E00463F9A /* RichUIEffects.xib */,
+				3E2F97F424ED017100463F9A /* RichUIEffectsWindowController.swift */,
+				3EB662CD24BE3789006C946B /* EffectsEditorTableViews.swift */,
+			);
+			path = Effects;
+			sourceTree = "<group>";
+		};
 		3E444F9724AA73490090AED8 /* Playlist */ = {
 			isa = PBXGroup;
 			children = (
@@ -1787,7 +1803,6 @@
 			children = (
 				3E0ED6AB1FBB1961008268B3 /* Effects.xib */,
 				3E98478C1F5D0419001A2D28 /* EffectsWindowController.swift */,
-				3EB662CD24BE3789006C946B /* EffectsEditorTableViews.swift */,
 				3E08399F21944E15008D84BA /* FXUnitViewController.swift */,
 				3EA2E6492192709000FB5BAC /* EffectsUnitView.swift */,
 				3EB499F5244B012300711BC5 /* EffectsViewPopupMenuController.swift */,
@@ -2796,6 +2811,7 @@
 			children = (
 				3E5D681D24EC33E700F25723 /* InterfaceManager.swift */,
 				3E5D681F24EC3FE600F25723 /* UnifiedInterface.swift */,
+				3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */,
 			);
 			path = InterfaceManagement;
 			sourceTree = "<group>";
@@ -3218,6 +3234,7 @@
 		3ED404A824ACEF63000BF125 /* RichUI */ = {
 			isa = PBXGroup;
 			children = (
+				3E2F97F124ED012100463F9A /* Effects */,
 				3ED404A924ACEFA4000BF125 /* RichUI.xib */,
 				3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */,
 				3E24C79B24EAACD4009C93AF /* NowPlaying */,
@@ -3472,6 +3489,7 @@
 				3E82888A24AE04C20032D0CE /* Sidebar.xib in Resources */,
 				3EE4D43E21D6E2F0000110FC /* Alerts.xib in Resources */,
 				3EBF7EF721589E54007869EC /* FavoritesEditor.xib in Resources */,
+				3E2F97F324ED013E00463F9A /* RichUIEffects.xib in Resources */,
 				3E5E1E5021DB539D007C62B7 /* AboutDialog.xib in Resources */,
 				3E850D5E1FB44DF30017CD02 /* PlaylistSearch.xib in Resources */,
 				3E82889124AE207A0032D0CE /* PlayQueue.xib in Resources */,
@@ -3576,6 +3594,7 @@
 				3E2188A81F0771390085BAB3 /* DetailedTrackInfoViewController.swift in Sources */,
 				3E2F10532155742E0099FD06 /* BookmarksEditorViewController.swift in Sources */,
 				3EDEADB5216360980071C660 /* EffectsUnitTabButtonCell.swift in Sources */,
+				3E2F97F024ECDDF900463F9A /* ModularInterface.swift in Sources */,
 				3E6341CE243D901400190502 /* ChaptersListViewController.swift in Sources */,
 				3EF5A5501F403D2500C5A2D2 /* PreferencesOptions.swift in Sources */,
 				3E1CB54621C8A31D00A19AAE /* GeneralPlaybackPreferencesViewController.swift in Sources */,
@@ -3738,6 +3757,7 @@
 				3EC22CE224E82FE1001F7EA3 /* FFmpegAudioFormat.swift in Sources */,
 				3EBA52F51FC2E29E007F902F /* KeyCodeConstants.swift in Sources */,
 				3EB4BCD224702744005024E5 /* DelayAfterTrackCompletionAction.swift in Sources */,
+				3E2F97F524ED017100463F9A /* RichUIEffectsWindowController.swift in Sources */,
 				3EB4BCD4247040B8005024E5 /* StartPlaybackChain.swift in Sources */,
 				3E0839B02195756F008D84BA /* TimeUnitDelegate.swift in Sources */,
 				3E1CF7ED1F5CBA2500613724 /* AudioGraphProtocols.swift in Sources */,

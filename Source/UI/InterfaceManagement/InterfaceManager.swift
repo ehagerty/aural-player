@@ -5,10 +5,10 @@ class InterfaceManager {
     var currentInterface: InterfaceType = .unified
     var interfaces: [InterfaceType: InterfaceProtocol] = [:]
     
-    init() {
+    init(_ appState: UIState, _ preferences: ViewPreferences) {
         
         let unifiedInterface = UnifiedInterface()
-        let modularInterface = ModularInterface()
+        let modularInterface = ModularInterface(appState.windowLayout, preferences)
         
         interfaces = [modularInterface.type: modularInterface, unifiedInterface.type: unifiedInterface]
     }
@@ -33,17 +33,4 @@ protocol InterfaceProtocol {
     func show()
     
     func hide()
-}
-
-class ModularInterface: InterfaceProtocol {
-    
-    var type: InterfaceType {.modular}
-    
-    func show() {
-        
-    }
-    
-    func hide() {
-        
-    }
 }

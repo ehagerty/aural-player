@@ -74,18 +74,18 @@ class PlaybackMenuController: NSObject, NSMenuDelegate {
         jumpToTimeMenuItem.enableIf(isPlayingOrPaused)
         
         // Enabled only if playing/paused
-        showInPlaylistMenuItem.enableIf(isPlayingOrPaused && WindowManager.isShowingPlaylist)
+//        showInPlaylistMenuItem.enableIf(isPlayingOrPaused && WindowManager.isShowingPlaylist)
         [replayTrackMenuItem, loopMenuItem, detailedInfoMenuItem].forEach({$0.enableIf(isPlayingOrPaused)})
         
         // Should not invoke these items when a popover is being displayed (because of the keyboard shortcuts which conflict with the CMD arrow and Alt arrow functions when editing text within a popover)
-        let showingModalComponent = WindowManager.isShowingModalComponent
-        
-        [previousTrackMenuItem, nextTrackMenuItem].forEach({$0.enableIf(!noTrack && !showingModalComponent)})
-        
-        // These items should be enabled only if there is a playing track and it has chapter markings
-        [previousChapterMenuItem, nextChapterMenuItem, replayChapterMenuItem, loopChapterMenuItem].forEach({$0?.enableIf(playbackInfo.chapterCount > 0)})
-        
-        [seekForwardMenuItem, seekBackwardMenuItem, seekForwardSecondaryMenuItem, seekBackwardSecondaryMenuItem].forEach({$0?.enableIf(isPlayingOrPaused && !showingModalComponent)})
+//        let showingModalComponent = WindowManager.isShowingModalComponent
+//        
+//        [previousTrackMenuItem, nextTrackMenuItem].forEach({$0.enableIf(!noTrack && !showingModalComponent)})
+//        
+//        // These items should be enabled only if there is a playing track and it has chapter markings
+//        [previousChapterMenuItem, nextChapterMenuItem, replayChapterMenuItem, loopChapterMenuItem].forEach({$0?.enableIf(playbackInfo.chapterCount > 0)})
+//        
+//        [seekForwardMenuItem, seekBackwardMenuItem, seekForwardSecondaryMenuItem, seekBackwardSecondaryMenuItem].forEach({$0?.enableIf(isPlayingOrPaused && !showingModalComponent)})
         
         rememberLastPositionMenuItem.enableIf(isPlayingOrPaused)
     }

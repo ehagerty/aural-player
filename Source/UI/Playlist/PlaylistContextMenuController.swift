@@ -115,8 +115,8 @@ class PlaylistContextMenuController: NSObject, NSMenuDelegate {
             removeGapsMenuItem.showIf_elseHide(gaps.hasGaps)
             editGapsMenuItem.showIf_elseHide(gaps.hasGaps)
             
-            let isPlayingTrack: Bool = playbackInfo.playingTrack == theClickedTrack
-            viewChaptersMenuItem.showIf_elseHide(isPlayingTrack && theClickedTrack.hasChapters && !WindowManager.isShowingChaptersList)
+//            let isPlayingTrack: Bool = playbackInfo.playingTrack == theClickedTrack
+//            viewChaptersMenuItem.showIf_elseHide(isPlayingTrack && theClickedTrack.hasChapters && !WindowManager.isShowingChaptersList)
             
         case .group:
             
@@ -197,7 +197,7 @@ class PlaylistContextMenuController: NSObject, NSMenuDelegate {
         
         guard let theClickedTrack = clickedTrack else {return}
         
-        WindowManager.playlistWindow.makeKeyAndOrderFront(self)
+//        WindowManager.playlistWindow.makeKeyAndOrderFront(self)
         
         if favoritesMenuItem.isOn {
         
@@ -213,7 +213,7 @@ class PlaylistContextMenuController: NSObject, NSMenuDelegate {
         }
         
         // If this isn't done, the app windows are hidden when the popover is displayed
-        WindowManager.mainWindow.orderFront(self)
+//        WindowManager.mainWindow.orderFront(self)
     }
     
     // Shows a popover with detailed information for the track that was right-clicked to bring up this context menu
@@ -223,14 +223,15 @@ class PlaylistContextMenuController: NSObject, NSMenuDelegate {
         
         theClickedTrack.loadAllMetadata()
         
-        WindowManager.playlistWindow.makeKeyAndOrderFront(self)
+//        WindowManager.playlistWindow.makeKeyAndOrderFront(self)
         detailedInfoPopover.show(theClickedTrack, playlistSelectedRowView, NSRectEdge.maxY)   // Display the popover below the selected row
-        WindowManager.mainWindow.makeKeyAndOrderFront(self)
+//        WindowManager.mainWindow.makeKeyAndOrderFront(self)
     }
     
     // Helper to obtain the view for the selected playlist row (used to position popovers)
     // Defaults to the content view of the playlist window
-    private var playlistSelectedRowView: NSView {PlaylistViewState.selectedRowView ?? WindowManager.playlistWindow.contentView!}
+    private var playlistSelectedRowView: NSView {PlaylistViewState.selectedRowView!}
+//    private var playlistSelectedRowView: NSView {PlaylistViewState.selectedRowView! ?? WindowManager.playlistWindow.contentView!}
  
     // Removes the selected playlist item from the playlist
     @IBAction func removeSelectedItemAction(_ sender: Any) {

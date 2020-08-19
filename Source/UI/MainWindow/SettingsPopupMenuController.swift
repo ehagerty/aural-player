@@ -17,6 +17,6 @@ class SettingsPopupMenuController: NSObject, NSMenuDelegate {
         playerViewMenuItem.enableIf(player.state != .waiting)
         
         // These items should be enabled only if there is no modal component currently shown.
-        [applyColorSchemeMenuItem, saveColorSchemeMenuItem].forEach({$0.enableIf(!WindowManager.isShowingModalComponent)})
+//        [applyColorSchemeMenuItem, saveColorSchemeMenuItem].forEach({$0.enableIf(!WindowManager.isShowingModalComponent)})
     }
 }

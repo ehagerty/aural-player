@@ -12,7 +12,7 @@ class ChaptersListWindowController: NSWindowController, NotificationSubscriber {
     
     override func windowDidLoad() {
         
-        self.window?.delegate = WindowManager.windowDelegate
+//        self.window?.delegate = WindowManager.windowDelegate
         
         changeBackgroundColor(ColorSchemes.systemScheme.general.backgroundColor)
         
@@ -21,7 +21,7 @@ class ChaptersListWindowController: NSWindowController, NotificationSubscriber {
     }
     
     @IBAction func closeWindowAction(_ sender: AnyObject) {
-        WindowManager.hideChaptersList()
+//        WindowManager.hideChaptersList()
     }
     
     private func applyColorScheme(_ scheme: ColorScheme) {

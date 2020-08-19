@@ -84,7 +84,7 @@ class PlayingTrackFunctionsViewController: NSViewController, NotificationSubscri
                 // TODO: This should be done through a delegate (TrackDelegate ???)
 //                playingTrack.loadDetailedInfo()
                 
-                WindowManager.mainWindow.makeKeyAndOrderFront(self)
+//                WindowManager.mainWindow.makeKeyAndOrderFront(self)
                 
                 let autoHideIsOn: Bool = PlayerViewState.viewType == .expandedArt || !PlayerViewState.showControls
                 
@@ -163,7 +163,7 @@ class PlayingTrackFunctionsViewController: NSViewController, NotificationSubscri
         
         let autoHideIsOn: Bool = PlayerViewState.viewType == .expandedArt || !PlayerViewState.showControls
         
-        WindowManager.mainWindow.makeKeyAndOrderFront(self)
+//        WindowManager.mainWindow.makeKeyAndOrderFront(self)
         
         // If controls are being auto-hidden, don't display popover relative to any view within the window. Show it relative to the window itself.
         if autoHideIsOn {
@@ -207,7 +207,7 @@ class PlayingTrackFunctionsViewController: NSViewController, NotificationSubscri
         if let playingTrack = player.currentTrack, trackFile == playingTrack.file {
             
             // TODO: Is this really required ???
-            WindowManager.mainWindow.makeKeyAndOrderFront(self)
+//            WindowManager.mainWindow.makeKeyAndOrderFront(self)
             
             btnFavorite.onIf(added)
             

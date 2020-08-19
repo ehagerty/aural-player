@@ -46,7 +46,7 @@ class ColorSchemePopupMenuController: NSObject, NSMenuDelegate, StringInputRecei
     }
     
     @IBAction func saveSchemeAction(_ sender: NSMenuItem) {
-        userSchemesPopover.show(WindowManager.mainWindow.contentView!, NSRectEdge.maxX)
+//        userSchemesPopover.show(WindowManager.mainWindow.contentView!, NSRectEdge.maxX)
     }
     
     @IBAction func manageSchemesAction(_ sender: NSMenuItem) {

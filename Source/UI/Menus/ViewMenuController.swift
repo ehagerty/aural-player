@@ -39,10 +39,10 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
         manageLayoutsMenuItem.enableIf(!WindowLayouts.userDefinedLayouts.isEmpty)
         toggleChaptersListMenuItem.enableIf(player.chapterCount > 0)
         
-        let showingModalComponent: Bool = WindowManager.isShowingModalComponent
-        
-        [applyColorSchemeMenuItem, saveColorSchemeMenuItem].forEach({$0.enableIf(!showingModalComponent)})
-        manageColorSchemesMenuItem.enableIf(!showingModalComponent && (ColorSchemes.numberOfUserDefinedSchemes > 0))
+//        let showingModalComponent: Bool = WindowManager.isShowingModalComponent
+//
+//        [applyColorSchemeMenuItem, saveColorSchemeMenuItem].forEach({$0.enableIf(!showingModalComponent)})
+//        manageColorSchemesMenuItem.enableIf(!showingModalComponent && (ColorSchemes.numberOfUserDefinedSchemes > 0))
         
         playerViewMenuItem.enableIf(player.state != .waiting)
     }
@@ -52,13 +52,13 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
         
         [togglePlaylistMenuItem, toggleEffectsMenuItem].forEach({$0?.show()})
         
-        togglePlaylistMenuItem.onIf(WindowManager.isShowingPlaylist)
-        toggleEffectsMenuItem.onIf(WindowManager.isShowingEffects)
-        toggleChaptersListMenuItem.onIf(WindowManager.isShowingChaptersList)
-        
-        
-        playlistViewMenuItem.showIf_elseHide(WindowManager.isShowingPlaylist)
-        effectsViewMenuItem.showIf_elseHide(WindowManager.isShowingEffects)
+//        togglePlaylistMenuItem.onIf(WindowManager.isShowingPlaylist)
+//        toggleEffectsMenuItem.onIf(WindowManager.isShowingEffects)
+//        toggleChaptersListMenuItem.onIf(WindowManager.isShowingChaptersList)
+//
+//
+//        playlistViewMenuItem.showIf_elseHide(WindowManager.isShowingPlaylist)
+//        effectsViewMenuItem.showIf_elseHide(WindowManager.isShowingEffects)
         
         // Recreate the custom layout items
         self.windowLayoutsMenu.items.forEach({
@@ -91,12 +91,12 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     
     // Shows/hides the effects window
     @IBAction func toggleEffectsAction(_ sender: AnyObject) {
-        WindowManager.toggleEffects()
+//        WindowManager.toggleEffects()
     }
     
     // Shows/hides the chapters list window
     @IBAction func toggleChaptersListAction(_ sender: AnyObject) {
-        WindowManager.toggleChaptersList()
+//        WindowManager.toggleChaptersList()
     }
     
     // TODO: Revisit this
@@ -105,11 +105,11 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     }
     
     @IBAction func windowLayoutAction(_ sender: NSMenuItem) {
-        WindowManager.layout(sender.title)
+//        WindowManager.layout(sender.title)
     }
     
     @IBAction func saveWindowLayoutAction(_ sender: NSMenuItem) {
-        layoutNamePopover.show(WindowManager.mainWindow.contentView!, NSRectEdge.maxX)
+//        layoutNamePopover.show(WindowManager.mainWindow.contentView!, NSRectEdge.maxX)
     }
     
     @IBAction func manageLayoutsAction(_ sender: Any) {
@@ -140,7 +140,7 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     
     // Receives a new EQ preset name and saves the new preset
     func acceptInput(_ string: String) {
-        WindowLayouts.addUserDefinedLayout(string, WindowManager.currentWindowLayout)
+//        WindowLayouts.addUserDefinedLayout(string, WindowManager.currentWindowLayout)
     }
     
     var inputFontSize: TextSize {

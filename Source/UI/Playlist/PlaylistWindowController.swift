@@ -79,7 +79,7 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
     override func windowDidLoad() {
         
         theWindow.isMovableByWindowBackground = true
-        theWindow.delegate = WindowManager.windowDelegate
+//        theWindow.delegate = WindowManager.windowDelegate
         
         btnClose.tintFunction = {return Colors.viewControlButtonColor}
         
@@ -439,7 +439,7 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
         
         // New track has no chapters, or there is no new track
         if playbackInfo.chapterCount == 0 {
-            WindowManager.hideChaptersList()
+//            WindowManager.hideChaptersList()
             
         } // Only show chapters list if preferred by user
         else if playlistPreferences.showChaptersList {
@@ -448,7 +448,7 @@ class PlaylistWindowController: NSWindowController, NSTabViewDelegate, Notificat
     }
     
     private func viewChaptersList() {
-        WindowManager.showChaptersList()
+//        WindowManager.showChaptersList()
     }
     
     // MARK: Message handling

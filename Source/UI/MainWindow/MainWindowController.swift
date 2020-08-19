@@ -15,7 +15,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     // The box that encloses the Now Playing info section
     @IBOutlet weak var rootContainerBox: NSBox!
     @IBOutlet weak var containerBox: NSBox!
-//    private lazy var playerView: NSView = ViewFactory.playerView
+    private lazy var playerViewController: PlayerViewController = PlayerViewController()
     
     @IBOutlet weak var btnQuit: TintedImageButton!
     @IBOutlet weak var btnMinimize: TintedImageButton!
@@ -42,7 +42,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
         initWindow()
         theWindow.setIsVisible(false)
         
-        theWindow.delegate = WindowManager.windowDelegate
+//        theWindow.delegate = WindowManager.windowDelegate
         
         activateGestureHandler()
         initSubscriptions()
@@ -67,8 +67,8 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
         
         logoImage.tintFunction = {return Colors.appLogoColor}
         
-        btnToggleEffects.onIf(appState.showEffects)
-        btnTogglePlaylist.onIf(appState.showPlaylist)
+//        btnToggleEffects.onIf(appState.showEffects)
+//        btnTogglePlaylist.onIf(appState.showPlaylist)
         
         changeTextSize(PlayerViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
@@ -76,7 +76,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     // Add the sub-views that make up the main window
     private func addSubViews() {
-//        containerBox.addSubview(playerView)
+        containerBox.addSubview(playerViewController.view)
     }
     
     private func activateGestureHandler() {
@@ -112,7 +112,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     private func togglePlaylistWindow() {
 
-        WindowManager.togglePlaylist()
+//        WindowManager.togglePlaylist()
         btnTogglePlaylist.toggle()
     }
     
@@ -123,7 +123,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     private func toggleEffectsWindow() {
         
-        WindowManager.toggleEffects()
+//        WindowManager.toggleEffects()
         btnToggleEffects.toggle()
     }
     
