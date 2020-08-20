@@ -28,5 +28,7 @@ protocol LibraryProtocol {
   
     func sort(_ sort: Sort) -> SortResults
     
+    func sort(by comparator: (Track, Track) -> Bool)
+    
     func clear()
 }

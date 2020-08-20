@@ -288,6 +288,10 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         _ = library.sort(sort)
     }
     
+    func sort(by comparator: (Track, Track) -> Bool) {
+        library.sort(by: comparator)
+    }
+    
     // MARK: Message handling
     
     func appLaunched(_ filesToOpen: [URL]) {

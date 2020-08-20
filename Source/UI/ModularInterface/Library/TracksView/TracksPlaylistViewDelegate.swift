@@ -138,7 +138,7 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
             
         case .library_artistTitle:
             
-            return createTextCell(tableView, .library_artistTitle, track.artistTitleString ?? track.defaultDisplayName, row)
+            return createArtistTitleCell(tableView, .library_artistTitle, track.title == nil ? nil : track.artist, track.title ?? track.defaultDisplayName, row)
             
         case .library_title:
 
@@ -213,6 +213,16 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
             
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
         cell.updateText(Fonts.Playlist.trackNameFont, text)
+        
+        return cell
+    }
+    
+    private func createArtistTitleCell(_ tableView: NSTableView, _ id: NSUserInterfaceItemIdentifier, _ artist: String?, _ title: String, _ row: Int) -> ArtistTitleRichTextCellView? {
+        
+        guard let cell = tableView.makeView(withIdentifier: id, owner: nil) as? ArtistTitleRichTextCellView else {return nil}
+            
+        cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
+        cell.update(artist: artist, title: title)
         
         return cell
     }

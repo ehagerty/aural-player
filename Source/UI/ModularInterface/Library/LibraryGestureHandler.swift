@@ -3,7 +3,7 @@
 */
 import Cocoa
 
-class PlaylistGestureHandler {
+class LibraryGestureHandler {
     
     private static let preferences: ControlsPreferences = ObjectGraph.preferences.controlsPreferences
     

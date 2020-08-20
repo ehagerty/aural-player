@@ -54,7 +54,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     private var eventMonitor: Any?
     
     // Delegate that relays CRUD actions to the playlist
-    private let playlist: PlaylistDelegateProtocol = ObjectGraph.playlistDelegate
+    private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     
     // Delegate that retrieves current playback info
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
@@ -119,7 +119,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         // Set up an input handler to handle scrolling and gestures
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.swipe], handler: {(event: NSEvent) -> NSEvent? in
             
-            PlaylistGestureHandler.handle(event)
+            LibraryGestureHandler.handle(event)
             return event
         });
         
@@ -134,7 +134,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         // MARK: Commands -------------------------------------------------------------------------------------
         
         Messenger.subscribe(self, .playlist_addTracks, self.addTracks)
-        Messenger.subscribe(self, .playlist_savePlaylist, self.savePlaylist)
         Messenger.subscribe(self, .playlist_clearPlaylist, self.clearPlaylist)
         
         Messenger.subscribe(self, .playlist_search, self.search)
@@ -162,24 +161,24 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         Messenger.publish(.windowManager_togglePlaylistWindow)
     }
     
-    private func checkIfPlaylistIsBeingModified() -> Bool {
+    private func checkIfLibraryIsBeingModified() -> Bool {
         
-        let playlistBeingModified = playlist.isBeingModified
+        let libraryBeingModified = library.isBeingModified
         
-        if playlistBeingModified {
+        if libraryBeingModified {
             alertDialog.showAlert(.error, "Playlist not modified", "The playlist cannot be modified while tracks are being added", "Please wait till the playlist is done adding tracks ...")
         }
         
-        return playlistBeingModified
+        return libraryBeingModified
     }
     
     // Invokes the Open file dialog, to allow the user to add tracks/playlists to the app playlist
     @IBAction func addTracksAction(_ sender: AnyObject) {
         
-        guard !checkIfPlaylistIsBeingModified() else {return}
+        guard !checkIfLibraryIsBeingModified() else {return}
         
         if fileOpenDialog.runModal() == NSApplication.ModalResponse.OK {
-            playlist.addFiles(fileOpenDialog.urls)
+            library.addFiles(fileOpenDialog.urls)
         }
     }
     
@@ -221,32 +220,17 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     // Removes selected items from the current playlist view. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
     @IBAction func removeTracksAction(_ sender: AnyObject) {
         
-        guard !checkIfPlaylistIsBeingModified() else {return}
+        guard !checkIfLibraryIsBeingModified() else {return}
         
         Messenger.publish(.playlist_removeTracks, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
-    }
-    
-    // Invokes the Save file dialog, to allow the user to save all playlist items to a playlist file
-    @IBAction func savePlaylistAction(_ sender: AnyObject) {
-        
-        guard !checkIfPlaylistIsBeingModified() else {return}
-        
-        // Make sure there is at least one track to save
-        if playlist.size > 0 && saveDialog.runModal() == NSApplication.ModalResponse.OK, let newFileURL = saveDialog.url {
-            playlist.savePlaylist(newFileURL)
-        }
-    }
-    
-    private func savePlaylist() {
-        savePlaylistAction(self)
     }
     
     // Removes all items from the playlist
     @IBAction func clearPlaylistAction(_ sender: AnyObject) {
         
-        guard !checkIfPlaylistIsBeingModified() else {return}
+        guard !checkIfLibraryIsBeingModified() else {return}
         
-        playlist.clear()
+        library.clear()
         
         // Tell all playlist views to refresh themselves
         Messenger.publish(.playlist_refresh, payload: PlaylistViewSelector.allViews)
@@ -256,18 +240,18 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         clearPlaylistAction(self)
     }
     
-    // Moves any selected playlist items up one row in the playlist. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
+    // Moves any selected playlist items up one row in the library. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
     @IBAction func moveTracksUpAction(_ sender: AnyObject) {
         
-        if !checkIfPlaylistIsBeingModified() {
+        if !checkIfLibraryIsBeingModified() {
             Messenger.publish(.playlist_moveTracksUp, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
         }
     }
     
-    // Moves any selected playlist items down one row in the playlist. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
+    // Moves any selected playlist items down one row in the library. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
     @IBAction func moveTracksDownAction(_ sender: AnyObject) {
         
-        if !checkIfPlaylistIsBeingModified() {
+        if !checkIfLibraryIsBeingModified() {
             Messenger.publish(.playlist_moveTracksDown, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
         }
     }
@@ -296,7 +280,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     private func sort() {
         
-        if !checkIfPlaylistIsBeingModified() {
+        if !checkIfLibraryIsBeingModified() {
             _ = playlistSortDialog.showDialog()
         }
     }

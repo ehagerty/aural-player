@@ -3,7 +3,7 @@ import Cocoa
 /*
     Controller for the contextual menu displayed when a playlist item is right-clicked
  */
-class PlaylistContextMenuController: NSObject, NSMenuDelegate {
+class LibraryContextMenuController: NSObject, NSMenuDelegate {
     
     // Not used within this class, but exposed to playlist view classes
     @IBOutlet weak var contextMenu: NSMenu!

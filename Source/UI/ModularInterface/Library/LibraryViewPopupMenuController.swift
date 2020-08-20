@@ -1,6 +1,6 @@
 import Cocoa
 
-class PlaylistViewPopupMenuController: NSObject, NSMenuDelegate {
+class LibraryViewPopupMenuController: NSObject, NSMenuDelegate {
     
     @IBOutlet weak var toggleTableHeaderMenuItem: NSMenuItem!
     

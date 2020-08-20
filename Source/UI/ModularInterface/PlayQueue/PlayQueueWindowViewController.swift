@@ -299,7 +299,7 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
     }
     
     @IBAction func closeWindowAction(_ sender: AnyObject) {
-//        window?.close()
+        window?.close()
     }
     
     // MARK: Appearance

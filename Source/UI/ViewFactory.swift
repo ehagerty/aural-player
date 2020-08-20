@@ -49,7 +49,7 @@ struct ViewFactory {
 //
 //        fileprivate static let genresViewController: GenresPlaylistViewController = GenresPlaylistViewController()
         
-        fileprivate static let contextMenuController: PlaylistContextMenuController = PlaylistContextMenuController()
+        fileprivate static let contextMenuController: LibraryContextMenuController = LibraryContextMenuController()
     }
     
     // Sub-views for the different individual playlist views displayed in the playlist window's tab group

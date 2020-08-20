@@ -93,4 +93,9 @@ class Library: LibraryProtocol {
         tracks.sort(by: SortComparator(sort, {track in track.defaultDisplayName}).compareTracks)
         return SortResults(.tracks, sort)
     }
+    
+    func sort(by comparator: (Track, Track) -> Bool) {
+        
+        tracks.sort(by: comparator)
+    }
 }

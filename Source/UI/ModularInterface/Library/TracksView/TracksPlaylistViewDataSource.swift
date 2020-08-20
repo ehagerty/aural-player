@@ -114,6 +114,18 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
             
             _ = tracksSort.withFields(.title)
             
+        case "artistTitle":
+            
+            library.sort(by: {t1, t2 in
+                
+                ascending ?
+                    (t1.artistTitleString ?? "") < (t2.artistTitleString ?? "") :
+                    (t1.artistTitleString ?? "") > (t2.artistTitleString ?? "")
+            })
+            
+            tableView.reloadData()
+            return
+            
         case "duration":
             
             _ = tracksSort.withFields(.duration)

@@ -32,5 +32,7 @@ protocol LibraryDelegateProtocol {
   
     func sort(_ sort: Sort)
     
+    func sort(by comparator: (Track, Track) -> Bool)
+    
     func clear()
 }

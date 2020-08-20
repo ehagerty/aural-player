@@ -146,6 +146,38 @@ class TextCellView: BasicFlatPlaylistCellView {
     }
 }
 
+@IBDesignable
+class RichTextCellView: BasicFlatPlaylistCellView {
+    
+    func attributedString(_ text: String, _ font: NSFont, _ color: NSColor) -> NSAttributedString {
+        
+        let attributes = [ NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: color]
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+}
+
+@IBDesignable
+class ArtistTitleRichTextCellView: RichTextCellView {
+    
+    func update(artist: String?, title: String) {
+        
+        // TODO: Truncation
+
+        if let theArtist = artist {
+            
+            let richText: NSMutableAttributedString = NSMutableAttributedString(attributedString: attributedString(theArtist + "   ", Fonts.Playlist.trackNameFont, Colors.Player.trackInfoArtistAlbumTextColor))
+            
+            richText.append(attributedString(title, Fonts.Playlist.trackNameFont, Colors.Player.trackInfoTitleTextColor))
+            
+            textField?.attributedStringValue = richText
+            
+        } else {
+            
+            textField?.attributedStringValue = attributedString(title, Fonts.Playlist.trackNameFont, Colors.Player.trackInfoTitleTextColor)
+        }
+    }
+}
+
 /*
     Custom view for a single NSTableView cell. Customizes the look and feel of cells (in selected rows) - font and text color.
  */
