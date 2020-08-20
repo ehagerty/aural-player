@@ -6,11 +6,29 @@ import Cocoa
 class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
     
     @IBOutlet weak var libraryView: AuralLibraryTableView!
+    @IBOutlet weak var header: NSTableHeaderView!
     
     private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
     // MARK: Table view functions --------------------------------------------------------------------------------
+    
+    override func awakeFromNib() {
+        
+        header.setFrameSize(NSMakeSize(header.frame.size.width, header.frame.size.height + 10))
+        let clipView = libraryView.enclosingScrollView!.contentView
+        clipView.setFrameSize(NSMakeSize(clipView.frame.size.width, clipView.frame.size.height + 10))
+        
+        for column in libraryView.tableColumns {
+            
+            let headerCell = LibraryTableHeaderCell()
+            
+            headerCell.stringValue = column.headerCell.stringValue
+            headerCell.isBordered = true
+            
+            column.headerCell = headerCell
+        }
+    }
     
     // Returns a view for a single row
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {

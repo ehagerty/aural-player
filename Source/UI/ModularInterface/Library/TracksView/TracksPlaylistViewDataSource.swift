@@ -29,7 +29,7 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     override func awakeFromNib() {
 
         // TODO: Later, control this based on saved app state (remembered) and/or preferences.
-        [indexColumn, titleColumn, artistColumn, albumColumn, genreColumn].forEach {$0.hide()}
+//        [indexColumn, titleColumn, artistColumn, albumColumn, genreColumn].forEach {$0.hide()}
 //        libraryView.headerView = nil
         theHeaderView = headerView
         

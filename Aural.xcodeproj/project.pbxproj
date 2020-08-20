@@ -345,6 +345,7 @@
 		3E3707D3248A3B110057A965 /* StartPlaybackChainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3707D2248A3B110057A965 /* StartPlaybackChainTests.swift */; };
 		3E3707D5248A9B5D0057A965 /* SeekSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3707D4248A9B5D0057A965 /* SeekSliderView.swift */; };
 		3E3A357D24EE853900DE643F /* CustomColumnEditorDialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A357C24EE853900DE643F /* CustomColumnEditorDialogController.swift */; };
+		3E3A357F24EEA14A00DE643F /* LibraryTableHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A357E24EEA14A00DE643F /* LibraryTableHeaderCell.swift */; };
 		3E3A63691F690EA200F72A60 /* PreferencesDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A63681F690EA200F72A60 /* PreferencesDelegate.swift */; };
 		3E3A636B1F690EBB00F72A60 /* PreferencesDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3A636A1F690EBB00F72A60 /* PreferencesDelegateProtocol.swift */; };
 		3E3AD5481F5D2BEC006123E9 /* NotificationDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3AD5471F5D2BEC006123E9 /* NotificationDefinitions.swift */; };
@@ -1098,6 +1099,7 @@
 		3E3707D2248A3B110057A965 /* StartPlaybackChainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPlaybackChainTests.swift; sourceTree = "<group>"; };
 		3E3707D4248A9B5D0057A965 /* SeekSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeekSliderView.swift; sourceTree = "<group>"; };
 		3E3A357C24EE853900DE643F /* CustomColumnEditorDialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColumnEditorDialogController.swift; sourceTree = "<group>"; };
+		3E3A357E24EEA14A00DE643F /* LibraryTableHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTableHeaderCell.swift; sourceTree = "<group>"; };
 		3E3A63681F690EA200F72A60 /* PreferencesDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesDelegate.swift; sourceTree = "<group>"; };
 		3E3A636A1F690EBB00F72A60 /* PreferencesDelegateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesDelegateProtocol.swift; sourceTree = "<group>"; };
 		3E3AD5471F5D2BEC006123E9 /* NotificationDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDefinitions.swift; sourceTree = "<group>"; };
@@ -2402,6 +2404,7 @@
 				3E722F7A1EFCF4EC00916BF2 /* TracksPlaylistViewDataSource.swift */,
 				3EA3579524EE578700248BF1 /* CustomColumnEditor.xib */,
 				3E3A357C24EE853900DE643F /* CustomColumnEditorDialogController.swift */,
+				3E3A357E24EEA14A00DE643F /* LibraryTableHeaderCell.swift */,
 			);
 			path = TracksView;
 			sourceTree = "<group>";
@@ -4062,6 +4065,7 @@
 				3E5F00C121536CF000A76C23 /* PitchPresets.swift in Sources */,
 				3EDDF6B01FB54AB800DF2E9A /* PlaybackMenuController.swift in Sources */,
 				3E5F00CC21539B5C00A76C23 /* Bookmarks.swift in Sources */,
+				3E3A357F24EEA14A00DE643F /* LibraryTableHeaderCell.swift in Sources */,
 				3E0F947D1FBBA33C00B6E1B3 /* FilterViewController.swift in Sources */,
 				3E0835F92459AB9900822FA8 /* ColorSchemesEditorViewController.swift in Sources */,
 				3EB1701521748ED200B82D3A /* JumpToTimeEditorWindowController.swift in Sources */,
