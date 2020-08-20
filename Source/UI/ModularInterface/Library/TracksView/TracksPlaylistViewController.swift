@@ -6,6 +6,8 @@ import Cocoa
 class LibraryTracksViewController: AuralViewController {
     
     @IBOutlet weak var libraryView: NSTableView!
+    @IBOutlet weak var header: NSTableHeaderView!
+    @IBOutlet weak var scroller: NSScroller!
     
     @IBOutlet weak var lblTracksSummary: NSTextField!
     @IBOutlet weak var lblDurationSummary: NSTextField!
@@ -210,6 +212,15 @@ class LibraryTracksViewController: AuralViewController {
         
         libraryView.enclosingScrollView?.backgroundColor = color
         libraryView.backgroundColor = color
+        
+        // Hack to redraw the top-right corner of the scroll view
+        if libraryView.headerView != nil {
+            
+            libraryView.headerView = nil
+            libraryView.headerView = header
+        }
+        
+        scroller.redraw()
     }
     
     private var allRows: IndexSet {IndexSet(integersIn: 0..<rowCount)}

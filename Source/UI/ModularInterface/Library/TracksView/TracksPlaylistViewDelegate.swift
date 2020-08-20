@@ -19,6 +19,9 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
         let clipView = libraryView.enclosingScrollView!.contentView
         clipView.setFrameSize(NSMakeSize(clipView.frame.size.width, clipView.frame.size.height + 10))
         
+        header.wantsLayer = true
+        header.layer?.backgroundColor = NSColor.clear.cgColor
+        
         for column in libraryView.tableColumns {
             
             let headerCell = LibraryTableHeaderCell()

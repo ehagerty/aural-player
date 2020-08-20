@@ -6,7 +6,7 @@ class PrettyScroller: NSScroller {
     let barInsetX: CGFloat = 7
     let barInsetY: CGFloat = 0
     
-    let knobInsetX: CGFloat = 5
+    let knobInsetX: CGFloat = 4
     let knobInsetY: CGFloat = 0
     let knobRadius: CGFloat = 1
 
@@ -29,6 +29,9 @@ class PrettyScroller: NSScroller {
     }
     
     override func draw(_ dirtyRect: NSRect) {
+        
+        Colors.windowBackgroundColor.setFill()
+        dirtyRect.fill()
         
         let rect = dirtyRect.insetBy(dx: barInsetX, dy: barInsetY)
         let drawPath = NSBezierPath.init(roundedRect: rect, xRadius: barRadius, yRadius: barRadius)

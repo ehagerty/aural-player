@@ -4,6 +4,13 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
     
     override var windowNibName: String? {return "PlayQueue"}
     
+    @IBOutlet weak var rootContainerBox: NSBox!
+    
+    @IBOutlet weak var scroller: NSScroller!
+    
+    @IBOutlet weak var btnClose: TintedImageButton!
+    @IBOutlet weak var viewMenuIconItem: TintedIconMenuItem!
+    
     @IBOutlet weak var playQueueView: NSTableView!
     @IBOutlet weak var lblTracksSummary: NSTextField!
     
@@ -28,9 +35,17 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
     
     private lazy var fileOpenDialog = DialogsAndAlerts.openDialog
     
+    private var viewControlButtons: [Tintable] = []
+    private var functionButtons: [TintedImageButton] = []
+    
     override func windowDidLoad() {
         
         playQueueView.enableDragDrop_reorderingAndFiles()
+        
+        viewControlButtons = [btnClose, viewMenuIconItem]
+        
+        changeTextSize(PlaylistViewState.textSize)
+        applyColorScheme(ColorSchemes.systemScheme)
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         
@@ -281,5 +296,39 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
             playQueueView.removeRows(at: IndexSet(integer: result.sourceIndex), withAnimation: result.movedUp ? .slideUp : .slideDown)
             playQueueView.insertRows(at: IndexSet(integer: result.destinationIndex), withAnimation: result.movedUp ? .slideDown : .slideUp)
         }
+    }
+    
+    @IBAction func closeWindowAction(_ sender: AnyObject) {
+//        window?.close()
+    }
+    
+    // MARK: Appearance
+    
+    private func changeTextSize(_ textSize: TextSize) {
+        
+    }
+    
+    private func applyColorScheme(_ scheme: ColorScheme) {
+        
+        changeBackgroundColor(scheme.general.backgroundColor)
+        changeViewControlButtonColor(scheme.general.viewControlButtonColor)
+        changeFunctionButtonColor(scheme.general.functionButtonColor)
+        scroller.redraw()
+    }
+    
+    private func changeBackgroundColor(_ color: NSColor) {
+        
+        rootContainerBox.fillColor = color
+        
+        playQueueView.enclosingScrollView?.backgroundColor = color
+        playQueueView.backgroundColor = color
+    }
+    
+    private func changeViewControlButtonColor(_ color: NSColor) {
+        viewControlButtons.forEach {$0.reTint()}
+    }
+    
+    private func changeFunctionButtonColor(_ color: NSColor) {
+        functionButtons.forEach {$0.reTint()}
     }
 }

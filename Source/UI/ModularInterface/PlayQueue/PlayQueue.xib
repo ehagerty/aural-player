@@ -8,8 +8,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PlayQueueWindowViewController" customModule="Aural" customModuleProvider="target">
             <connections>
+                <outlet property="btnClose" destination="4yV-Um-Fno" id="VRE-qd-meT"/>
                 <outlet property="lblTracksSummary" destination="GqF-KI-QYQ" id="SXJ-JQ-Cuh"/>
                 <outlet property="playQueueView" destination="CUg-cs-QYS" id="iai-QX-9uY"/>
+                <outlet property="rootContainerBox" destination="YoY-1j-kEY" id="J5R-V0-Plh"/>
+                <outlet property="scroller" destination="8se-UT-FcN" id="XB1-pM-LKk"/>
+                <outlet property="viewMenuIconItem" destination="asW-PK-IIU" id="ajO-XS-aqX"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="CG6-bH-8AI"/>
             </connections>
         </customObject>
@@ -24,25 +28,84 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button toolTip="Hide the playlist" wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tW5-8q-brA" userLabel="Close Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                        <rect key="frame" x="10" y="376" width="10" height="10"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Close" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="vdD-YG-ruZ">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Close"/>
-                        </userDefinedRuntimeAttributes>
-                    </button>
-                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dys-ee-q5g" userLabel="PlayQueue">
-                        <rect key="frame" x="10" y="27" width="580" height="343"/>
-                        <clipView key="contentView" drawsBackground="NO" id="a8h-Qd-YWK">
-                            <rect key="frame" x="0.0" y="0.0" width="580" height="343"/>
+                    <box focusRingType="none" boxType="custom" borderType="none" borderWidth="0.0" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="YoY-1j-kEY" userLabel="Root Container">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                        <view key="contentView" id="Mfx-0r-dRQ">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button toolTip="Hide the playlist" wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4yV-Um-Fno" userLabel="Close Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
+                                    <rect key="frame" x="15" y="375" width="10" height="10"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Close" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FdM-lY-tWt">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Close"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="closeWindowAction:" target="-2" id="Dhc-11-pBW"/>
+                                    </connections>
+                                </button>
+                                <popUpButton toolTip="Playlist View" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5p1-sr-Ddg" userLabel="Playlist View Menu">
+                                    <rect key="frame" x="566" y="372" width="24" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="6xX-Mm-Azc"/>
+                                        <constraint firstAttribute="height" constant="15" id="isf-UK-I6g"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" preferredEdge="maxX" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="asW-PK-IIU" id="Apu-zJ-JGW">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" size="11" name="Play-Regular"/>
+                                        <menu key="menu" autoenablesItems="NO" id="HSn-Dd-PYe">
+                                            <items>
+                                                <menuItem image="Settings" hidden="YES" id="asW-PK-IIU" customClass="TintedIconMenuItem" customModule="Aural" customModuleProvider="target">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Settings"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </menuItem>
+                                                <menuItem title="Show table header" id="w24-ee-9Zn">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                </menuItem>
+                                                <menuItem isSeparatorItem="YES" id="H6l-wa-gsi"/>
+                                                <menuItem title="Text size" id="VM1-T6-cyU">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menu key="submenu" title="Text size" id="XGH-gk-Iz4">
+                                                        <items>
+                                                            <menuItem title="Normal" id="1Df-99-eMM">
+                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                            </menuItem>
+                                                            <menuItem title="Larger" tag="1" id="Bi8-dA-gwG">
+                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                            </menuItem>
+                                                            <menuItem title="Largest" tag="2" id="0DB-2V-xe8">
+                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                            </menuItem>
+                                                        </items>
+                                                    </menu>
+                                                </menuItem>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="5p1-sr-Ddg" secondAttribute="trailing" constant="10" id="P55-hS-5eC"/>
+                                <constraint firstItem="5p1-sr-Ddg" firstAttribute="top" secondItem="Mfx-0r-dRQ" secondAttribute="top" constant="13" id="zvN-Sl-c8H"/>
+                            </constraints>
+                        </view>
+                        <color key="borderColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </box>
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dys-ee-q5g" userLabel="PlayQueue">
+                        <rect key="frame" x="10" y="35" width="580" height="325"/>
+                        <clipView key="contentView" id="a8h-Qd-YWK">
+                            <rect key="frame" x="0.0" y="0.0" width="580" height="325"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="CUg-cs-QYS" userLabel="PlayQueue">
-                                    <rect key="frame" x="0.0" y="0.0" width="580" height="343"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="580" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -173,16 +236,16 @@
                             <nil key="backgroundColor"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="0Kr-lg-GhY">
-                            <rect key="frame" x="0.0" y="353" width="598" height="15"/>
+                            <rect key="frame" x="-100" y="-100" width="598" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="8se-UT-FcN">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="8se-UT-FcN" customClass="PrettyScroller" customModule="Aural" customModuleProvider="target">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GqF-KI-QYQ" userLabel="Summary">
-                        <rect key="frame" x="8" y="0.0" width="594" height="25"/>
+                        <rect key="frame" x="18" y="0.0" width="584" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="qM8-AO-bJm"/>
                         </constraints>
@@ -192,56 +255,19 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <popUpButton toolTip="Playlist View" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="65i-6c-cMb" userLabel="Settings Menu">
-                        <rect key="frame" x="568" y="378" width="24" height="15"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="15" id="0PM-BI-UgT"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="5Aw-9B-tAu"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="KIK-Ym-5kQ"/>
-                            <constraint firstAttribute="width" constant="24" id="sLG-Rr-bHH"/>
-                        </constraints>
-                        <popUpButtonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" preferredEdge="maxX" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="Uqw-do-15P" id="2BP-aQ-Wd2">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" size="11" name="Play-Regular"/>
-                            <menu key="menu" autoenablesItems="NO" id="dka-iN-wYg">
-                                <items>
-                                    <menuItem image="Settings" hidden="YES" id="Uqw-do-15P" customClass="TintedIconMenuItem" customModule="Aural" customModuleProvider="target">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Settings"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </menuItem>
-                                    <menuItem title="Text size" id="oQh-b0-EQ6">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <menu key="submenu" title="Text size" id="6a8-Ha-oVN">
-                                            <items>
-                                                <menuItem title="Normal" id="TTV-vu-5lk">
-                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                </menuItem>
-                                                <menuItem title="Larger" tag="1" id="oga-dQ-5Ow">
-                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                </menuItem>
-                                                <menuItem title="Largest" tag="2" id="zTx-bE-lUD">
-                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                </menuItem>
-                                            </items>
-                                        </menu>
-                                    </menuItem>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="dys-ee-q5g" secondAttribute="trailing" constant="10" id="19y-Jy-lWc"/>
-                    <constraint firstItem="dys-ee-q5g" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="30" id="E7h-uW-hvE"/>
-                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="dys-ee-q5g" secondAttribute="leading" id="MJH-Od-lmS"/>
+                    <constraint firstItem="dys-ee-q5g" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="40" id="E7h-uW-hvE"/>
+                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="dys-ee-q5g" secondAttribute="leading" constant="10" id="MJH-Od-lmS"/>
                     <constraint firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" id="aKQ-uM-LJ5"/>
+                    <constraint firstAttribute="trailing" secondItem="YoY-1j-kEY" secondAttribute="trailing" id="dJ3-0l-ysk"/>
                     <constraint firstItem="dys-ee-q5g" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="10" id="dUc-FS-BEF"/>
+                    <constraint firstAttribute="bottom" secondItem="YoY-1j-kEY" secondAttribute="bottom" id="jJT-JA-TqE"/>
+                    <constraint firstItem="YoY-1j-kEY" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="oGY-NT-mbS"/>
                     <constraint firstAttribute="trailing" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="ufA-G7-3zX"/>
-                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="top" secondItem="dys-ee-q5g" secondAttribute="bottom" constant="2" id="ufz-mi-B3a"/>
-                    <constraint firstAttribute="trailing" secondItem="65i-6c-cMb" secondAttribute="trailing" constant="8" id="wAX-gG-m8m"/>
-                    <constraint firstItem="65i-6c-cMb" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="7" id="zd9-iJ-KNX"/>
+                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="top" secondItem="dys-ee-q5g" secondAttribute="bottom" constant="10" id="ufz-mi-B3a"/>
+                    <constraint firstItem="YoY-1j-kEY" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="vSs-Le-UJU"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="141" y="147"/>
