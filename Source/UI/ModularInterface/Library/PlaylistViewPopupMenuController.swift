@@ -2,6 +2,8 @@ import Cocoa
 
 class PlaylistViewPopupMenuController: NSObject, NSMenuDelegate {
     
+    @IBOutlet weak var toggleTableHeaderMenuItem: NSMenuItem!
+    
     @IBOutlet weak var textSizeNormalMenuItem: NSMenuItem!
     @IBOutlet weak var textSizeLargerMenuItem: NSMenuItem!
     @IBOutlet weak var textSizeLargestMenuItem: NSMenuItem!
@@ -13,6 +15,8 @@ class PlaylistViewPopupMenuController: NSObject, NSMenuDelegate {
     
     // When the menu is about to open, set the menu item states according to the current window/view state
     func menuNeedsUpdate(_ menu: NSMenu) {
+        
+        toggleTableHeaderMenuItem.onIf(PlaylistViewState.isShowingTableHeader)
         
         textSizeMenuItems.forEach({$0.off()})
         
@@ -34,5 +38,11 @@ class PlaylistViewPopupMenuController: NSObject, NSMenuDelegate {
             PlaylistViewState.textSize = size
             Messenger.publish(.playlist_changeTextSize, payload: size)
         }
+    }
+    
+    @IBAction func toggleTableHeaderAction(_ sender: NSMenuItem) {
+        
+        PlaylistViewState.isShowingTableHeader.toggle()
+        Messenger.publish(.library_toggleTableHeader)
     }
 }

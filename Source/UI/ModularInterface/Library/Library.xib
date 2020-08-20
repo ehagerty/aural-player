@@ -80,6 +80,13 @@
                                                         <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Settings"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </menuItem>
+                                                <menuItem title="Show table header" id="Ztx-C7-jMv">
+                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <connections>
+                                                        <action selector="toggleTableHeaderAction:" target="BRL-5h-wH5" id="pZL-PI-CNH"/>
+                                                    </connections>
+                                                </menuItem>
+                                                <menuItem isSeparatorItem="YES" id="vEm-4E-wv5"/>
                                                 <menuItem title="Text size" id="O7r-qv-G9t">
                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                     <menu key="submenu" title="Text size" id="jSz-GN-QV5">
@@ -551,6 +558,7 @@
                 <outlet property="textSizeLargerMenuItem" destination="WHr-gt-cVC" id="AJy-BM-viX"/>
                 <outlet property="textSizeLargestMenuItem" destination="ehX-FT-LYF" id="WcU-MX-e0Z"/>
                 <outlet property="textSizeNormalMenuItem" destination="m2K-Zl-YNW" id="0wC-3k-SQF"/>
+                <outlet property="toggleTableHeaderMenuItem" destination="Ztx-C7-jMv" id="rBZ-pB-Qfa"/>
             </connections>
         </customObject>
         <menu autoenablesItems="NO" id="5mK-N5-S6w" userLabel="Playlist context menu">

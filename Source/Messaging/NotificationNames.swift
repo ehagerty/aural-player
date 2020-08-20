@@ -427,6 +427,8 @@ extension Notification.Name {
     
     // ----------------------------------------------------------------------------------------
     
+    static let library_toggleTableHeader = Notification.Name("library_toggleTableHeader")
+    
     static let library_removeTracks = Notification.Name("library_removeTracks")
     
     // MARK: Play Queue commands

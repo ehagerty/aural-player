@@ -3,10 +3,11 @@ import Cocoa
 /*
     Data source for the NSTableView that displays the "Tracks" (flat) playlist view.
  */
-class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelegate {
+class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelegate, NotificationSubscriber {
     
     @IBOutlet weak var libraryView: NSTableView!
     @IBOutlet weak var headerView: NSTableHeaderView!
+    private var theHeaderView: NSTableHeaderView!
     
     @IBOutlet weak var indexColumn: NSTableColumn!
     @IBOutlet weak var artistTitleColumn: NSTableColumn!
@@ -31,6 +32,8 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         // TODO: Later, control this based on saved app state (remembered) and/or preferences.
         [indexColumn, titleColumn, artistColumn, albumColumn, genreColumn].forEach {$0.hide()}
 //        libraryView.headerView = nil
+        theHeaderView = headerView
+        Messenger.subscribe(self, .library_toggleTableHeader, self.toggleTableHeader)
     }
     
     var isShowingArtistColumn: Bool {artistColumn.isShown}
@@ -41,21 +44,25 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     
     func menuWillOpen(_ menu: NSMenu) {
         
-        artistColumnMenuItem.onIf(isShowingArtistColumn)
-        albumColumnMenuItem.onIf(isShowingAlbumColumn)
-        genreColumnMenuItem.onIf(isShowingGenreColumn)
+        for item in menu.items {
+            
+            if let id = item.identifier {
+                item.onIf(libraryView.tableColumn(withIdentifier: id)?.isShown ?? false)
+            }
+        }
     }
     
-    @IBAction func toggleArtistColumnAction(_ sender: AnyObject) {
-        libraryView.tableColumn(withIdentifier: .library_artist)!.isHidden.toggle()
+    func toggleTableHeader() {
+        libraryView.headerView = libraryView.headerView != nil ? nil : theHeaderView
     }
     
-    @IBAction func toggleAlbumColumnAction(_ sender: AnyObject) {
-        libraryView.tableColumn(withIdentifier: .library_album)!.isHidden.toggle()
-    }
-    
-    @IBAction func toggleGenreColumnAction(_ sender: AnyObject) {
-        libraryView.tableColumn(withIdentifier: .library_genre)!.isHidden.toggle()
+    @IBAction func toggleColumnAction(_ sender: NSMenuItem) {
+        
+        if let id = sender.identifier {
+            libraryView.tableColumn(withIdentifier: id)?.isHidden.toggle()
+        }
+        
+        print("\(sender.identifier!.rawValue) triggered this action !!!")
     }
     
     // Returns the total number of playlist rows

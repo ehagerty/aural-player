@@ -380,29 +380,53 @@
         </menu>
         <menu id="AHk-0p-NbT" userLabel="ColumnSelectionMenu">
             <items>
-                <menuItem title="Artist" id="km0-Hh-mcI" userLabel="Artist">
+                <menuItem title="Index" identifier="library_index" id="km0-Hh-mcI" userLabel="Index">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleArtistColumnAction:" target="vH7-ho-Ykd" id="yBk-5E-Qxl"/>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="VQU-8n-lhB"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Album" id="9wP-Br-aTf" userLabel="Album">
+                <menuItem title="Artist-Title" identifier="library_artistTitle" id="wIp-dj-eOL">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleAlbumColumnAction:" target="vH7-ho-Ykd" id="JSY-k1-Pfi"/>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="CEf-Gu-kVi"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Genre" id="0pM-5Q-W0I" userLabel="Genre">
+                <menuItem title="Duration" identifier="library_duration" id="696-5X-YdH" userLabel="Duration">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="toggleGenreColumnAction:" target="vH7-ho-Ykd" id="glP-cI-2JH"/>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="9M3-rk-3XK"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Title" identifier="library_title" id="lwD-6e-Zpp">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="Rd3-uv-grT"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Artist" identifier="library_artist" id="eOx-Dv-e7b" userLabel="Artist">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="0Qt-ty-yQa"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Album" identifier="library_album" id="9wP-Br-aTf" userLabel="Album">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="i9e-JD-f10"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Genre" identifier="library_genre" id="0pM-5Q-W0I" userLabel="Genre">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleColumnAction:" target="vH7-ho-Ykd" id="mXR-fH-evD"/>
                     </connections>
                 </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="vH7-ho-Ykd" id="X8f-DS-VcN"/>
             </connections>
-            <point key="canvasLocation" x="237" y="53"/>
+            <point key="canvasLocation" x="-147" y="-1180"/>
         </menu>
     </objects>
 </document>

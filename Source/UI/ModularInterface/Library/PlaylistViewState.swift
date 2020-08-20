@@ -13,6 +13,8 @@ class PlaylistViewState {
     
     static var textSize: TextSize = .normal
     
+    static var isShowingTableHeader: Bool = true
+    
     // The playlist view that was clicked. Will be nil initially.
     private static var _clickedView: NSTableView?
     
