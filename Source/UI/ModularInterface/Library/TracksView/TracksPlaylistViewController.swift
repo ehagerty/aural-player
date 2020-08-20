@@ -8,6 +8,7 @@ class LibraryTracksViewController: AuralViewController {
     @IBOutlet weak var libraryView: NSTableView!
     
     @IBOutlet weak var lblTracksSummary: NSTextField!
+    @IBOutlet weak var lblDurationSummary: NSTextField!
     
     private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
@@ -31,6 +32,9 @@ class LibraryTracksViewController: AuralViewController {
     
     override func initializeUI() {
         
+        changeTextSize(PlaylistViewState.textSize)
+        doApplyColorScheme(ColorSchemes.systemScheme, false)
+        
         updateSummary()
         libraryView.enableDragDrop_files()
     }
@@ -42,6 +46,22 @@ class LibraryTracksViewController: AuralViewController {
         Messenger.subscribeAsync(self, .library_tracksRemoved, self.tracksRemoved(_:), queue: .main)
         
         Messenger.subscribe(self, .library_removeTracks, self.removeSelectedTracks)
+        
+        Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
+        
+        Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
+        Messenger.subscribe(self, .changeBackgroundColor, self.changeBackgroundColor(_:))
+        
+        Messenger.subscribe(self, .playlist_changeTrackNameTextColor, self.changeTrackNameTextColor(_:))
+        Messenger.subscribe(self, .playlist_changeIndexDurationTextColor, self.changeIndexDurationTextColor(_:))
+        
+        Messenger.subscribe(self, .playlist_changeTrackNameSelectedTextColor, self.changeTrackNameSelectedTextColor(_:))
+        Messenger.subscribe(self, .playlist_changeIndexDurationSelectedTextColor, self.changeIndexDurationSelectedTextColor(_:))
+        
+        Messenger.subscribe(self, .playlist_changePlayingTrackIconColor, self.changePlayingTrackIconColor(_:))
+        Messenger.subscribe(self, .playlist_changeSelectionBoxColor, self.changeSelectionBoxColor(_:))
+        
+        Messenger.subscribe(self, .playlist_changeSummaryInfoColor, self.changeSummaryInfoColor(_:))
     }
     
     func trackAdded(_ notification: LibraryTrackAddedNotification) {
@@ -118,8 +138,11 @@ class LibraryTracksViewController: AuralViewController {
     
     private func updateSummary() {
         
-        let numTracks = library.size
+        let summary = library.summary
+        let numTracks = summary.size
+        
         lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
+        lblDurationSummary.stringValue = ValueFormatter.formatSecondsToHMS(summary.totalDuration)
     }
     
     private func removeSelectedTracks() {
@@ -151,6 +174,83 @@ class LibraryTracksViewController: AuralViewController {
         }
         
         updateSummary()
+    }
+    
+    // MARK: Appearance
+    
+    private func changeTextSize(_ textSize: TextSize) {
+        
+        let selectedRows = self.selectedRows
+        libraryView.reloadData()
+        libraryView.selectRowIndexes(selectedRows, byExtendingSelection: false)
+        
+        lblTracksSummary.font = Fonts.Playlist.summaryFont
+        lblDurationSummary.font = Fonts.Playlist.summaryFont
+    }
+    
+    private func applyColorScheme(_ scheme: ColorScheme) {
+        doApplyColorScheme(scheme)
+    }
+    
+    private func doApplyColorScheme(_ scheme: ColorScheme, _ mustReloadRows: Bool = true) {
+        
+        changeBackgroundColor(scheme.general.backgroundColor)
+        
+        if mustReloadRows {
+            
+            let selectedRows = self.selectedRows
+            libraryView.reloadData()
+            libraryView.selectRowIndexes(selectedRows, byExtendingSelection: false)
+        }
+        
+        changeSummaryInfoColor(scheme.playlist.summaryInfoColor)
+    }
+    
+    private func changeBackgroundColor(_ color: NSColor) {
+        
+        libraryView.enclosingScrollView?.backgroundColor = color
+        libraryView.backgroundColor = color
+    }
+    
+    private var allRows: IndexSet {IndexSet(integersIn: 0..<rowCount)}
+    
+    private func changeTrackNameTextColor(_ color: NSColor) {
+        libraryView.reloadData(forRowIndexes: allRows, columnIndexes: IndexSet(integer: 1))
+    }
+    
+    private func changeIndexDurationTextColor(_ color: NSColor) {
+        libraryView.reloadData(forRowIndexes: allRows, columnIndexes: IndexSet([0, 2]))
+    }
+    
+    private func changeTrackNameSelectedTextColor(_ color: NSColor) {
+        libraryView.reloadData(forRowIndexes: selectedRows, columnIndexes: IndexSet(integer: 1))
+    }
+    
+    private func changeIndexDurationSelectedTextColor(_ color: NSColor) {
+        libraryView.reloadData(forRowIndexes: selectedRows, columnIndexes: IndexSet([0, 2]))
+    }
+    
+    private func changeSummaryInfoColor(_ color: NSColor) {
+        [lblTracksSummary, lblDurationSummary].forEach {$0.textColor = color}
+    }
+    
+    private func changeSelectionBoxColor(_ color: NSColor) {
+        
+        // Note down the selected rows, clear the selection, and re-select the originally selected rows (to trigger a repaint of the selection boxes)
+        let selectedRows = self.selectedRows
+        
+        if !selectedRows.isEmpty {
+            
+            clearSelection()
+            libraryView.selectRowIndexes(selectedRows, byExtendingSelection: false)
+        }
+    }
+    
+    private func changePlayingTrackIconColor(_ color: NSColor) {
+        
+        if let playingTrack = self.playbackInfo.currentTrack, let playingTrackIndex = library.indexOfTrack(playingTrack) {
+            libraryView.reloadData(forRowIndexes: IndexSet(integer: playingTrackIndex), columnIndexes: IndexSet(integer: 0))
+        }
     }
     
     // MARK: Context menu handling -----------------------------------------------------------------
