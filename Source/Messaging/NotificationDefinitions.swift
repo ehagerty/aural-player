@@ -307,6 +307,14 @@ struct LibraryTrackAddedNotification: NotificationPayload {
 }
 
 // Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
+struct LibraryCustomColumnAddCommandNotification: NotificationPayload {
+    
+    let notificationName: Notification.Name = .library_addCustomColumn
+    
+    let column: CustomColumn
+}
+
+// Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
 struct PlayQueueTrackAddedNotification: NotificationPayload {
     
     let notificationName: Notification.Name = .playQueue_trackAdded

@@ -5,10 +5,11 @@ import Cocoa
  */
 class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelegate, NotificationSubscriber {
     
-    @IBOutlet weak var libraryView: NSTableView!
+    @IBOutlet weak var libraryView: AuralLibraryTableView!
     @IBOutlet weak var headerView: NSTableHeaderView!
     private var theHeaderView: NSTableHeaderView!
     
+    @IBOutlet weak var columnsMenu: NSMenu!
     @IBOutlet weak var indexColumn: NSTableColumn!
     @IBOutlet weak var artistTitleColumn: NSTableColumn!
     @IBOutlet weak var durationColumn: NSTableColumn!
@@ -17,9 +18,7 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     @IBOutlet weak var albumColumn: NSTableColumn!
     @IBOutlet weak var genreColumn: NSTableColumn!
     
-    @IBOutlet weak var artistColumnMenuItem: NSMenuItem!
-    @IBOutlet weak var albumColumnMenuItem: NSMenuItem!
-    @IBOutlet weak var genreColumnMenuItem: NSMenuItem!
+    private lazy var customColumnEditor: CustomColumnEditorDialogController = CustomColumnEditorDialogController()
     
     private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
@@ -33,7 +32,9 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         [indexColumn, titleColumn, artistColumn, albumColumn, genreColumn].forEach {$0.hide()}
 //        libraryView.headerView = nil
         theHeaderView = headerView
+        
         Messenger.subscribe(self, .library_toggleTableHeader, self.toggleTableHeader)
+        Messenger.subscribe(self, .library_addCustomColumn, self.addCustomColumn(_:))
     }
     
     var isShowingArtistColumn: Bool {artistColumn.isShown}
@@ -44,6 +45,14 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     
     func menuWillOpen(_ menu: NSMenu) {
         
+//        while menu.items.count > 7 {
+//            menu.removeItem(at: 7)
+//        }
+//
+//        for customCol in libraryView.customColumns {
+//            menu.
+//        }
+//
         for item in menu.items {
             
             if let id = item.identifier {
@@ -56,13 +65,34 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         libraryView.headerView = libraryView.headerView != nil ? nil : theHeaderView
     }
     
+    func addCustomColumn(_ notif: LibraryCustomColumnAddCommandNotification) {
+        
+        let customColumn = notif.column
+        customColumn.id = "library_custom\(libraryView.customColumnsMap.count)"
+        
+        let column = libraryView.tableColumns[libraryView.column(withIdentifier: NSUserInterfaceItemIdentifier(customColumn.id))]
+        column.headerCell.title = customColumn.title
+        
+        libraryView.customColumns.append(customColumn)
+        libraryView.customColumnsMap[column.identifier] = customColumn
+        
+        let item: NSMenuItem = NSMenuItem(title: customColumn.title, action: #selector(self.toggleColumnAction(_:)), keyEquivalent: "")
+        item.identifier = column.identifier
+        item.target = self
+        
+        columnsMenu.insertItem(item, at: columnsMenu.items.count - 3)
+        column.show()
+    }
+    
     @IBAction func toggleColumnAction(_ sender: NSMenuItem) {
         
         if let id = sender.identifier {
             libraryView.tableColumn(withIdentifier: id)?.isHidden.toggle()
         }
-        
-        print("\(sender.identifier!.rawValue) triggered this action !!!")
+    }
+    
+    @IBAction func addColumnAction(_ sender: NSMenuItem) {
+        customColumnEditor.showDialog()
     }
     
     // Returns the total number of playlist rows
@@ -110,47 +140,6 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         tableView.reloadData()
     }
     
-    func tableView(_ tableView: NSTableView, sizeToFitWidthOfColumn column: Int) -> CGFloat {
-        
-        guard tableView.numberOfRows > 0 else {return tableView.tableColumns[column].width}
-        
-        let rowsRange: Range<Int> = 0..<tableView.numberOfRows
-        var widths: [CGFloat] = [0]
-        
-        switch column {
-            
-            // TODO: Using column index won't work because columns can be reordered.
-            // Use the column identifier instead.
-
-        case 1:
-
-            // Title
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.title}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-
-        case 3:
-
-            // Artist
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-
-        case 4:
-
-            // Album
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.album}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-
-        case 5:
-
-            // Genre
-            widths = rowsRange.compactMap {library.trackAtIndex($0)?.genre}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
-
-        default:
-            
-            // Index / Duration
-            return tableView.tableColumns[column].maxWidth
-        }
-        
-        return max(widths.max() ?? 0, tableView.tableColumns[column].width) + 10
-    }
-
     // MARK: Drag n drop
     
     // Validates the proposed drag/drop operation
@@ -180,4 +169,41 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         }
         
         return false
-    }}
+    }
+}
+
+class CustomColumn {
+    
+    var id: String
+    var title: String
+    var formatComponents: [ColumnFormatComponent] = []
+    
+    // TODO:
+    // var coloringPolicy: CustomColumnColoringPolicy
+    
+    init(title: String, formatComponents: [ColumnFormatComponent]) {
+        
+        // TODO
+        self.id = "library_custom"
+        
+        self.title = title
+        self.formatComponents = formatComponents
+    }
+    
+    func text(for track: Track) -> String {
+        
+        var str: String = ""
+        
+        for component in formatComponents {
+            
+            if let metadataField = component as? ColumnFormatMetadataField {
+                str += metadataField.value(for: track) ?? ""
+                
+            } else if let separator = component as? ColumnFormatFieldSeparator {
+                str += separator.value
+            }
+        }
+        
+        return str
+    }
+}

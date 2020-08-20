@@ -428,6 +428,7 @@ extension Notification.Name {
     // ----------------------------------------------------------------------------------------
     
     static let library_toggleTableHeader = Notification.Name("library_toggleTableHeader")
+    static let library_addCustomColumn = Notification.Name("library_addCustomColumn")
     
     static let library_removeTracks = Notification.Name("library_removeTracks")
     

@@ -5,7 +5,7 @@ import Cocoa
  */
 class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
     
-    @IBOutlet weak var libraryView: NSTableView!
+    @IBOutlet weak var libraryView: AuralLibraryTableView!
     
     private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
@@ -15,6 +15,57 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
     // Returns a view for a single row
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
         return PlaylistRowView()
+    }
+    
+    func tableView(_ tableView: NSTableView, sizeToFitWidthOfColumn columnIndex: Int) -> CGFloat {
+        
+        guard tableView.numberOfRows > 0 else {return tableView.tableColumns[columnIndex].width}
+        
+        let rowsRange: Range<Int> = 0..<tableView.numberOfRows
+        var widths: [CGFloat] = [0]
+        
+        // NOTE - For large numbers of tracks, this could be slow !
+        // Should this be done only for visible rows ???
+        
+        let column = tableView.tableColumns[columnIndex]
+        
+        switch column.identifier {
+            
+            // TODO: Using column index won't work because columns can be reordered.
+            // Use the column identifier instead.
+            
+        case .library_title:
+            
+            // Title
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.title}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
+        case .library_artistTitle:
+
+            // Title
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.artistTitleString}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
+        case .library_title:
+
+            // Artist
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
+        case .library_album:
+
+            // Album
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.album}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
+        case .library_genre:
+
+            // Genre
+            widths = rowsRange.compactMap {library.trackAtIndex($0)?.genre}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
+
+        default:
+            
+            // Index / Duration
+            return tableView.tableColumns[columnIndex].maxWidth
+        }
+        
+        return max(widths.max() ?? 0, tableView.tableColumns[columnIndex].width) + 10
     }
     
     // Enables type selection, allowing the user to conveniently and efficiently find a playlist track by typing its display name, which results in the track, if found, being selected within the playlist
@@ -100,7 +151,14 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
 
             return nil
             
-        default: return nil // Impossible
+        default:
+            
+            // Custom column
+            if let customColumn = libraryView.customColumnsMap[columnId] {
+                return createTextCell(tableView, columnId, customColumn.text(for: track), row)
+            }
+            
+            return nil // Impossible
             
         }
     }
@@ -133,7 +191,6 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
         guard let cell = tableView.makeView(withIdentifier: id, owner: nil) as? TextCellView else {return nil}
             
         cell.rowSelectionStateFunction = {tableView.selectedRowIndexes.contains(row)}
-        
         cell.updateText(Fonts.Playlist.trackNameFont, text)
         
         return cell

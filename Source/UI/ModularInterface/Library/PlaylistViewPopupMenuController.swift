@@ -16,7 +16,7 @@ class PlaylistViewPopupMenuController: NSObject, NSMenuDelegate {
     // When the menu is about to open, set the menu item states according to the current window/view state
     func menuNeedsUpdate(_ menu: NSMenu) {
         
-        toggleTableHeaderMenuItem.onIf(PlaylistViewState.isShowingTableHeader)
+        toggleTableHeaderMenuItem?.onIf(PlaylistViewState.isShowingTableHeader)
         
         textSizeMenuItems.forEach({$0.off()})
         

@@ -25,6 +25,26 @@ class AuralPlaylistTableView: NSTableView {
     }
 }
 
+class AuralLibraryTableView: NSTableView {
+    
+    var customColumns: [CustomColumn] = []
+    var customColumnsMap: [NSUserInterfaceItemIdentifier: CustomColumn] = [:]
+    
+    override func menu(for event: NSEvent) -> NSMenu? {
+        
+        let clickedRow: Int = self.row(at: self.convert(event.locationInWindow, from: nil))
+
+        // If the click occurred outside of any of the playlist rows (i.e. empty space), don't show the menu
+        if clickedRow == -1 {return nil}
+        
+        if !self.isRowSelected(clickedRow) {
+            self.selectRow(clickedRow)
+        }
+        
+        return self.menu
+    }
+}
+
 /*
     Custom view for a NSTableView row that displays a single playlist track or group. Customizes the selection look and feel.
  */
