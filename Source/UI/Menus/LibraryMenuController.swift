@@ -58,6 +58,20 @@ class LibraryMenuController: NSObject, NSMenuDelegate {
             Messenger.publish(.library_clear)
         }
     }
+    
+    // MARK: Playback actions -----------------------------------------------------------------
+    
+    @IBAction func playNowAction(_ sender: AnyObject) {
+        Messenger.publish(.library_playNow)
+    }
+    
+    @IBAction func playNextAction(_ sender: AnyObject) {
+        Messenger.publish(.library_playNext)
+    }
+    
+    @IBAction func playLaterAction(_ sender: AnyObject) {
+        Messenger.publish(.library_playLater)
+    }
 
 //    // Presents the search modal dialog to allow the user to search for playlist tracks
 //    @IBAction func playlistSearchAction(_ sender: Any) {

@@ -50,6 +50,10 @@ class LibraryTracksViewController: AuralViewController {
         Messenger.subscribe(self, .library_removeTracks, self.removeSelectedTracks)
         Messenger.subscribe(self, .library_refresh, {(selector: PlaylistViewSelector) in self.refresh()})
         
+        Messenger.subscribe(self, .library_playNow, self.playNow)
+        Messenger.subscribe(self, .library_playNext, self.playNext)
+        Messenger.subscribe(self, .library_playLater, self.playLater)
+        
         // MARK: Appearance
         
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
@@ -73,22 +77,6 @@ class LibraryTracksViewController: AuralViewController {
         
         libraryView.noteNumberOfRowsChanged()
         updateSummary()
-    }
-    
-    // Plays the track selected within the playlist, if there is one. If multiple tracks are selected, the first one will be chosen.
-    @IBAction func playSelectedTrackAction(_ sender: AnyObject) {
-        playSelectedTrackWithDelay()
-    }
-    
-    func playSelectedTrack() {
-        playSelectedTrackWithDelay()
-    }
-    
-    func playSelectedTrackWithDelay(_ delay: Double? = nil) {
-        
-        if let firstSelectedRow = libraryView.selectedRowIndexes.min() {
-            Messenger.publish(TrackPlaybackCommandNotification(index: firstSelectedRow, delay: delay))
-        }
     }
     
     private func trackTransitioned(_ notification: TrackTransitionNotification) {
@@ -273,24 +261,47 @@ class LibraryTracksViewController: AuralViewController {
         }
     }
     
+    // MARK: Track playback ------------------------------------------------------------------------------
+    
+    // Plays the track selected within the playlist, if there is one. If multiple tracks are selected, the first one will be chosen.
+    @IBAction func playNowAction(_ sender: AnyObject) {
+        playNow()
+    }
+    
+    // TODO: When play now is invoked,
+    // display a non-intrusive popover giving the user
+    // the option to clear the tracks previously in the
+    // play queue ... if there were any. And dimiss the
+    // popover after a few seconds.
+    func playNow(withDelay seconds: Double? = nil) {
+        
+        _ = playQueue.enqueueToPlayNow(selectedTracks)
+        Messenger.publish(TrackPlaybackCommandNotification(index: 0, delay: seconds))
+    }
+    
+    func playNext() {
+        _ = playQueue.enqueueToPlayNext(selectedTracks)
+    }
+    
+    func playLater() {
+        _ = playQueue.enqueueToPlayLater(selectedTracks)
+    }
+    
     // MARK: Context menu handling -----------------------------------------------------------------
     
     private var selectedTracks: [Track] {
         libraryView.selectedRowIndexes.compactMap {self.library.trackAtIndex($0)}
     }
     
-    @IBAction func playNow(_ sender: AnyObject) {
-        //        print("\nPLAY NOW")
-        _ = playQueue.enqueueToPlayNow(selectedTracks)
+    @IBAction func playNowContextMenuAction(_ sender: AnyObject) {
+        playNow()
     }
     
-    @IBAction func playNext(_ sender: AnyObject) {
-        //        print("\nPLAY NEXT")
-        _ = playQueue.enqueueToPlayNext(selectedTracks)
+    @IBAction func playNextContextMenuAction(_ sender: AnyObject) {
+        playNext()
     }
     
-    @IBAction func playLater(_ sender: AnyObject) {
-        //        print("\nPLAY LATER")
-        _ = playQueue.enqueueToPlayLater(selectedTracks)
+    @IBAction func playLaterContextMenuAction(_ sender: AnyObject) {
+        playLater()
     }
 }

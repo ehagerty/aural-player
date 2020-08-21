@@ -794,13 +794,25 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="nas-Z1-0q1"/>
-                            <menuItem title="  Play selected track" image="Play-Small" id="YKq-Va-vIK" userLabel="Play selected track/group">
+                            <menuItem title="  Play now" image="Play-Small" id="YKq-Va-vIK" userLabel="Play now">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="playSelectedItemAction:" target="sXT-Pr-clR" id="i5P-AA-OGZ"/>
+                                    <action selector="playNowAction:" target="w06-ce-55M" id="vPw-aC-eGG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Play next" indentationLevel="1" id="ci7-Vg-aBx" userLabel="Play next">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="playNextAction:" target="w06-ce-55M" id="JiQ-8q-FJL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="  Play later" indentationLevel="1" id="va8-z8-nBo" userLabel="Play later">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="playLaterAction:" target="w06-ce-55M" id="WKE-XS-rGO"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="YFj-8Z-1g2"/>

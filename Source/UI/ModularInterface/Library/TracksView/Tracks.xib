@@ -48,7 +48,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="588" height="358"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" headerView="n1T-g7-GdR" viewBased="YES" id="OzC-ZW-pSB" userLabel="LibraryTracks" customClass="AuralLibraryTableView" customModule="Aural" customModuleProvider="target">
+                            <tableView identifier="library_tracksView" verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="30" rowSizeStyle="automatic" headerView="n1T-g7-GdR" viewBased="YES" id="OzC-ZW-pSB" userLabel="LibraryTracks" customClass="AuralLibraryTableView" customModule="Aural" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="588" height="333"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -81,7 +81,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yVc-s6-1Tk">
-                                                        <rect key="frame" x="14" y="79" width="20" height="17"/>
+                                                        <rect key="frame" x="15" y="79" width="20" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="4Gl-zp-3jI"/>
                                                     </imageView>
@@ -326,7 +326,7 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="Y2d-3P-Rak"/>
+                                    <action trigger="doubleAction" selector="playNowAction:" target="-2" id="La4-Yu-3kU"/>
                                     <outlet property="dataSource" destination="vH7-ho-Ykd" id="beM-hb-vKH"/>
                                     <outlet property="delegate" destination="fxO-kG-Bir" id="Q8q-m5-hIi"/>
                                     <outlet property="menu" destination="AZB-cj-qYO" id="GBS-lt-434"/>
@@ -393,19 +393,19 @@
                 <menuItem title="Play Now" id="pKh-0F-HqF">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="playNow:" target="-2" id="qhf-Yy-C0L"/>
+                        <action selector="playNowContextMenuAction:" target="-2" id="u3l-4x-gjv"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Play Next" id="oHd-nk-8A8">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="playNext:" target="-2" id="riy-6I-Xhy"/>
+                        <action selector="playNextContextMenuAction:" target="-2" id="5oP-jc-d3G"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Play Later" id="ky1-SL-n6Q">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="playLater:" target="-2" id="Nhx-si-1zH"/>
+                        <action selector="playLaterContextMenuAction:" target="-2" id="JbP-Ua-WHL"/>
                     </connections>
                 </menuItem>
             </items>

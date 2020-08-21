@@ -171,6 +171,11 @@ class BasicTableCellView: NSTableCellView {
 
 extension NSUserInterfaceItemIdentifier {
     
+    static let library_tracksView: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_tracksView")
+    
+    static let playQueue: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue")
+    
+    
     static let uid_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier(UIConstants.playlistIndexColumnID)
     
     static let uid_trackName: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier(UIConstants.playlistNameColumnID)

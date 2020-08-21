@@ -100,11 +100,11 @@
                     </box>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dys-ee-q5g" userLabel="PlayQueue">
                         <rect key="frame" x="10" y="35" width="580" height="325"/>
-                        <clipView key="contentView" id="a8h-Qd-YWK">
+                        <clipView key="contentView" drawsBackground="NO" id="a8h-Qd-YWK">
                             <rect key="frame" x="0.0" y="0.0" width="580" height="325"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="CUg-cs-QYS" userLabel="PlayQueue">
+                                <tableView identifier="playQueue" verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="CUg-cs-QYS" userLabel="PlayQueue">
                                     <rect key="frame" x="0.0" y="0.0" width="580" height="325"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>

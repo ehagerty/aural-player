@@ -1,12 +1,5 @@
 import Foundation
 
-// A contract for payload objects dispatched by Messenger.
-protocol NotificationPayload {
-    
-    // The name of the associated Notification.
-    var notificationName: Notification.Name {get}
-}
-
 /*
     Signifies that a track transition has occurred, i.e. either the playback state, the current
     track, or both, have changed. eg. when changing tracks or a track goes from waiting/transcoding
@@ -292,26 +285,6 @@ struct PlaylistTrackAddedNotification: NotificationPayload {
     
     // The current progress of the track add operation (See TrackAddOperationProgress)
     let addOperationProgress: TrackAddOperationProgress
-}
-
-// Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
-struct LibraryTrackAddedNotification: NotificationPayload {
-    
-    let notificationName: Notification.Name = .library_trackAdded
-    
-    // The index of the newly added track
-    let trackIndex: Int
-    
-    // The current progress of the track add operation (See TrackAddOperationProgress)
-    let addOperationProgress: TrackAddOperationProgress
-}
-
-// Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
-struct LibraryCustomColumnAddCommandNotification: NotificationPayload {
-    
-    let notificationName: Notification.Name = .library_addCustomColumn
-    
-    let column: CustomColumn
 }
 
 // Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.

@@ -147,11 +147,23 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     
     // MARK: Drag n drop
     
+    // Writes source information to the pasteboard
+    func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {
+        
+        if library.isBeingModified {return false}
+        
+        let item = NSPasteboardItem()
+        item.setData(NSKeyedArchiver.archivedData(withRootObject: rowIndexes), forType: .data)
+        pboard.writeObjects([item])
+        
+        return true
+    }
+    
     // Validates the proposed drag/drop operation
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
 
         // Files are being dragged in from outside the app (e.g. tracks/playlists from Finder)
-        return library.isBeingModified || info.draggingSource is NSTableView ? invalidDragOperation : .copy
+        return library.isBeingModified ? invalidDragOperation : .copy
     }
     
     // Given source indexes, a destination index (dropRow), and the drop operation (on/above), determines if the drop is a valid reorder operation (depending on the bounds of the playlist, and the source and destination indexes)

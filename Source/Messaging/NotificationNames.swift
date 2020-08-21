@@ -118,25 +118,6 @@ extension Notification.Name {
     
     // ----------------------------------------------------------------------------------------
     
-    // MARK: Notifications published by the library.
-
-    // Signifies that the library has begun adding a set of tracks.
-    static let library_startedAddingTracks = Notification.Name("library_startedAddingTracks")
-    
-    // Signifies that the library has finished adding a set of tracks.
-    static let library_doneAddingTracks = Notification.Name("library_doneAddingTracks")
-    
-    // Signifies that a new track has been added to the library.
-    static let library_trackAdded = Notification.Name("library_trackAdded")
-    
-    // Signifies that some chosen tracks could not be added to the library (i.e. an error condition).
-    static let library_tracksNotAdded = Notification.Name("library_tracksNotAdded")
-    
-    // Signifies that some tracks have been removed from the library.
-    static let library_tracksRemoved = Notification.Name("library_tracksRemoved")
-    
-    // ----------------------------------------------------------------------------------------
-    
     // MARK: Notifications published by the play queue.
     
     // Signifies that the play queue has begun adding a set of tracks.
@@ -426,17 +407,6 @@ extension Notification.Name {
     // ----------------------------------------------------------------------------------------
     
     // ----------------------------------------------------------------------------------------
-    
-    static let library_toggleTableHeader = Notification.Name("library_toggleTableHeader")
-    static let library_addCustomColumn = Notification.Name("library_addCustomColumn")
-    
-    // Commands the library to display a file dialog to let the user add new tracks.
-    static let library_addTracks = Notification.Name("library_addTracks")
-    static let library_removeTracks = Notification.Name("library_removeTracks")
-    static let library_clear = Notification.Name("library_clear")
-    
-    // Commands a library to refresh its list view (eg. in response to tracks being added/removed/updated).
-    static let library_refresh = Notification.Name("library_refresh")
     
     // MARK: Play Queue commands
     

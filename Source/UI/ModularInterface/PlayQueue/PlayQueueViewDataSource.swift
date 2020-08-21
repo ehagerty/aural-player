@@ -5,6 +5,7 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
     @IBOutlet weak var playQueueView: NSTableView!
     
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
+    private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     
     // Signifies an invalid drag/drop operation
     private let invalidDragOperation: NSDragOperation = []
@@ -44,17 +45,22 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
         if playQueue.isBeingModified {return invalidDragOperation}
         
         // If the source is the tableView, that means playlist tracks are being reordered
-        if info.draggingSource is NSTableView {
+        if let sourceTableView = info.draggingSource as? NSTableView {
             
-            // Reordering of tracks
-            if let sourceIndexSet = getSourceIndexes(info), validateReorderOperation(tableView, sourceIndexSet, row, dropOperation) {
+            if sourceTableView.identifier == .library_tracksView {
+                
+                // Tracks are being dragged from the library -> play queue.
+                return .copy
+                
+            } else if sourceTableView.identifier == .playQueue, let sourceIndexSet = getSourceIndexes(info),
+                validateReorderOperation(tableView, sourceIndexSet, row, dropOperation) {
+                
+                // Tracks are being reordered within the play queue.
                 return .move
             }
             
             return invalidDragOperation
         }
-        
-        // TODO: What about items added from apps other than Finder ??? From VOX or other audio players ???
         
         // Otherwise, files are being dragged in from outside the app (e.g. tracks/playlists from Finder)
         return .copy
@@ -72,9 +78,9 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
         
         if playQueue.isBeingModified {return false}
         
-        if info.draggingSource is NSTableView {
+        if let sourceTableView = info.draggingSource as? NSTableView {
             
-            if let sourceIndices = getSourceIndexes(info) {
+            if sourceTableView.identifier == .playQueue, let sourceIndices = getSourceIndexes(info) {
                 
                 let results = playQueue.dropTracks(sourceIndices, row)
                 
@@ -100,6 +106,16 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
                 
                 // Select all the destination rows (the new locations of the moved tracks)
                 tableView.selectRowIndexes(IndexSet(destinationIndices), byExtendingSelection: false)
+                
+                return true
+            }
+            
+            if sourceTableView.identifier == .library_tracksView, let sourceIndices = getSourceIndexes(info) {
+                
+                // Convert the indices from the library view into tracks, then enqueue them onto the play queue.
+                
+                let tracks = sourceIndices.compactMap {library.trackAtIndex($0)}
+                _ = playQueue.enqueueToPlayLater(tracks)
                 
                 return true
             }

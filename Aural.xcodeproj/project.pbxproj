@@ -746,6 +746,7 @@
 		3EC90B9A246C8122009D2181 /* PlaybackLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC90B98246C811E009D2181 /* PlaybackLoop.swift */; };
 		3EC90B9C246C816C009D2181 /* PlaybackLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC90B9B246C816C009D2181 /* PlaybackLoopTests.swift */; };
 		3EC947AF1F5DDEB100FDBE25 /* PlaylistProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC947AE1F5DDEB100FDBE25 /* PlaylistProtocols.swift */; };
+		3EC94B0024EFA59400EBF356 /* LibraryNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC94AFF24EFA59400EBF356 /* LibraryNotifications.swift */; };
 		3ECB858F2152677300D974F5 /* SnappingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECB858E2152677300D974F5 /* SnappingWindow.swift */; };
 		3ECCF5D124E4365D005E32EB /* FFmpegDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCF5D024E4365D005E32EB /* FFmpegDecoder.swift */; };
 		3ECD17441F6BBEE400492F56 /* ID3Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD17431F6BBEE400492F56 /* ID3Parser.swift */; };
@@ -1475,6 +1476,7 @@
 		3EC90B98246C811E009D2181 /* PlaybackLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLoop.swift; sourceTree = "<group>"; };
 		3EC90B9B246C816C009D2181 /* PlaybackLoopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLoopTests.swift; sourceTree = "<group>"; };
 		3EC947AE1F5DDEB100FDBE25 /* PlaylistProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistProtocols.swift; sourceTree = "<group>"; };
+		3EC94AFF24EFA59400EBF356 /* LibraryNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNotifications.swift; sourceTree = "<group>"; };
 		3ECB858E2152677300D974F5 /* SnappingWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnappingWindow.swift; sourceTree = "<group>"; };
 		3ECCF5D024E4365D005E32EB /* FFmpegDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegDecoder.swift; sourceTree = "<group>"; };
 		3ECD17431F6BBEE400492F56 /* ID3Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ID3Parser.swift; sourceTree = "<group>"; };
@@ -2075,6 +2077,7 @@
 				3E8E2C472493D3FF00D795F6 /* Messenger.swift */,
 				3E3AD5471F5D2BEC006123E9 /* NotificationDefinitions.swift */,
 				3E29C9102495F0040066D8B9 /* NotificationNames.swift */,
+				3EC94AFF24EFA59400EBF356 /* LibraryNotifications.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -3660,6 +3663,7 @@
 				3E309B781FB70D1F00C61E72 /* InfoPopupViewController.swift in Sources */,
 				3E6C32A424AB1C110011D44C /* BookmarkState.swift in Sources */,
 				3E9A90EB24DDA7B50027D414 /* FFmpegCodec.swift in Sources */,
+				3EC94B0024EFA59400EBF356 /* LibraryNotifications.swift in Sources */,
 				3EDFFA071FC0263E00158177 /* PlaylistPreferencesViewController.swift in Sources */,
 				3EBF7EF2215873E8007869EC /* CustomEditorViews.swift in Sources */,
 				3EF86047245DAB470067583A /* SettingsPopupMenuController.swift in Sources */,
