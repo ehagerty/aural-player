@@ -1748,10 +1748,10 @@
 		3E50AD952461370C00B31339 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3E50AD97246137A700B31339 /* Menus */,
 				3E5D681C24EC33D300F25723 /* InterfaceManagement */,
 				3E2F97F624ED067A00463F9A /* ModularInterface */,
 				3ED404A824ACEF63000BF125 /* RichUI */,
-				3E50AD97246137A700B31339 /* Menus */,
 				3E50AD98246137E200B31339 /* WindowManagement */,
 				3EF62FEF244C424E00AD7172 /* ColorSchemes */,
 				3E50AD9D2461388100B31339 /* Preferences */,
@@ -1781,8 +1781,8 @@
 				3E192395215B0F1100E894B3 /* FavoritesMenuController.swift */,
 				3E5F00CF2153A09500A76C23 /* BookmarksMenuController.swift */,
 				3E850D581FB446940017CD02 /* PlaylistMenuController.swift */,
-				3EF661FE24B3982D00BFF16A /* PlayQueueMenuController.swift */,
 				3EE32D7724EA3D7F007900F4 /* LibraryMenuController.swift */,
+				3EF661FE24B3982D00BFF16A /* PlayQueueMenuController.swift */,
 				3EDDF6AF1FB54AB800DF2E9A /* PlaybackMenuController.swift */,
 				3EB029131FB58CEC00A2D920 /* SoundMenuController.swift */,
 				3EDDF6A81FB4FAA600DF2E9A /* ViewMenuController.swift */,

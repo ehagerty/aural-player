@@ -331,4 +331,20 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
     private func changeFunctionButtonColor(_ color: NSColor) {
         functionButtons.forEach {$0.reTint()}
     }
+    
+//    func trackChanged() {
+//
+//        // New track has no chapters, or there is no new track
+//        if playbackInfo.chapterCount == 0 {
+//            //            WindowManager.hideChaptersList()
+//
+//        } // Only show chapters list if preferred by user
+//        else if playlistPreferences.showChaptersList {
+//            viewChaptersList()
+//        }
+//    }
+//    
+//    private func viewChaptersList() {
+////        WindowManager.showChaptersList()
+//    }
 }

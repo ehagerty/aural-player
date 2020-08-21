@@ -35,6 +35,10 @@ extension Notification.Name {
     static let library_playNow = Notification.Name("library_playNow")
     static let library_playNext = Notification.Name("library_playNext")
     static let library_playLater = Notification.Name("library_playLater")
+    
+    static let library_clearSelection = Notification.Name("library_clearSelection")
+    static let library_invertSelection = Notification.Name("library_invertSelection")
+    static let library_cropSelection = Notification.Name("library_cropSelection")
 }
 
 // Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.

@@ -124,8 +124,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         Messenger.subscribeAsync(self, .playlist_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playlist_tracksNotAdded, self.tracksNotAdded(_:), queue: .main)
         
-        Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackChanged, queue: .main)
-        
         // MARK: Commands -------------------------------------------------------------------------------------
         
         Messenger.subscribe(self, .library_addTracks, self.addTracks)
@@ -136,8 +134,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         Messenger.subscribe(self, .playlist_previousView, self.previousView)
         Messenger.subscribe(self, .playlist_nextView, self.nextView)
-        
-        Messenger.subscribe(self, .playlist_viewChaptersList, self.viewChaptersList)
         
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
         
@@ -170,15 +166,16 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     // Invokes the Open file dialog, to allow the user to add tracks/playlists to the app playlist
     @IBAction func addTracksAction(_ sender: AnyObject) {
         
-        guard !checkIfLibraryIsBeingModified() else {return}
-        
-        if fileOpenDialog.runModal() == NSApplication.ModalResponse.OK {
-            library.addFiles(fileOpenDialog.urls)
+        if !checkIfLibraryIsBeingModified() {
+            addTracks()
         }
     }
     
     private func addTracks() {
-        addTracksAction(self)
+        
+        if fileOpenDialog.runModal() == NSApplication.ModalResponse.OK {
+            library.addFiles(fileOpenDialog.urls)
+        }
     }
     
     // When a track add operation starts, the progress spinner needs to be initialized
@@ -223,16 +220,17 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     // Removes all items from the playlist
     @IBAction func clearLibraryAction(_ sender: AnyObject) {
         
-        guard !checkIfLibraryIsBeingModified() else {return}
+        if !checkIfLibraryIsBeingModified() {
+            clearLibrary()
+        }
+    }
+    
+    private func clearLibrary() {
         
         library.clear()
         
         // Tell all playlist views to refresh themselves
         Messenger.publish(.library_refresh, payload: PlaylistViewSelector.allViews)
-    }
-    
-    private func clearLibrary() {
-        clearLibraryAction(self)
     }
     
     // Moves any selected playlist items up one row in the library. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.
@@ -270,14 +268,14 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     // Presents the sort modal dialog to allow the user to sort playlist tracks
     @IBAction func sortAction(_ sender: AnyObject) {
-        sort()
+        
+        if !checkIfLibraryIsBeingModified() {
+            sort()
+        }
     }
     
     private func sort() {
-        
-        if !checkIfLibraryIsBeingModified() {
-            _ = playlistSortDialog.showDialog()
-        }
+        _ = playlistSortDialog.showDialog()
     }
     
     // MARK: Playlist window actions
@@ -352,21 +350,5 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     
     private func redrawSelectedTabButton() {
         (tabGroup.selectedTabViewItem as? AuralTabViewItem)?.tabButton.redraw()
-    }
-    
-    func trackChanged() {
-        
-        // New track has no chapters, or there is no new track
-        if playbackInfo.chapterCount == 0 {
-//            WindowManager.hideChaptersList()
-            
-        } // Only show chapters list if preferred by user
-        else if playlistPreferences.showChaptersList {
-            viewChaptersList()
-        }
-    }
-    
-    private func viewChaptersList() {
-//        WindowManager.showChaptersList()
     }
 }

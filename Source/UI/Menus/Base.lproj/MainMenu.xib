@@ -819,13 +819,13 @@ DQ
                             <menuItem title=" Clear selection" image="InvertSelection-Small" id="WS5-L7-I8R" userLabel="Clear selection">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="clearSelectionAction:" target="sXT-Pr-clR" id="mAh-VC-CRB"/>
+                                    <action selector="clearSelectionAction:" target="w06-ce-55M" id="eJ1-wa-UEA"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Invert selection" image="InvertSelection-Small" id="6Bt-JE-fxF" userLabel="Invert selection">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="invertSelectionAction:" target="sXT-Pr-clR" id="Nan-AL-qhu"/>
+                                    <action selector="invertSelectionAction:" target="w06-ce-55M" id="3Lr-6u-PiY"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Crop selection" image="CropSelection-Small" id="wol-oV-8bJ" userLabel="Crop selection">
@@ -834,7 +834,7 @@ CA
 </string>
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
-                                    <action selector="cropSelectionAction:" target="sXT-Pr-clR" id="HPj-gv-wUa"/>
+                                    <action selector="cropSelectionAction:" target="w06-ce-55M" id="DIZ-fI-rLZ"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Remove selected tracks" image="Remove-Small" id="qrL-L7-SKn" userLabel="Remove selected tracks">

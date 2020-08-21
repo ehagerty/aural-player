@@ -72,6 +72,23 @@ class LibraryMenuController: NSObject, NSMenuDelegate {
     @IBAction func playLaterAction(_ sender: AnyObject) {
         Messenger.publish(.library_playLater)
     }
+    
+    // MARK: Actions related to track selection -----------------------------------------------------------------
+    
+    @IBAction func clearSelectionAction(_ sender: Any) {
+        Messenger.publish(.library_clearSelection, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
+    }
+    
+    @IBAction func invertSelectionAction(_ sender: Any) {
+        Messenger.publish(.library_invertSelection, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
+    }
+    
+    @IBAction func cropSelectionAction(_ sender: Any) {
+        
+        if !checkIfLibraryIsBeingModified() {
+            Messenger.publish(.library_cropSelection, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
+        }
+    }
 
 //    // Presents the search modal dialog to allow the user to search for playlist tracks
 //    @IBAction func playlistSearchAction(_ sender: Any) {

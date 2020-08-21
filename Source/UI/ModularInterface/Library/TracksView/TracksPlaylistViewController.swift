@@ -54,6 +54,10 @@ class LibraryTracksViewController: AuralViewController {
         Messenger.subscribe(self, .library_playNext, self.playNext)
         Messenger.subscribe(self, .library_playLater, self.playLater)
         
+        Messenger.subscribe(self, .library_clearSelection, {(selector: PlaylistViewSelector) in self.clearSelection()})
+        Messenger.subscribe(self, .library_invertSelection, {(selector: PlaylistViewSelector) in self.invertSelection()})
+        Messenger.subscribe(self, .library_cropSelection, {(selector: PlaylistViewSelector) in self.cropSelection()})
+        
         // MARK: Appearance
         
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
@@ -127,6 +131,27 @@ class LibraryTracksViewController: AuralViewController {
     
     private func clearSelection() {
         libraryView.selectRowIndexes(IndexSet(), byExtendingSelection: false)
+    }
+    
+    private func invertSelection() {
+        libraryView.selectRowIndexes(invertedSelection, byExtendingSelection: false)
+    }
+    
+    private var invertedSelection: IndexSet {
+        IndexSet((0..<library.size).filter {!selectedRows.contains($0)})
+    }
+    
+    private func cropSelection() {
+        
+        let tracksToDelete: IndexSet = invertedSelection
+        
+        if tracksToDelete.count > 0 {
+            
+            library.removeTracks(tracksToDelete)
+            libraryView.reloadData()
+            
+            updateSummary()
+        }
     }
     
     private func updateSummary() {
