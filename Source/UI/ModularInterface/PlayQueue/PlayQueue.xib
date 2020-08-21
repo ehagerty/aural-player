@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PlayQueueWindowViewController" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="btnClose" destination="4yV-Um-Fno" id="VRE-qd-meT"/>
+                <outlet property="lblDurationSummary" destination="c2A-EN-gcy" id="X20-MA-KGD"/>
                 <outlet property="lblTracksSummary" destination="GqF-KI-QYQ" id="SXJ-JQ-Cuh"/>
                 <outlet property="playQueueView" destination="CUg-cs-QYS" id="iai-QX-9uY"/>
                 <outlet property="rootContainerBox" destination="YoY-1j-kEY" id="J5R-V0-Plh"/>
@@ -24,6 +25,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="600" height="400"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <value key="minSize" type="size" width="400" height="300"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -98,14 +100,26 @@
                         <color key="borderColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </box>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dDG-Dw-rbl" userLabel="Window Title" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
+                        <rect key="frame" x="228" y="370" width="144" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="km8-Ni-5c7"/>
+                            <constraint firstAttribute="width" constant="140" id="t0K-A8-rE4"/>
+                        </constraints>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Play  Queue" id="Hoy-4w-wcU" customClass="FXUnitCaptionCell" customModule="Aural" customModuleProvider="target">
+                            <font key="font" size="12" name="AlegreyaSansSC-Medium"/>
+                            <color key="textColor" white="0.70157877599999996" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </textFieldCell>
+                    </textField>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="52" horizontalPageScroll="10" verticalLineScroll="52" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dys-ee-q5g" userLabel="PlayQueue">
-                        <rect key="frame" x="10" y="35" width="580" height="325"/>
+                        <rect key="frame" x="10" y="40" width="580" height="320"/>
                         <clipView key="contentView" drawsBackground="NO" id="a8h-Qd-YWK">
-                            <rect key="frame" x="0.0" y="0.0" width="580" height="325"/>
+                            <rect key="frame" x="0.0" y="0.0" width="580" height="320"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView identifier="playQueue" verticalHuggingPriority="750" allowsExpansionToolTips="YES" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" viewBased="YES" id="CUg-cs-QYS" userLabel="PlayQueue">
-                                    <rect key="frame" x="0.0" y="0.0" width="580" height="325"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="580" height="320"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -212,7 +226,7 @@
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vxn-MD-dgA">
                                                             <rect key="frame" x="0.0" y="14" width="74" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="gUo-O2-EQG">
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Table View Cell" id="gUo-O2-EQG">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -244,8 +258,8 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GqF-KI-QYQ" userLabel="Summary">
-                        <rect key="frame" x="18" y="0.0" width="584" height="25"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GqF-KI-QYQ" userLabel="Tracks Summary">
+                        <rect key="frame" x="23" y="5" width="279" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="qM8-AO-bJm"/>
                         </constraints>
@@ -255,21 +269,44 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c2A-EN-gcy" userLabel="Duration Summary">
+                        <rect key="frame" x="298" y="5" width="274" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="25" id="Ed1-mo-NU5"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="qXW-J2-ods"/>
+                            <constraint firstAttribute="height" constant="25" id="yFp-qr-x3R"/>
+                        </constraints>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="0:00" id="wkM-BW-BXY">
+                            <font key="font" size="13" name="Play-Regular"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="dys-ee-q5g" secondAttribute="trailing" constant="10" id="19y-Jy-lWc"/>
                     <constraint firstItem="dys-ee-q5g" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="40" id="E7h-uW-hvE"/>
-                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="dys-ee-q5g" secondAttribute="leading" constant="10" id="MJH-Od-lmS"/>
-                    <constraint firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" id="aKQ-uM-LJ5"/>
+                    <constraint firstItem="dDG-Dw-rbl" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="J4l-K2-gdJ"/>
+                    <constraint firstItem="c2A-EN-gcy" firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" id="Jyp-X5-fpn"/>
+                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="dys-ee-q5g" secondAttribute="leading" constant="15" id="MJH-Od-lmS"/>
+                    <constraint firstItem="c2A-EN-gcy" firstAttribute="trailing" secondItem="dys-ee-q5g" secondAttribute="trailing" constant="-20" id="SYH-9q-B7w"/>
+                    <constraint firstItem="dDG-Dw-rbl" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="8" id="UYZ-Ot-NAf"/>
+                    <constraint firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" constant="5" id="aKQ-uM-LJ5"/>
+                    <constraint firstItem="c2A-EN-gcy" firstAttribute="leading" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="cfG-P1-sRH"/>
                     <constraint firstAttribute="trailing" secondItem="YoY-1j-kEY" secondAttribute="trailing" id="dJ3-0l-ysk"/>
                     <constraint firstItem="dys-ee-q5g" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="10" id="dUc-FS-BEF"/>
                     <constraint firstAttribute="bottom" secondItem="YoY-1j-kEY" secondAttribute="bottom" id="jJT-JA-TqE"/>
                     <constraint firstItem="YoY-1j-kEY" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="oGY-NT-mbS"/>
-                    <constraint firstAttribute="trailing" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="ufA-G7-3zX"/>
+                    <constraint firstAttribute="centerX" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="ufA-G7-3zX"/>
                     <constraint firstItem="GqF-KI-QYQ" firstAttribute="top" secondItem="dys-ee-q5g" secondAttribute="bottom" constant="10" id="ufz-mi-B3a"/>
                     <constraint firstItem="YoY-1j-kEY" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="vSs-Le-UJU"/>
                 </constraints>
             </view>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                    <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="141" y="147"/>
         </window>
         <customObject id="aOk-aP-Tup" customClass="PlayQueueViewDelegate" customModule="Aural" customModuleProvider="target">

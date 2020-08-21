@@ -6,11 +6,13 @@ class PrettyScroller: NSScroller {
     let barInsetX: CGFloat = 7
     let barInsetY: CGFloat = 0
     
-    let knobInsetX: CGFloat = 4
+    let knobInsetX: CGFloat = 5
     let knobInsetY: CGFloat = 0
     let knobRadius: CGFloat = 1
 
     var knobColor: NSColor = NSColor.gray
+    
+    var knobRect: NSRect {self.rect(for: .knob).insetBy(dx: knobInsetX, dy: knobInsetY)}
     
     override func awakeFromNib() {
         self.scrollerStyle = .overlay
@@ -18,7 +20,8 @@ class PrettyScroller: NSScroller {
     
     override func drawKnob() {
         
-        let knobRect = self.rect(for: .knob).insetBy(dx: knobInsetX, dy: knobInsetY)
+        var knobRect = self.knobRect
+        knobRect = knobRect.offsetBy(dx: self.bounds.maxX - knobRect.maxX, dy: 0)
         
         if knobRect.height <= 0 || knobRect.width <= 0 {return}
         
@@ -33,7 +36,7 @@ class PrettyScroller: NSScroller {
         Colors.windowBackgroundColor.setFill()
         dirtyRect.fill()
         
-        let rect = dirtyRect.insetBy(dx: barInsetX, dy: barInsetY)
+        let rect = dirtyRect.insetBy(dx: barInsetX, dy: barInsetY).offsetBy(dx: self.bounds.maxX - knobRect.maxX, dy: 0)
         let drawPath = NSBezierPath.init(roundedRect: rect, xRadius: barRadius, yRadius: barRadius)
         
         Colors.scrollerBarColor.setFill()

@@ -81,7 +81,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yVc-s6-1Tk">
-                                                        <rect key="frame" x="17" y="79" width="20" height="17"/>
+                                                        <rect key="frame" x="19" y="79" width="20" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="4Gl-zp-3jI"/>
                                                     </imageView>
@@ -351,7 +351,7 @@
                     </tableHeaderView>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IVX-KK-frX" userLabel="Tracks Summary">
-                    <rect key="frame" x="13" y="0.0" width="288" height="25"/>
+                    <rect key="frame" x="3" y="0.0" width="298" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="ds1-oO-vBi"/>
                     </constraints>
@@ -362,7 +362,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lBW-co-5dc" userLabel="Duration Summary">
-                    <rect key="frame" x="297" y="0.0" width="278" height="25"/>
+                    <rect key="frame" x="297" y="0.0" width="298" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="7wE-17-9IF"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="i6T-Zx-avc"/>
@@ -377,13 +377,13 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="str-2W-bBn" secondAttribute="bottom" constant="30" id="0SI-yI-RT3"/>
                 <constraint firstItem="str-2W-bBn" firstAttribute="top" secondItem="YQl-P2-Yq0" secondAttribute="top" constant="10" id="3Sv-HK-WoE"/>
-                <constraint firstItem="IVX-KK-frX" firstAttribute="leading" secondItem="YQl-P2-Yq0" secondAttribute="leading" constant="15" id="6x2-rM-oNd"/>
+                <constraint firstItem="IVX-KK-frX" firstAttribute="leading" secondItem="YQl-P2-Yq0" secondAttribute="leading" constant="5" id="6x2-rM-oNd"/>
                 <constraint firstItem="lBW-co-5dc" firstAttribute="leading" secondItem="IVX-KK-frX" secondAttribute="trailing" id="KQs-20-xo0"/>
                 <constraint firstItem="lBW-co-5dc" firstAttribute="bottom" secondItem="IVX-KK-frX" secondAttribute="bottom" id="d3J-XQ-9bT"/>
                 <constraint firstItem="str-2W-bBn" firstAttribute="leading" secondItem="YQl-P2-Yq0" secondAttribute="leading" constant="10" id="fCc-bo-kVq"/>
                 <constraint firstItem="IVX-KK-frX" firstAttribute="trailing" secondItem="YQl-P2-Yq0" secondAttribute="centerX" id="gft-uB-hB7"/>
                 <constraint firstAttribute="trailing" secondItem="str-2W-bBn" secondAttribute="trailing" id="hb0-Fl-anK"/>
-                <constraint firstItem="lBW-co-5dc" firstAttribute="trailing" secondItem="str-2W-bBn" secondAttribute="trailing" constant="-25" id="nEg-zH-vYc"/>
+                <constraint firstItem="lBW-co-5dc" firstAttribute="trailing" secondItem="str-2W-bBn" secondAttribute="trailing" constant="-5" id="nEg-zH-vYc"/>
                 <constraint firstAttribute="bottom" secondItem="IVX-KK-frX" secondAttribute="bottom" id="oSs-QQ-ci3"/>
             </constraints>
             <point key="canvasLocation" x="252" y="-1021"/>

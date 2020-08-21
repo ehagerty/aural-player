@@ -29,10 +29,10 @@ class PlayQueueTrackInfoCell: NSTableCellView {
         set(newValue) {
             
             lblName.font = newValue
-            lblName.textColor = Colors.Constants.white90Percent
+            lblName.textColor = Colors.Player.trackInfoTitleTextColor
             
             lblTitle.font = newValue
-            lblTitle.textColor = Colors.Constants.white90Percent
+            lblTitle.textColor = Colors.Player.trackInfoTitleTextColor
         }
     }
     
@@ -42,7 +42,7 @@ class PlayQueueTrackInfoCell: NSTableCellView {
         
         set(newValue) {
             lblArtistAlbum.font = newValue
-            lblArtistAlbum.textColor = Colors.Constants.white70Percent
+            lblArtistAlbum.textColor = Colors.Player.trackInfoArtistAlbumTextColor
         }
     }
     

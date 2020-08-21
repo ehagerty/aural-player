@@ -6,13 +6,14 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
     
     @IBOutlet weak var rootContainerBox: NSBox!
     
-    @IBOutlet weak var scroller: NSScroller!
-    
     @IBOutlet weak var btnClose: TintedImageButton!
     @IBOutlet weak var viewMenuIconItem: TintedIconMenuItem!
     
     @IBOutlet weak var playQueueView: NSTableView!
+    @IBOutlet weak var scroller: NSScroller!
+    
     @IBOutlet weak var lblTracksSummary: NSTextField!
+    @IBOutlet weak var lblDurationSummary: NSTextField!
     
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
@@ -45,7 +46,7 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         viewControlButtons = [btnClose, viewMenuIconItem]
         
         changeTextSize(PlaylistViewState.textSize)
-        applyColorScheme(ColorSchemes.systemScheme)
+        doApplyColorScheme(ColorSchemes.systemScheme, false)
         
         Messenger.subscribeAsync(self, .player_trackTransitioned, self.trackTransitioned(_:), queue: .main)
         
@@ -63,6 +64,8 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
         Messenger.subscribe(self, .playQueue_moveTracksToTop, self.moveTracksToTop)
         Messenger.subscribe(self, .playQueue_moveTracksToBottom, self.moveTracksToBottom)
+        
+        Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
         
         updateSummary()
     }
@@ -176,8 +179,11 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
     
     private func updateSummary() {
         
-        let numTracks = playQueue.size
+        let summary = playQueue.summary
+        let numTracks = summary.size
+        
         lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
+        lblDurationSummary.stringValue = ValueFormatter.formatSecondsToHMS(summary.totalDuration)
     }
     
     private func removeSelectedTracks() {
@@ -308,14 +314,6 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         
     }
     
-    private func applyColorScheme(_ scheme: ColorScheme) {
-        
-        changeBackgroundColor(scheme.general.backgroundColor)
-        changeViewControlButtonColor(scheme.general.viewControlButtonColor)
-        changeFunctionButtonColor(scheme.general.functionButtonColor)
-        scroller.redraw()
-    }
-    
     private func changeBackgroundColor(_ color: NSColor) {
         
         rootContainerBox.fillColor = color
@@ -332,19 +330,62 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         functionButtons.forEach {$0.reTint()}
     }
     
-//    func trackChanged() {
-//
-//        // New track has no chapters, or there is no new track
-//        if playbackInfo.chapterCount == 0 {
-//            //            WindowManager.hideChaptersList()
-//
-//        } // Only show chapters list if preferred by user
-//        else if playlistPreferences.showChaptersList {
-//            viewChaptersList()
-//        }
-//    }
-//    
-//    private func viewChaptersList() {
-////        WindowManager.showChaptersList()
-//    }
+    private func applyColorScheme(_ scheme: ColorScheme) {
+        doApplyColorScheme(scheme)
+    }
+    
+    private func doApplyColorScheme(_ scheme: ColorScheme, _ mustReloadRows: Bool = true) {
+        
+        changeBackgroundColor(scheme.general.backgroundColor)
+        changeViewControlButtonColor(scheme.general.viewControlButtonColor)
+        changeFunctionButtonColor(scheme.general.functionButtonColor)
+        
+        scroller.redraw()
+        
+        if mustReloadRows {
+            
+            let selRows = self.selectedRows
+            playQueueView.reloadData()
+            playQueueView.selectRowIndexes(selRows, byExtendingSelection: false)
+        }
+    }
+    
+    private var allRows: IndexSet {
+        return IndexSet(integersIn: 0..<playQueueView.numberOfRows)
+    }
+    
+    private func changeTrackNameTextColor(_ color: NSColor) {
+        playQueueView.reloadData(forRowIndexes: allRows, columnIndexes: IndexSet([1]))
+    }
+    
+    private func changeIndexDurationTextColor(_ color: NSColor) {
+        playQueueView.reloadData(forRowIndexes: allRows, columnIndexes: IndexSet([0, 2]))
+    }
+    
+    private func changeTrackNameSelectedTextColor(_ color: NSColor) {
+        playQueueView.reloadData(forRowIndexes: playQueueView.selectedRowIndexes, columnIndexes: IndexSet([1]))
+    }
+    
+    private func changeIndexDurationSelectedTextColor(_ color: NSColor) {
+        playQueueView.reloadData(forRowIndexes: playQueueView.selectedRowIndexes, columnIndexes: IndexSet([0, 2]))
+    }
+    
+    private func changeSelectionBoxColor(_ color: NSColor) {
+        
+        // Note down the selected rows, clear the selection, and re-select the originally selected rows (to trigger a repaint of the selection boxes)
+        let selRows = self.selectedRows
+        
+        if !selRows.isEmpty {
+            
+            clearSelection()
+            playQueueView.selectRowIndexes(selRows, byExtendingSelection: false)
+        }
+    }
+    
+    private func changePlayingTrackIconColor(_ color: NSColor) {
+        
+        if let playingTrack = self.playbackInfo.currentTrack, let playingTrackIndex = self.playQueue.indexOfTrack(playingTrack) {
+            playQueueView.reloadData(forRowIndexes: IndexSet([playingTrackIndex]), columnIndexes: IndexSet([0]))
+        }
+    }
 }
