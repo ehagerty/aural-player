@@ -46,9 +46,6 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
         
         switch column.identifier {
             
-            // TODO: Using column index won't work because columns can be reordered.
-            // Use the column identifier instead.
-            
         case .library_title:
             
             // Title

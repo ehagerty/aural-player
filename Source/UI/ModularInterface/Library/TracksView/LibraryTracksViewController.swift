@@ -16,7 +16,7 @@ class LibraryTracksViewController: AuralViewController {
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
-    override var nibName: String? {return "Tracks"}
+    override var nibName: String? {return "LibraryTracks"}
     
     private var selectedRows: IndexSet {libraryView.selectedRowIndexes}
     
