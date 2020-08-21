@@ -48,6 +48,9 @@ class LibraryTracksViewController: AuralViewController {
         Messenger.subscribeAsync(self, .library_tracksRemoved, self.tracksRemoved(_:), queue: .main)
         
         Messenger.subscribe(self, .library_removeTracks, self.removeSelectedTracks)
+        Messenger.subscribe(self, .library_refresh, {(selector: PlaylistViewSelector) in self.refresh()})
+        
+        // MARK: Appearance
         
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
         
@@ -145,6 +148,12 @@ class LibraryTracksViewController: AuralViewController {
         
         lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
         lblDurationSummary.stringValue = ValueFormatter.formatSecondsToHMS(summary.totalDuration)
+    }
+    
+    func refresh() {
+        
+        libraryView.reloadData()
+        updateSummary()
     }
     
     private func removeSelectedTracks() {

@@ -20,11 +20,6 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     @IBOutlet weak var btnClose: TintedImageButton!
     @IBOutlet weak var viewMenuIconItem: TintedIconMenuItem!
     
-    @IBOutlet weak var btnPageUp: TintedImageButton!
-    @IBOutlet weak var btnPageDown: TintedImageButton!
-    @IBOutlet weak var btnScrollToTop: TintedImageButton!
-    @IBOutlet weak var btnScrollToBottom: TintedImageButton!
-    
     // The different playlist views
     private lazy var tracksViewController: LibraryTracksViewController = LibraryTracksViewController()
     private lazy var tracksView: NSView = tracksViewController.view
@@ -84,7 +79,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         childContainerBoxes = [playlistContainerBox, tabButtonsBox, controlsBox]
         viewControlButtons = [btnClose, viewMenuIconItem].compactMap {$0 as? Tintable}
-        functionButtons = [btnPageUp, btnPageDown, btnScrollToTop, btnScrollToBottom] + controlButtonsSuperview.subviews.compactMap {$0 as? TintedImageButton}
+        functionButtons = controlButtonsSuperview.subviews.compactMap {$0 as? TintedImageButton}
         tabButtons = [btnTracksTab, btnArtistsTab, btnAlbumsTab, btnGenresTab]
 
         changeTextSize(PlaylistViewState.textSize)
@@ -133,8 +128,8 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         // MARK: Commands -------------------------------------------------------------------------------------
         
-        Messenger.subscribe(self, .playlist_addTracks, self.addTracks)
-        Messenger.subscribe(self, .playlist_clearPlaylist, self.clearPlaylist)
+        Messenger.subscribe(self, .library_addTracks, self.addTracks)
+        Messenger.subscribe(self, .library_clear, self.clearLibrary)
         
         Messenger.subscribe(self, .playlist_search, self.search)
         Messenger.subscribe(self, .playlist_sort, self.sort)
@@ -222,22 +217,22 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         guard !checkIfLibraryIsBeingModified() else {return}
         
-        Messenger.publish(.playlist_removeTracks, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
+        Messenger.publish(.library_removeTracks, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
     }
     
     // Removes all items from the playlist
-    @IBAction func clearPlaylistAction(_ sender: AnyObject) {
+    @IBAction func clearLibraryAction(_ sender: AnyObject) {
         
         guard !checkIfLibraryIsBeingModified() else {return}
         
         library.clear()
         
         // Tell all playlist views to refresh themselves
-        Messenger.publish(.playlist_refresh, payload: PlaylistViewSelector.allViews)
+        Messenger.publish(.library_refresh, payload: PlaylistViewSelector.allViews)
     }
     
-    private func clearPlaylist() {
-        clearPlaylistAction(self)
+    private func clearLibrary() {
+        clearLibraryAction(self)
     }
     
     // Moves any selected playlist items up one row in the library. Delegates the action to the appropriate playlist view, because this operation depends on which playlist view is currently shown.

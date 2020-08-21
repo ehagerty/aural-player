@@ -126,7 +126,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
      */
     private func collectTracks(_ files: [URL], _ isRecursiveCall: Bool) {
         
-        for file in files {
+        for file in files.sorted(by: {$0.path < $1.path}) {
             
             // Playlists might contain broken file references
             if !FileSystemUtils.fileExists(file) {

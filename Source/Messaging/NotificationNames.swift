@@ -430,7 +430,13 @@ extension Notification.Name {
     static let library_toggleTableHeader = Notification.Name("library_toggleTableHeader")
     static let library_addCustomColumn = Notification.Name("library_addCustomColumn")
     
+    // Commands the library to display a file dialog to let the user add new tracks.
+    static let library_addTracks = Notification.Name("library_addTracks")
     static let library_removeTracks = Notification.Name("library_removeTracks")
+    static let library_clear = Notification.Name("library_clear")
+    
+    // Commands a library to refresh its list view (eg. in response to tracks being added/removed/updated).
+    static let library_refresh = Notification.Name("library_refresh")
     
     // MARK: Play Queue commands
     

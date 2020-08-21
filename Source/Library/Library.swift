@@ -47,11 +47,21 @@ class Library: LibraryProtocol {
     }
     
     func clear() {
+        
         tracks.removeAll()
+        tracksByFile.removeAll()
     }
     
     func removeTracks(_ indices: IndexSet) -> [Track] {
-        return tracks.removeItems(at: indices)
+        
+        // TODO: Resolve file URL ?
+        
+        let removedTracks = tracks.removeItems(at: indices)
+        for track in removedTracks {
+            tracksByFile.removeValue(forKey: track.file)
+        }
+        
+        return removedTracks
     }
     
     func search(_ searchQuery: SearchQuery) -> SearchResults {

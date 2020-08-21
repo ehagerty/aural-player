@@ -112,19 +112,12 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
             
         case "title":
             
+            // TODO: Title sort should also take into consideration defaultDisplayName (in SortComparator)
             _ = tracksSort.withFields(.title)
             
         case "artistTitle":
             
-            library.sort(by: {t1, t2 in
-                
-                ascending ?
-                    (t1.artistTitleString ?? "") < (t2.artistTitleString ?? "") :
-                    (t1.artistTitleString ?? "") > (t2.artistTitleString ?? "")
-            })
-            
-            tableView.reloadData()
-            return
+            _ = tracksSort.withFields(.artistTitle)
             
         case "duration":
             

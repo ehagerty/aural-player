@@ -72,6 +72,12 @@
                 <outlet property="theMenu" destination="nzT-Bj-81Y" id="L7C-0i-wdd"/>
             </connections>
         </customObject>
+        <customObject id="w06-ce-55M" customClass="LibraryMenuController" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="clearLibraryMenuItem" destination="S5Y-ns-2JX" id="6x2-t0-xSE"/>
+                <outlet property="removeSelectedItemsMenuItem" destination="qrL-L7-SKn" id="mXf-jY-YRq"/>
+            </connections>
+        </customObject>
         <customObject id="EvH-oo-9ua" customClass="PlayQueueMenuController" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="moveItemsDownMenuItem" destination="0Jf-TT-U2K" id="2ZY-af-pBq"/>
@@ -776,7 +782,7 @@ CA
                         <items>
                             <menuItem title="  Add files / folders" image="Add-Small" keyEquivalent="o" id="jfS-cf-MnL">
                                 <connections>
-                                    <action selector="addFilesAction:" target="sXT-Pr-clR" id="XZq-ja-9n0"/>
+                                    <action selector="addFilesAction:" target="w06-ce-55M" id="i4H-yo-cHo"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Clear the library" image="Clear-Small" id="S5Y-ns-2JX">
@@ -784,7 +790,7 @@ CA
 CA
 </string>
                                 <connections>
-                                    <action selector="clearPlaylistAction:" target="sXT-Pr-clR" id="uoq-o1-kaO"/>
+                                    <action selector="clearLibraryAction:" target="w06-ce-55M" id="Nqs-8z-vwr"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="nas-Z1-0q1"/>
@@ -825,7 +831,7 @@ CA
 </string>
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="removeSelectedItemsAction:" target="EvH-oo-9ua" id="fTW-qr-7mm"/>
+                                    <action selector="removeSelectedItemsAction:" target="w06-ce-55M" id="JAz-fO-r6i"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="ohM-yR-Fxw"/>
