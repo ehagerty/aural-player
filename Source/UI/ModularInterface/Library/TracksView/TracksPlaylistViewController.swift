@@ -58,6 +58,11 @@ class LibraryTracksViewController: AuralViewController {
         Messenger.subscribe(self, .library_invertSelection, {(selector: PlaylistViewSelector) in self.invertSelection()})
         Messenger.subscribe(self, .library_cropSelection, {(selector: PlaylistViewSelector) in self.cropSelection()})
         
+        Messenger.subscribe(self, .library_scrollToTop, {(selector: PlaylistViewSelector) in self.scrollToTop()})
+        Messenger.subscribe(self, .library_scrollToBottom, {(selector: PlaylistViewSelector) in self.scrollToBottom()})
+        Messenger.subscribe(self, .library_pageUp, {(selector: PlaylistViewSelector) in self.pageUp()})
+        Messenger.subscribe(self, .library_pageDown, {(selector: PlaylistViewSelector) in self.pageDown()})
+        
         // MARK: Appearance
         
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
@@ -200,7 +205,39 @@ class LibraryTracksViewController: AuralViewController {
         updateSummary()
     }
     
-    // MARK: Appearance
+    // MARK: Scrolling ----------------------------------------------------------------
+    
+    // Scrolls the playlist view to the very top
+    private func scrollToTop() {
+        
+        if atLeastOneRow {
+            libraryView.scrollRowToVisible(0)
+        }
+    }
+    
+    // Scrolls the playlist view to the very bottom
+    private func scrollToBottom() {
+        
+        if atLeastOneRow {
+            libraryView.scrollRowToVisible(lastRow)
+        }
+    }
+    
+    private func pageUp() {
+        
+        if atLeastOneRow {
+            libraryView.pageUp()
+        }
+    }
+    
+    private func pageDown() {
+        
+        if atLeastOneRow {
+            libraryView.pageDown()
+        }
+    }
+    
+    // MARK: Appearance ----------------------------------------------------------------
     
     private func changeTextSize(_ textSize: TextSize) {
         

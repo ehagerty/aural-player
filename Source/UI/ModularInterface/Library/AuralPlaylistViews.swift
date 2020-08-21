@@ -49,34 +49,46 @@ extension NSTableView {
     func pageUp() {
         
         // Determine if the first row currently displayed has been truncated so it is not fully visible
-        let visibleRect = self.visibleRect
+        var visibleRect = self.visibleRect
+        let headerHeight = self.headerView?.height ?? 0
+        
+        visibleRect.size = NSMakeSize(visibleRect.width, visibleRect.height - headerHeight)
+        visibleRect.origin.y += headerHeight
         
         let firstRowShown = self.rows(in: visibleRect).lowerBound
         let firstRowShownRect = self.rect(ofRow: firstRowShown)
-        
+
         let truncationAmount =  visibleRect.minY - firstRowShownRect.minY
         let truncationRatio = truncationAmount / firstRowShownRect.height
-        
+
         // If the first row currently displayed has been truncated more than 10%, show it again in the next page
-        
+
         let lastRowToShow = truncationRatio > 0.1 ? firstRowShown : firstRowShown - 1
         let lastRowToShowRect = self.rect(ofRow: lastRowToShow)
-        
+
         // Calculate the scroll amount, as a function of the last row to show next, using the visible rect origin (i.e. the top of the first row in the playlist) as the stopping point
-        
+
         let scrollAmount = min(visibleRect.origin.y, visibleRect.maxY - lastRowToShowRect.maxY)
         
-        if scrollAmount > 0 {
+        if scrollAmount > 0, let scrollView = self.enclosingScrollView {
             
-            let up = visibleRect.origin.applying(CGAffineTransform.init(translationX: 0, y: -scrollAmount))
-            self.enclosingScrollView?.contentView.scroll(to: up)
+            let clipView = scrollView.contentView
+            let up = visibleRect.origin.applying(CGAffineTransform.init(translationX: 0, y: -(scrollAmount + headerHeight)))
+            
+            clipView.scroll(to: up)
+            scrollView.reflectScrolledClipView(clipView)
         }
     }
     
     func pageDown() {
         
         // Determine if the last row currently displayed has been truncated so it is not fully visible
-        let visibleRect = self.visibleRect
+        var visibleRect = self.visibleRect
+        let headerHeight = self.headerView?.height ?? 0
+        
+        visibleRect.size = NSMakeSize(visibleRect.width, visibleRect.height - headerHeight)
+        visibleRect.origin.y += headerHeight
+        
         let visibleRows = self.rows(in: visibleRect)
         
         let lastRowShown = visibleRows.lowerBound + visibleRows.length - 1
@@ -96,10 +108,13 @@ extension NSTableView {
 
         let scrollAmount = min(firstRowToShowRect.origin.y - visibleRect.origin.y, lastRowInPlaylistRect.maxY - visibleRect.maxY)
         
-        if scrollAmount > 0 {
+        if scrollAmount > 0, let scrollView = self.enclosingScrollView {
             
-            let down = visibleRect.origin.applying(CGAffineTransform.init(translationX: 0, y: scrollAmount))
-            self.enclosingScrollView?.contentView.scroll(to: down)
+            let clipView = scrollView.contentView
+            let down = visibleRect.origin.applying(CGAffineTransform.init(translationX: 0, y: scrollAmount - headerHeight))
+            
+            clipView.scroll(to: down)
+            scrollView.reflectScrolledClipView(clipView)
         }
     }
 }

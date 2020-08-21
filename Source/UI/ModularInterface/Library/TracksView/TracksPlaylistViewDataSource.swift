@@ -45,14 +45,6 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     
     func menuWillOpen(_ menu: NSMenu) {
         
-//        while menu.items.count > 7 {
-//            menu.removeItem(at: 7)
-//        }
-//
-//        for customCol in libraryView.customColumns {
-//            menu.
-//        }
-//
         for item in menu.items {
             
             if let id = item.identifier {
@@ -63,6 +55,9 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     
     func toggleTableHeader() {
         libraryView.headerView = libraryView.headerView != nil ? nil : theHeaderView
+//        print("\nDoc view: \(libraryView.frame) \(libraryView.enclosingScrollView!.contentView.documentView?.frame)")
+        
+        print("\nInsets: \(libraryView.enclosingScrollView!.contentView.contentInsets)")
     }
     
     func addCustomColumn(_ notif: LibraryCustomColumnAddCommandNotification) {

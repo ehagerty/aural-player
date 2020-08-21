@@ -81,7 +81,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yVc-s6-1Tk">
-                                                        <rect key="frame" x="15" y="79" width="20" height="17"/>
+                                                        <rect key="frame" x="17" y="79" width="20" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="4Gl-zp-3jI"/>
                                                     </imageView>

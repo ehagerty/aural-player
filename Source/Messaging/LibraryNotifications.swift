@@ -39,9 +39,21 @@ extension Notification.Name {
     static let library_clearSelection = Notification.Name("library_clearSelection")
     static let library_invertSelection = Notification.Name("library_invertSelection")
     static let library_cropSelection = Notification.Name("library_cropSelection")
+    
+    // Commands the library to scroll to the top of its list view.
+    static let library_scrollToTop = Notification.Name("library_scrollToTop")
+
+    // Commands the library to scroll to the bottom of its list view.
+    static let library_scrollToBottom = Notification.Name("library_scrollToBottom")
+
+    // Commands the library to scroll one page up within its list view.
+    static let library_pageUp = Notification.Name("library_pageUp")
+
+    // Commands the library to scroll one page down within its list view.
+    static let library_pageDown = Notification.Name("library_pageDown")
 }
 
-// Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
+// Indicates that a new track has been added to the library, and that the UI should refresh itself to show the new information.
 struct LibraryTrackAddedNotification: NotificationPayload {
     
     let notificationName: Notification.Name = .library_trackAdded
@@ -53,7 +65,7 @@ struct LibraryTrackAddedNotification: NotificationPayload {
     let addOperationProgress: TrackAddOperationProgress
 }
 
-// Indicates that a new track has been added to the playlist, and that the UI should refresh itself to show the new information.
+// Indicates that a new track has been added to the library, and that the UI should refresh itself to show the new information.
 struct LibraryCustomColumnAddCommandNotification: NotificationPayload {
     
     let notificationName: Notification.Name = .library_addCustomColumn

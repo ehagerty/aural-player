@@ -15,21 +15,15 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
     
     override func awakeFromNib() {
         
-        header.setFrameSize(NSMakeSize(header.frame.size.width, header.frame.size.height + 10))
-        let clipView = libraryView.enclosingScrollView!.contentView
-        clipView.setFrameSize(NSMakeSize(clipView.frame.size.width, clipView.frame.size.height + 10))
+        if let clipView = libraryView.enclosingScrollView?.contentView {
         
-        header.wantsLayer = true
-        header.layer?.backgroundColor = NSColor.clear.cgColor
+            header.setFrameSize(NSMakeSize(header.width, header.height + 10))
+            clipView.setFrameSize(NSMakeSize(clipView.width, clipView.height + 10))
+            clipView.contentInsets.top = header.height
+        }
         
         for column in libraryView.tableColumns {
-            
-            let headerCell = LibraryTableHeaderCell()
-            
-            headerCell.stringValue = column.headerCell.stringValue
-            headerCell.isBordered = true
-            
-            column.headerCell = headerCell
+            column.headerCell = LibraryTableHeaderCell(stringValue: column.headerCell.stringValue)
         }
     }
     
@@ -62,10 +56,10 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
 
         case .library_artistTitle:
 
-            // Title
+            // Artist - Title
             widths = rowsRange.compactMap {library.trackAtIndex($0)?.artistTitleString}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
 
-        case .library_title:
+        case .library_artist:
 
             // Artist
             widths = rowsRange.compactMap {library.trackAtIndex($0)?.artist}.map{StringUtils.sizeOfString($0, Fonts.Playlist.trackNameFont).width}
@@ -86,7 +80,11 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
             return tableView.tableColumns[columnIndex].maxWidth
         }
         
-        return max(widths.max() ?? 0, tableView.tableColumns[columnIndex].width) + 10
+        if let maxWidth = widths.max() {
+            return maxWidth + 10
+        }
+        
+        return column.width
     }
     
     // Enables type selection, allowing the user to conveniently and efficiently find a playlist track by typing its display name, which results in the track, if found, being selected within the playlist
