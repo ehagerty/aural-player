@@ -8,18 +8,12 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     // Volume/pan controls
     @IBOutlet weak var btnVolume: TintedImageButton!
     @IBOutlet weak var volumeSlider: NSSlider!
-    @IBOutlet weak var panSlider: NSSlider!
     
     // These are feedback labels that are shown briefly and automatically hidden
     @IBOutlet weak var lblVolume: VALabel!
-//    @IBOutlet weak var lblPan: VALabel!
     
     // Wrappers around the feedback labels that automatically hide them after showing them for a brief interval
     private var autoHidingVolumeLabel: AutoHidingView!
-//    private var autoHidingPanLabel: AutoHidingView!
-    
-//    @IBOutlet weak var lblPanCaption: VALabel!
-//    @IBOutlet weak var lblPanCaption2: VALabel!
     
     // Delegate that conveys all volume/pan adjustments to the audio graph
     private var audioGraph: AudioGraphDelegateProtocol = ObjectGraph.audioGraphDelegate
@@ -34,13 +28,9 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     override func viewDidLoad() {
         
         autoHidingVolumeLabel = AutoHidingView(lblVolume, UIConstants.feedbackLabelAutoHideIntervalSeconds)
-//        autoHidingPanLabel = AutoHidingView(lblPan, UIConstants.feedbackLabelAutoHideIntervalSeconds)
         
         volumeSlider.floatValue = audioGraph.volume
         volumeChanged(audioGraph.volume, audioGraph.muted, true, false)
-        
-//        panSlider.floatValue = audioGraph.balance
-//        panChanged(audioGraph.balance, false)
         
         changeTextSize(PlayerViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
@@ -58,9 +48,6 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
         Messenger.subscribe(self, .player_muteOrUnmute, self.muteOrUnmute)
         Messenger.subscribe(self, .player_decreaseVolume, self.decreaseVolume(_:))
         Messenger.subscribe(self, .player_increaseVolume, self.increaseVolume(_:))
-        
-        Messenger.subscribe(self, .player_panLeft, self.panLeft)
-        Messenger.subscribe(self, .player_panRight, self.panRight)
         
         Messenger.subscribe(self, .player_changeTextSize, self.changeTextSize(_:))
         
@@ -150,39 +137,8 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
         }
     }
     
-    // Updates the stereo pan
-    @IBAction func panAction(_ sender: AnyObject) {
-        
-        audioGraph.balance = panSlider.floatValue
-        panChanged(audioGraph.balance)
-    }
-    
-    // Pans the sound towards the left channel, by a certain preset value
-    private func panLeft() {
-        
-        panChanged(audioGraph.panLeft())
-        panSlider.floatValue = audioGraph.balance
-    }
-    
-    // Pans the sound towards the right channel, by a certain preset value
-    private func panRight() {
-        
-        panChanged(audioGraph.panRight())
-        panSlider.floatValue = audioGraph.balance
-    }
-    
-    private func panChanged(_ pan: Float, _ showFeedback: Bool = true) {
-        
-//        lblPan.stringValue = ValueFormatter.formatPan(pan)
-//
-//        // Shows and automatically hides the pan label after a preset time interval
-//        if showFeedback {
-//            autoHidingPanLabel.showView()
-//        }
-    }
-    
     private func changeTextSize(_ size: TextSize) {
-//        [lblVolume, lblPan, lblPanCaption, lblPanCaption2].forEach({$0.font = Fonts.Player.feedbackFont})
+        lblVolume.font = Fonts.Player.feedbackFont
     }
     
     private func applyColorScheme(_ scheme: ColorScheme) {
@@ -193,30 +149,22 @@ class PlayerAudioViewController: NSViewController, NotificationSubscriber {
     }
     
     private func changeFunctionButtonColor(_ color: NSColor) {
-        
         btnVolume.reTint()
-        
-//        lblPanCaption.textColor = color
-//        lblPanCaption2.textColor = color
     }
     
     private func changeSliderColors() {
-        [volumeSlider, panSlider].forEach({$0?.redraw()})
+        volumeSlider.redraw()
     }
     
     private func changeSliderValueTextColor(_ color: NSColor) {
-        
         lblVolume.textColor = Colors.Player.feedbackTextColor
-//        lblPan.textColor = Colors.Player.feedbackTextColor
     }
     
     private func trackChanged(_ newTrack: Track?) {
         
         // Apply sound profile if there is one for the new track and the preferences allow it
         if soundPreferences.rememberEffectsSettings, let theNewTrack = newTrack, soundProfiles.hasFor(theNewTrack) {
-
             volumeChanged(audioGraph.volume, audioGraph.muted)
-            panChanged(audioGraph.balance)
         }
     }
     
