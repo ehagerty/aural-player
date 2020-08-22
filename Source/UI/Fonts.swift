@@ -43,6 +43,8 @@ struct Fonts {
         static let captionFont_15: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 15)!
         static let captionFont_16: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 16)!
         
+        static let captionMediumFont_12: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 12)!
+        static let captionMediumFont_13: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 13)!
         static let captionMediumFont_14: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 14)!
         static let captionMediumFont_15: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 15)!
         static let captionMediumFont_16: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 16)!
@@ -307,9 +309,9 @@ struct Fonts {
             }
         }
         
-        static let tabsFont_normal: NSFont = Constants.captionFont_14
-        static let tabsFont_larger: NSFont = Constants.captionFont_15
-        static let tabsFont_largest: NSFont = Constants.captionFont_16
+        static let tabsFont_normal: NSFont = Constants.captionFont_13
+        static let tabsFont_larger: NSFont = Constants.captionFont_14
+        static let tabsFont_largest: NSFont = Constants.captionFont_15
         
         static var tabsFont: NSFont {
             
@@ -324,9 +326,9 @@ struct Fonts {
             }
         }
         
-        static let selectedTabFont_normal: NSFont = Constants.captionMediumFont_14
-        static let selectedTabFont_larger: NSFont = Constants.captionMediumFont_15
-        static let selectedTabFont_largest: NSFont = Constants.captionMediumFont_16
+        static let selectedTabFont_normal: NSFont = Constants.captionMediumFont_13
+        static let selectedTabFont_larger: NSFont = Constants.captionMediumFont_14
+        static let selectedTabFont_largest: NSFont = Constants.captionMediumFont_15
         
         static var selectedTabFont: NSFont {
             
