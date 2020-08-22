@@ -75,6 +75,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ObjectGraph.interfaceManager.showInterface(type: .modular)
 //        ObjectGraph.interfaceManager.showInterface(type: .unified)
         
+        print(EQMapper.map10BandsTo15Bands(EQPresetsBands.danceBands, AppConstants.Sound.eq15BandFrequencies).sorted(by: {$0.key < $1.key}))
+        
         // Update the appLaunched flag
         appLaunched = true
         

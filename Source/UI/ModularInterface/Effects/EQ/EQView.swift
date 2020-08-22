@@ -59,9 +59,7 @@ class EQView: NSView {
     
     // bands argument is a map of Frequency -> Gain
     func updateBands(_ bands: [Float: Float], _ globalGain: Float) {
-        
-        let sortedBands: [Float] = bands.sorted(by: {r1, r2 -> Bool in r1.key < r2.key}).map {$0.value}
-        updateBands(sortedBands, globalGain)
+        updateBands(bands.sorted(by: {$0.key < $1.key}).map {$0.value}, globalGain)
     }
     
     func applyPreset(_ preset: EQPreset) {

@@ -6,6 +6,17 @@ import Cocoa
 class PitchViewController: FXUnitViewController {
     
     @IBOutlet weak var pitchView: PitchView!
+    @IBOutlet weak var box: NSBox!
+    
+    @IBOutlet weak var lblPitch: VALabel!
+    @IBOutlet weak var lblPitchMin: VALabel!
+    @IBOutlet weak var lblPitchMax: VALabel!
+    @IBOutlet weak var lblPitchValue: VALabel!
+    
+    @IBOutlet weak var lblOverlap: VALabel!
+    @IBOutlet weak var lblOverlapMin: VALabel!
+    @IBOutlet weak var lblOverlapMax: VALabel!
+    @IBOutlet weak var lblPitchOverlapValue: VALabel!
     
     override var nibName: String? {return "Pitch"}
     
@@ -37,7 +48,7 @@ class PitchViewController: FXUnitViewController {
         // TODO: Move this to a generic view
         pitchView.initialize(self.unitStateFunction)
         
-//        functionLabels = [lblPitch, lblOverlap, lblPitchMin, lblPitchMax, lblPitchValue, lblOverlapMin, lblOverlapMax, lblPitchOverlapValue]
+        functionLabels = [lblPitch, lblOverlap, lblPitchMin, lblPitchMax, lblPitchValue, lblOverlapMin, lblOverlapMax, lblPitchOverlapValue]
     }
     
     override func initControls() {
@@ -47,6 +58,8 @@ class PitchViewController: FXUnitViewController {
     }
     
     override func stateChanged() {
+        
+        super.stateChanged()
         pitchView.stateChanged()
     }
     
@@ -62,13 +75,15 @@ class PitchViewController: FXUnitViewController {
         
         pitchUnit.pitch = roundedInt(pitch)
         pitchUnit.ensureActive()
-        
-//        pitchView.setPitch(pitch, pitchUnit.formattedPitch)
-        
+
+        let pitchOSC = pitchUnit.pitchAsOctavesSemitonesCents
+        pitchView.setPitch(pitchOSC.octaves, pitchOSC.semitones, pitchOSC.cents, pitchUnit.formattedPitch)
+
+        btnBypass.updateState()
         pitchView.stateChanged()
-        
+
         Messenger.publish(.fx_unitStateChanged)
-        
+
         // Show the Pitch tab
         showThisTab()
     }
@@ -97,13 +112,15 @@ class PitchViewController: FXUnitViewController {
     // Changes the pitch to a specified value
     private func pitchChange(_ pitch: Float, _ pitchString: String) {
         
-        Messenger.publish(.fx_unitStateChanged)
+        // TODO
         
+//        Messenger.publish(.fx_unitStateChanged)
+//
 //        pitchView.setPitch(pitch, pitchString)
-        pitchView.stateChanged()
-        
-        // Show the Pitch tab if the Effects panel is shown
-        showThisTab()
+//        pitchView.stateChanged()
+//
+//        // Show the Pitch tab if the Effects panel is shown
+//        showThisTab()
     }
     
     override func applyColorScheme(_ scheme: ColorScheme) {

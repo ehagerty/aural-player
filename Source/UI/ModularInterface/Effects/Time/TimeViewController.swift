@@ -5,8 +5,19 @@ import Cocoa
  */
 class TimeViewController: FXUnitViewController {
     
-    var timeView: TimeView {self.view as! TimeView}
+    @IBOutlet weak var timeView: TimeView!
     
+    @IBOutlet weak var lblRate: VALabel!
+    @IBOutlet weak var lblRateMin: VALabel!
+    @IBOutlet weak var lblRateMax: VALabel!
+    @IBOutlet weak var lblRateValue: VALabel!
+    
+    @IBOutlet weak var lblOverlap: VALabel!
+    @IBOutlet weak var lblOverlapMin: VALabel!
+    @IBOutlet weak var lblOverlapMax: VALabel!
+    @IBOutlet weak var lblOverlapValue: VALabel!
+    
+    @IBOutlet weak var lblPitchShiftValue: VALabel!
     @IBOutlet weak var btnShiftPitch: NSButton!
     
     override var nibName: String? {return "Time"}
@@ -50,9 +61,9 @@ class TimeViewController: FXUnitViewController {
     }
 
     // Activates/deactivates the Time stretch effects unit
-    override func toggleUnitState() {
+    @IBAction override func bypassAction(_ sender: AnyObject) {
 
-        super.toggleUnitState()
+        super.bypassAction(sender)
         
         // The playback rate may have changed, send out a notification
         Messenger.publish(.fx_playbackRateChanged, payload: timeUnit.effectiveRate)

@@ -93,7 +93,7 @@ fileprivate enum SystemDefinedEQPresetParams: String, CaseIterable {
 }
 
 // Container for specific frequency->gain mappings for different EQ presets
-fileprivate struct EQPresetsBands {
+struct EQPresetsBands {
     
     static let flatBands: [Float] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 

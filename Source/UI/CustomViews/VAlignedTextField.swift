@@ -149,20 +149,22 @@ class CenterTextLabel: VALabel {
 class FXUnitCaptionCell: VALabelCell {
 
     override func drawingRect(forBounds theRect: NSRect) -> NSRect {
+        
+        print("\nSuper: \(super.drawingRect(forBounds: theRect))")
 
         switch EffectsViewState.textSize {
 
         case .normal:
 
-            return NSRect(origin: NSMakePoint(0, theRect.height - 23), size: NSMakeSize(theRect.width, 23))
+            return NSRect(origin: NSMakePoint(0, theRect.height - 21), size: NSMakeSize(theRect.width, 21))
             
         case .larger:
             
-            return NSRect(origin: NSMakePoint(0, theRect.height - 25 + 1), size: NSMakeSize(theRect.width, 25))
+            return NSRect(origin: NSMakePoint(0, theRect.height - 24 + 1), size: NSMakeSize(theRect.width, 24))
             
         case .largest:
             
-            return NSRect(origin: NSMakePoint(0, theRect.height - 29 + 2), size: NSMakeSize(theRect.width, 29))
+            return NSRect(origin: NSMakePoint(0, theRect.height - 26 + 2), size: NSMakeSize(theRect.width, 26))
         }
     }
 }

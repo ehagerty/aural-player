@@ -44,7 +44,7 @@ class MasterViewController: FXUnitViewController {
                                  filter: {msg in msg.trackChanged && self.soundPreferences.rememberEffectsSettings},
                                  queue: .main)
         
-        Messenger.subscribe(self, .masterFXUnit_toggleEffects, self.toggleUnitState)
+        Messenger.subscribe(self, .masterFXUnit_toggleEffects, self.toggleEffects)
     }
     
     override func initControls() {
@@ -54,11 +54,15 @@ class MasterViewController: FXUnitViewController {
         broadcastStateChangeNotification()
     }
     
-    override func toggleUnitState() {
+    @IBAction override func bypassAction(_ sender: AnyObject) {
         
-        super.toggleUnitState()
+        super.bypassAction(sender)
         updateButtons()
         broadcastStateChangeNotification()
+    }
+    
+    private func toggleEffects() {
+        bypassAction(self)
     }
     
     @IBAction override func presetsAction(_ sender: AnyObject) {
@@ -68,6 +72,7 @@ class MasterViewController: FXUnitViewController {
     }
     
     private func updateButtons() {
+        btnBypass.updateState()
         masterView.stateChanged()
     }
     
@@ -137,6 +142,8 @@ class MasterViewController: FXUnitViewController {
     }
     
     override func changeTextSize(_ textSize: TextSize) {
+        
+        lblCaption.font = Fonts.Effects.unitCaptionFont
         
         functionLabels.forEach({
             $0.font = $0 is EffectsUnitTriStateLabel ? Fonts.Effects.masterUnitFunctionFont : Fonts.Effects.unitFunctionFont

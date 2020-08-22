@@ -7,14 +7,14 @@ import Cocoa
 class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     
     let barRadius: CGFloat = 0.75
-    let barInsetX: CGFloat = 0
+    let barInsetX: CGFloat = 0.5
     let barInsetY: CGFloat = 0
     
     let knobHeight: CGFloat = 4
-    let knobInsetX: CGFloat = 0
+    let knobInsetX: CGFloat = 1.5
     let knobInsetY: CGFloat = 0
     let knobRadius: CGFloat = 1
-    let knobWidthOutsideBar: CGFloat = 2
+    let knobWidthOutsideBar: CGFloat = 3
     
     var unitState: EffectsUnitState = .bypassed
     
@@ -41,8 +41,22 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     
     // Force knobRect and barRect to NOT be flipped
     
+//    override func knobRect(flipped: Bool) -> NSRect {
+//        return super.knobRect(flipped: false)
+//    }
+    
     override func knobRect(flipped: Bool) -> NSRect {
-        return super.knobRect(flipped: false)
+        
+        let bar = barRect(flipped: flipped)
+        let val = CGFloat(self.doubleValue) + 20
+        
+        let startY = bar.maxY - (val * bar.height / 40)
+        let yOffset = (val * knobHeight / 40)
+        
+        let newX = bar.minX - knobWidthOutsideBar
+        let newY = startY - yOffset
+        
+        return NSRect(x: newX, y: newY, width: knobWidthOutsideBar * 2 + bar.width, height: knobHeight)
     }
     
     override func barRect(flipped: Bool) -> NSRect {
@@ -66,12 +80,18 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     
     override internal func drawBar(inside drawRect: NSRect, flipped: Bool) {
         
+        print("\nDrawRect: \(drawRect)")
+        
         let knobFrame = knobRect(flipped: false)
-        let halfKnobWidth = knobFrame.width / 2
+        let halfKnobHeight = knobFrame.height / 2
         
-        let topRect = NSRect(x: drawRect.minX + 1, y: drawRect.minY, width: drawRect.width - 2, height: knobFrame.minY).insetBy(dx: barInsetX, dy: barInsetY)
+        let topRect = NSRect(x: drawRect.minX + 1.5, y: drawRect.minY, width: drawRect.width / 2, height: knobFrame.minY + halfKnobHeight).insetBy(dx: barInsetX, dy: barInsetY)
         
-        let bottomRect = NSRect(x: drawRect.minX, y: knobFrame.maxY - halfKnobWidth, width: drawRect.width, height: drawRect.height - knobFrame.maxY + halfKnobWidth).insetBy(dx: barInsetX, dy: barInsetY)
+        print("TopRect: \(topRect)")
+        
+        let bottomRect = NSRect(x: drawRect.minX, y: knobFrame.maxY - halfKnobHeight, width: drawRect.width, height: drawRect.height - knobFrame.maxY + halfKnobHeight).insetBy(dx: barInsetX, dy: barInsetY)
+        
+        print("BottomRect: \(bottomRect)")
         
         // Bottom rect
         var drawPath = NSBezierPath.init(roundedRect: bottomRect, xRadius: barRadius, yRadius: barRadius)
@@ -80,10 +100,7 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
         
         // Top rect
         drawPath = NSBezierPath.init(roundedRect: topRect, xRadius: barRadius, yRadius: barRadius)
-        NSColor.black.setFill()
-        drawPath.fill()
-        
-//        backgroundGradient.draw(in: drawPath, angle: -UIConstants.verticalGradientDegrees)
+        backgroundGradient.draw(in: drawPath, angle: -UIConstants.verticalGradientDegrees)
         
         // Draw one tick across the center of the bar (marking 0dB)
         let tickMinX = drawRect.minX + 1.5

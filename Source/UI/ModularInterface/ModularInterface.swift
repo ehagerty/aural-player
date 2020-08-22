@@ -84,13 +84,13 @@ class ModularInterface: InterfaceProtocol {
         
         if layout.showPlaylist {
             
-            mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.below)
-            playlistWindow.setFrame(layout.playlistWindowFrame!, display: true)
+//            mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.below)
+//            playlistWindow.setFrame(layout.playlistWindowFrame!, display: true)
         }
         
         mainWindow.setIsVisible(true)
         effectsWindow.setIsVisible(layout.showEffects)
-        playlistWindow.setIsVisible(layout.showPlaylist)
+//        playlistWindow.setIsVisible(layout.showPlaylist)
         
         Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: layout.showPlaylist, showingEffectsWindow: layout.showEffects))
     }

@@ -138,3 +138,38 @@ class ParametricEQNode: AVAudioUnitEQ {
         return allBands
     }
 }
+
+class EQMapper {
+
+static func map10BandsTo15Bands(_ srcBands: [Float], _ targetFrequencies: [Float]) -> [Float: Float] {
+    
+    var mappedBands: [Float: Float] = [:]
+    
+    mappedBands[targetFrequencies[0]] = srcBands[0]
+    mappedBands[targetFrequencies[1]] = srcBands[0]
+    
+    mappedBands[targetFrequencies[2]] = srcBands[1]
+    
+    mappedBands[targetFrequencies[3]] = srcBands[2]
+    mappedBands[targetFrequencies[4]] = srcBands[2]
+    
+    mappedBands[targetFrequencies[5]] = srcBands[3]
+    
+    mappedBands[targetFrequencies[6]] = srcBands[4]
+    mappedBands[targetFrequencies[7]] = srcBands[4]
+    
+    mappedBands[targetFrequencies[8]] = srcBands[5]
+    
+    mappedBands[targetFrequencies[9]] = srcBands[6]
+    mappedBands[targetFrequencies[10]] = srcBands[6]
+    
+    mappedBands[targetFrequencies[11]] = srcBands[7]
+    
+    mappedBands[targetFrequencies[12]] = srcBands[8]
+    mappedBands[targetFrequencies[13]] = srcBands[8]
+    
+    mappedBands[targetFrequencies[14]] = srcBands[9]
+    
+    return mappedBands
+}
+}

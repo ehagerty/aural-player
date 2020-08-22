@@ -2,6 +2,10 @@ import Cocoa
 
 class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceiver, NotificationSubscriber {
     
+    @IBOutlet weak var btnBypass: EffectsUnitTriStateBypassButton!
+    
+    @IBOutlet weak var lblCaption: VALabel!
+    
     // Labels
     var functionLabels: [NSTextField] = []
     
@@ -34,6 +38,7 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
     
     func oneTimeSetup() {
         
+        btnBypass.stateFunction = self.unitStateFunction
         btnSavePreset.tintFunction = {return Colors.functionButtonColor}
         presetsMenuIconItem.tintFunction = {return Colors.functionButtonColor}
         
@@ -48,7 +53,7 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
         
         for subview in view.subviews {
             
-            if let label = subview as? NSTextField {
+            if let label = subview as? NSTextField, label != lblCaption {
                 
                 labels.append(label)
                 label is FunctionValueLabel ? functionValueLabels.append(label) : functionCaptionLabels.append(label)
@@ -67,13 +72,10 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
         // Subscribe to notifications
         Messenger.subscribe(self, .fx_unitStateChanged, self.stateChanged)
         
-        Messenger.subscribe(self, .fx_toggleFXUnitState, {(EffectsUnit) in self.toggleUnitState()},
-        filter: {(unit: EffectsUnit) in unit == self.unitType})
+        Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
         
         Messenger.subscribe(self, .fx_updateFXUnitView, {(EffectsUnit) in self.initControls()},
                             filter: {(unit: EffectsUnit) in unit == .master || (unit == self.unitType)})
-        
-        //        Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
         
         Messenger.subscribe(self, .fx_changeSliderColors, self.changeSliderColors)
         
@@ -95,13 +97,15 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
         presetsMenu.selectItem(at: -1)
     }
     
-    func stateChanged() {}
+    func stateChanged() {
+        btnBypass.updateState()
+    }
     
     func showThisTab() {
         Messenger.publish(.fx_showFXUnitTab, payload: self.unitType!)
     }
     
-    func toggleUnitState() {
+    @IBAction func bypassAction(_ sender: AnyObject) {
 
         _ = fxUnit.toggleState()
         stateChanged()
@@ -123,8 +127,9 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
     
     func changeTextSize(_ textSize: TextSize) {
         
-//        functionLabels.forEach({$0.font = Fonts.Effects.unitFunctionFont})
-//        presetsMenu.font = Fonts.Effects.menuFont
+        lblCaption.font = Fonts.Effects.unitCaptionFont
+        functionLabels.forEach({$0.font = Fonts.Effects.unitFunctionFont})
+        presetsMenu.font = Fonts.Effects.menuFont
     }
     
     func applyColorScheme(_ scheme: ColorScheme) {
@@ -141,7 +146,7 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
     }
     
     func changeMainCaptionTextColor(_ color: NSColor) {
-//        lblCaption.textColor = color
+        lblCaption.textColor = color
     }
     
     func changeFunctionCaptionTextColor(_ color: NSColor) {
@@ -155,21 +160,21 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
     func changeActiveUnitStateColor(_ color: NSColor) {
         
         if fxUnit.state == .active {
-//            btnBypass.reTint()
+            btnBypass.reTint()
         }
     }
     
     func changeBypassedUnitStateColor(_ color: NSColor) {
         
         if fxUnit.state == .bypassed {
-//            btnBypass.reTint()
+            btnBypass.reTint()
         }
     }
     
     func changeSuppressedUnitStateColor(_ color: NSColor) {
         
         if fxUnit.state == .suppressed {
-//            btnBypass.reTint()
+            btnBypass.reTint()
         }
     }
     

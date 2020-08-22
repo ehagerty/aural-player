@@ -42,12 +42,15 @@ struct Fonts {
         static let captionFont_14: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 14)!
         static let captionFont_15: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 15)!
         static let captionFont_16: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 16)!
+        static let captionFont_17: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 17)!
         
         static let captionMediumFont_12: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 12)!
         static let captionMediumFont_13: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 13)!
         static let captionMediumFont_14: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 14)!
         static let captionMediumFont_15: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 15)!
         static let captionMediumFont_16: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 16)!
+        static let captionMediumFont_17: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 17)!
+        static let captionMediumFont_18: NSFont = NSFont(name: "Alegreya Sans SC Medium", size: 18)!
         
         static let captionFont_18: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 18)!
         static let captionFont_20: NSFont = NSFont(name: "Alegreya Sans SC Regular", size: 20)!
@@ -427,9 +430,9 @@ struct Fonts {
             }
         }
         
-        private static let unitCaptionFont_normal: NSFont = Constants.captionFont_16
-        private static let unitCaptionFont_larger: NSFont = Constants.captionFont_18
-        private static let unitCaptionFont_largest: NSFont = Constants.captionFont_20
+        private static let unitCaptionFont_normal: NSFont = Constants.captionFont_14
+        private static let unitCaptionFont_larger: NSFont = Constants.captionFont_16
+        private static let unitCaptionFont_largest: NSFont = Constants.captionFont_18
         
         static var unitCaptionFont: NSFont {
             

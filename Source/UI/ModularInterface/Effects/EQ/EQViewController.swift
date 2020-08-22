@@ -43,10 +43,13 @@ class EQViewController: FXUnitViewController {
     override func initControls() {
         
         super.initControls()
+        eqView.setState(eqUnit.state)
         eqView.updateBands(eqUnit.bands, eqUnit.globalGain)
     }
     
     override func stateChanged() {
+        
+        super.stateChanged()
         eqView.stateChanged()
     }
     
