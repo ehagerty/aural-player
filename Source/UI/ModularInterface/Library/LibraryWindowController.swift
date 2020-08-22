@@ -77,7 +77,9 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         setUpTabGroup()
         
-        childContainerBoxes = [playlistContainerBox, tabButtonsBox, controlsBox]
+//        childContainerBoxes = [playlistContainerBox, tabButtonsBox, controlsBox]
+        childContainerBoxes = [playlistContainerBox, controlsBox]
+        
         viewControlButtons = [btnClose, viewMenuIconItem].compactMap {$0 as? Tintable}
         functionButtons = controlButtonsSuperview.subviews.compactMap {$0 as? TintedImageButton}
         tabButtons = [btnTracksTab, btnArtistsTab, btnAlbumsTab, btnGenresTab]

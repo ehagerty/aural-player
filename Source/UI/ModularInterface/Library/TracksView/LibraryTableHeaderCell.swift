@@ -19,7 +19,7 @@ class LibraryTableHeaderCell: NSTableHeaderCell {
 
         let size: CGSize = stringValue.size(withAttributes: attrsDict)
         let truncatedString = StringUtils.truncate(stringValue, Fonts.Playlist.chaptersListHeaderFont, cellFrame.width - 10)
-
+        
         let rect = NSRect(x: cellFrame.minX + 5, y: cellFrame.minY, width: size.width, height: cellFrame.height)
         truncatedString.draw(in: rect, withAttributes: attrsDict)
         

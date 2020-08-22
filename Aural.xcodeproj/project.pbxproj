@@ -710,10 +710,6 @@
 		3EB662CE24BE3789006C946B /* EffectsPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB662CB24BE3788006C946B /* EffectsPanelController.swift */; };
 		3EB662CF24BE3789006C946B /* EffectsEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB662CC24BE3788006C946B /* EffectsEditorViewDelegate.swift */; };
 		3EB662D024BE3789006C946B /* EffectsEditorTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB662CD24BE3789006C946B /* EffectsEditorTableViews.swift */; };
-		3EB7B50E24DDA48B004A1D9A /* libswresample in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7B50A24DDA48B004A1D9A /* libswresample */; };
-		3EB7B50F24DDA48B004A1D9A /* libavcodec in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7B50B24DDA48B004A1D9A /* libavcodec */; };
-		3EB7B51024DDA48B004A1D9A /* libavutil in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7B50C24DDA48B004A1D9A /* libavutil */; };
-		3EB7B51124DDA48B004A1D9A /* libavformat in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7B50D24DDA48B004A1D9A /* libavformat */; };
 		3EB7B51B24DDA5E0004A1D9A /* ffmpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 3EB7B51924DDA5E0004A1D9A /* ffmpeg.c */; };
 		3EB7F45F217FC48800A2CE76 /* AlbumsPlaylistSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB7F45E217FC48800A2CE76 /* AlbumsPlaylistSortViewController.swift */; };
 		3EB7F461217FC4BA00A2CE76 /* AlbumsPlaylistSort.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7F460217FC4BA00A2CE76 /* AlbumsPlaylistSort.xib */; };
@@ -805,7 +801,6 @@
 		3EE4EC222470F9F30075374E /* SequenceScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC212470F9F30075374E /* SequenceScope.swift */; };
 		3EE4EC242471588C0075374E /* ChapterPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE4EC232471588C0075374E /* ChapterPlayback.swift */; };
 		3EE6C73924E028BB00379163 /* TimeStretchSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6C73824E028BB00379163 /* TimeStretchSlider.swift */; };
-		3EE6C73B24E0596500379163 /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3EE6C73A24E0596500379163 /* TODO.txt */; };
 		3EE7D71F244EADEB005D76FA /* PlaylistState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D71E244EADEB005D76FA /* PlaylistState.swift */; };
 		3EE7D721244EBF29005D76FA /* ColorSchemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D720244EBF29005D76FA /* ColorSchemes.swift */; };
 		3EE7D723244EBF5A005D76FA /* ColorSchemePreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D722244EBF5A005D76FA /* ColorSchemePreset.swift */; };
@@ -3516,7 +3511,6 @@
 				3EDDF6AC1FB4FF5100DF2E9A /* MainWindow.xib in Resources */,
 				3E85F25C1EFA78D6007BE830 /* Assets.xcassets in Resources */,
 				3EF5E5B41FBDA3DB004270A4 /* LibraryTracks.xib in Resources */,
-				3EB7B51124DDA48B004A1D9A /* libavformat in Resources */,
 				3E0835F72459A9FA00822FA8 /* ColorSchemesEditor.xib in Resources */,
 				3E0ED6B81FBB1C34008268B3 /* Reverb.xib in Resources */,
 				3E36E8621FC00E700005C62E /* PlaylistPreferences.xib in Resources */,
@@ -3550,7 +3544,6 @@
 				3EB1700C2173F5C200B82D3A /* DelayedPlaybackEditorDialog.xib in Resources */,
 				3E0ED6B21FBB1B0B008268B3 /* Pitch.xib in Resources */,
 				3E36E86B1FC0108F0005C62E /* HistoryPreferences.xib in Resources */,
-				3EB7B51024DDA48B004A1D9A /* libavutil in Resources */,
 				3E176605217DE4BE001C6CF9 /* ArtistsPlaylistSort.xib in Resources */,
 				3E98CBC7216B3C8F0025A77E /* EQPresetsEditor.xib in Resources */,
 				3E89CA28246323030057D3EE /* WaitingTrack.xib in Resources */,
@@ -3562,14 +3555,12 @@
 				3E066C2D216C6FB500E4FE80 /* TimePresetsEditor.xib in Resources */,
 				3E0ED6BD1FBB1CB7008268B3 /* Delay.xib in Resources */,
 				3E0C993D216C89B400E396DB /* FilterPresetsEditor.xib in Resources */,
-				3EE6C73B24E0596500379163 /* TODO.txt in Resources */,
 				3E0ED6AC1FBB1961008268B3 /* Effects.xib in Resources */,
 				3E10DDDF216F28A7001D3B66 /* GapsEditorDialog.xib in Resources */,
 				3E0ED6A61FBB05FF008268B3 /* Player.xib in Resources */,
 				3E18A58324ED8B680014E850 /* PlayQueue.xib in Resources */,
 				3E0DF1C02431BB1E0096C2A1 /* ChaptersList.xib in Resources */,
 				3E36E85F1FC00E2A0005C62E /* PlaybackPreferences.xib in Resources */,
-				3EB7B50F24DDA48B004A1D9A /* libavcodec in Resources */,
 				3EE7D733244EE0C5005D76FA /* PlaylistColorScheme.xib in Resources */,
 				3E066C2F216C796B00E4FE80 /* ReverbPresetsEditor.xib in Resources */,
 				3EF62FF1244C427200AD7172 /* ColorSchemes.xib in Resources */,
@@ -3592,7 +3583,6 @@
 				3E850D601FB459230017CD02 /* Library.xib in Resources */,
 				3EBD557D21590B9A00286439 /* Master.xib in Resources */,
 				3E7651BB24B9B942002FB8B4 /* UnifiedLibraryTracks.xib in Resources */,
-				3EB7B50E24DDA48B004A1D9A /* libswresample in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

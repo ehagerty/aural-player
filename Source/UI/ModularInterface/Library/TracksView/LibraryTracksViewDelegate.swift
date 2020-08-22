@@ -17,8 +17,8 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
         
         if let clipView = libraryView.enclosingScrollView?.contentView {
         
-            header.setFrameSize(NSMakeSize(header.width, header.height + 10))
-            clipView.setFrameSize(NSMakeSize(clipView.width, clipView.height + 10))
+            header.setFrameSize(NSMakeSize(header.width, header.height + 6))
+            clipView.setFrameSize(NSMakeSize(clipView.width, clipView.height + 6))
             clipView.contentInsets.top = header.height
         }
         

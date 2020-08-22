@@ -11,7 +11,7 @@ class EffectsUnitTabButtonCell: NSButtonCell {
     
     var unitState: EffectsUnitState = .bypassed
     
-    private let imgWidth: CGFloat = 14, imgHeight: CGFloat = 14
+    private let imgWidth: CGFloat = 12, imgHeight: CGFloat = 12
     
     override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
         drawInterior(withFrame: cellFrame, in: controlView)
@@ -31,10 +31,15 @@ class EffectsUnitTabButtonCell: NSButtonCell {
         // Selection underline
         if isOn {
             
-            let drawRect = NSRect(x: cellFrame.centerX - (imgRect.width / 2), y: cellFrame.maxY - 2, width: imgRect.width, height: 2)
-            
+            let drawRect = NSRect(x: cellFrame.centerX - (imgRect.width / 2), y: cellFrame.maxY - 3, width: imgRect.width, height: 2)
+
             selectionBoxColor.setFill()
             drawRect.fill()
+//            selectionBoxColor.setStroke()
+//            let drawPath = NSBezierPath(rect: cellFrame)
+//            drawPath.lineWidth = 2
+//            drawPath.stroke()
+            
         }
     }
 }

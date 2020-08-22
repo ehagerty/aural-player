@@ -292,9 +292,9 @@ struct Fonts {
             }
         }
         
-        private static let chaptersListHeaderFont_normal: NSFont = Constants.mainFont_14_5
-        private static let chaptersListHeaderFont_larger: NSFont = Constants.mainFont_15_5
-        private static let chaptersListHeaderFont_largest: NSFont = Constants.mainFont_16_5
+        private static let chaptersListHeaderFont_normal: NSFont = Constants.mainFont_13
+        private static let chaptersListHeaderFont_larger: NSFont = Constants.mainFont_14
+        private static let chaptersListHeaderFont_largest: NSFont = Constants.mainFont_15
         
         static var chaptersListHeaderFont: NSFont {
             
