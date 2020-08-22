@@ -150,8 +150,6 @@ class FXUnitCaptionCell: VALabelCell {
 
     override func drawingRect(forBounds theRect: NSRect) -> NSRect {
         
-        print("\nSuper: \(super.drawingRect(forBounds: theRect))")
-
         switch EffectsViewState.textSize {
 
         case .normal:

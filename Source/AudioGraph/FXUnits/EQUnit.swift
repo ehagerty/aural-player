@@ -79,8 +79,7 @@ class EQUnit: FXUnit, EQUnitProtocol {
     
     func applyPreset(_ preset: EQPreset) {
         
-        let sortedBands = EQMapper.map10BandsTo15Bands(preset.bands, AppConstants.Sound.eq15BandFrequencies).sorted(by: {$0.key < $1.key})
-        bands = sortedBands.map {$0.value}
+        bands = preset.bands
         globalGain = preset.globalGain
     }
     

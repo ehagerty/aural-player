@@ -331,10 +331,26 @@
                                 <menuItem title="Electronic" id="pLH-3u-JAm" userLabel="Electronic">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
+                                <menuItem title="Pop" id="3we-Ul-N8b" userLabel="Pop">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Rock" id="PTF-Qd-QRe" userLabel="Rock">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="R&amp;B" id="2Vt-tV-eMF" userLabel="R&amp;B">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
                                 <menuItem title="Hip Hop" id="oo6-wQ-hVP" userLabel="Hip Hop">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
-                                <menuItem title="Jazz" id="CjP-yA-7gM" userLabel="Jazz">
+                                <menuItem isSeparatorItem="YES" id="R1g-Ck-Ck0"/>
+                                <menuItem title="Acoustic" id="NQ0-FT-6d2">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Classical" id="CjP-yA-7gM" userLabel="Classical">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem title="Jazz" id="5zE-xL-yZ4" userLabel="Jazz">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem title="Latin" id="NOS-PI-Dds" userLabel="Latin">
@@ -344,15 +360,6 @@
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem title="Piano" id="0IY-9K-9K5" userLabel="Piano">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem title="Pop" id="3we-Ul-N8b" userLabel="Pop">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem title="R&amp;B" id="2Vt-tV-eMF" userLabel="R&amp;B">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem title="Rock" id="PTF-Qd-QRe" userLabel="Rock">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="Pb0-0B-IG7"/>

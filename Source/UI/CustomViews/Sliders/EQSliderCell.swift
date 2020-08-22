@@ -41,10 +41,6 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     
     // Force knobRect and barRect to NOT be flipped
     
-//    override func knobRect(flipped: Bool) -> NSRect {
-//        return super.knobRect(flipped: false)
-//    }
-    
     override func knobRect(flipped: Bool) -> NSRect {
         
         let bar = barRect(flipped: flipped)
@@ -80,18 +76,12 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     
     override internal func drawBar(inside drawRect: NSRect, flipped: Bool) {
         
-        print("\nDrawRect: \(drawRect)")
-        
         let knobFrame = knobRect(flipped: false)
         let halfKnobHeight = knobFrame.height / 2
         
         let topRect = NSRect(x: drawRect.minX + 1.5, y: drawRect.minY, width: drawRect.width / 2, height: knobFrame.minY + halfKnobHeight).insetBy(dx: barInsetX, dy: barInsetY)
         
-        print("TopRect: \(topRect)")
-        
         let bottomRect = NSRect(x: drawRect.minX, y: knobFrame.maxY - halfKnobHeight, width: drawRect.width, height: drawRect.height - knobFrame.maxY + halfKnobHeight).insetBy(dx: barInsetX, dy: barInsetY)
-        
-        print("BottomRect: \(bottomRect)")
         
         // Bottom rect
         var drawPath = NSBezierPath.init(roundedRect: bottomRect, xRadius: barRadius, yRadius: barRadius)
