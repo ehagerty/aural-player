@@ -131,6 +131,12 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                     </tabViewItem>
+                                                    <tabViewItem label="Pitch Shift" identifier="2" id="XfC-ME-cUm">
+                                                        <view key="view" id="heI-Be-MGY">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
                                                 </tabViewItems>
                                             </tabView>
                                         </subviews>
