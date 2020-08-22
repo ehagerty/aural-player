@@ -161,12 +161,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     private func changeBackgroundColor(_ color: NSColor) {
         
         rootContainerBox.fillColor = color
-        
-//        [effectsContainerBox, tabButtonsBox].forEach({
-        [effectsContainerBox].forEach({
-            $0!.fillColor = color
-            $0!.isTransparent = !color.isOpaque
-        })
+        [effectsContainerBox, tabButtonsBox].forEach {$0.fillColor = color}
         
         fxTabViewButtons.forEach({$0.redraw()})
     }

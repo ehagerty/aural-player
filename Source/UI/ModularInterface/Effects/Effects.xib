@@ -331,7 +331,7 @@
                                             </button>
                                         </subviews>
                                     </view>
-                                    <color key="borderColor" white="0.17617868192535213" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="borderColor" white="0.1245721678408451" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </box>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M7i-h0-Wr5" userLabel="Window Title">

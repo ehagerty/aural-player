@@ -77,8 +77,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
         
         setUpTabGroup()
         
-//        childContainerBoxes = [playlistContainerBox, tabButtonsBox, controlsBox]
-        childContainerBoxes = [playlistContainerBox, controlsBox]
+        childContainerBoxes = [playlistContainerBox, tabButtonsBox, controlsBox]
         
         viewControlButtons = [btnClose, viewMenuIconItem].compactMap {$0 as? Tintable}
         functionButtons = controlButtonsSuperview.subviews.compactMap {$0 as? TintedImageButton}
@@ -316,12 +315,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     private func changeBackgroundColor(_ color: NSColor) {
         
         rootContainerBox.fillColor = color
-     
-        for box in childContainerBoxes {
-            
-            box.fillColor = color
-            box.isTransparent = !color.isOpaque
-        }
+        childContainerBoxes.forEach {$0.fillColor = color}
         
         redrawTabButtons()
     }
