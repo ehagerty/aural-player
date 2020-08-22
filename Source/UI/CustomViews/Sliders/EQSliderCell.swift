@@ -7,14 +7,14 @@ import Cocoa
 class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     
     let barRadius: CGFloat = 0.75
-    let barInsetX: CGFloat = 0.5
+    let barInsetX: CGFloat = 0.25
     let barInsetY: CGFloat = 0
     
-    let knobHeight: CGFloat = 4
+    let knobHeight: CGFloat = 10
     let knobInsetX: CGFloat = 1.5
     let knobInsetY: CGFloat = 0
     let knobRadius: CGFloat = 1
-    let knobWidthOutsideBar: CGFloat = 3
+    let knobWidthOutsideBar: CGFloat = 2
     
     var unitState: EffectsUnitState = .bypassed
     
@@ -42,17 +42,7 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     // Force knobRect and barRect to NOT be flipped
     
     override func knobRect(flipped: Bool) -> NSRect {
-        
-        let bar = barRect(flipped: flipped)
-        let val = CGFloat(self.doubleValue) + 20
-        
-        let startY = bar.maxY - (val * bar.height / 40)
-        let yOffset = (val * knobHeight / 40)
-        
-        let newX = bar.minX - knobWidthOutsideBar
-        let newY = startY - yOffset
-        
-        return NSRect(x: newX, y: newY, width: knobWidthOutsideBar * 2 + bar.width, height: knobHeight)
+        return super.knobRect(flipped: false)
     }
     
     override func barRect(flipped: Bool) -> NSRect {
@@ -77,11 +67,11 @@ class EQSliderCell: NSSliderCell, EffectsUnitSliderCellProtocol {
     override internal func drawBar(inside drawRect: NSRect, flipped: Bool) {
         
         let knobFrame = knobRect(flipped: false)
-        let halfKnobHeight = knobFrame.height / 2
+        let halfKnobWidth = knobFrame.width / 2
         
-        let topRect = NSRect(x: drawRect.minX + 1.5, y: drawRect.minY, width: drawRect.width / 2, height: knobFrame.minY + halfKnobHeight).insetBy(dx: barInsetX, dy: barInsetY)
+        let topRect = NSRect(x: drawRect.minX, y: drawRect.minY, width: drawRect.width, height: knobFrame.minY + halfKnobWidth).insetBy(dx: barInsetX, dy: barInsetY)
         
-        let bottomRect = NSRect(x: drawRect.minX, y: knobFrame.maxY - halfKnobHeight, width: drawRect.width, height: drawRect.height - knobFrame.maxY + halfKnobHeight).insetBy(dx: barInsetX, dy: barInsetY)
+        let bottomRect = NSRect(x: drawRect.minX, y: knobFrame.maxY - halfKnobWidth, width: drawRect.width, height: drawRect.height - knobFrame.maxY + halfKnobWidth).insetBy(dx: barInsetX, dy: barInsetY)
         
         // Bottom rect
         var drawPath = NSBezierPath.init(roundedRect: bottomRect, xRadius: barRadius, yRadius: barRadius)
