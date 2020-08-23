@@ -3,3 +3,5 @@ _Ignored
 Icons/
 Resources/ffmpeg/sharedLibs
 TODO.txt
+Resources/ffmpeg/ffmpeg
+Resources/ffmpeg/ffprobe
