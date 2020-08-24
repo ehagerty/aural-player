@@ -11,12 +11,6 @@ class PitchViewController: FXUnitViewController {
     @IBOutlet weak var lblPitch: VALabel!
     @IBOutlet weak var lblPitchMin: VALabel!
     @IBOutlet weak var lblPitchMax: VALabel!
-    @IBOutlet weak var lblPitchValue: VALabel!
-    
-    @IBOutlet weak var lblOverlap: VALabel!
-    @IBOutlet weak var lblOverlapMin: VALabel!
-    @IBOutlet weak var lblOverlapMax: VALabel!
-    @IBOutlet weak var lblPitchOverlapValue: VALabel!
     
     override var nibName: String? {return "Pitch"}
     
@@ -36,25 +30,21 @@ class PitchViewController: FXUnitViewController {
         
         super.initSubscriptions()
         
-        Messenger.subscribe(self, .pitchFXUnit_decreasePitch, self.decreasePitch)
-        Messenger.subscribe(self, .pitchFXUnit_increasePitch, self.increasePitch)
-        Messenger.subscribe(self, .pitchFXUnit_setPitch, self.setPitch(_:))
+//        Messenger.subscribe(self, .pitchFXUnit_decreasePitch, self.decreasePitch)
+//        Messenger.subscribe(self, .pitchFXUnit_increasePitch, self.increasePitch)
+//        Messenger.subscribe(self, .pitchFXUnit_setPitch, self.setPitch(_:))
     }
     
     override func oneTimeSetup() {
         
         super.oneTimeSetup()
-        
-        // TODO: Move this to a generic view
         pitchView.initialize(self.unitStateFunction)
-        
-        functionLabels = [lblPitch, lblOverlap, lblPitchMin, lblPitchMax, lblPitchValue, lblOverlapMin, lblOverlapMax, lblPitchOverlapValue]
     }
     
     override func initControls() {
         
         super.initControls()
-        pitchView.setState(pitchUnit.pitchAsOctavesSemitonesCents, pitchUnit.formattedPitch, pitchUnit.overlap, pitchUnit.formattedOverlap)
+        pitchView.pitch = pitchUnit.pitch
     }
     
     override func stateChanged() {
@@ -67,60 +57,7 @@ class PitchViewController: FXUnitViewController {
     @IBAction func pitchAction(_ sender: AnyObject) {
         
         pitchUnit.pitch = pitchView.pitch
-        pitchView.pitchUpdated(formattedString: pitchUnit.formattedPitch)
-    }
-    
-    // Sets the pitch to a specific value
-    private func setPitch(_ pitch: Float) {
-        
-        pitchUnit.pitch = roundedInt(pitch)
-        pitchUnit.ensureActive()
-
-        let pitchOSC = pitchUnit.pitchAsOctavesSemitonesCents
-        pitchView.setPitch(pitchOSC.octaves, pitchOSC.semitones, pitchOSC.cents, pitchUnit.formattedPitch)
-
-        btnBypass.updateState()
-        pitchView.stateChanged()
-
-        Messenger.publish(.fx_unitStateChanged)
-
-        // Show the Pitch tab
-        showThisTab()
-    }
-    
-    // Updates the Overlap parameter of the Pitch shift effects unit
-    @IBAction func pitchOverlapAction(_ sender: AnyObject) {
-
-        pitchUnit.overlap = pitchView.overlap
-        pitchView.setPitchOverlap(pitchUnit.overlap, pitchUnit.formattedOverlap)
-    }
-    
-    // Increases the overall pitch by a certain preset increment
-    private func increasePitch() {
-        
-        let newPitch = pitchUnit.increasePitch()
-        pitchChange(newPitch.pitch, newPitch.pitchString)
-    }
-    
-    // Decreases the overall pitch by a certain preset decrement
-    private func decreasePitch() {
-        
-        let newPitch = pitchUnit.decreasePitch()
-        pitchChange(newPitch.pitch, newPitch.pitchString)
-    }
-    
-    // Changes the pitch to a specified value
-    private func pitchChange(_ pitch: Float, _ pitchString: String) {
-        
-        // TODO
-        
-//        Messenger.publish(.fx_unitStateChanged)
-//
-//        pitchView.setPitch(pitch, pitchString)
-//        pitchView.stateChanged()
-//
-//        // Show the Pitch tab if the Effects panel is shown
-//        showThisTab()
+        pitchView.pitchUpdated()
     }
     
     override func applyColorScheme(_ scheme: ColorScheme) {

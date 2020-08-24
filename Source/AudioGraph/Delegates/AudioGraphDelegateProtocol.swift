@@ -116,24 +116,22 @@ protocol EQUnitDelegateProtocol: FXUnitDelegateProtocol {
 protocol PitchUnitDelegateProtocol: FXUnitDelegateProtocol {
     
     // The pitch shift value, in cents, specified as a value between -2400 and 2400
-    var pitch: Int {get set}
-    
-    var pitchAsOctavesSemitonesCents: (octaves: Int, semitones: Int, cents: Int) {get}
-    
-    var formattedPitch: String {get}
-    
-    // the amount of overlap between segments of the input audio signal into the pitch effects unit, specified as a value between 3 and 32
-    var overlap: Float {get set}
-    
-    var formattedOverlap: String {get}
+    var pitch: PitchShift {get set}
     
     // Increases the pitch shift by a small increment. Returns the new pitch shift value.
-    func increasePitch() -> (pitch: Float, pitchString: String)
+    func increasePitch() -> PitchShift
     
     // Decreases the pitch shift by a small decrement. Returns the new pitch shift value.
-    func decreasePitch() -> (pitch: Float, pitchString: String)
+    func decreasePitch() -> PitchShift
     
     var presets: PitchPresets {get}
+}
+
+struct PitchShift {
+    
+    let octaves: Int
+    let semitones: Int
+    let cents: Int
 }
 
 protocol TimeUnitDelegateProtocol: FXUnitDelegateProtocol {

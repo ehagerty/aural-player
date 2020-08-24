@@ -11,10 +11,7 @@ struct CircularSliderTick {
 class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     
     var unitState: EffectsUnitState = .bypassed {
-        
-        didSet {
-            redraw()
-        }
+        didSet {redraw()}
     }
     
     var stateFunction: (() -> EffectsUnitState)?
@@ -34,6 +31,10 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         didSet {redraw()}
     }
     
+    func setValue(_ value: Int) {
+        setValue(Float(value))
+    }
+    
     func setValue(_ value: Float) {
         
         let tick = snapValueToTick(value)
@@ -45,10 +46,12 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     
     @IBInspectable var initialValue: Float = 0
     
+    // TODO: Check current value and adjust relative to minimum.
     @IBInspectable var minValue: Float = 0 {
         didSet {allowedValues = minValue...maxValue}
     }
     
+    // TODO: Check current value and adjust relative to maximum.
     @IBInspectable var maxValue: Float = 100 {
         didSet {allowedValues = minValue...maxValue}
     }
@@ -56,7 +59,18 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     @IBInspectable var interval: Float = 1
     
     var allowedValues: ClosedRange<Float> = 0...0 {
-        didSet {redraw()}
+        
+        didSet {
+            
+            if floatValue < allowedValues.lowerBound {
+                setValue(allowedValues.lowerBound)
+                
+            } else if floatValue > allowedValues.upperBound {
+                setValue(allowedValues.upperBound)
+            }
+            
+            redraw()
+        }
     }
     
     var radius: CGFloat = 30
@@ -163,7 +177,7 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
 
-        shapeLayer.fillColor = Colors.Constants.white10Percent.cgColor
+        shapeLayer.fillColor = Colors.Effects.sliderBackgroundColor.cgColor
         shapeLayer.strokeColor = NSColor.clear.cgColor
 
         shapeLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor

@@ -6,74 +6,29 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     
     override var unitDescription: String {"Pitch Shift"}
     
-    var pitch: Int {
+    var pitch: PitchShift {
         
-        get {roundedInt(unit.pitch)}
-        set(newValue) {unit.pitch = Float(newValue)}
-    }
-    
-    var pitchAsOctavesSemitonesCents: (octaves: Int, semitones: Int, cents: Int) {
-        
-        var cents = self.pitch
-        
-        let octaves = cents / AppConstants.ValueConversions.pitch_octaveToCents
-        cents -= octaves * AppConstants.ValueConversions.pitch_octaveToCents
-        
-        let semitones = cents / AppConstants.ValueConversions.pitch_semitoneToCents
-        cents -= semitones * AppConstants.ValueConversions.pitch_semitoneToCents
-        
-        return (octaves, semitones, cents)
-    }
-    
-    var formattedPitch: String {
-        
-        let pitch = self.pitch
-        
-        if pitch == 0 {
-            return "0"
+        get {
             
-        } else if pitch > 0 {
+            var cents = roundedInt(unit.pitch)
             
-            if pitch % AppConstants.ValueConversions.pitch_octaveToCents == 0 {
-                
-                let octaves = pitch / AppConstants.ValueConversions.pitch_octaveToCents
-                return "+\(octaves) 8ve"
-            }
+            let octaves = cents / AppConstants.ValueConversions.pitch_octaveToCents
+            cents -= octaves * AppConstants.ValueConversions.pitch_octaveToCents
             
-            if pitch % AppConstants.ValueConversions.pitch_semitoneToCents == 0 {
-                
-                let semitones = pitch / AppConstants.ValueConversions.pitch_semitoneToCents
-                return "+\(semitones) m2"
-            }
+            let semitones = cents / AppConstants.ValueConversions.pitch_semitoneToCents
+            cents -= semitones * AppConstants.ValueConversions.pitch_semitoneToCents
             
-            return "+\(pitch) cents"
-            
-        } else {
-            
-            if pitch % AppConstants.ValueConversions.pitch_octaveToCents == 0 {
-                
-                let octaves = pitch / AppConstants.ValueConversions.pitch_octaveToCents
-                return "\(octaves) 8ve"
-            }
-            
-            if pitch % AppConstants.ValueConversions.pitch_semitoneToCents == 0 {
-                
-                let semitones = pitch / AppConstants.ValueConversions.pitch_semitoneToCents
-                return "\(semitones) m2"
-            }
-            
-            return "\(pitch) cents"
+            return PitchShift(octaves: octaves, semitones: semitones, cents: cents)
         }
-    }
-    
-    var overlap: Float {
         
-        get {return unit.overlap}
-        set(newValue) {unit.overlap = newValue}
-    }
-    
-    var formattedOverlap: String {
-        return ValueFormatter.formatOverlap(overlap)
+        set(shift) {
+            
+            let cents = (shift.octaves * AppConstants.ValueConversions.pitch_octaveToCents) +
+                        (shift.semitones * AppConstants.ValueConversions.pitch_semitoneToCents) +
+                        shift.cents
+            
+            unit.pitch = Float(cents)
+        }
     }
     
     var presets: PitchPresets {return unit.presets}
@@ -84,22 +39,22 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
         super.init(unit)
     }
     
-    func increasePitch() -> (pitch: Float, pitchString: String) {
+    func increasePitch() -> PitchShift {
         
         ensureActiveAndResetPitch()
         return setUnitPitch(min(2400, unit.pitch + Float(preferences.pitchDelta)))
     }
     
-    func decreasePitch() -> (pitch: Float, pitchString: String) {
+    func decreasePitch() -> PitchShift {
         
         ensureActiveAndResetPitch()
         return setUnitPitch(max(-2400, unit.pitch - Float(preferences.pitchDelta)))
     }
     
-    private func setUnitPitch(_ value: Float) -> (pitch: Float, pitchString: String) {
-        
+    private func setUnitPitch(_ value: Float) -> PitchShift {
+
         unit.pitch = value
-        return (Float(pitch), formattedPitch)
+        return self.pitch
     }
     
     private func ensureActiveAndResetPitch() {
