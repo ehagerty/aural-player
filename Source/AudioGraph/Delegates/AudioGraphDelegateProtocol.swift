@@ -169,10 +169,6 @@ protocol TimeUnitDelegateProtocol: FXUnitDelegateProtocol {
     
     var formattedRate: String {get}
     
-    var overlap: Float {get set}
-    
-    var formattedOverlap: String {get}
-    
     var shiftPitch: Bool {get set}
     
     var pitch: Float {get}

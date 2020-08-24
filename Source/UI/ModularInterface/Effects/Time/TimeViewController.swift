@@ -12,11 +12,6 @@ class TimeViewController: FXUnitViewController {
     @IBOutlet weak var lblRateMax: VALabel!
     @IBOutlet weak var lblRateValue: VALabel!
     
-    @IBOutlet weak var lblOverlap: VALabel!
-    @IBOutlet weak var lblOverlapMin: VALabel!
-    @IBOutlet weak var lblOverlapMax: VALabel!
-    @IBOutlet weak var lblOverlapValue: VALabel!
-    
     @IBOutlet weak var lblPitchShiftValue: VALabel!
     @IBOutlet weak var btnShiftPitch: NSButton!
     
@@ -51,7 +46,7 @@ class TimeViewController: FXUnitViewController {
     override func initControls() {
 
         super.initControls()
-        timeView.setState(timeUnit.rate, timeUnit.formattedRate, timeUnit.overlap, timeUnit.formattedOverlap, timeUnit.shiftPitch, timeUnit.formattedPitch)
+        timeView.setState(timeUnit.rate, timeUnit.formattedRate, timeUnit.shiftPitch, timeUnit.formattedPitch)
     }
     
     override func stateChanged() {
@@ -117,13 +112,6 @@ class TimeViewController: FXUnitViewController {
         showThisTab()
 
         Messenger.publish(.fx_playbackRateChanged, payload: rateInfo.rate)
-    }
-
-    // Updates the Overlap parameter of the Time stretch effects unit
-    @IBAction func timeOverlapAction(_ sender: Any) {
-        
-        timeUnit.overlap = timeView.overlap
-        timeView.setOverlap(timeUnit.overlap, timeUnit.formattedOverlap)
     }
 
     // Updates the label that displays the pitch shift value

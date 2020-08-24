@@ -71,20 +71,20 @@ class FXUnitViewController: NSViewController, NSMenuDelegate, StringInputReceive
         
         // Subscribe to notifications
         Messenger.subscribe(self, .fx_unitStateChanged, self.stateChanged)
-        
-        Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
-        
+
         Messenger.subscribe(self, .fx_updateFXUnitView, {(EffectsUnit) in self.initControls()},
                             filter: {(unit: EffectsUnit) in unit == .master || (unit == self.unitType)})
         
-        Messenger.subscribe(self, .fx_changeSliderColors, self.changeSliderColors)
-        
+        Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
         Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
+        
         Messenger.subscribe(self, .changeFunctionButtonColor, self.changeFunctionButtonColor(_:))
         Messenger.subscribe(self, .changeMainCaptionTextColor, self.changeMainCaptionTextColor(_:))
         
         Messenger.subscribe(self, .fx_changeFunctionCaptionTextColor, self.changeFunctionCaptionTextColor(_:))
         Messenger.subscribe(self, .fx_changeFunctionValueTextColor, self.changeFunctionValueTextColor(_:))
+        
+        Messenger.subscribe(self, .fx_changeSliderColors, self.changeSliderColors)
         
         Messenger.subscribe(self, .fx_changeActiveUnitStateColor, self.changeActiveUnitStateColor(_:))
         Messenger.subscribe(self, .fx_changeBypassedUnitStateColor, self.changeBypassedUnitStateColor(_:))

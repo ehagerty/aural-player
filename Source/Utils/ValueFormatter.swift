@@ -232,6 +232,40 @@ class ValueFormatter {
         return formatValueWithUnits(NSNumber(value: value), 1, Units.pitchOctaves, true)
     }
     
+    static func formatPitchShift(_ shift: PitchShift) -> String {
+        
+        let absCents = shift.asCents
+        
+        if absCents == 0 {
+            return "0"
+        }
+        
+        let sign = absCents > 0 ? "+" : "-"
+        
+        var octavesStr = ""
+        
+        if shift.octaves != 0 {
+            octavesStr = String(format: "%d 8ve  ", abs(shift.octaves))
+        }
+        
+        var centsStr = ""
+        
+        if shift.cents != 0 {
+            centsStr = String(format: "%d cents", abs(shift.cents))
+        }
+        
+        var semitonesStr = ""
+        
+        if shift.semitones != 0 {
+            semitonesStr = String(format: "%d m2  ", abs(shift.semitones))
+            
+        } else {
+            semitonesStr = shift.octaves != 0 ? (shift.cents != 0 ?  "0 m2  " : "") : ""
+        }
+        
+        return String(format: "%@%@%@%@", sign, octavesStr, semitonesStr, centsStr)
+    }
+    
     static func formatOverlap(_ value: Float) -> String {
         return ValueFormatter.formatValue(NSNumber(value: value), 1)
     }
