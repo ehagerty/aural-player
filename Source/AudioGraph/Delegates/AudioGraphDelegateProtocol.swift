@@ -132,6 +132,33 @@ struct PitchShift {
     let octaves: Int
     let semitones: Int
     let cents: Int
+    
+    var asCents: Int {
+        
+        octaves * AppConstants.ValueConversions.pitch_octaveToCents +
+        semitones * AppConstants.ValueConversions.pitch_semitoneToCents
+        + cents
+    }
+    
+    init(octaves: Int, semitones: Int, cents: Int) {
+        
+        self.octaves = octaves
+        self.semitones = semitones
+        self.cents = cents
+    }
+    
+    init(fromCents pitchCents: Int) {
+        
+        var cents = pitchCents
+        
+        self.octaves = cents / AppConstants.ValueConversions.pitch_octaveToCents
+        cents -= octaves * AppConstants.ValueConversions.pitch_octaveToCents
+        
+        self.semitones = cents / AppConstants.ValueConversions.pitch_semitoneToCents
+        cents -= semitones * AppConstants.ValueConversions.pitch_semitoneToCents
+        
+        self.cents = cents
+    }
 }
 
 protocol TimeUnitDelegateProtocol: FXUnitDelegateProtocol {

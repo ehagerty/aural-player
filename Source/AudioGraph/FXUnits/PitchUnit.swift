@@ -37,7 +37,7 @@ class PitchUnit: FXUnit, PitchShiftUnitProtocol {
     }
     
     override func savePreset(_ presetName: String) {
-        presets.addPreset(PitchPreset(presetName, .active, pitch, overlap, false))
+        presets.addPreset(PitchPreset(presetName, .active, PitchShift(fromCents: roundedInt(pitch)), false))
     }
 
     override func applyPreset(_ presetName: String) {
@@ -48,13 +48,11 @@ class PitchUnit: FXUnit, PitchShiftUnitProtocol {
     }
     
     func applyPreset(_ preset: PitchPreset) {
-        
-        pitch = preset.pitch
-        overlap = preset.overlap
+        pitch = Float(preset.pitch.asCents)
     }
     
     var settingsAsPreset: PitchPreset {
-        return PitchPreset("pitchSettings", state, pitch, overlap, false)
+        return PitchPreset("pitchSettings", state, PitchShift(fromCents: roundedInt(pitch)), false)
     }
     
     var persistentState: PitchUnitState {

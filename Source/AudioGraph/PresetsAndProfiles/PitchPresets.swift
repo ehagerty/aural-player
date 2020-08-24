@@ -8,33 +8,25 @@ class PitchPresets: FXPresets<PitchPreset> {
         addPresets(SystemDefinedPitchPresets.presets)
     }
     
-    static var defaultPreset: PitchPreset = {return SystemDefinedPitchPresets.presets.first(where: {$0.name == SystemDefinedPitchPresetParams.normal.rawValue})!}()
+    static var defaultPreset: PitchPreset = {SystemDefinedPitchPresets.presets.first(where: {$0.name == SystemDefinedPitchPresetParams.normal.rawValue})!}()
 }
 
 class PitchPreset: EffectsUnitPreset {
     
-    let pitch: Float
-    let overlap: Float
+    let pitch: PitchShift
     
-    init(_ name: String, _ state: EffectsUnitState, _ pitch: Float, _ overlap: Float, _ systemDefined: Bool) {
+    init(_ name: String, _ state: EffectsUnitState, _ pitch: PitchShift, _ systemDefined: Bool) {
         
         self.pitch = pitch
-        self.overlap = overlap
         super.init(name, state, systemDefined)
     }
 }
 
 fileprivate struct SystemDefinedPitchPresets {
     
-    static let presets: [PitchPreset] = {
-        
-        var arr: [PitchPreset] = []
-        SystemDefinedPitchPresetParams.allValues.forEach({
-            arr.append(PitchPreset($0.rawValue, $0.state, $0.pitch, $0.overlap, true))
-        })
-        
-        return arr
-    }()
+    static let presets: [PitchPreset] = SystemDefinedPitchPresetParams.allValues.map {
+        PitchPreset($0.rawValue, $0.state, $0.pitch, true)
+    }
 }
 
 /*
@@ -60,33 +52,29 @@ fileprivate enum SystemDefinedPitchPresetParams: String {
         return SystemDefinedPitchPresetParams(rawValue: displayName) ?? .normal
     }
     
-    var pitch: Float {
+    var pitch: PitchShift {
         
         switch self {
             
-        case .normal:   return 0
+        case .normal:   return PitchShift(fromCents: 0)
             
-        case .happyLittleGirl: return 0.3 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .happyLittleGirl: return PitchShift(octaves: 0, semitones: 3, cents: 60)
             
-        case .chipmunk: return 0.5 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .chipmunk: return PitchShift(octaves: 0, semitones: 6, cents: 0)
             
-        case .oneOctaveUp:  return 1 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .oneOctaveUp:  return PitchShift(octaves: 1, semitones: 0, cents: 0)
             
-        case .twoOctavesUp: return 2 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .twoOctavesUp: return PitchShift(octaves: 2, semitones: 0, cents: 0)
             
-        case .deep: return -0.3 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .deep: return PitchShift(octaves: 0, semitones: -3, cents: -60)
             
-        case .robocop:  return -0.5 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .robocop:  return PitchShift(octaves: 0, semitones: -6, cents: 0)
             
-        case .oneOctaveDown:    return -1 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .oneOctaveDown:    return PitchShift(octaves: -1, semitones: 0, cents: 0)
             
-        case .twoOctavesDown:   return -2 * AppConstants.ValueConversions.pitch_UIToAudioGraph
+        case .twoOctavesDown:   return PitchShift(octaves: -2, semitones: 0, cents: 0)
             
         }
-    }
-    
-    var overlap: Float {
-        return 8
     }
     
     var state: EffectsUnitState {

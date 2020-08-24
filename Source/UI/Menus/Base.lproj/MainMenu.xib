@@ -119,8 +119,6 @@
             <connections>
                 <outlet property="devicesMenu" destination="Gsu-W0-XjY" id="3uH-7o-o7q"/>
                 <outlet property="eqMenu" destination="9wV-eS-AMY" id="rmz-xV-44s"/>
-                <outlet property="halfOctaveAboveMenuItem" destination="oiI-Ft-yc5" id="2VO-d4-8QL"/>
-                <outlet property="halfOctaveBelowMenuItem" destination="Lm3-tW-hm0" id="Hx3-ya-ekH"/>
                 <outlet property="masterBypassMenuItem" destination="RYd-AL-o42" id="CRo-uw-2LA"/>
                 <outlet property="oneOctaveAboveMenuItem" destination="lYO-gE-kn8" id="cF3-jz-2Y3"/>
                 <outlet property="oneOctaveBelowMenuItem" destination="Wyn-lR-dym" id="cwk-rT-q61"/>
@@ -136,10 +134,6 @@
                 <outlet property="rate3MenuItem" destination="2vl-Ma-c41" id="lnm-qP-Ob3"/>
                 <outlet property="rate4MenuItem" destination="fst-0S-zTa" id="Afz-Ag-CvM"/>
                 <outlet property="rememberSettingsMenuItem" destination="lCg-7a-tY1" id="fMm-kj-L7K"/>
-                <outlet property="sixthOctaveAboveMenuItem" destination="kkN-dY-eg6" id="iml-9A-Fly"/>
-                <outlet property="sixthOctaveBelowMenuItem" destination="cYW-58-jBH" id="04l-XA-aLr"/>
-                <outlet property="thirdOctaveAboveMenuItem" destination="NHt-qJ-lNc" id="a2a-EQ-z9I"/>
-                <outlet property="thirdOctaveBelowMenuItem" destination="YNJ-sM-QkM" id="tm2-Qq-LrK"/>
                 <outlet property="timeMenu" destination="4bW-6o-06c" id="lOU-hM-JJd"/>
                 <outlet property="twoOctavesAboveMenuItem" destination="fN8-4T-8mm" id="7QK-92-U0N"/>
                 <outlet property="twoOctavesBelowMenuItem" destination="fVw-ks-nVV" id="FCS-vy-DvL"/>
@@ -1176,61 +1170,25 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="FvH-UH-cOy"/>
-                                        <menuItem title="-2 Octaves" tag="-12" id="fVw-ks-nVV" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
+                                        <menuItem title="-2 Octaves" tag="-12" id="fVw-ks-nVV" customClass="PitchShiftMenuItem" customModule="Aural" customModuleProvider="target">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="setPitchAction:" target="YGo-hN-fxr" id="Dge-5K-Ijh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="-1 Octave" tag="-12" id="Wyn-lR-dym" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
+                                        <menuItem title="-1 Octave" tag="-12" id="Wyn-lR-dym" customClass="PitchShiftMenuItem" customModule="Aural" customModuleProvider="target">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="setPitchAction:" target="YGo-hN-fxr" id="4kz-58-1Cs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="-6 Semitones" tag="-4" id="Lm3-tW-hm0" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="setPitchAction:" target="YGo-hN-fxr" id="PQV-iJ-A5r"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="-4 Semitones" tag="-4" id="YNJ-sM-QkM" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="setPitchAction:" target="YGo-hN-fxr" id="cdc-zd-w8Q"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="-2 Semitones" tag="-2" id="cYW-58-jBH" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="setPitchAction:" target="YGo-hN-fxr" id="7cY-i4-xcw"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="+2 Semitones" tag="2" id="kkN-dY-eg6" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="setPitchAction:" target="YGo-hN-fxr" id="lhZ-0D-Qtl"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="+4 Semitones" tag="4" id="NHt-qJ-lNc" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="setPitchAction:" target="YGo-hN-fxr" id="pKN-rz-myR"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="+6 Semitones" tag="-4" id="oiI-Ft-yc5" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="setPitchAction:" target="YGo-hN-fxr" id="wbT-be-bdf"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="+1 Octave" tag="12" id="lYO-gE-kn8" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
+                                        <menuItem title="+1 Octave" tag="12" id="lYO-gE-kn8" customClass="PitchShiftMenuItem" customModule="Aural" customModuleProvider="target">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="setPitchAction:" target="YGo-hN-fxr" id="sOD-oo-hfJ"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="+2 Octaves" tag="12" id="fN8-4T-8mm" customClass="SoundParameterMenuItem" customModule="Aural" customModuleProvider="target">
+                                        <menuItem title="+2 Octaves" tag="12" id="fN8-4T-8mm" customClass="PitchShiftMenuItem" customModule="Aural" customModuleProvider="target">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="setPitchAction:" target="YGo-hN-fxr" id="YuZ-g0-Bk8"/>

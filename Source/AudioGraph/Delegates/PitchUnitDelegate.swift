@@ -8,18 +8,7 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     
     var pitch: PitchShift {
         
-        get {
-            
-            var cents = roundedInt(unit.pitch)
-            
-            let octaves = cents / AppConstants.ValueConversions.pitch_octaveToCents
-            cents -= octaves * AppConstants.ValueConversions.pitch_octaveToCents
-            
-            let semitones = cents / AppConstants.ValueConversions.pitch_semitoneToCents
-            cents -= semitones * AppConstants.ValueConversions.pitch_semitoneToCents
-            
-            return PitchShift(octaves: octaves, semitones: semitones, cents: cents)
-        }
+        get {PitchShift(fromCents: roundedInt(unit.pitch))}
         
         set(shift) {
             

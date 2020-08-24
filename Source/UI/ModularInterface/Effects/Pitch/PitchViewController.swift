@@ -30,9 +30,9 @@ class PitchViewController: FXUnitViewController {
         
         super.initSubscriptions()
         
-//        Messenger.subscribe(self, .pitchFXUnit_decreasePitch, self.decreasePitch)
-//        Messenger.subscribe(self, .pitchFXUnit_increasePitch, self.increasePitch)
-//        Messenger.subscribe(self, .pitchFXUnit_setPitch, self.setPitch(_:))
+        Messenger.subscribe(self, .pitchFXUnit_decreasePitch, self.decreasePitch)
+        Messenger.subscribe(self, .pitchFXUnit_increasePitch, self.increasePitch)
+        Messenger.subscribe(self, .pitchFXUnit_setPitch, self.setPitch(_:))
     }
     
     override func oneTimeSetup() {
@@ -59,6 +59,35 @@ class PitchViewController: FXUnitViewController {
         pitchUnit.pitch = pitchView.pitch
         pitchView.pitchUpdated()
     }
+    
+    func setPitch(_ pitch: PitchShift) {
+        
+        pitchUnit.ensureActive()
+        
+        pitchUnit.pitch = pitch
+        pitchView.pitch = pitch
+        
+        Messenger.publish(.fx_unitStateChanged)
+        showThisTab()
+    }
+    
+    func decreasePitch() {
+        
+        pitchView.pitch = pitchUnit.decreasePitch()
+
+        Messenger.publish(.fx_unitStateChanged)
+        showThisTab()
+    }
+    
+    func increasePitch() {
+        
+        pitchView.pitch = pitchUnit.increasePitch()
+
+        Messenger.publish(.fx_unitStateChanged)
+        showThisTab()
+    }
+    
+    // MARK: Appearance --------------------------------------------------------------------------------
     
     override func applyColorScheme(_ scheme: ColorScheme) {
         

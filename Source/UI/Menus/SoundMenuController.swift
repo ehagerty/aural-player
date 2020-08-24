@@ -22,17 +22,11 @@ class SoundMenuController: NSObject, NSMenuDelegate {
     // Menu items that hold specific associated values
     
     // Pitch shift menu items (with specific pitch shift values)
-    @IBOutlet weak var twoOctavesBelowMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var oneOctaveBelowMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var halfOctaveBelowMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var thirdOctaveBelowMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var sixthOctaveBelowMenuItem: SoundParameterMenuItem!
+    @IBOutlet weak var twoOctavesBelowMenuItem: PitchShiftMenuItem!
+    @IBOutlet weak var oneOctaveBelowMenuItem: PitchShiftMenuItem!
     
-    @IBOutlet weak var sixthOctaveAboveMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var thirdOctaveAboveMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var halfOctaveAboveMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var oneOctaveAboveMenuItem: SoundParameterMenuItem!
-    @IBOutlet weak var twoOctavesAboveMenuItem: SoundParameterMenuItem!
+    @IBOutlet weak var oneOctaveAboveMenuItem: PitchShiftMenuItem!
+    @IBOutlet weak var twoOctavesAboveMenuItem: PitchShiftMenuItem!
     
     // Playback rate (Time) menu items (with specific playback rate values)
     @IBOutlet weak var rate0_25MenuItem: SoundParameterMenuItem!
@@ -62,17 +56,11 @@ class SoundMenuController: NSObject, NSMenuDelegate {
         // Associate each of the menu items with a specific pitch shift or playback rate value, so that when the item is clicked later, that value can be readily retrieved and used in performing the action.
         
         // Pitch shift menu items
-        twoOctavesBelowMenuItem.paramValue = -2
-        oneOctaveBelowMenuItem.paramValue = -1
-        halfOctaveBelowMenuItem.paramValue = -0.5
-        thirdOctaveBelowMenuItem.paramValue = -1/3
-        sixthOctaveBelowMenuItem.paramValue = -1/6
+        twoOctavesBelowMenuItem.pitch = PitchShift(octaves: -2, semitones: 0, cents: 0)
+        oneOctaveBelowMenuItem.pitch = PitchShift(octaves: -1, semitones: 0, cents: 0)
         
-        sixthOctaveAboveMenuItem.paramValue = 1/6
-        thirdOctaveAboveMenuItem.paramValue = 1/3
-        halfOctaveAboveMenuItem.paramValue = 0.5
-        oneOctaveAboveMenuItem.paramValue = 1
-        twoOctavesAboveMenuItem.paramValue = 2
+        oneOctaveAboveMenuItem.pitch = PitchShift(octaves: 1, semitones: 0, cents: 0)
+        twoOctavesAboveMenuItem.pitch = PitchShift(octaves: 2, semitones: 0, cents: 0)
         
         // Playback rate (Time) menu items
         rate0_25MenuItem.paramValue = 0.25
@@ -209,10 +197,13 @@ class SoundMenuController: NSObject, NSMenuDelegate {
     }
     
     // Sets the pitch to a value specified by the menu item clicked
-    @IBAction func setPitchAction(_ sender: SoundParameterMenuItem) {
+    @IBAction func setPitchAction(_ sender: PitchShiftMenuItem) {
         
         // Menu item's "paramValue" specifies the pitch shift value associated with the menu item (in octaves)
-        Messenger.publish(.pitchFXUnit_setPitch, payload: sender.paramValue)
+        
+        if let thePitch: PitchShift = sender.pitch {
+            Messenger.publish(.pitchFXUnit_setPitch, payload: thePitch)
+        }
     }
     
     // Decreases the playback rate by a certain preset decrement
@@ -235,6 +226,13 @@ class SoundMenuController: NSObject, NSMenuDelegate {
     @IBAction func rememberSettingsAction(_ sender: ToggleMenuItem) {
         Messenger.publish(!rememberSettingsMenuItem.isOn ? .fx_saveSoundProfile : .fx_deleteSoundProfile)
     }
+}
+
+// An NSMenuItem subclass that contains extra fields to hold information (similar to tags) associated with the menu item
+class PitchShiftMenuItem: NSMenuItem {
+    
+    // A generic numerical parameter value
+    var pitch: PitchShift!
 }
 
 // An NSMenuItem subclass that contains extra fields to hold information (similar to tags) associated with the menu item

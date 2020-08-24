@@ -152,9 +152,8 @@ fileprivate func deserializePitchPreset(_ map: NSDictionary) -> PitchPreset {
     let name = map["name"] as? String ?? ""
     let state = mapEnum(map, "state", AppDefaults.pitchState)
     let pitch: Float = mapNumeric(map, "pitch", AppDefaults.pitch)
-    let overlap: Float = mapNumeric(map, "overlap", AppDefaults.pitchOverlap)
     
-    return PitchPreset(name, state, pitch, overlap, false)
+    return PitchPreset(name, state, PitchShift(fromCents: roundedInt(pitch)), false)
 }
 
 class TimeUnitState: FXUnitState<TimePreset>, PersistentState {
