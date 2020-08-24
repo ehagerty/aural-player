@@ -276,14 +276,20 @@ class ValueFormatter {
     
     static func formatReverbAmount(_ value: Float) -> String {
         
-        if (value == 0) {
+        switch value {
+            
+        case 0:
+            
             return String(format: "100%% %@", Units.reverbDryAmount)
-        } else if (value == 100) {
+            
+        case 100:
+            
             return String(format: "100%% %@", Units.reverbWetAmount)
-        } else {
-            let dry = Int(round(value))
-            let wet = 100 - dry
-            return String(format:"%d / %d", dry, wet)
+            
+        default:
+            
+            let wet = roundedInt(value)
+            return String(format:"%d / %d", 100 - wet, wet)
         }
     }
     

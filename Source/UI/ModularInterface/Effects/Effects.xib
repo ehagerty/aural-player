@@ -143,6 +143,12 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                     </tabViewItem>
+                                                    <tabViewItem label="Reverb" identifier="4" id="s94-U9-dAg">
+                                                        <view key="view" id="Nw5-og-BcT">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
                                                 </tabViewItems>
                                             </tabView>
                                         </subviews>

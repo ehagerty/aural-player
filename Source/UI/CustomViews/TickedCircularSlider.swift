@@ -46,12 +46,10 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     
     @IBInspectable var initialValue: Float = 0
     
-    // TODO: Check current value and adjust relative to minimum.
     @IBInspectable var minValue: Float = 0 {
         didSet {allowedValues = minValue...maxValue}
     }
     
-    // TODO: Check current value and adjust relative to maximum.
     @IBInspectable var maxValue: Float = 100 {
         didSet {allowedValues = minValue...maxValue}
     }
@@ -197,12 +195,7 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         arcLayer.path = arcPath.CGPath
 
         arcLayer.fillColor = NSColor.clear.cgColor
-
-        let arcColor: CGColor = unitState == .active ?
-            NSColor(red: 0, green: 0.35, blue: 0.7, alpha: 1).cgColor :
-            Colors.Constants.white70Percent.cgColor
-        
-        arcLayer.strokeColor = arcColor
+        arcLayer.strokeColor = foregroundColor.cgColor
         arcLayer.lineWidth = 2
 
         arcLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor

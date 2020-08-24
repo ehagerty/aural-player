@@ -15,17 +15,19 @@ class ReverbView: NSView {
     }
     
     func initialize(_ stateFunction: (() -> EffectsUnitState)?) {
-//        reverbAmountSlider.stateFunction = stateFunction
-//        reverbAmountSlider.updateState()
+        
+        reverbAmountSlider.stateFunction = stateFunction
+        reverbAmountSlider.updateState()
     }
     
     func setState(_ space: String , _ amount: Float, _ amountString: String) {
+        
         setSpace(space)
         setAmount(amount, amountString)
     }
     
     func setUnitState(_ state: EffectsUnitState) {
-//        reverbAmountSlider.setUnitState(state)
+        reverbAmountSlider.unitState = state
     }
     
     func setSpace(_ space: String) {
@@ -33,12 +35,13 @@ class ReverbView: NSView {
     }
     
     func setAmount(_ amount: Float, _ amountString: String) {
-        reverbAmountSlider.floatValue = amount
+        
+        reverbAmountSlider.setValue(amount)
         lblReverbAmountValue.stringValue = amountString
     }
     
     func stateChanged() {
-//        reverbAmountSlider.updateState()
+        reverbAmountSlider.updateState()
     }
     
     func applyPreset(_ preset: ReverbPreset) {
@@ -49,6 +52,7 @@ class ReverbView: NSView {
     }
     
     func changeTextSize() {
+        
         reverbSpaceMenu.redraw()
         reverbSpaceMenu.font = Fonts.Effects.unitFunctionFont
     }
