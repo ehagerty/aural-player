@@ -815,6 +815,7 @@
 		3EE93BD424423D4C009A70D9 /* PlayerViewPopupMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE93BD324423D4C009A70D9 /* PlayerViewPopupMenuController.swift */; };
 		3EE97B39245C47C20063ADB2 /* ColorSchemeHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE97B38245C47C20063ADB2 /* ColorSchemeHistory.swift */; };
 		3EE97B3B245C4E1C0063ADB2 /* AuralColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE97B3A245C4E1C0063ADB2 /* AuralColorPicker.swift */; };
+		3EEB110D24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB110C24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift */; };
 		3EEDFC2B24B225720025BA02 /* UnifiedPlayQueueViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEDFC2A24B225720025BA02 /* UnifiedPlayQueueViewDelegate.swift */; };
 		3EEDFC3024B23FE80025BA02 /* FileSystemBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEDFC2F24B23FE80025BA02 /* FileSystemBrowser.xib */; };
 		3EEDFC3224B241940025BA02 /* FileSystemBrowserViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEDFC3124B241940025BA02 /* FileSystemBrowserViewDelegate.swift */; };
@@ -1547,6 +1548,7 @@
 		3EE93BD324423D4C009A70D9 /* PlayerViewPopupMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewPopupMenuController.swift; sourceTree = "<group>"; };
 		3EE97B38245C47C20063ADB2 /* ColorSchemeHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeHistory.swift; sourceTree = "<group>"; };
 		3EE97B3A245C4E1C0063ADB2 /* AuralColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuralColorPicker.swift; sourceTree = "<group>"; };
+		3EEB110C24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsUnitTriStateCheckButton.swift; sourceTree = "<group>"; };
 		3EEDFC2A24B225720025BA02 /* UnifiedPlayQueueViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedPlayQueueViewDelegate.swift; sourceTree = "<group>"; };
 		3EEDFC2F24B23FE80025BA02 /* FileSystemBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSystemBrowser.xib; sourceTree = "<group>"; };
 		3EEDFC3124B241940025BA02 /* FileSystemBrowserViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemBrowserViewDelegate.swift; sourceTree = "<group>"; };
@@ -2731,6 +2733,7 @@
 				3E46F55D1F2A8003007CD384 /* ModalDialogButtonCells.swift */,
 				3E46F55B1F2A7A36007CD384 /* CheckRadioButtonCell.swift */,
 				3EDA1FB8214F278C003591FA /* TrackPeekingButton.swift */,
+				3EEB110C24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -3723,6 +3726,7 @@
 				3E7CA23C217E739A00356240 /* ArtistsPlaylistSortViewController.swift in Sources */,
 				3E17D03421E625A100951F81 /* PrettyScroller.swift in Sources */,
 				3E78DC9D24648C0700E6BC00 /* PlayerSequencingViewController.swift in Sources */,
+				3EEB110D24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift in Sources */,
 				3E23E09F246E84E000367E2B /* ApplyPlaybackProfileAction.swift in Sources */,
 				3E9A90ED24DDA7B50027D414 /* FFmpegPacket.swift in Sources */,
 				3EF5E5B91FBDAF0B004270A4 /* ArtistsPlaylistViewController.swift in Sources */,

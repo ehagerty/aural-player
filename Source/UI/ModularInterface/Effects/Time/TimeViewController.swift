@@ -128,7 +128,7 @@ class TimeViewController: FXUnitViewController {
     override func applyColorScheme(_ scheme: ColorScheme) {
         
         super.applyColorScheme(scheme)
-        changeSliderColors()
+        timeView.applyColorScheme(scheme)
     }
     
     override func changeSliderColors() {
@@ -140,7 +140,7 @@ class TimeViewController: FXUnitViewController {
         super.changeActiveUnitStateColor(color)
         
         if timeUnit.isActive {
-            timeView.redrawSliders()
+            timeView.changeActiveUnitStateColor(color)
         }
     }
     
@@ -149,7 +149,7 @@ class TimeViewController: FXUnitViewController {
         super.changeBypassedUnitStateColor(color)
         
         if timeUnit.state == .bypassed {
-            timeView.redrawSliders()
+            timeView.changeBypassedUnitStateColor(color)
         }
     }
     
@@ -158,13 +158,7 @@ class TimeViewController: FXUnitViewController {
         super.changeSuppressedUnitStateColor(color)
         
         if timeUnit.state == .suppressed {
-            timeView.redrawSliders()
+            timeView.changeSuppressedUnitStateColor(color)
         }
-    }
-    
-    override func changeFunctionCaptionTextColor(_ color: NSColor) {
-        
-        super.changeFunctionCaptionTextColor(color)
-        timeView.changeFunctionCaptionTextColor()
     }
 }

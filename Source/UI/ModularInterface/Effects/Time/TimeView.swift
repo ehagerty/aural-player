@@ -28,7 +28,32 @@ class TimeView: NSView {
     }
     
     func stateChanged() {
+        
         timeSlider.updateState()
+        
+        switch timeSlider.unitState {
+            
+        case .active:
+            
+            if btnShiftPitch.isOn {
+                
+                btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(ColorSchemes.systemScheme.effects.activeUnitStateColor)
+                btnShiftPitch.redraw()
+            }
+            
+        case .bypassed:
+            
+            btnShiftPitch.image = btnShiftPitch.image?.applyingTint(ColorSchemes.systemScheme.effects.bypassedUnitStateColor)
+            btnShiftPitch.redraw()
+            
+        case .suppressed:
+            
+            if btnShiftPitch.isOn {
+                
+                btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(ColorSchemes.systemScheme.effects.suppressedUnitStateColor)
+                btnShiftPitch.redraw()
+            }
+        }
     }
     
     func setState(_ rate: Float, _ rateString: String, _ shiftPitch: Bool, _ shiftPitchString: String) {
@@ -70,10 +95,44 @@ class TimeView: NSView {
         timeSlider.redraw()
     }
     
-    func changeFunctionCaptionTextColor() {
+    func applyColorScheme(_ scheme: ColorScheme) {
+        stateChanged()
+    }
+    
+    func changeActiveUnitStateColor(_ color: NSColor) {
         
-        btnShiftPitch.image = btnShiftPitch.image?.applyingTint(Colors.Effects.functionCaptionTextColor)
-        btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(Colors.Effects.functionCaptionTextColor)
+        redrawSliders()
+        
+        if btnShiftPitch.isOn {
+            btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(color)
+            
+        } else {
+            btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(ColorSchemes.systemScheme.effects.bypassedUnitStateColor)
+        }
+        
+        btnShiftPitch.redraw()
+    }
+    
+    func changeBypassedUnitStateColor(_ color: NSColor) {
+        
+        redrawSliders()
+        
+        btnShiftPitch.image = btnShiftPitch.image?.applyingTint(color)
+        btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(color)
+        
+        btnShiftPitch.redraw()
+    }
+    
+    func changeSuppressedUnitStateColor(_ color: NSColor) {
+        
+        redrawSliders()
+        
+        if btnShiftPitch.isOn {
+            btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(color)
+            
+        } else {
+            btnShiftPitch.alternateImage = btnShiftPitch.alternateImage?.applyingTint(ColorSchemes.systemScheme.effects.bypassedUnitStateColor)
+        }
         
         btnShiftPitch.redraw()
     }
