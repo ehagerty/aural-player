@@ -294,7 +294,7 @@ class ValueFormatter {
     }
     
     static func formatDelayTime(_ value: Double) -> String {
-        return ValueFormatter.formatValueWithUnits(NSNumber(value: value), 2, Units.delayTimeSecs, false)
+        return ValueFormatter.formatValueWithUnits(NSNumber(value: value), 2, Units.delayTimeSecs, true)
     }
     
     static func formatDelayAmount(_ value: Float) -> String {
@@ -398,7 +398,7 @@ class ValueFormatter {
         static let timeStretchRate: String = "x"
         static let reverbWetAmount: String = "wet"
         static let reverbDryAmount: String = "dry"
-        static let delayTimeSecs: String = "s"
+        static let delayTimeSecs: String = "sec"
         static let delayFeedbackPerc: String = "%"
         static let frequencyHz: String = "Hz"
         static let frequencyKHz: String = "KHz"

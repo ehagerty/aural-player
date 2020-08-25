@@ -25,8 +25,6 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         }
     }
     
-    var percentage: Float = 50
-    
     override var integerValue: Int {
         didSet {redraw()}
     }
@@ -75,13 +73,11 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     var center: NSPoint = NSPoint.zero
     var perimeterPoint: NSPoint = NSPoint.zero
     
-    var backgroundColor: NSColor {return Colors.Player.progressArcBackgroundColor}
+    var backgroundColor: NSColor {Colors.Effects.sliderBackgroundColor}
 
     var foregroundColor: NSColor {
-        return unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
+        unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
     }
-    
-    var textFont: NSFont {return Fonts.Player.infoBoxArtistAlbumFont}
     
     var ticks: [CircularSliderTick] = []
     
@@ -175,7 +171,7 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
 
-        shapeLayer.fillColor = Colors.Effects.sliderBackgroundColor.cgColor
+        shapeLayer.fillColor = backgroundColor.cgColor
         shapeLayer.strokeColor = NSColor.clear.cgColor
 
         shapeLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor
@@ -221,7 +217,7 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         // --------------------- DIMMING WHEN DISABLED ----------------
         
         if self.isDisabled {
-            
+
             let dimPath = NSBezierPath(ovalIn: dirtyRect.insetBy(dx: 0, dy: 0))
 
             let dimLayer = CAShapeLayer()

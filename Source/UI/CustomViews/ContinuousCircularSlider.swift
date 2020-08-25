@@ -21,8 +21,6 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         }
     }
     
-    var percentage: Float = 50
-    
     override var floatValue: Float {
         didSet {redraw()}
     }
@@ -34,13 +32,11 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
     var center: NSPoint = NSPoint.zero
     var perimeterPoint: NSPoint = NSPoint.zero
     
-    var backgroundColor: NSColor {return Colors.Player.progressArcBackgroundColor}
-    
+    var backgroundColor: NSColor {Colors.Effects.sliderBackgroundColor}
+
     var foregroundColor: NSColor {
-        return unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
+        unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
     }
-    
-    var textFont: NSFont {return Fonts.Player.infoBoxArtistAlbumFont}
     
     func setValue(_ value: Float) {
         
@@ -76,11 +72,11 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         layer?.sublayers?.removeAll()
         
         let circlePath = NSBezierPath(ovalIn: dirtyRect.insetBy(dx: 0, dy: 0))
-
+        
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.CGPath
 
-        shapeLayer.fillColor = Colors.Constants.white10Percent.cgColor
+        shapeLayer.fillColor = backgroundColor.cgColor
         shapeLayer.strokeColor = NSColor.clear.cgColor
 
         shapeLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor
@@ -90,10 +86,6 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         
         // ------------------------ ARC ----------------------------
                 
-        // To prevent the arc from disappearing when we hit 100%
-        percentage = (floatValue - minValue) * 100 / (maxValue - minValue)
-        if percentage >= 100 {percentage = 99.98}
-
         let arcPath = NSBezierPath()
         arcPath.appendArc(withCenter: center, radius: radius - 2, startAngle: 225, endAngle: -45, clockwise: true)
 
@@ -102,9 +94,8 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
 
         arcLayer.fillColor = NSColor.clear.cgColor
 
-        let arcColor: CGColor = unitState == .active ? NSColor(red: 0, green: 0.35, blue: 0.7, alpha: 1).cgColor : Colors.Constants.white70Percent.cgColor
-        arcLayer.strokeColor = arcColor
-        arcLayer.lineWidth = 2
+        arcLayer.strokeColor = foregroundColor.cgColor
+        arcLayer.lineWidth = 3
 
         arcLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor
         arcLayer.shouldRasterize = true
@@ -116,14 +107,14 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         let line = NSBezierPath() // container for line(s)
         line.move(to: center) // start point
         line.line(to: perimeterPoint) // destination
-        
+
         let fgLayer = CAShapeLayer()
         fgLayer.path = line.CGPath
-            
+
         fgLayer.fillColor = NSColor.clear.cgColor
         fgLayer.strokeColor = foregroundColor.cgColor
         fgLayer.lineWidth = 2.0
-            
+
         self.layer?.addSublayer(fgLayer)
     }
     
@@ -179,6 +170,8 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
     }
     
     private func convertAngleDegreesToPerimeterPoint(_ angle: CGFloat) -> NSPoint {
+        
+        let radius = self.radius - 5
         
         if angle < 45 {
             

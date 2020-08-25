@@ -41,7 +41,7 @@ class DelayViewController: FXUnitViewController {
     // Updates the Delay amount parameter
     @IBAction func delayAmountAction(_ sender: AnyObject) {
 
-        delayUnit.amount = delayView.amount
+        delayUnit.amount = Float(delayView.amount)
         delayView.setAmount(delayUnit.amount, delayUnit.formattedAmount)
     }
 
@@ -49,13 +49,14 @@ class DelayViewController: FXUnitViewController {
     @IBAction func delayTimeAction(_ sender: AnyObject) {
 
         delayUnit.time = delayView.time
-        delayView.setTime(delayUnit.time, delayUnit.formattedTime)
+//        delayView.setTime(delayUnit.time, delayUnit.formattedTime)
+        delayView.timeChanged(delayUnit.formattedTime)
     }
 
     // Updates the Delay feedback parameter
     @IBAction func delayFeedbackAction(_ sender: AnyObject) {
 
-        delayUnit.feedback = delayView.feedback
+        delayUnit.feedback = Float(delayView.feedback)
         delayView.setFeedback(delayUnit.feedback, delayUnit.formattedFeedback)
     }
 

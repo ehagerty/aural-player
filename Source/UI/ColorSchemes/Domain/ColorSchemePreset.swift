@@ -716,13 +716,13 @@ enum ColorSchemePreset: String, CaseIterable {
         
         switch self {
             
-        case .blackAttack:  return Colors.Constants.white45Percent
+        case .blackAttack:  return Colors.Constants.white55Percent
             
-        case .blackAqua:  return Colors.Constants.white45Percent
+        case .blackAqua:  return Colors.Constants.white55Percent
             
         case .whiteBlight:  return Colors.Constants.white25Percent
             
-        case .gloomyDay:    return Colors.Constants.white45Percent
+        case .gloomyDay:    return Colors.Constants.white55Percent
             
         case .brownie:    return NSColor(red: 0.614, green: 0.407, blue: 0.333, alpha: 1)
             

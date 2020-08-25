@@ -255,7 +255,6 @@ enum FilterBandType: String {
         }
     }
     
-    // Constructs a ReverPresets object from a description string
     static func fromDescription(_ description: String) -> FilterBandType {
         return FilterBandType(rawValue: StringUtils.camelCase(description))!
     }
