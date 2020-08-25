@@ -147,10 +147,7 @@ class TimeViewController: FXUnitViewController {
     override func changeBypassedUnitStateColor(_ color: NSColor) {
         
         super.changeBypassedUnitStateColor(color)
-        
-        if timeUnit.state == .bypassed {
-            timeView.changeBypassedUnitStateColor(color)
-        }
+        timeView.changeBypassedUnitStateColor(color)
     }
     
     override func changeSuppressedUnitStateColor(_ color: NSColor) {

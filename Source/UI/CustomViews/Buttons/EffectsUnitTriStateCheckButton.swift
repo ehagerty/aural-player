@@ -1,52 +1,57 @@
 import Cocoa
 
+@IBDesignable
 class EffectsUnitTriStateCheckButton: NSButton {
     
-    // The image displayed when the button is in an "Off" state
-    @IBInspectable var offStateImage: NSImage?
-
-    // The image displayed when the button is in an "On" state
-    @IBInspectable var onStateImage: NSImage?
-
-    var stateFunction: (() -> EffectsUnitState)?
+    var stateFunction: (() -> EffectsUnitState)? {
+        didSet {reTint()}
+    }
 
     var unitState: EffectsUnitState {
         return stateFunction?() ?? .bypassed
     }
     
-    var activeStateTintFunction: () -> NSColor = {Colors.Effects.activeUnitStateColor} {
-        didSet {reTint()}
-    }
+    var activeStateColor: NSColor {Colors.Effects.activeUnitStateColor}
     
-    var bypassedStateTintFunction: () -> NSColor = {Colors.Effects.bypassedUnitStateColor} {
-        didSet {reTint()}
-    }
+    var bypassedStateColor: NSColor {Colors.Effects.bypassedUnitStateColor}
     
-    var suppressedStateTintFunction: () -> NSColor = {Colors.Effects.suppressedUnitStateColor} {
-        didSet {reTint()}
-    }
-    
-    func updateState() {
+    var suppressedStateColor: NSColor {Colors.Effects.suppressedUnitStateColor}
         
-        if isOff {return}
+    func stateChanged() {
+     
+        switch unitState {
+
+        case .bypassed:
+
+            alternateImage = alternateImage?.applyingTint(bypassedStateColor)
+
+        case .active:
+
+            alternateImage = alternateImage?.applyingTint(activeStateColor)
+
+        case .suppressed:
+
+            alternateImage = alternateImage?.applyingTint(suppressedStateColor)
+        }
+    }
+    
+    func reTint() {
+        
+        image = image?.applyingTint(bypassedStateColor)
 
         switch unitState {
 
         case .bypassed:
             
-            alternateImage = alternateImage?.applyingTint(bypassedStateTintFunction())
+            alternateImage = alternateImage?.applyingTint(bypassedStateColor)
 
         case .active:
             
-            alternateImage = alternateImage?.applyingTint(activeStateTintFunction())
+            alternateImage = alternateImage?.applyingTint(activeStateColor)
 
         case .suppressed:
 
-            alternateImage = alternateImage?.applyingTint(suppressedStateTintFunction())
+            alternateImage = alternateImage?.applyingTint(suppressedStateColor)
         }
-    }
-
-    func reTint() {
-        updateState()
     }
 }

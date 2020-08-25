@@ -73,7 +73,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eST-3d-ORx" userLabel="Shift Pitch">
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eST-3d-ORx" userLabel="Shift Pitch" customClass="EffectsUnitTriStateCheckButton" customModule="Aural" customModuleProvider="target">
                     <rect key="frame" x="88" y="59" width="117" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="bevel" title="  Shift pitch" bezelStyle="regularSquare" image="NotChecked" imagePosition="right" alignment="left" alternateImage="Checked" controlSize="mini" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="1vF-KK-JPP" customClass="FXFunctionCheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
