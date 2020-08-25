@@ -6,7 +6,7 @@ class DelayView: NSView {
     @IBOutlet weak var amountSlider: TickedCircularSlider!
     @IBOutlet weak var feedbackSlider: TickedCircularSlider!
     
-    @IBOutlet weak var cutoffSlider: CutoffFrequencySlider!
+    @IBOutlet weak var cutoffSlider: CutoffFrequencyCircularSlider!
     
     private var sliders: [EffectsUnitSliderProtocol] = []
     
@@ -31,28 +31,29 @@ class DelayView: NSView {
         return feedbackSlider.integerValue
     }
     
-    override func awakeFromNib() {
-//        sliders = [timeSlider, amountSlider, cutoffSlider, feedbackSlider]
-        sliders = [timeSlider, amountSlider, feedbackSlider]
-    }
-    
-    func initialize(_ stateFunction: (() -> EffectsUnitState)?) {
+    func initialize() {
         
+        let delayUnit = ObjectGraph.audioGraphDelegate.delayUnit
+
+        sliders = [timeSlider, amountSlider, cutoffSlider, feedbackSlider]
+
         for var slider in sliders {
-            
-            slider.stateFunction = stateFunction
+
+            slider.stateFunction = delayUnit.stateFunction
             slider.updateState()
         }
-//
-//        (cutoffSlider.cell as? CutoffFrequencySliderCell)?.filterType = .lowPass
-    }
-    
-    func setState(_ time: Double, _ timeString: String, _ amount: Float, _ amountString: String, _ feedback: Float, _ feedbackString: String, _ cutoff: Float, _ cutoffString: String) {
-        
-//        setTime(time, timeString)
-//        setAmount(amount, amountString)
-//        setFeedback(feedback, feedbackString)
-//        setCutoff(cutoff, cutoffString)
+
+        timeSlider.setValue(Float(delayUnit.time))
+        lblTime.stringValue = delayUnit.formattedTime
+
+        amountSlider.setValue(delayUnit.amount)
+        lblAmount.stringValue = delayUnit.formattedAmount
+
+        feedbackSlider.setValue(delayUnit.feedback)
+        lblFeedback.stringValue = delayUnit.formattedFeedback
+
+        cutoffSlider.setFrequency(delayUnit.lowPassCutoff)
+        lblCutoff.stringValue = delayUnit.formattedLowPassCutoff
     }
     
     func setUnitState(_ state: EffectsUnitState) {
@@ -62,31 +63,19 @@ class DelayView: NSView {
         }
     }
     
-    func setTime(_ time: Double, _ timeString: String) {
-        
-        timeSlider.doubleValue = time
-        lblTime.stringValue = timeString
-    }
-    
     func timeChanged(_ timeString: String) {
         lblTime.stringValue = timeString
     }
     
-    func setAmount(_ amount: Float, _ amountString: String) {
-        
-        amountSlider.floatValue = amount
+    func amountChanged(_ amountString: String) {
         lblAmount.stringValue = amountString
     }
     
-    func setFeedback(_ feedback: Float, _ feedbackString: String) {
-        
-        feedbackSlider.floatValue = feedback
+    func feedbackChanged(_ feedbackString: String) {
         lblFeedback.stringValue = feedbackString
     }
     
-    func setCutoff(_ cutoff: Float, _ cutoffString: String) {
-        
-        cutoffSlider.setFrequency(cutoff)
+    func cutoffChanged(_ cutoffString: String) {
         lblCutoff.stringValue = cutoffString
     }
     

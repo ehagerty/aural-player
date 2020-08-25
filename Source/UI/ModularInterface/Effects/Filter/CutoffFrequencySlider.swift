@@ -11,6 +11,47 @@ class CutoffFrequencySlider: EffectsUnitSlider {
     }
 }
 
+class CutoffFrequencyCircularSlider: CircularSlider {
+    
+    var frequency: Float {
+        return 20 * powf(10, (floatValue - 20) / 6660)
+    }
+    
+    func setFrequency(_ freq: Float) {
+        setValue(6660 * log10(freq/20) + 20)
+    }
+    
+    override func setValue(_ value: Float) {
+        
+        let sweepAngle = computeAngle(value: value)
+        perimeterPoint = convertAngleDegreesToPerimeterPoint(sweepAngle)
+        
+        arcEndAngle = 225 - sweepAngle
+        
+        self.floatValue = value
+        self.integerValue = roundedInt(self.floatValue)
+    }
+    
+    override func computeValueForClick(loc: NSPoint) {
+     
+        let dx = center.x - loc.x
+        let dy = center.y - loc.y
+        
+        let xSign: CGFloat = dx == 0 ? 1 : dx / abs(dx)
+        let ySign: CGFloat = dy == 0 ? 1 : dy / abs(dy)
+        
+        let angleRads = ySign > 0 ? min(atan((dy * ySign) / (dx * xSign)), 45 * CGFloat.pi / 180) : atan((dy * ySign) / (dx * xSign))
+        
+        let sweepAngle = convertAngleRadsToAngleDegrees(angleRads, xSign, ySign)
+        perimeterPoint = convertAngleDegreesToPerimeterPoint(sweepAngle)
+        self.floatValue = computeValue(angle: sweepAngle)
+        
+        arcEndAngle = 225 - sweepAngle
+        
+        sendAction(self.action, to: self.target)
+    }
+}
+
 class CutoffFrequencySliderCell: EffectsTickedSliderCell {
     
     var filterType: FilterBandType = .lowPass

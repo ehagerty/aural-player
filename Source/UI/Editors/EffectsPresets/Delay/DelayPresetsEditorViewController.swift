@@ -20,7 +20,7 @@ class DelayPresetsEditorViewController: FXPresetsEditorGenericViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        delayView.initialize({() -> EffectsUnitState in return .active})
+//        delayView.initialize({() -> EffectsUnitState in return .active})
     }
     
     override func renderPreview(_ presetName: String) {

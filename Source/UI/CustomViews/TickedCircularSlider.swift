@@ -10,6 +10,17 @@ struct CircularSliderTick {
 @IBDesignable
 class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     
+    override func awakeFromNib() {
+        
+        self.enable()
+
+        center = NSPoint(x: frame.width / 2, y: frame.height / 2)
+        radius = self.width / 2
+        computeTicks()
+        
+        setValue(allowedValues.lowerBound)
+    }
+    
     var unitState: EffectsUnitState = .bypassed {
         didSet {redraw()}
     }
@@ -41,8 +52,6 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
         self.floatValue = tick.value
         self.integerValue = roundedInt(self.floatValue)
     }
-    
-    @IBInspectable var initialValue: Float = 0
     
     @IBInspectable var minValue: Float = 0 {
         didSet {allowedValues = minValue...maxValue}
@@ -76,21 +85,24 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     var backgroundColor: NSColor {Colors.Effects.sliderBackgroundColor}
 
     var foregroundColor: NSColor {
-        unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
+        
+        switch unitState {
+            
+        case .active:
+            
+            return Colors.Effects.activeUnitStateColor
+            
+        case .bypassed:
+            
+            return Colors.Effects.bypassedUnitStateColor
+            
+        case .suppressed:
+            
+            return Colors.Effects.suppressedUnitStateColor
+        }
     }
     
     var ticks: [CircularSliderTick] = []
-    
-    override func awakeFromNib() {
-        
-        self.enable()
-        
-        center = NSPoint(x: frame.width / 2, y: frame.height / 2)
-        radius = self.width / 2
-        computeTicks()
-
-        setValue(initialValue)
-    }
     
     private func computeTicks() {
         
@@ -192,7 +204,7 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
 
         arcLayer.fillColor = NSColor.clear.cgColor
         arcLayer.strokeColor = foregroundColor.cgColor
-        arcLayer.lineWidth = 2
+        arcLayer.lineWidth = 3
 
         arcLayer.rasterizationScale = 2.0 * NSScreen.main!.backingScaleFactor
         arcLayer.shouldRasterize = true
@@ -308,6 +320,8 @@ class TickedCircularSlider: NSControl, EffectsUnitSliderProtocol {
     }
     
     private func convertAngleDegreesToPerimeterPoint(_ angle: CGFloat) -> NSPoint {
+        
+        let radius = self.radius - 5
         
         if angle < 45 {
             

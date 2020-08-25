@@ -35,13 +35,27 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
     var backgroundColor: NSColor {Colors.Effects.sliderBackgroundColor}
 
     var foregroundColor: NSColor {
-        unitState == .active ? Colors.Effects.activeUnitStateColor : Colors.Effects.bypassedUnitStateColor
+        
+        switch unitState {
+            
+        case .active:
+            
+            return Colors.Effects.activeUnitStateColor
+            
+        case .bypassed:
+            
+            return Colors.Effects.bypassedUnitStateColor
+            
+        case .suppressed:
+            
+            return Colors.Effects.suppressedUnitStateColor
+        }
     }
     
     func setValue(_ value: Float) {
         
         let angle = computeAngle(value: value)
-        perimeterPoint = convertAngleDegreesToPerimeterPoint(CGFloat(angle))
+        perimeterPoint = convertAngleDegreesToPerimeterPoint(angle)
         
         self.floatValue = value
         self.integerValue = roundedInt(self.floatValue)
@@ -54,17 +68,21 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         center = NSPoint(x: frame.width / 2, y: frame.height / 2)
         radius = self.width / 2
         perimeterPoint = convertAngleDegreesToPerimeterPoint(0)
+        
+        setValue(minValue)
     }
    
-    private func computeAngle(value: Float) -> Float {
+    func computeAngle(value: Float) -> CGFloat {
 
         let percentage = (value - minValue) * 100 / (maxValue - minValue)
-        return percentage * 2.7
+        return CGFloat(percentage * 2.7)
     }
 
-    private func computeValue(angle: CGFloat) -> Float {
+    func computeValue(angle: CGFloat) -> Float {
         return Float(CGFloat(minValue) + (angle * CGFloat(maxValue - minValue) / 270.0))
     }
+    
+    var arcEndAngle: CGFloat = -45
     
     override func draw(_ dirtyRect: NSRect) {
         
@@ -85,9 +103,9 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         self.layer?.addSublayer(shapeLayer)
         
         // ------------------------ ARC ----------------------------
-                
+        
         let arcPath = NSBezierPath()
-        arcPath.appendArc(withCenter: center, radius: radius - 2, startAngle: 225, endAngle: -45, clockwise: true)
+        arcPath.appendArc(withCenter: center, radius: radius - 2, startAngle: 225, endAngle: arcEndAngle, clockwise: true)
 
         let arcLayer = CAShapeLayer()
         arcLayer.path = arcPath.CGPath
@@ -126,7 +144,7 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         computeValueForClick(loc: self.convert(event.locationInWindow, from: nil))
     }
     
-    private func computeValueForClick(loc: NSPoint) {
+    func computeValueForClick(loc: NSPoint) {
      
         let dx = center.x - loc.x
         let dy = center.y - loc.y
@@ -143,7 +161,7 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         sendAction(self.action, to: self.target)
     }
     
-    private func convertAngleRadsToAngleDegrees(_ rads: CGFloat, _ xSign: CGFloat, _ ySign: CGFloat) -> CGFloat {
+    func convertAngleRadsToAngleDegrees(_ rads: CGFloat, _ xSign: CGFloat, _ ySign: CGFloat) -> CGFloat {
         
         let rawAngle = rads * (180 / CGFloat.pi)
         
@@ -169,7 +187,7 @@ class CircularSlider: NSControl, EffectsUnitSliderProtocol {
         }
     }
     
-    private func convertAngleDegreesToPerimeterPoint(_ angle: CGFloat) -> NSPoint {
+    func convertAngleDegreesToPerimeterPoint(_ angle: CGFloat) -> NSPoint {
         
         let radius = self.radius - 5
         

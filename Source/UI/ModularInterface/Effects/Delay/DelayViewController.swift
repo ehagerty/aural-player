@@ -20,16 +20,10 @@ class DelayViewController: FXUnitViewController {
         presetsWrapper = PresetsWrapper<DelayPreset, DelayPresets>(delayUnit.presets)
     }
     
-    override func oneTimeSetup() {
-        
-        super.oneTimeSetup()
-        delayView.initialize(self.unitStateFunction)
-    }
-
     override func initControls() {
-
+        
         super.initControls()
-        delayView.setState(delayUnit.time, delayUnit.formattedTime, delayUnit.amount, delayUnit.formattedAmount, delayUnit.feedback, delayUnit.formattedFeedback, delayUnit.lowPassCutoff, delayUnit.formattedLowPassCutoff)
+        delayView.initialize()
     }
     
     override func stateChanged() {
@@ -42,14 +36,13 @@ class DelayViewController: FXUnitViewController {
     @IBAction func delayAmountAction(_ sender: AnyObject) {
 
         delayUnit.amount = Float(delayView.amount)
-        delayView.setAmount(delayUnit.amount, delayUnit.formattedAmount)
+        delayView.amountChanged(delayUnit.formattedAmount)
     }
 
     // Updates the Delay time parameter
     @IBAction func delayTimeAction(_ sender: AnyObject) {
 
         delayUnit.time = delayView.time
-//        delayView.setTime(delayUnit.time, delayUnit.formattedTime)
         delayView.timeChanged(delayUnit.formattedTime)
     }
 
@@ -57,14 +50,14 @@ class DelayViewController: FXUnitViewController {
     @IBAction func delayFeedbackAction(_ sender: AnyObject) {
 
         delayUnit.feedback = Float(delayView.feedback)
-        delayView.setFeedback(delayUnit.feedback, delayUnit.formattedFeedback)
+        delayView.feedbackChanged(delayUnit.formattedFeedback)
     }
 
     // Updates the Delay low pass cutoff parameter
     @IBAction func delayCutoffAction(_ sender: AnyObject) {
 
         delayUnit.lowPassCutoff = delayView.cutoff
-        delayView.setCutoff(delayUnit.lowPassCutoff, delayUnit.formattedLowPassCutoff)
+        delayView.cutoffChanged(delayUnit.formattedLowPassCutoff)
     }
     
     override func applyColorScheme(_ scheme: ColorScheme) {
