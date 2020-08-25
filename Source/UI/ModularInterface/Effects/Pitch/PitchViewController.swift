@@ -41,11 +41,11 @@ class PitchViewController: FXUnitViewController {
         pitchView.initialize(self.unitStateFunction)
     }
     
-//    override func initControls() {
-//        
-//        super.initControls()
-//        pitchView.pitch = pitchUnit.pitch
-//    }
+    override func initControls() {
+        
+        super.initControls()
+        pitchView.pitch = pitchUnit.pitch
+    }
     
     override func stateChanged() {
         

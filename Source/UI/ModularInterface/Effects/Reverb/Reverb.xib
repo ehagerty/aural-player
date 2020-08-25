@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="785-e3-cLn" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="347" y="116" width="70" height="24"/>
+                    <rect key="frame" x="340" y="112" width="84" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Amount" id="MPP-k1-in1">
                         <font key="font" size="13" name="Play-Regular"/>
@@ -33,7 +33,7 @@
                     </textFieldCell>
                 </textField>
                 <customView id="vDb-sU-qIh" customClass="TickedCircularSlider" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="361" y="46" width="40" height="40"/>
+                    <rect key="frame" x="360" y="46" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="value">
@@ -63,7 +63,7 @@
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aX-Uz-vKb" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="327" y="37" width="38" height="24"/>
+                    <rect key="frame" x="326" y="37" width="38" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Dry" id="BWr-IN-xXt">
                         <font key="font" size="11" name="Play-Regular"/>
@@ -72,7 +72,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BI1-Bc-aNh" userLabel="Wet" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="399" y="37" width="40" height="24"/>
+                    <rect key="frame" x="398" y="37" width="40" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Wet" id="b7d-iJ-fbf">
                         <font key="font" size="11" name="Play-Regular"/>
@@ -81,7 +81,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3XR-5h-wOf" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="116" width="187" height="24"/>
+                    <rect key="frame" x="93" y="112" width="187" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Simulated space" id="9X4-LS-mMP">
                         <font key="font" size="13" name="Play-Regular"/>
@@ -90,7 +90,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ame-Sx-NHD" userLabel="Reverb Space Menu">
-                    <rect key="frame" x="105" y="89" width="191" height="22"/>
+                    <rect key="frame" x="95" y="85" width="191" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="push" title="Placeholder" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" inset="2" altersStateOfSelectedItem="NO" selectedItem="skd-YJ-Wlc" id="KQD-U0-tMq" customClass="FXUnitPopupMenuCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -135,7 +135,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07I-F7-HY3" userLabel="Lbl Reverb Value" customClass="FunctionValueLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="342" y="90" width="81" height="24"/>
+                    <rect key="frame" x="340" y="92" width="84" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="100% wet" id="4kG-hJ-3QM">
                         <font key="font" size="12" name="Play-Regular"/>

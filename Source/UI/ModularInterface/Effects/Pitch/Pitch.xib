@@ -27,7 +27,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-Gs-ONv" userLabel="2 Octaves" customClass="FunctionValueLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="114" y="92" width="52" height="24"/>
+                    <rect key="frame" x="90" y="92" width="100" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="hgj-t7-Rdh">
                         <font key="font" size="14" name="Play-Regular"/>
@@ -66,7 +66,7 @@
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yY-Bp-kT8" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="351" y="112" width="70" height="24"/>
+                    <rect key="frame" x="336" y="112" width="100" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Cents" id="2aN-gv-CHf">
                         <font key="font" size="13" name="Play-Regular"/>
@@ -75,7 +75,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ryC-3C-jKV" userLabel="2 Octaves" customClass="FunctionValueLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="360" y="92" width="52" height="24"/>
+                    <rect key="frame" x="336" y="92" width="100" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="w79-Hk-vtC">
                         <font key="font" size="14" name="Play-Regular"/>
@@ -114,16 +114,16 @@
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1I-aS-oR6" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="230" y="112" width="70" height="24"/>
+                    <rect key="frame" x="212" y="112" width="100" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Semitones" id="g0h-hS-1Xe">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Semitones" id="g0h-hS-1Xe">
                         <font key="font" size="13" name="Play-Regular"/>
                         <color key="textColor" white="0.39721565069999998" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hvG-kJ-HoT" userLabel="2 Octaves" customClass="FunctionValueLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="236" y="92" width="52" height="24"/>
+                    <rect key="frame" x="212" y="92" width="100" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="6cs-0C-5P7">
                         <font key="font" size="14" name="Play-Regular"/>
@@ -162,7 +162,7 @@
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3oC-qk-aAJ" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="105" y="112" width="70" height="24"/>
+                    <rect key="frame" x="90" y="112" width="100" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Octaves" id="80o-zl-u1W">
                         <font key="font" size="13" name="Play-Regular"/>
@@ -216,7 +216,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eh8-bF-I5A" userLabel="2 Octaves" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="400" y="37" width="30" height="20"/>
+                    <rect key="frame" x="400" y="37" width="44" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="100" id="fjR-77-JJ4">
                         <font key="font" size="11" name="Play-Regular"/>
