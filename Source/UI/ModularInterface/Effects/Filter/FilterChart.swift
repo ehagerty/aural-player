@@ -25,7 +25,7 @@ class FilterChart: NSView {
     }
     
     var textColor: NSColor {
-        return Colors.filterChartTextColor
+        return Colors.Effects.functionCaptionTextColor
     }
     
     override func draw(_ dirtyRect: NSRect) {

@@ -18,7 +18,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     private let timeView: NSView = ViewFactory.timeView
     private let reverbView: NSView = ViewFactory.reverbView
     private let delayView: NSView = ViewFactory.delayView
-//    private let filterView: NSView = ViewFactory.filterView
+    private let filterView: NSView = ViewFactory.filterView
 //    private let recorderView: NSView = ViewFactory.recorderView
 
     // Tab view and its buttons
@@ -83,7 +83,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         fxTabView.tabViewItem(at: 3).view?.addSubview(timeView)
         fxTabView.tabViewItem(at: 4).view?.addSubview(reverbView)
         fxTabView.tabViewItem(at: 5).view?.addSubview(delayView)
-//        fxTabView.tabViewItem(at: 6).view?.addSubview(filterView)
+        fxTabView.tabViewItem(at: 6).view?.addSubview(filterView)
 //        fxTabView.tabViewItem(at: 7).view?.addSubview(recorderView)
 
         fxTabViewButtons = [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, recorderTabViewButton]
@@ -106,7 +106,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     private func initTabGroup() {
 
         // Select Master tab view by default
-        tabViewAction(delayTabViewButton)
+        tabViewAction(filterTabViewButton)
     }
 
     private func initSubscriptions() {
