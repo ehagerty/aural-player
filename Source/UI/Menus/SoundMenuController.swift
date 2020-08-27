@@ -83,25 +83,26 @@ class SoundMenuController: NSObject, NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         
         // Audio output devices menu
-        if (menu == devicesMenu) {
+        if menu == devicesMenu {
             
             // Recreate the menu each time
             
             devicesMenu.removeAllItems()
             
-            let outputDeviceName: String = graph.outputDevice.name!
+            let deviceList = graph.availableDevices
             
             // Add menu items for each available device
-            for device in graph.availableDevices {
+            for device in deviceList.allDevices {
                 
-                let menuItem = NSMenuItem(title: device.name!, action: #selector(self.outputDeviceAction(_:)), keyEquivalent: "")
+                let title = device.name + (device.isConnectedViaBluetooth ? " (Bluetooth)" : "")
+                let menuItem = NSMenuItem(title: title, action: #selector(self.outputDeviceAction(_:)), keyEquivalent: "")
                 menuItem.representedObject = device
                 menuItem.target = self
                 
                 self.devicesMenu.insertItem(menuItem, at: 0)
             
                 // Select this item if it represents the current output device
-                menuItem.onIf(outputDeviceName == menuItem.title)
+                menuItem.onIf(deviceList.outputDevice.uid == device.uid)
             }
             
         } else {
@@ -118,7 +119,7 @@ class SoundMenuController: NSObject, NSMenuDelegate {
     @IBAction func outputDeviceAction(_ sender: NSMenuItem) {
         
         if let outputDevice = sender.representedObject as? AudioDevice {
-            graph.outputDevice = outputDevice
+            graph.setOutputDevice(outputDevice)
         }
     }
     

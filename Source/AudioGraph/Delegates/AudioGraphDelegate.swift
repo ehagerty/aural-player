@@ -6,19 +6,10 @@ import AVFoundation
 
 class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
     
-    var availableDevices: [AudioDevice] {
-        return graph.availableDevices
-    }
+    var availableDevices: AudioDeviceList {graph.availableDevices}
     
-    var systemDevice: AudioDevice {return graph.systemDevice}
-    
-    var outputDevice: AudioDevice {
-        
-        get {return graph.outputDevice}
-        
-        set(newValue) {
-            graph.outputDevice = newValue
-        }
+    func setOutputDevice(_ device: AudioDevice) {
+        graph.setOutputDevice(device)
     }
     
     var masterUnit: MasterUnitDelegateProtocol
@@ -55,14 +46,15 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         filterUnit = FilterUnitDelegate(graph.filterUnit)
         
         // Set output device based on user preference
-        
+
+        let allDevices: [AudioDevice] = graph.availableDevices.allDevices
         if preferences.outputDeviceOnStartup.option == .rememberFromLastAppLaunch {
             
             let prefDevice: AudioDeviceState = graphState.outputDevice
             
             // Check if remembered device is available (based on name and UID)
-            if let foundDevice = graph.availableDevices.first(where: {$0.name! == prefDevice.name && $0.uid! == prefDevice.uid}) {
-                self.graph.outputDevice = foundDevice
+            if let foundDevice = allDevices.first(where: {$0.name == prefDevice.name && $0.uid! == prefDevice.uid}) {
+                graph.setOutputDevice(foundDevice)
             }
             
         } else if preferences.outputDeviceOnStartup.option == .specific,
@@ -70,8 +62,8 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
             let prefDeviceUID = preferences.outputDeviceOnStartup.preferredDeviceUID {
             
             // Check if preferred device is available (based on name and UID)
-            if let foundDevice = graph.availableDevices.first(where: {$0.name! == prefDeviceName && $0.uid! == prefDeviceUID}) {
-                self.graph.outputDevice = foundDevice
+            if let foundDevice = allDevices.first(where: {$0.name == prefDeviceName && $0.uid! == prefDeviceUID}) {
+                graph.setOutputDevice(foundDevice)
             }
         }
         

@@ -6,21 +6,10 @@ import AVFoundation
  */
 class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     
-    var availableDevices: [AudioDevice] {
-        return deviceManager.allDevices
-    }
+    var availableDevices: AudioDeviceList {deviceManager.allDevices}
     
-    var systemDevice: AudioDevice {
-        return deviceManager.systemDevice
-    }
-    
-    var outputDevice: AudioDevice {
-        
-        get {return deviceManager.outputDevice}
-        
-        set(newDevice) {
-            deviceManager.outputDevice = newDevice
-        }
+    func setOutputDevice(_ device: AudioDevice) {
+        deviceManager.outputDeviceId = device.id
     }
     
     private let audioEngine: AVAudioEngine
@@ -106,9 +95,9 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     
     var volume: Float {
         
-        get {return playerVolume}
+        get {playerVolume}
         
-        set(newValue) {
+        set {
             playerVolume = newValue
             if !muted {playerNode.volume = newValue}
         }
@@ -146,8 +135,10 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         
         let state: AudioGraphState = AudioGraphState()
         
-        state.outputDevice.name = outputDevice.name!
-        state.outputDevice.uid = outputDevice.uid!
+        let outputDevice = deviceManager.allDevices.outputDevice
+        
+        state.outputDevice.name = outputDevice?.name ?? ""
+        state.outputDevice.uid = outputDevice?.uid ?? ""
         
         // Volume and pan (balance)
         state.volume = playerVolume

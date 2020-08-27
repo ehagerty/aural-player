@@ -8,6 +8,14 @@ import AVFoundation
  */
 public class DeviceManager {
     
+    static var hardwareDevicesPropertyAddress: AudioObjectPropertyAddress =
+        AudioObjectPropertyAddress(outputPropertyWithSelector: kAudioHardwarePropertyDevices)
+    
+    static var hardwareDefaultOutputDevicePropertyAddress: AudioObjectPropertyAddress =
+        AudioObjectPropertyAddress(outputPropertyWithSelector: kAudioHardwarePropertyDefaultOutputDevice)
+    
+    static let systemAudioObjectId: AudioObjectID = AudioObjectID(kAudioObjectSystemObject)
+    
     // The AudioUnit underlying AVAudioEngine's output node (used to set the output device)
     let outputAudioUnit: AudioUnit
     
@@ -16,107 +24,87 @@ public class DeviceManager {
     }
     
     // A listing of all available audio output devices
-    var allDevices: [AudioDevice] {
+    var allDevices: AudioDeviceList {
         
-        var propsize: UInt32 = 0
+        var propSize: UInt32 = 0
+        var result: OSStatus = AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, sizeOfPropertyAddress, nil, &propSize)
+        if result != 0 {return AudioDeviceList.unknown}
         
-        var address: AudioObjectPropertyAddress = AudioObjectPropertyAddress(
-            mSelector: AudioObjectPropertySelector(kAudioHardwarePropertyDevices),
-            mScope: AudioObjectPropertyScope(kAudioObjectPropertyScopeGlobal),
-            mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
+        let numDevices = Int(propSize / sizeOfDeviceId)
+        var devids: [AudioDeviceID] = Array(repeating: AudioDeviceID(), count: numDevices)
         
-        var result: OSStatus = AudioObjectGetPropertyDataSize(AudioObjectID(kAudioObjectSystemObject), &address, UInt32(MemoryLayout<AudioObjectPropertyAddress>.size), nil, &propsize)
+        result = AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, 0, nil, &propSize, &devids)
+        if result != 0 {return AudioDeviceList.unknown}
         
-        if (result != 0) {
-            NSLog("Error \(result) from AudioObjectGetPropertyDataSize")
-            return []
-        }
-        
-        let numDevices = Int(propsize / UInt32(MemoryLayout<AudioDeviceID>.size))
-        
-        var devids = [AudioDeviceID]()
-        for _ in 0..<numDevices {
-            devids.append(AudioDeviceID())
-        }
-        
-        result = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &propsize, &devids);
-        
-        if (result != 0) {
-            NSLog("Error \(result) from AudioObjectGetPropertyData")
-            return []
-        }
-        
-        var devices: [AudioDevice] = []
-        
-        for i in 0..<numDevices {
-            
-            let audioDevice = AudioDevice(deviceID: devids[i])
-            
-            if let name = audioDevice.name, audioDevice.hasOutput, !name.contains("CADefaultDeviceAggregate") {
-                devices.append(audioDevice)
-            }
-        }
-        
-        return devices
-    }
-    
-    // The audio output device currently being used by the OS
-    var systemDevice: AudioDevice {
-        return allDevices.first(where: {$0.id == systemDeviceId})!
+        let devices: [AudioDevice] = devids.compactMap {AudioDevice(deviceID: $0)}
+        return AudioDeviceList(allDevices: devices, outputDeviceId: outputDeviceId, systemDeviceId: systemDeviceId)
     }
     
     // The AudioDeviceID of the audio output device currently being used by the OS
     private var systemDeviceId: AudioDeviceID {
         
-        var curDeviceId: AudioDeviceID? = kAudioObjectUnknown
+        var curDeviceId: AudioDeviceID = kAudioObjectUnknown
         var size: UInt32 = 0
         
-        var inputDeviceAOPA: AudioObjectPropertyAddress =
-            AudioObjectPropertyAddress(mSelector:
-                kAudioHardwarePropertyDefaultOutputDevice,
-                                       mScope: kAudioObjectPropertyScopeGlobal,
-                                       mElement:
-                kAudioObjectPropertyElementMaster)
+        AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDefaultOutputDevicePropertyAddress, 0, nil, &size)
+        AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDefaultOutputDevicePropertyAddress, 0, nil, &size, &curDeviceId)
         
-        // Get size
-        AudioObjectGetPropertyDataSize(UInt32(kAudioObjectSystemObject), &inputDeviceAOPA, 0, nil, &size)
-        
-        // Get device
-        AudioObjectGetPropertyData(UInt32(kAudioObjectSystemObject), &inputDeviceAOPA, 0, nil, &size, &curDeviceId)
-        
-        return curDeviceId!
+        return curDeviceId
     }
     
     // The variable used to get/set the application's audio output device
-    var outputDevice: AudioDevice {
+    var outputDeviceId: AudioDeviceID {
         
         get {
             
             var outDeviceID: AudioDeviceID = 0
-            var sizeOfAudioDevId = UInt32(MemoryLayout<AudioDeviceID>.size)
-            let error = AudioUnitGetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, &sizeOfAudioDevId)
+            var sizeOfDeviceId: UInt32 = UInt32(MemoryLayout<AudioDeviceID>.size)
+            let error = AudioUnitGetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, &sizeOfDeviceId)
             
-            if error == 0
-            {
-                // If the current device is "CADefaultDeviceAggregate", it is actually equivalent to systemDevice
-                let devices: [AudioDevice] = allDevices
-                return devices.first(where: {$0.id == outDeviceID}) ?? devices.first(where: {$0.id == systemDeviceId})!
-            }
-            
-            NSLog("Error getting current audio output device, errorCode=", error)
-            return systemDevice
+            return error == 0 ? outDeviceID : systemDeviceId
         }
         
-        set(newDevice) {
+        set(newDeviceId) {
             
-            var outDeviceID: AudioDeviceID = newDevice.id
-            let sizeOfAudioDevId = UInt32(MemoryLayout<AudioDeviceID>.size)
-            let error = AudioUnitSetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, sizeOfAudioDevId)
+            var outDeviceID: AudioDeviceID = newDeviceId
+            let error = AudioUnitSetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, sizeOfDeviceId)
             
             if error > 0
             {
-                NSLog("Error setting audio output device to: ", newDevice.name!, ", errorCode=", error)
+                NSLog("Error setting audio output device to: ", newDeviceId, ", errorCode=", error)
             }
         }
     }
+}
+
+extension AudioObjectPropertyAddress {
+    
+    init(globalPropertyWithSelector selector: AudioObjectPropertySelector) {
+        self.init(mSelector: selector, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMaster)
+    }
+    
+    init(outputPropertyWithSelector selector: AudioObjectPropertySelector) {
+        self.init(mSelector: selector, mScope: kAudioObjectPropertyScopeOutput, mElement: kAudioObjectPropertyElementMaster)
+    }
+}
+
+let sizeOfPropertyAddress: UInt32 = UInt32(MemoryLayout<AudioObjectPropertyAddress>.size)
+let sizeOfDeviceId: UInt32 = UInt32(MemoryLayout<AudioDeviceID>.size)
+
+func getCFStringProperty(deviceID: AudioDeviceID, addressPtr: UnsafePointer<AudioObjectPropertyAddress>) -> String? {
+    
+    var prop: CFString? = nil
+    var sizeOfCFStringOptional: UInt32 = UInt32(MemoryLayout<CFString?>.size)
+    
+    let result: OSStatus = AudioObjectGetPropertyData(deviceID, addressPtr, 0, nil, &sizeOfCFStringOptional, &prop)
+    return result == noErr ? prop as String? : nil
+}
+
+func getCodeProperty(deviceID: AudioDeviceID, addressPtr: UnsafePointer<AudioObjectPropertyAddress>) -> String? {
+    
+    var prop: UInt32 = 0
+    var sizeOfUInt32: UInt32 = UInt32(MemoryLayout<UInt32>.size)
+    
+    let result: OSStatus = AudioObjectGetPropertyData(deviceID, addressPtr, 0, nil, &sizeOfUInt32, &prop)
+    return result == noErr ? AudioUtils.codeToString(prop) : nil
 }

@@ -6,9 +6,8 @@ import AVFoundation
  */
 protocol AudioGraphProtocol: PlayerGraphProtocol, RecorderGraphProtocol {
     
-    var availableDevices: [AudioDevice] {get}
-    var systemDevice: AudioDevice {get}
-    var outputDevice: AudioDevice {get set}
+    var availableDevices: AudioDeviceList {get}
+    func setOutputDevice(_ device: AudioDevice)
     
     var volume: Float {get set}
     var balance: Float {get set}

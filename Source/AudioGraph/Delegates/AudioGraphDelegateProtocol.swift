@@ -6,9 +6,8 @@ import AVFoundation
 
 protocol AudioGraphDelegateProtocol {
     
-    var availableDevices: [AudioDevice] {get}
-    var systemDevice: AudioDevice {get}
-    var outputDevice: AudioDevice {get set}
+    var availableDevices: AudioDeviceList {get}
+    func setOutputDevice(_ device: AudioDevice)
     
     // NOTE - All functions that return String values return user-friendly text representations of the value being get/set, for display in the UI. For instance, setDelayLowPassCutoff(64) might return a value like "64 Hz"
     var volume: Float {get set}
