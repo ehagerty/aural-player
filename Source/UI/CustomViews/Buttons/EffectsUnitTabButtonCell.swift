@@ -11,7 +11,7 @@ class EffectsUnitTabButtonCell: NSButtonCell {
     
     var unitState: EffectsUnitState = .bypassed
     
-    private let imgWidth: CGFloat = 12, imgHeight: CGFloat = 12
+    private let imgWidth: CGFloat = 14, imgHeight: CGFloat = 14
     
     override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
         drawInterior(withFrame: cellFrame, in: controlView)
