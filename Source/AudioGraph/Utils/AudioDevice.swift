@@ -6,6 +6,7 @@ public class AudioDeviceList {
     static let unknown: AudioDeviceList = AudioDeviceList(allDevices: [], outputDeviceId: kAudioObjectUnknown, systemDeviceId: kAudioObjectUnknown)
     
     let allDevices: [AudioDevice]
+    var deviceCount: Int {allDevices.count}
     
     let systemDevice: AudioDevice!
     let outputDevice: AudioDevice!

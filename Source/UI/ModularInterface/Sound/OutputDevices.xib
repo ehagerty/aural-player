@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="OutputDevicesViewController" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="btn0" destination="Yai-KE-Wpz" id="OLh-GG-dx1"/>
+                <outlet property="btn1" destination="sq9-lZ-wPR" id="cPe-6z-SNA"/>
+                <outlet property="btn2" destination="ZMt-CV-Xdv" id="qIq-nc-kG0"/>
+                <outlet property="btn3" destination="oCL-Qj-Yus" id="qRA-cC-UxA"/>
+                <outlet property="btn4" destination="3ba-3s-aBS" id="DYX-lQ-ywE"/>
+                <outlet property="view" destination="c22-O7-iKe" id="8ia-3j-SRX"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TH1-Tu-5YI" userLabel="Master Unit Caption" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="86" y="147" width="187" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Output  Devices" id="Wky-5o-hl6" customClass="FXUnitCaptionCell" customModule="Aural" customModuleProvider="target">
+                        <font key="font" size="14" name="AlegreyaSansSC-Regular"/>
+                        <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" id="Yai-KE-Wpz" userLabel="Selector button 0" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="103" y="110" width="300" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="O9n-Vg-flq">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Play-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deviceSelectorAction:" target="-2" id="sPU-Ol-k2v"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="sq9-lZ-wPR" userLabel="Selector button 1" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="103" y="85" width="300" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Z7i-83-k4m">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Play-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deviceSelectorAction:" target="-2" id="UV5-8o-a5y"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="ZMt-CV-Xdv" userLabel="Selector button 2" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="103" y="60" width="300" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Suu-it-dwZ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Play-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deviceSelectorAction:" target="-2" id="ADC-33-if9"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="oCL-Qj-Yus" userLabel="Selector button 3" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="103" y="35" width="300" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="15e-pu-ZH5">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Play-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deviceSelectorAction:" target="-2" id="IKx-mE-VwE"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="3ba-3s-aBS" userLabel="Selector button 4" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="103" y="10" width="300" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Qc5-qj-L9e">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="12" name="Play-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deviceSelectorAction:" target="-2" id="VzL-Dj-v4w"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="141" y="153.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="RadioButton" width="25" height="25"/>
+    </resources>
+</document>

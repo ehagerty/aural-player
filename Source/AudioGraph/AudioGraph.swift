@@ -80,7 +80,7 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         soundProfiles.audioGraph = self
         
         // Register self as an observer for notifications when the audio output device has changed (e.g. headphones)
-        NotificationCenter.default.addObserver(self, selector: #selector(outputChanged), name: NSNotification.Name.AVAudioEngineConfigurationChange, object: audioEngine)
+        NotificationCenter.default.addObserver(self, selector: #selector(outputChanged), name: .AVAudioEngineConfigurationChange, object: audioEngine)
         
         audioEngineHelper.addNodes(nodes)
         audioEngineHelper.connectNodes()

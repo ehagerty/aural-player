@@ -161,6 +161,12 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                     </tabViewItem>
+                                                    <tabViewItem label="Output Devices" identifier="7" id="a0d-pM-HPa">
+                                                        <view key="view" id="gmZ-Cf-Byi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
                                                 </tabViewItems>
                                             </tabView>
                                         </subviews>
@@ -386,7 +392,7 @@
         <image name="ReverbTab" width="25" height="25"/>
         <image name="ReverbTab-Mixed" width="25" height="25"/>
         <image name="ReverbTab-On" width="25" height="25"/>
-        <image name="Settings" width="12" height="12"/>
+        <image name="Settings" width="220" height="200"/>
         <image name="TimeTab" width="32" height="32"/>
         <image name="TimeTab-Mixed" width="32" height="32"/>
         <image name="TimeTab-On" width="32" height="32"/>
