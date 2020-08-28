@@ -13,6 +13,7 @@
                 <outlet property="btn2" destination="ZMt-CV-Xdv" id="qIq-nc-kG0"/>
                 <outlet property="btn3" destination="oCL-Qj-Yus" id="qRA-cC-UxA"/>
                 <outlet property="btn4" destination="3ba-3s-aBS" id="DYX-lQ-ywE"/>
+                <outlet property="lblCaption" destination="TH1-Tu-5YI" id="HaF-go-eMP"/>
                 <outlet property="view" destination="c22-O7-iKe" id="8ia-3j-SRX"/>
             </connections>
         </customObject>
@@ -32,9 +33,9 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" id="Yai-KE-Wpz" userLabel="Selector button 0" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="110" width="300" height="25"/>
+                    <rect key="frame" x="103" y="110" width="400" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="O9n-Vg-flq">
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="O9n-Vg-flq" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="12" name="Play-Regular"/>
                     </buttonCell>
@@ -43,9 +44,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="sq9-lZ-wPR" userLabel="Selector button 1" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="85" width="300" height="25"/>
+                    <rect key="frame" x="103" y="85" width="400" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Z7i-83-k4m">
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Z7i-83-k4m" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="12" name="Play-Regular"/>
                     </buttonCell>
@@ -54,9 +55,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="ZMt-CV-Xdv" userLabel="Selector button 2" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="60" width="300" height="25"/>
+                    <rect key="frame" x="103" y="60" width="400" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Suu-it-dwZ">
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Suu-it-dwZ" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="12" name="Play-Regular"/>
                     </buttonCell>
@@ -65,9 +66,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="oCL-Qj-Yus" userLabel="Selector button 3" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="35" width="300" height="25"/>
+                    <rect key="frame" x="103" y="35" width="400" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="15e-pu-ZH5">
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="15e-pu-ZH5" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="12" name="Play-Regular"/>
                     </buttonCell>
@@ -76,9 +77,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="3ba-3s-aBS" userLabel="Selector button 4" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="10" width="300" height="25"/>
+                    <rect key="frame" x="103" y="10" width="400" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Qc5-qj-L9e">
+                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Qc5-qj-L9e" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="12" name="Play-Regular"/>
                     </buttonCell>

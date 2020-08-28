@@ -726,6 +726,7 @@
 		3EBF7EF2215873E8007869EC /* CustomEditorViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBF7EF1215873E8007869EC /* CustomEditorViews.swift */; };
 		3EBF7EF521589DC9007869EC /* FavoritesEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBF7EF421589DC9007869EC /* FavoritesEditorViewController.swift */; };
 		3EBF7EF721589E54007869EC /* FavoritesEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBF7EF621589E54007869EC /* FavoritesEditor.xib */; };
+		3EBFA70524F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFA70424F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift */; };
 		3EC22CE224E82FE1001F7EA3 /* FFmpegAudioFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC22CE124E82FE1001F7EA3 /* FFmpegAudioFormat.swift */; };
 		3EC22CE424E83102001F7EA3 /* SampleConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC22CE324E83102001F7EA3 /* SampleConverter.swift */; };
 		3EC22CE624E83120001F7EA3 /* AVFSampleConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC22CE524E83120001F7EA3 /* AVFSampleConverter.swift */; };
@@ -1459,6 +1460,7 @@
 		3EBF7EF1215873E8007869EC /* CustomEditorViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEditorViews.swift; sourceTree = "<group>"; };
 		3EBF7EF421589DC9007869EC /* FavoritesEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesEditorViewController.swift; sourceTree = "<group>"; };
 		3EBF7EF621589E54007869EC /* FavoritesEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoritesEditor.xib; sourceTree = "<group>"; };
+		3EBFA70424F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputDeviceSelectorButtonCell.swift; sourceTree = "<group>"; };
 		3EC22CE124E82FE1001F7EA3 /* FFmpegAudioFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegAudioFormat.swift; sourceTree = "<group>"; };
 		3EC22CE324E83102001F7EA3 /* SampleConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleConverter.swift; sourceTree = "<group>"; };
 		3EC22CE524E83120001F7EA3 /* AVFSampleConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFSampleConverter.swift; sourceTree = "<group>"; };
@@ -1625,6 +1627,7 @@
 			children = (
 				3E01BA3024F7F52800F76DEE /* OutputDevices.xib */,
 				3EE7ED9224F80BF40011CA93 /* OutputDevicesViewController.swift */,
+				3EBFA70424F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -3909,6 +3912,7 @@
 				3EC22CE824E83186001F7EA3 /* AVFExtensions.swift in Sources */,
 				3E33B4A41F3F08B8005EF359 /* Preferences.swift in Sources */,
 				3EC2A0F8249F7BF5008E85E9 /* LibraryGestureHandler.swift in Sources */,
+				3EBFA70524F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift in Sources */,
 				3E98478D1F5D0419001A2D28 /* EffectsWindowController.swift in Sources */,
 				3E1BF7632431048800B6B9F9 /* RecordingQuality.swift in Sources */,
 				3E75929424DEADB200B95E8E /* AVFMetadataContext.swift in Sources */,

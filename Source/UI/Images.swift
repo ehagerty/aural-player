@@ -58,4 +58,6 @@ struct Images {
     
     static let imgDisclosure_collapsed: NSImage = NSImage(named: "DisclosureTriangle-Collapsed")!
     static let imgDisclosure_expanded: NSImage = NSImage(named: "DisclosureTriangle-Expanded")!
+    
+    static let imgRadioButton: NSImage = NSImage(named: "RadioButton")!
 }

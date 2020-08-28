@@ -118,6 +118,15 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     }
 
     func reconnectPlayerNodeWithFormat(_ format: AVAudioFormat) {
+        
+        let cur = playerNode.outputFormat(forBus: 0)
+        
+        // TODO: If newFormat == curFormat, don't reconnect.
+        
+        print("\nCurFormat: \(cur.channelLayout?.layoutTag) \(cur.sampleRate)")
+        print("\nNewFormat: \(format.channelLayout?.layoutTag) \(format.sampleRate)")
+        print(cur.sampleRate == format.sampleRate, cur == format, cur.isEqual(to: format))
+        
         audioEngineHelper.reconnectNodes(playerNode, outputNode: auxMixer, format: format)
     }
     
