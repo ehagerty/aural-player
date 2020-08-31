@@ -18,14 +18,38 @@ public class DeviceManager {
     
     let list: DeviceList
     
-    var preferredOutputDevice: AudioDevice?
+    var preferredDevice: AudioDevice?
     
     private var lastEventTime: Double = 0
     
-    init(_ outputAudioUnit: AudioUnit) {
+    init(outputAudioUnit: AudioUnit, useSystemDevice: Bool, preferredDeviceUID: String?) {
         
         self.outputAudioUnit = outputAudioUnit
         self.list = DeviceList()
+        
+        if useSystemDevice {
+            
+            outputDeviceId = systemDeviceId
+            
+        } else if let thePreferredDeviceUID = preferredDeviceUID {
+            
+            // Try to remember the preferred output device
+            if let foundDevice = list.deviceByUID(thePreferredDeviceUID) {
+                
+                print("\nRemembered device: \(foundDevice.name)")
+                
+                preferredDevice = foundDevice
+                outputDeviceId = foundDevice.id
+                
+            } else {    // Default to the system device
+                
+                print("\nDid NOT remember device, defaulting to system device.")
+                
+                let systemDevice = self.systemDevice
+                preferredDevice = systemDevice
+                outputDeviceId = systemDevice.id
+            }
+        }
         
         DeviceManager.outputDeviceChangeHandler = self.outputDeviceChanged
         
@@ -52,7 +76,7 @@ public class DeviceManager {
             
             // If the system tries to change the device when the user has selected a preferred device, revert back
             // to the user's chosen device.
-            if let thePreferredDevice = preferredOutputDevice, thePreferredDevice.id != newDeviceId {
+            if let thePreferredDevice = preferredDevice, thePreferredDevice.id != newDeviceId {
                 
                 // Check to make sure the preferred device is still available
                 if list.isDeviceAvailable(thePreferredDevice) {
@@ -62,19 +86,18 @@ public class DeviceManager {
                     
                 } else {
                     
-                    preferredOutputDevice = outputDevice
-                    NSLog("\nDevice \(thePreferredDevice.name) is no longer available. Keeping new device \(preferredOutputDevice!.name)")
+                    preferredDevice = outputDevice
+                    NSLog("\nDevice \(thePreferredDevice.name) is no longer available. Keeping new device \(preferredDevice!.name)")
                 }
             }
             
-        } else {
-            NSLog("OutputDeviceChange - Time difference of \(timeDiff) too little. Ignoring notification.\n")
+            Messenger.publish(.deviceManager_deviceChanged)
         }
     }
     
     // A listing of all available audio output devices
     var allDevices: AudioDeviceList {
-        return AudioDeviceList(allDevices: list.devices, outputDeviceId: outputDeviceId, systemDeviceId: systemDeviceId)
+        AudioDeviceList(allDevices: list.devices, outputDeviceId: outputDeviceId, systemDeviceId: systemDeviceId)
     }
     
     var systemDevice: AudioDevice {
@@ -96,7 +119,11 @@ public class DeviceManager {
     var outputDevice: AudioDevice {
         
         get {list.deviceById(outputDeviceId) ?? AudioDevice(deviceId: outputDeviceId) ?? systemDevice}
-        set {outputDeviceId = newValue.id}
+        
+        set {
+            preferredDevice = newValue
+            outputDeviceId = newValue.id
+        }
     }
     
     // The variable used to get/set the application's audio output device
@@ -115,6 +142,8 @@ public class DeviceManager {
             
             if outputDeviceId == newDeviceId {return}
             
+            // TODO: Validate that the device still exists ? By doing a lookup in list.map ???
+            
             var outDeviceID: AudioDeviceID = newDeviceId
             let error = AudioUnitSetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, sizeOfDeviceId)
             
@@ -122,11 +151,26 @@ public class DeviceManager {
             {
                 NSLog("Error setting audio output device to: ", newDeviceId, ", errorCode=", error)
             }
+            
+            Messenger.publish(.deviceManager_deviceChanged)
         }
     }
     
-    func useSystemDevice() {
-        outputDeviceId = systemDeviceId
+    var useSystemDevice: Bool {
+        
+        get {preferredDevice == nil}
+        
+        set {
+            
+            if newValue {
+
+                preferredDevice = nil
+                outputDeviceId = systemDeviceId
+                
+            } else  {
+                preferredDevice = outputDevice
+            }
+        }
     }
 }
 
@@ -152,6 +196,9 @@ extension Notification.Name {
     
     // MARK: Notifications published by the application (i.e. app delegate). They represent different lifecycle stages/events.
     
-    // Signifies that the application has finished launching
+    // Signifies that the list of audio output devices has been updated.
     static let deviceManager_deviceListUpdated = Notification.Name("deviceManager_deviceListUpdated")
+    
+    // Signifies that the audio output device has changed.
+    static let deviceManager_deviceChanged = Notification.Name("deviceManager_deviceChanged")
 }

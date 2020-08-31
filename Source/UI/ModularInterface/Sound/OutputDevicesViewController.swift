@@ -25,7 +25,7 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
         applyColorScheme(ColorSchemes.systemScheme)
         
         Messenger.subscribeAsync(self, .deviceManager_deviceListUpdated, self.updateDevicesList, queue: .main)
-        Messenger.subscribeAsync(self, .audioGraph_engineRestarted, self.updateDevicesList, queue: .main)
+        Messenger.subscribeAsync(self, .deviceManager_deviceChanged, self.updateDevicesList, queue: .main)
         
         Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
         Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
@@ -129,7 +129,7 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     @IBAction func deviceSelectorAction(_ sender: NSButton) {
         
         let device = deviceList.allDevices[sender.tag]
-        graph.setOutputDevice(device)
+        graph.outputDevice = device
         
         updateDevicesList()
     }

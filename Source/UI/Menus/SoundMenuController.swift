@@ -119,7 +119,7 @@ class SoundMenuController: NSObject, NSMenuDelegate {
     @IBAction func outputDeviceAction(_ sender: NSMenuItem) {
         
         if let outputDevice = sender.representedObject as? AudioDevice {
-            graph.setOutputDevice(outputDevice)
+            graph.outputDevice = outputDevice
         }
     }
     

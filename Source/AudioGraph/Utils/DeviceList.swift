@@ -19,6 +19,7 @@ class DeviceList {
     private var lastRebuildTime: Double = 0
     
     func deviceById(_ id: AudioDeviceID) -> AudioDevice? {devicesMap[id]}
+    func deviceByUID(_ uid: String) -> AudioDevice? {devices.first(where: {$0.uid == uid})}
 
     init() {
         
@@ -69,18 +70,5 @@ class DeviceList {
         }
     }
     
-    func isDeviceAvailable(_ device: AudioDevice) -> Bool {devices.map {$0.id}.contains(device.id)}
-    
-    private var allDeviceIds: [AudioDeviceID] {
-        
-        var propSize: UInt32 = 0
-        var result: OSStatus = AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, sizeOfPropertyAddress, nil, &propSize)
-        if result != 0 {return []}
-        
-        let numDevices = Int(propSize / sizeOfDeviceId)
-        var devids: [AudioDeviceID] = Array(repeating: AudioDeviceID(), count: numDevices)
-        
-        result = AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, 0, nil, &propSize, &devids)
-        return result == 0 ? devids : []
-    }
+    func isDeviceAvailable(_ device: AudioDevice) -> Bool {devicesMap[device.id] != nil}
 }

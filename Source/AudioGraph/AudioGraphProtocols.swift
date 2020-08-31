@@ -7,7 +7,7 @@ import AVFoundation
 protocol AudioGraphProtocol: PlayerGraphProtocol, RecorderGraphProtocol {
     
     var availableDevices: AudioDeviceList {get}
-    func setOutputDevice(_ device: AudioDevice)
+    var outputDevice: AudioDevice {get set}
     var useSystemDevice: Bool {get set}
     
     var volume: Float {get set}
@@ -43,9 +43,6 @@ protocol PlayerGraphProtocol {
     
     // Clears reverb/delay sound tails. Suitable for use when stopping the player.
     func clearSoundTails()
-    
-    // When the audio output is changed
-    func restartAudioEngine()
 }
 
 /*

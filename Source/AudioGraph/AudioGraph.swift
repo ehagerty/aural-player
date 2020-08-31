@@ -8,32 +8,19 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     
     var availableDevices: AudioDeviceList {deviceManager.allDevices}
     
-    func setOutputDevice(_ device: AudioDevice) {
-
-        preferredOutputDevice = device
-        deviceManager.outputDevice = device
+    var outputDevice: AudioDevice {
+        
+        get {deviceManager.outputDevice}
+        set {deviceManager.outputDevice = newValue}
     }
     
     var useSystemDevice: Bool {
         
-        get {preferredOutputDevice == nil}
-        
-        set {
-            
-            if newValue {
-
-                preferredOutputDevice = nil
-                deviceManager.useSystemDevice()
-                
-            } else  {
-                preferredOutputDevice = deviceManager.outputDevice
-            }
-        }
+        get {deviceManager.useSystemDevice}
+        set {deviceManager.useSystemDevice = newValue}
     }
     
-    var preferredOutputDevice: AudioDevice?
-    
-    private let audioEngine: AVAudioEngine
+    private let engine: AVAudioEngine
     internal let outputNode: AVAudioOutputNode
     internal let playerNode: AuralPlayerNode
     internal let nodeForRecorderTap: AVAudioNode
@@ -59,7 +46,7 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     // Sets up the audio engine
     init(_ state: AudioGraphState) {
         
-        audioEngine = AVAudioEngine()
+        engine = AVAudioEngine()
         
         // If running on 10.12 Sierra or older, use the legacy AVAudioPlayerNode APIs
         if #available(OSX 10.13, *) {
@@ -68,39 +55,16 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
             playerNode = AuralPlayerNode(useLegacyAPI: true)
         }
         
-        nodeForRecorderTap = audioEngine.mainMixerNode
-        self.outputNode = audioEngine.outputNode
+        playerVolume = state.volume
+        muted = state.muted
+        playerNode.volume = muted ? 0 : playerVolume
+        playerNode.pan = state.balance
+        
+        nodeForRecorderTap = engine.mainMixerNode
+        self.outputNode = engine.outputNode
         auxMixer = AVAudioMixerNode()
         
-        deviceManager = DeviceManager(audioEngine.outputNode.audioUnit!)
-        
-        if state.useSystemDevice {
-            
-            deviceManager.useSystemDevice()
-            
-        } else {
-            
-            let deviceList = deviceManager.allDevices
-            
-            // Try to remember the preferred output device
-            let deviceUIDFromLastLaunch = state.outputDevice.uid
-            if let foundDevice = deviceList.allDevices.first(where: {$0.uid == deviceUIDFromLastLaunch}) {
-                
-//                print("\nRemembered device: \(foundDevice.name)")
-                
-                preferredOutputDevice = foundDevice
-                deviceManager.outputDevice = foundDevice
-                
-            } else {    // Default to the system device
-                
-//                print("\nDid NOT remember device")
-                
-                preferredOutputDevice = deviceList.systemDevice
-                deviceManager.useSystemDevice()
-            }
-        }
-        
-        audioEngineHelper = AudioEngineHelper(engine: audioEngine)
+        audioEngineHelper = AudioEngineHelper(engine: engine)
         
         eqUnit = EQUnit(state)
         pitchUnit = PitchUnit(state)
@@ -112,13 +76,9 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         let slaveUnits = [eqUnit, pitchUnit, timeUnit, reverbUnit, delayUnit, filterUnit]
         masterUnit = MasterUnit(state, slaveUnits)
 
-        var nodes = [playerNode, auxMixer]
-        slaveUnits.forEach({nodes.append(contentsOf: $0.avNodes)})
-        
-        playerVolume = state.volume
-        muted = state.muted
-        playerNode.volume = muted ? 0 : playerVolume
-        playerNode.pan = state.balance
+        deviceManager = DeviceManager(outputAudioUnit: engine.outputNode.audioUnit!,
+                                      useSystemDevice: state.useSystemDevice,
+                                      preferredDeviceUID: state.useSystemDevice ? nil : state.outputDevice.uid)
         
         soundProfiles = SoundProfiles()
         state.soundProfiles.forEach({
@@ -127,22 +87,45 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         
         soundProfiles.audioGraph = self
         
-        audioEngineHelper.addNodes(nodes)
-        audioEngineHelper.connectNodes()
-        audioEngineHelper.prepareAndStart()
+        let nodes = [playerNode, auxMixer] + slaveUnits.flatMap {$0.avNodes}
+        nodes.forEach {engine.attach($0)}
+        
+        for index in 0..<nodes.lastIndex {
+            engine.connect(nodes[index], to: nodes[index + 1], format: nil)
+        }
+        
+        // Connect last node to main mixer
+        engine.connect(nodes.last!, to: engine.mainMixerNode, format: nil)
+        engine.prepare()
+        
+        startEngine()
         
         // Register self as an observer for notifications when the audio output device has changed (e.g. headphones)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.outputChanged(_:)), name: .AVAudioEngineConfigurationChange, object: audioEngine)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.engineStopped(_:)), name: .AVAudioEngineConfigurationChange, object: engine)
     }
     
-    @objc func outputChanged(_ notif: Notification) {
+    // MARK: Audio engine-related functions
+    
+    func startEngine() {
+        
+        do {
+            try engine.start()
+        } catch let error as NSError {
+            NSLog("Error starting audio engine: %@", error.description)
+        }
+    }
+    
+    @objc func engineStopped(_ notif: Notification) {
         
         NSLog("AVAudioEngineConfigurationChange - Engine stopped !")
         
         let newDevice = deviceManager.allDevices.outputDevice
         print("\nNew device now: \(newDevice.name)")
         
-        audioEngineHelper.restart()
+        if !engine.isRunning {
+            //            print("\nACTUALLY Restarting engine")
+            startEngine()
+        }
         
         // Send out a notification
         Messenger.publish(.audioGraph_engineRestarted)
@@ -208,7 +191,7 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         let outputDevice = deviceManager.outputDevice
         
         state.outputDevice.name = outputDevice.name
-        state.outputDevice.uid = outputDevice.uid ?? ""
+        state.outputDevice.uid = outputDevice.uid
         
         state.useSystemDevice = useSystemDevice
         
@@ -230,14 +213,10 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         return state
     }
     
-    func restartAudioEngine() {
-        audioEngineHelper.restart()
-    }
-    
     func tearDown() {
         
         // Release the audio engine resources
-        audioEngine.stop()
+        engine.stop()
     }
 }
 

@@ -8,8 +8,10 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
     
     var availableDevices: AudioDeviceList {graph.availableDevices}
     
-    func setOutputDevice(_ device: AudioDevice) {
-        graph.setOutputDevice(device)
+    var outputDevice: AudioDevice {
+        
+        get {graph.outputDevice}
+        set {graph.outputDevice = newValue}
     }
     
     var useSystemDevice: Bool {
