@@ -38,6 +38,15 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ny-nJ-XdQ" userLabel="Rate" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="93" y="64" width="76" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Shift Pitch" id="mpC-IN-0nU">
+                        <font key="font" size="13" name="Play-Regular"/>
+                        <color key="textColor" white="0.40263488479999998" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kkb-xo-GOJ" userLabel="Rate Slider" customClass="TimeStretchSlider" customModule="Aural" customModuleProvider="target">
                     <rect key="frame" x="172" y="98" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -74,9 +83,9 @@
                     </textFieldCell>
                 </textField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eST-3d-ORx" userLabel="Shift Pitch" customClass="EffectsUnitTriStateCheckButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="88" y="59" width="117" height="34"/>
+                    <rect key="frame" x="172" y="62" width="25" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Shift pitch" bezelStyle="regularSquare" image="NotChecked" imagePosition="right" alignment="left" alternateImage="Checked" controlSize="mini" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="1vF-KK-JPP" customClass="FXFunctionCheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
+                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NotChecked" imagePosition="left" alignment="left" alternateImage="Checked" controlSize="mini" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="1vF-KK-JPP" customClass="FXFunctionCheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="13" name="Play-Regular"/>
                     </buttonCell>

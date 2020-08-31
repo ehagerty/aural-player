@@ -69,7 +69,7 @@ enum EffectsUnit: Int {
     case reverb
     case delay
     case filter
-    case recorder
+//    case recorder
 }
 
 typealias EffectsUnitStateFunction = () -> EffectsUnitState

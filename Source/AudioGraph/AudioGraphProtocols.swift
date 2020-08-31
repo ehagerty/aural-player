@@ -8,6 +8,7 @@ protocol AudioGraphProtocol: PlayerGraphProtocol, RecorderGraphProtocol {
     
     var availableDevices: AudioDeviceList {get}
     func setOutputDevice(_ device: AudioDevice)
+    var useSystemDevice: Bool {get set}
     
     var volume: Float {get set}
     var balance: Float {get set}

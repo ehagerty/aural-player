@@ -12,6 +12,12 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         graph.setOutputDevice(device)
     }
     
+    var useSystemDevice: Bool {
+        
+        get {graph.useSystemDevice}
+        set {graph.useSystemDevice = newValue}
+    }
+    
     var masterUnit: MasterUnitDelegateProtocol
     var eqUnit: EQUnitDelegateProtocol
     var pitchUnit: PitchUnitDelegateProtocol
@@ -44,28 +50,6 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         reverbUnit = ReverbUnitDelegate(graph.reverbUnit)
         delayUnit = DelayUnitDelegate(graph.delayUnit)
         filterUnit = FilterUnitDelegate(graph.filterUnit)
-        
-        // Set output device based on user preference
-
-        let allDevices: [AudioDevice] = graph.availableDevices.allDevices
-        if preferences.outputDeviceOnStartup.option == .rememberFromLastAppLaunch {
-            
-            let prefDevice: AudioDeviceState = graphState.outputDevice
-            
-            // Check if remembered device is available (based on name and UID)
-            if let foundDevice = allDevices.first(where: {$0.name == prefDevice.name && $0.uid! == prefDevice.uid}) {
-                graph.setOutputDevice(foundDevice)
-            }
-            
-        } else if preferences.outputDeviceOnStartup.option == .specific,
-            let prefDeviceName = preferences.outputDeviceOnStartup.preferredDeviceName,
-            let prefDeviceUID = preferences.outputDeviceOnStartup.preferredDeviceUID {
-            
-            // Check if preferred device is available (based on name and UID)
-            if let foundDevice = allDevices.first(where: {$0.name == prefDeviceName && $0.uid! == prefDeviceUID}) {
-                graph.setOutputDevice(foundDevice)
-            }
-        }
         
         // Set volume and effects based on user preference
         

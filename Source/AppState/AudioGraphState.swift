@@ -348,6 +348,7 @@ fileprivate func deserializeFilterPreset(_ map: NSDictionary) -> FilterPreset {
 class AudioGraphState: PersistentState {
     
     var outputDevice: AudioDeviceState = AudioDeviceState()
+    var useSystemDevice: Bool = true
     
     var volume: Float = AppDefaults.volume
     var muted: Bool = AppDefaults.muted
@@ -370,6 +371,8 @@ class AudioGraphState: PersistentState {
         if let outputDeviceDict = (map["outputDevice"] as? NSDictionary) {
             audioGraphState.outputDevice = AudioDeviceState.deserialize(outputDeviceDict) as! AudioDeviceState
         }
+        
+        audioGraphState.useSystemDevice = mapDirectly(map, "useSystemDevice", true)
         
         audioGraphState.volume = mapNumeric(map, "volume", AppDefaults.volume)
         audioGraphState.muted = mapDirectly(map, "muted", AppDefaults.muted)

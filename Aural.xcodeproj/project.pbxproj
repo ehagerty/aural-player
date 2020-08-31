@@ -727,6 +727,7 @@
 		3EBF7EF521589DC9007869EC /* FavoritesEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBF7EF421589DC9007869EC /* FavoritesEditorViewController.swift */; };
 		3EBF7EF721589E54007869EC /* FavoritesEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EBF7EF621589E54007869EC /* FavoritesEditor.xib */; };
 		3EBFA70524F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBFA70424F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift */; };
+		3EC194AA24FD3CCC0064FB75 /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC194A924FD3CCC0064FB75 /* DeviceList.swift */; };
 		3EC22CE224E82FE1001F7EA3 /* FFmpegAudioFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC22CE124E82FE1001F7EA3 /* FFmpegAudioFormat.swift */; };
 		3EC22CE424E83102001F7EA3 /* SampleConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC22CE324E83102001F7EA3 /* SampleConverter.swift */; };
 		3EC22CE624E83120001F7EA3 /* AVFSampleConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC22CE524E83120001F7EA3 /* AVFSampleConverter.swift */; };
@@ -1461,6 +1462,7 @@
 		3EBF7EF421589DC9007869EC /* FavoritesEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesEditorViewController.swift; sourceTree = "<group>"; };
 		3EBF7EF621589E54007869EC /* FavoritesEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoritesEditor.xib; sourceTree = "<group>"; };
 		3EBFA70424F8C0F5003DE1E4 /* OutputDeviceSelectorButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputDeviceSelectorButtonCell.swift; sourceTree = "<group>"; };
+		3EC194A924FD3CCC0064FB75 /* DeviceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
 		3EC22CE124E82FE1001F7EA3 /* FFmpegAudioFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFmpegAudioFormat.swift; sourceTree = "<group>"; };
 		3EC22CE324E83102001F7EA3 /* SampleConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleConverter.swift; sourceTree = "<group>"; };
 		3EC22CE524E83120001F7EA3 /* AVFSampleConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFSampleConverter.swift; sourceTree = "<group>"; };
@@ -2240,6 +2242,7 @@
 			children = (
 				3E551B861F10801100354DE2 /* AudioEngineHelper.swift */,
 				3E3ECDFE242E2CC4000721E9 /* DeviceManager.swift */,
+				3EC194A924FD3CCC0064FB75 /* DeviceList.swift */,
 				3E33C11B242F1A88005A062B /* AudioDevice.swift */,
 			);
 			path = Utils;
@@ -4097,6 +4100,7 @@
 				3E02739E1FD91B46000F0844 /* StringInputPopoverViewController.swift in Sources */,
 				3E9796811F00BA3000690DA2 /* RepeatAndShuffleModes.swift in Sources */,
 				3EBF7EF521589DC9007869EC /* FavoritesEditorViewController.swift in Sources */,
+				3EC194AA24FD3CCC0064FB75 /* DeviceList.swift in Sources */,
 				3E3D249924E2CEEC00975403 /* FFmpegPacketFrames.swift in Sources */,
 				3EA2E6522192F22F00FB5BAC /* ReverbView.swift in Sources */,
 				3EB2A7E81F043BBE001DF748 /* TickedSliderCells.swift in Sources */,

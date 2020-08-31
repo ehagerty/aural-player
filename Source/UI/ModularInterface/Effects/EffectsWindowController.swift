@@ -35,7 +35,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     @IBOutlet weak var reverbTabViewButton: EffectsUnitTabButton!
     @IBOutlet weak var delayTabViewButton: EffectsUnitTabButton!
     @IBOutlet weak var filterTabViewButton: EffectsUnitTabButton!
-    @IBOutlet weak var recorderTabViewButton: EffectsUnitTabButton!
+    @IBOutlet weak var devicesTabViewButton: EffectsUnitTabButton!
 
     private var fxTabViewButtons: [EffectsUnitTabButton]!
     
@@ -90,7 +90,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         fxTabView.tabViewItem(at: 7).view?.addSubview(devicesView)
 //        fxTabView.tabViewItem(at: 7).view?.addSubview(recorderView)
 
-        fxTabViewButtons = [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, recorderTabViewButton]
+        fxTabViewButtons = [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, devicesTabViewButton]
         
         masterTabViewButton.stateFunction = graph.masterUnit.stateFunction
         eqTabViewButton.stateFunction = graph.eqUnit.stateFunction
@@ -99,19 +99,19 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         reverbTabViewButton.stateFunction = graph.reverbUnit.stateFunction
         delayTabViewButton.stateFunction = graph.delayUnit.stateFunction
         filterTabViewButton.stateFunction = graph.filterUnit.stateFunction
-        recorderTabViewButton.stateFunction = {return self.recorder.isRecording ? .active : .bypassed}
+        devicesTabViewButton.stateFunction = {.bypassed}
     }
 
     private func initUnits() {
 
-        [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, recorderTabViewButton].forEach({$0?.updateState()})
+        [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, devicesTabViewButton].forEach({$0?.updateState()})
     }
 
     private func initTabGroup() {
 
         // Select Master tab view by default
-//        tabViewAction(masterTabViewButton)
-        fxTabView.selectTabViewItem(at: 7)
+        tabViewAction(devicesTabViewButton)
+//        fxTabView.selectTabViewItem(at: 7)
     }
 
     private func initSubscriptions() {
@@ -138,10 +138,8 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     @IBAction func tabViewAction(_ sender: NSButton) {
 
         // Set sender button state, reset all other button states
-        
-        // TODO: Add a field "isSelected" to the tab button control to distinguish between "state" (on/off) and "selected"
-        fxTabViewButtons!.forEach({$0.state = convertToNSControlStateValue(0)})
-        sender.state = convertToNSControlStateValue(1)
+        fxTabViewButtons!.forEach {$0.state = UIConstants.offState}
+        sender.state = UIConstants.onState
 
         // Button tag is the tab index
         fxTabView.selectTabViewItem(at: sender.tag)
@@ -237,15 +235,8 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
 
         case .filter: tabViewAction(filterTabViewButton)
 
-        case .recorder: tabViewAction(recorderTabViewButton)
-            
         case .master: tabViewAction(masterTabViewButton)
             
         }
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToNSControlStateValue(_ input: Int) -> NSControl.StateValue {
-    return NSControl.StateValue(rawValue: input)
 }

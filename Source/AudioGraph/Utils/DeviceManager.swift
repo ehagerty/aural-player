@@ -8,9 +8,6 @@ import AVFoundation
  */
 public class DeviceManager {
     
-    static var hardwareDevicesPropertyAddress: AudioObjectPropertyAddress =
-        AudioObjectPropertyAddress(outputPropertyWithSelector: kAudioHardwarePropertyDevices)
-    
     static var hardwareDefaultOutputDevicePropertyAddress: AudioObjectPropertyAddress =
         AudioObjectPropertyAddress(outputPropertyWithSelector: kAudioHardwarePropertyDefaultOutputDevice)
     
@@ -19,25 +16,69 @@ public class DeviceManager {
     // The AudioUnit underlying AVAudioEngine's output node (used to set the output device)
     let outputAudioUnit: AudioUnit
     
+    let list: DeviceList
+    
+    var preferredOutputDevice: AudioDevice?
+    
+    private var lastEventTime: Double = 0
+    
     init(_ outputAudioUnit: AudioUnit) {
+        
         self.outputAudioUnit = outputAudioUnit
+        self.list = DeviceList()
+        
+        DeviceManager.outputDeviceChangeHandler = self.outputDeviceChanged
+        
+        AudioUnitAddPropertyListener(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, {_, _, _, _, _ in
+            DeviceManager.outputDeviceChangedProxy()
+        }, nil)
+    }
+    
+    static var outputDeviceChangeHandler: () -> Void = {}
+    
+    static func outputDeviceChangedProxy() {
+        outputDeviceChangeHandler()
+    }
+    
+    func outputDeviceChanged() {
+        
+        let now = CFAbsoluteTimeGetCurrent()
+        let timeDiff = now - self.lastEventTime
+        self.lastEventTime = now
+        
+        if timeDiff > 0.1 {
+            
+            let newDeviceId = outputDeviceId
+            
+            // If the system tries to change the device when the user has selected a preferred device, revert back
+            // to the user's chosen device.
+            if let thePreferredDevice = preferredOutputDevice, thePreferredDevice.id != newDeviceId {
+                
+                // Check to make sure the preferred device is still available
+                if list.isDeviceAvailable(thePreferredDevice) {
+                    
+                    NSLog("\nReverting back to: \(thePreferredDevice.name)")
+                    outputDeviceId = thePreferredDevice.id
+                    
+                } else {
+                    
+                    preferredOutputDevice = outputDevice
+                    NSLog("\nDevice \(thePreferredDevice.name) is no longer available. Keeping new device \(preferredOutputDevice!.name)")
+                }
+            }
+            
+        } else {
+            NSLog("OutputDeviceChange - Time difference of \(timeDiff) too little. Ignoring notification.\n")
+        }
     }
     
     // A listing of all available audio output devices
     var allDevices: AudioDeviceList {
-        
-        var propSize: UInt32 = 0
-        var result: OSStatus = AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, sizeOfPropertyAddress, nil, &propSize)
-        if result != 0 {return AudioDeviceList.unknown}
-        
-        let numDevices = Int(propSize / sizeOfDeviceId)
-        var devids: [AudioDeviceID] = Array(repeating: AudioDeviceID(), count: numDevices)
-        
-        result = AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, 0, nil, &propSize, &devids)
-        if result != 0 {return AudioDeviceList.unknown}
-        
-        let devices: [AudioDevice] = devids.compactMap {AudioDevice(deviceID: $0)}
-        return AudioDeviceList(allDevices: devices, outputDeviceId: outputDeviceId, systemDeviceId: systemDeviceId)
+        return AudioDeviceList(allDevices: list.devices, outputDeviceId: outputDeviceId, systemDeviceId: systemDeviceId)
+    }
+    
+    var systemDevice: AudioDevice {
+        list.deviceById(systemDeviceId) ?? AudioDevice(deviceId: systemDeviceId)!
     }
     
     // The AudioDeviceID of the audio output device currently being used by the OS
@@ -52,19 +93,27 @@ public class DeviceManager {
         return curDeviceId
     }
     
+    var outputDevice: AudioDevice {
+        
+        get {list.deviceById(outputDeviceId) ?? AudioDevice(deviceId: outputDeviceId) ?? systemDevice}
+        set {outputDeviceId = newValue.id}
+    }
+    
     // The variable used to get/set the application's audio output device
-    var outputDeviceId: AudioDeviceID {
+    private var outputDeviceId: AudioDeviceID {
         
         get {
             
             var outDeviceID: AudioDeviceID = 0
-            var sizeOfDeviceId: UInt32 = UInt32(MemoryLayout<AudioDeviceID>.size)
-            let error = AudioUnitGetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, &sizeOfDeviceId)
+            var size: UInt32 = sizeOfDeviceId
+            let error = AudioUnitGetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, &size)
             
             return error == 0 ? outDeviceID : systemDeviceId
         }
         
         set(newDeviceId) {
+            
+            if outputDeviceId == newDeviceId {return}
             
             var outDeviceID: AudioDeviceID = newDeviceId
             let error = AudioUnitSetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, sizeOfDeviceId)
@@ -74,6 +123,10 @@ public class DeviceManager {
                 NSLog("Error setting audio output device to: ", newDeviceId, ", errorCode=", error)
             }
         }
+    }
+    
+    func useSystemDevice() {
+        outputDeviceId = systemDeviceId
     }
 }
 
@@ -90,21 +143,15 @@ extension AudioObjectPropertyAddress {
 
 let sizeOfPropertyAddress: UInt32 = UInt32(MemoryLayout<AudioObjectPropertyAddress>.size)
 let sizeOfDeviceId: UInt32 = UInt32(MemoryLayout<AudioDeviceID>.size)
+let sizeOfCFStringOptional: UInt32 = UInt32(MemoryLayout<CFString?>.size)
+let sizeOfUInt32: UInt32 = UInt32(MemoryLayout<UInt32>.size)
 
-func getCFStringProperty(deviceID: AudioDeviceID, addressPtr: UnsafePointer<AudioObjectPropertyAddress>) -> String? {
+extension Notification.Name {
     
-    var prop: CFString? = nil
-    var sizeOfCFStringOptional: UInt32 = UInt32(MemoryLayout<CFString?>.size)
+    // ----------------------------------------------------------------------------------------
     
-    let result: OSStatus = AudioObjectGetPropertyData(deviceID, addressPtr, 0, nil, &sizeOfCFStringOptional, &prop)
-    return result == noErr ? prop as String? : nil
-}
-
-func getCodeProperty(deviceID: AudioDeviceID, addressPtr: UnsafePointer<AudioObjectPropertyAddress>) -> String? {
+    // MARK: Notifications published by the application (i.e. app delegate). They represent different lifecycle stages/events.
     
-    var prop: UInt32 = 0
-    var sizeOfUInt32: UInt32 = UInt32(MemoryLayout<UInt32>.size)
-    
-    let result: OSStatus = AudioObjectGetPropertyData(deviceID, addressPtr, 0, nil, &sizeOfUInt32, &prop)
-    return result == noErr ? AudioUtils.codeToString(prop) : nil
+    // Signifies that the application has finished launching
+    static let deviceManager_deviceListUpdated = Notification.Name("deviceManager_deviceListUpdated")
 }

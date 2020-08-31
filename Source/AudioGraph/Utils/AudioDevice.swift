@@ -8,14 +8,14 @@ public class AudioDeviceList {
     let allDevices: [AudioDevice]
     var deviceCount: Int {allDevices.count}
     
-    let systemDevice: AudioDevice!
-    let outputDevice: AudioDevice!
+    let systemDevice: AudioDevice
+    let outputDevice: AudioDevice
     
     init(allDevices: [AudioDevice], outputDeviceId: AudioDeviceID, systemDeviceId: AudioDeviceID) {
         
         self.allDevices = allDevices
         
-        let systemDevice = allDevices.first(where: {$0.id == systemDeviceId})
+        let systemDevice = allDevices.first(where: {$0.id == systemDeviceId})!
         self.systemDevice = systemDevice
         
         self.outputDevice = allDevices.first(where: {$0.id == outputDeviceId}) ?? systemDevice
@@ -45,7 +45,7 @@ public class AudioDevice {
     let id: AudioDeviceID
     
     // Persistent unique identifer of this device (not user-friendly)
-    let uid: String?
+    let uid: String
     
     let modelUID: String?
     
@@ -63,19 +63,24 @@ public class AudioDevice {
     let transportType: String?
     let isConnectedViaBluetooth: Bool
     
-    init?(deviceID: AudioDeviceID) {
+    init?(deviceId: AudioDeviceID) {
         
-        guard let name = getCFStringProperty(deviceID: deviceID, addressPtr: &Self.namePropertyAddress),
-            !name.contains("CADefaultDeviceAggregate") else {return nil}
+        guard let name = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.namePropertyAddress), !name.contains("CADefaultDeviceAggregate"),
+            let uid = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.deviceUIDPropertyAddress) else {
+            
+            print("\nNil because name=\(getCFStringProperty(deviceId: deviceId, addressPtr: &Self.namePropertyAddress))")
+            
+            return nil
+        }
         
         let channelCount: Int = {
             
-            var sizeOfCFStringOptional: UInt32 = UInt32(MemoryLayout<CFString?>.size)
-            var result: OSStatus = AudioObjectGetPropertyDataSize(deviceID, &Self.streamConfigPropertyAddress, 0, nil, &sizeOfCFStringOptional)
+            var size: UInt32 = sizeOfCFStringOptional
+            var result: OSStatus = AudioObjectGetPropertyDataSize(deviceId, &Self.streamConfigPropertyAddress, 0, nil, &size)
             if result != 0 {return 0}
             
             let bufferList = UnsafeMutablePointer<AudioBufferList>.allocate(capacity: Int(sizeOfCFStringOptional))
-            result = AudioObjectGetPropertyData(deviceID, &Self.streamConfigPropertyAddress, 0, nil, &sizeOfCFStringOptional, bufferList)
+            result = AudioObjectGetPropertyData(deviceId, &Self.streamConfigPropertyAddress, 0, nil, &size, bufferList)
             if result != 0 {return 0}
             
             let buffers = UnsafeMutableAudioBufferListPointer(bufferList)
@@ -86,18 +91,36 @@ public class AudioDevice {
         // We are only interested in output devices
         if channelCount <= 0 {return nil}
         
-        self.id = deviceID
-        self.uid = getCFStringProperty(deviceID: deviceID, addressPtr: &Self.deviceUIDPropertyAddress)
-        self.modelUID = getCFStringProperty(deviceID: deviceID, addressPtr: &Self.modelUIDPropertyAddress)
+        self.id = deviceId
+        self.uid = uid
+        self.modelUID = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.modelUIDPropertyAddress)
         
         self.name = name
-        self.manufacturer = getCFStringProperty(deviceID: deviceID, addressPtr: &Self.manufacturerPropertyAddress)
+        self.manufacturer = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.manufacturerPropertyAddress)
         
         self.channelCount = channelCount
         self.hasOutput = channelCount > 0
         
-        self.dataSource = getCodeProperty(deviceID: deviceID, addressPtr: &Self.dataSourcePropertyAddress)
-        self.transportType = getCodeProperty(deviceID: deviceID, addressPtr: &Self.transportTypePropertyAddress)
+        self.dataSource = getCodeProperty(deviceId: deviceId, addressPtr: &Self.dataSourcePropertyAddress)
+        self.transportType = getCodeProperty(deviceId: deviceId, addressPtr: &Self.transportTypePropertyAddress)
         self.isConnectedViaBluetooth = transportType?.lowercased() == "blue"
     }
+}
+
+func getCFStringProperty(deviceId: AudioDeviceID, addressPtr: UnsafePointer<AudioObjectPropertyAddress>) -> String? {
+    
+    var prop: CFString? = nil
+    var size: UInt32 = sizeOfCFStringOptional
+    
+    let result: OSStatus = AudioObjectGetPropertyData(deviceId, addressPtr, 0, nil, &size, &prop)
+    return result == noErr ? prop as String? : nil
+}
+
+func getCodeProperty(deviceId: AudioDeviceID, addressPtr: UnsafePointer<AudioObjectPropertyAddress>) -> String? {
+    
+    var prop: UInt32 = 0
+    var size: UInt32 = sizeOfUInt32
+    
+    let result: OSStatus = AudioObjectGetPropertyData(deviceId, addressPtr, 0, nil, &size, &prop)
+    return result == noErr ? AudioUtils.codeToString(prop) : nil
 }

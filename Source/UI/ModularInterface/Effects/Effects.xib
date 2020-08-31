@@ -10,13 +10,13 @@
             <connections>
                 <outlet property="btnClose" destination="NDE-AU-hEg" id="dJA-C6-iMl"/>
                 <outlet property="delayTabViewButton" destination="mw3-FF-9td" id="O9j-H8-Whx"/>
+                <outlet property="devicesTabViewButton" destination="tIx-Qv-jQv" id="acf-xt-DLE"/>
                 <outlet property="effectsContainerBox" destination="Jtw-Y5-1IX" id="Vtv-2X-ndU"/>
                 <outlet property="eqTabViewButton" destination="O5c-8Q-17s" id="FX2-zC-8e8"/>
                 <outlet property="filterTabViewButton" destination="gOm-fK-Gv0" id="2eo-rZ-CKA"/>
                 <outlet property="fxTabView" destination="NVs-Zs-ocb" id="7H8-SK-rCV"/>
                 <outlet property="masterTabViewButton" destination="j0D-uE-fqF" id="eOe-vY-4a4"/>
                 <outlet property="pitchTabViewButton" destination="eay-EC-eK5" id="JLh-hS-UmO"/>
-                <outlet property="recorderTabViewButton" destination="tIx-Qv-jQv" id="eF8-Fo-6Xq"/>
                 <outlet property="reverbTabViewButton" destination="i8m-M9-uNi" id="Pbu-A6-kIV"/>
                 <outlet property="rootContainerBox" destination="wnD-Di-RRh" id="5rA-wc-wsr"/>
                 <outlet property="tabButtonsBox" destination="Zhk-zz-laJ" id="ZQW-Ua-AU2"/>

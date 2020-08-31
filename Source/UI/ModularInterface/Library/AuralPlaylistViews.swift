@@ -232,6 +232,12 @@ extension NSUserInterfaceItemIdentifier {
     static let library_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_album")
     
     static let library_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_genre")
+    
+    // MARK: Audio Devices table
+    
+    static let devices_selector: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("devices_selector")
+    
+    static let devices_name: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("devices_name")
 }
 
 extension NSPasteboard.PasteboardType {

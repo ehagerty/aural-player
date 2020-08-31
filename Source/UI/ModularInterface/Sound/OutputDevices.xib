@@ -8,12 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="OutputDevicesViewController" customModule="Aural" customModuleProvider="target">
             <connections>
-                <outlet property="btn0" destination="Yai-KE-Wpz" id="OLh-GG-dx1"/>
-                <outlet property="btn1" destination="sq9-lZ-wPR" id="cPe-6z-SNA"/>
-                <outlet property="btn2" destination="ZMt-CV-Xdv" id="qIq-nc-kG0"/>
-                <outlet property="btn3" destination="oCL-Qj-Yus" id="qRA-cC-UxA"/>
-                <outlet property="btn4" destination="3ba-3s-aBS" id="DYX-lQ-ywE"/>
+                <outlet property="btnSystemDevice" destination="MDP-vl-fpU" id="uUZ-0A-q3c"/>
+                <outlet property="devicesView" destination="4HG-OX-FaG" id="No9-Q3-6JW"/>
                 <outlet property="lblCaption" destination="TH1-Tu-5YI" id="HaF-go-eMP"/>
+                <outlet property="lblSystemDevice" destination="TPv-gw-Hgj" id="b2b-xh-kgW"/>
                 <outlet property="view" destination="c22-O7-iKe" id="8ia-3j-SRX"/>
             </connections>
         </customObject>
@@ -32,66 +30,126 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" id="Yai-KE-Wpz" userLabel="Selector button 0" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="110" width="400" height="25"/>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MDP-vl-fpU" userLabel="Use System Device" customClass="EffectsUnitTriStateCheckButton" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="88" y="108" width="35" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="O9n-Vg-flq" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
+                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NotChecked" imagePosition="left" alignment="left" alternateImage="Checked" controlSize="mini" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="wIi-ly-aQ1" customClass="FXFunctionCheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" size="12" name="Play-Regular"/>
+                        <font key="font" size="13" name="Play-Regular"/>
                     </buttonCell>
                     <connections>
-                        <action selector="deviceSelectorAction:" target="-2" id="sPU-Ol-k2v"/>
+                        <action selector="systemDeviceSelectorAction:" target="-2" id="CE5-QT-rQJ"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" id="sq9-lZ-wPR" userLabel="Selector button 1" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="85" width="400" height="25"/>
+                <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGW-3c-wQJ">
+                    <rect key="frame" x="93" y="30" width="400" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Z7i-83-k4m" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" size="12" name="Play-Regular"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="deviceSelectorAction:" target="-2" id="UV5-8o-a5y"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="ZMt-CV-Xdv" userLabel="Selector button 2" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="60" width="400" height="25"/>
+                    <clipView key="contentView" id="mzT-a5-gOD">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="75"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" id="4HG-OX-FaG">
+                                <rect key="frame" x="0.0" y="0.0" width="406" height="75"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <size key="intercellSpacing" width="3" height="0.0"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="devices_selector" width="25" minWidth="25" maxWidth="25" id="hkq-eo-Ufl">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="4e2-FU-vLR">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <tableCellView id="V3Y-ts-sca" customClass="DeviceSelectorTableCellView" customModule="Aural" customModuleProvider="target">
+                                                <rect key="frame" x="1" y="0.0" width="25" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <button id="9sj-C2-xSZ" userLabel="DeviceSelector">
+                                                        <rect key="frame" x="6" y="1" width="18" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="radio" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Baa-wO-wn6">
+                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                    </button>
+                                                </subviews>
+                                                <connections>
+                                                    <outlet property="selector" destination="9sj-C2-xSZ" id="ZLe-SF-XEj"/>
+                                                </connections>
+                                            </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                    <tableColumn identifier="devices_name" width="375" minWidth="375" maxWidth="375" id="ebY-Wh-1xh">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="CDt-dP-bTi">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <tableCellView id="sQQ-60-abT" customClass="DeviceNameTableCellView" customModule="Aural" customModuleProvider="target">
+                                                <rect key="frame" x="29" y="0.0" width="375" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6fQ-n2-VBj" userLabel="DeviceName" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="HbB-F9-0OX">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <connections>
+                                                    <outlet property="textField" destination="6fQ-n2-VBj" id="t7h-46-EUY"/>
+                                                </connections>
+                                            </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <outlet property="dataSource" destination="-2" id="YEZ-pO-1g4"/>
+                                    <outlet property="delegate" destination="-2" id="UKT-dt-t6O"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Kei-gx-uKo">
+                        <rect key="frame" x="-100" y="-100" width="398" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="JaT-Lv-qvb" customClass="PrettyScroller" customModule="Aural" customModuleProvider="target">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPv-gw-Hgj" userLabel="Rate" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
+                    <rect key="frame" x="120" y="112" width="375" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Suu-it-dwZ" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" size="12" name="Play-Regular"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="deviceSelectorAction:" target="-2" id="ADC-33-if9"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="oCL-Qj-Yus" userLabel="Selector button 3" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="35" width="400" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="15e-pu-ZH5" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" size="12" name="Play-Regular"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="deviceSelectorAction:" target="-2" id="IKx-mE-VwE"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="3ba-3s-aBS" userLabel="Selector button 4" customClass="OutputDeviceRadioButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="103" y="10" width="400" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="  Radio" bezelStyle="regularSquare" image="RadioButton" imagePosition="left" alignment="left" alternateImage="RadioButton" imageScaling="proportionallyUpOrDown" inset="2" id="Qc5-qj-L9e" customClass="OutputDeviceSelectorButtonCell" customModule="Aural" customModuleProvider="target">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" size="12" name="Play-Regular"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="deviceSelectorAction:" target="-2" id="VzL-Dj-v4w"/>
-                    </connections>
-                </button>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title=" Use system output device" id="uek-vd-jVV">
+                        <font key="font" size="13" name="Play-Regular"/>
+                        <color key="textColor" white="0.40263488479999998" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="141" y="153.5"/>
         </customView>
     </objects>
     <resources>
-        <image name="RadioButton" width="25" height="25"/>
+        <image name="Checked" width="200" height="200"/>
+        <image name="NotChecked" width="200" height="200"/>
     </resources>
 </document>
