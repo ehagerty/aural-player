@@ -320,8 +320,6 @@
                 <outlet property="centsSlider" destination="wik-f7-0DE" id="KDe-Ws-epB"/>
                 <outlet property="lblCents" destination="ryC-3C-jKV" id="kka-G0-xEx"/>
                 <outlet property="lblOctaves" destination="2Nk-Gs-ONv" id="d1Z-Ox-nUE"/>
-                <outlet property="lblPitchMax" destination="ctw-Ln-5P1" id="s9C-6P-F9q"/>
-                <outlet property="lblPitchMin" destination="4fy-nb-fcf" id="RER-T5-KVv"/>
                 <outlet property="lblSemitones" destination="hvG-kJ-HoT" id="lIv-Tk-03A"/>
                 <outlet property="octavesSlider" destination="hkm-hv-dgO" id="zYJ-es-kUl"/>
                 <outlet property="semitonesSlider" destination="Xrx-aR-KSa" id="CKp-jj-qfV"/>

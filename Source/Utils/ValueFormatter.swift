@@ -211,20 +211,19 @@ class ValueFormatter {
             // Left of center
             
             let absVal = abs(panVal)
-            return absVal < 100 ? String(format: "L %d%%", absVal) : "L"
+            return absVal < 100 ? String(format: "Left %d%%", absVal) : "Left"
             
         } else if (panVal > 0) {
             
             // Right of center
             
             let absVal = abs(panVal)
-            return absVal < 100 ? String(format: "R %d%%", absVal) : "R"
+            return absVal < 100 ? String(format: "Right %d%%", absVal) : "Right"
             
         } else {
             
             // Center
-            
-            return "C"
+            return "Center"
         }
     }
     

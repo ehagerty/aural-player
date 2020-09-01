@@ -20,7 +20,10 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     private let delayView: NSView = ViewFactory.delayView
     private let filterView: NSView = ViewFactory.filterView
     
-    private let devicesViewController: OutputDevicesViewController = OutputDevicesViewController()
+    private let pannerViewController: PannerViewController = PannerViewController()
+    private lazy var pannerView: NSView = pannerViewController.view
+    
+    private let devicesViewController: DevicesViewController = DevicesViewController()
     private lazy var devicesView: NSView = devicesViewController.view
 //    private let recorderView: NSView = ViewFactory.recorderView
 
@@ -35,6 +38,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     @IBOutlet weak var reverbTabViewButton: EffectsUnitTabButton!
     @IBOutlet weak var delayTabViewButton: EffectsUnitTabButton!
     @IBOutlet weak var filterTabViewButton: EffectsUnitTabButton!
+    @IBOutlet weak var pannerTabViewButton: EffectsUnitTabButton!
     @IBOutlet weak var devicesTabViewButton: EffectsUnitTabButton!
 
     private var fxTabViewButtons: [EffectsUnitTabButton]!
@@ -87,10 +91,11 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         fxTabView.tabViewItem(at: 4).view?.addSubview(reverbView)
         fxTabView.tabViewItem(at: 5).view?.addSubview(delayView)
         fxTabView.tabViewItem(at: 6).view?.addSubview(filterView)
-        fxTabView.tabViewItem(at: 7).view?.addSubview(devicesView)
+        fxTabView.tabViewItem(at: 7).view?.addSubview(pannerView)
+        fxTabView.tabViewItem(at: 8).view?.addSubview(devicesView)
 //        fxTabView.tabViewItem(at: 7).view?.addSubview(recorderView)
 
-        fxTabViewButtons = [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, devicesTabViewButton]
+        fxTabViewButtons = [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, pannerTabViewButton, devicesTabViewButton]
         
         masterTabViewButton.stateFunction = graph.masterUnit.stateFunction
         eqTabViewButton.stateFunction = graph.eqUnit.stateFunction
@@ -99,19 +104,18 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
         reverbTabViewButton.stateFunction = graph.reverbUnit.stateFunction
         delayTabViewButton.stateFunction = graph.delayUnit.stateFunction
         filterTabViewButton.stateFunction = graph.filterUnit.stateFunction
+        pannerTabViewButton.stateFunction = {.bypassed}
         devicesTabViewButton.stateFunction = {.bypassed}
     }
 
     private func initUnits() {
-
-        [masterTabViewButton, eqTabViewButton, pitchTabViewButton, timeTabViewButton, reverbTabViewButton, delayTabViewButton, filterTabViewButton, devicesTabViewButton].forEach({$0?.updateState()})
+        fxTabViewButtons.forEach {$0.updateState()}
     }
 
     private func initTabGroup() {
 
         // Select Master tab view by default
-        tabViewAction(devicesTabViewButton)
-//        fxTabView.selectTabViewItem(at: 7)
+        tabViewAction(masterTabViewButton)
     }
 
     private func initSubscriptions() {

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E00122A1F26A5100059B2D0 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0012291F26A5100059B2D0 /* SearchQuery.swift */; };
-		3E01BA3124F7F52800F76DEE /* OutputDevices.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E01BA3024F7F52800F76DEE /* OutputDevices.xib */; };
+		3E01BA3124F7F52800F76DEE /* Devices.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E01BA3024F7F52800F76DEE /* Devices.xib */; };
 		3E02739D1FD91B46000F0844 /* StringInputPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E02739B1FD91B46000F0844 /* StringInputPopover.xib */; };
 		3E02739E1FD91B46000F0844 /* StringInputPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E02739C1FD91B46000F0844 /* StringInputPopoverViewController.swift */; };
 		3E047B0E1F01436700ADE0F1 /* ReverbSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E047B0D1F01436700ADE0F1 /* ReverbSpaces.swift */; };
@@ -714,6 +714,8 @@
 		3EB7F461217FC4BA00A2CE76 /* AlbumsPlaylistSort.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7F460217FC4BA00A2CE76 /* AlbumsPlaylistSort.xib */; };
 		3EB7F464217FC72900A2CE76 /* GenresPlaylistSort.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB7F463217FC72900A2CE76 /* GenresPlaylistSort.xib */; };
 		3EB7F466217FC73F00A2CE76 /* GenresPlaylistSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB7F465217FC73F00A2CE76 /* GenresPlaylistSortViewController.swift */; };
+		3EB8BE7324FE26C1008D3C27 /* Panner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB8BE7224FE26C1008D3C27 /* Panner.xib */; };
+		3EB8BE7524FE2835008D3C27 /* PannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB8BE7424FE2835008D3C27 /* PannerViewController.swift */; };
 		3EB9304921996353008E45F8 /* FilterBand.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EB9304821996353008E45F8 /* FilterBand.xib */; };
 		3EB9304B21996376008E45F8 /* FilterBandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9304A21996376008E45F8 /* FilterBandViewController.swift */; };
 		3EBA52F51FC2E29E007F902F /* KeyCodeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBA52F41FC2E29E007F902F /* KeyCodeConstants.swift */; };
@@ -811,7 +813,7 @@
 		3EE7D730244EDCC2005D76FA /* PlayerColorSchemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D72F244EDCC2005D76FA /* PlayerColorSchemeViewController.swift */; };
 		3EE7D733244EE0C5005D76FA /* PlaylistColorScheme.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EE7D732244EE0C5005D76FA /* PlaylistColorScheme.xib */; };
 		3EE7D735244EE1AB005D76FA /* PlaylistColorSchemeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7D734244EE1AB005D76FA /* PlaylistColorSchemeViewController.swift */; };
-		3EE7ED9324F80BF40011CA93 /* OutputDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7ED9224F80BF40011CA93 /* OutputDevicesViewController.swift */; };
+		3EE7ED9324F80BF40011CA93 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE7ED9224F80BF40011CA93 /* DevicesViewController.swift */; };
 		3EE8E98624BF06570024FD0C /* TickedCircularSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE8E98524BF06570024FD0C /* TickedCircularSlider.swift */; };
 		3EE93BD424423D4C009A70D9 /* PlayerViewPopupMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE93BD324423D4C009A70D9 /* PlayerViewPopupMenuController.swift */; };
 		3EE97B39245C47C20063ADB2 /* ColorSchemeHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE97B38245C47C20063ADB2 /* ColorSchemeHistory.swift */; };
@@ -919,7 +921,7 @@
 
 /* Begin PBXFileReference section */
 		3E0012291F26A5100059B2D0 /* SearchQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
-		3E01BA3024F7F52800F76DEE /* OutputDevices.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutputDevices.xib; sourceTree = "<group>"; };
+		3E01BA3024F7F52800F76DEE /* Devices.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Devices.xib; sourceTree = "<group>"; };
 		3E02739B1FD91B46000F0844 /* StringInputPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StringInputPopover.xib; sourceTree = "<group>"; };
 		3E02739C1FD91B46000F0844 /* StringInputPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringInputPopoverViewController.swift; sourceTree = "<group>"; };
 		3E047B0D1F01436700ADE0F1 /* ReverbSpaces.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReverbSpaces.swift; sourceTree = "<group>"; };
@@ -1447,6 +1449,8 @@
 		3EB7F460217FC4BA00A2CE76 /* AlbumsPlaylistSort.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlbumsPlaylistSort.xib; sourceTree = "<group>"; };
 		3EB7F463217FC72900A2CE76 /* GenresPlaylistSort.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenresPlaylistSort.xib; sourceTree = "<group>"; };
 		3EB7F465217FC73F00A2CE76 /* GenresPlaylistSortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenresPlaylistSortViewController.swift; sourceTree = "<group>"; };
+		3EB8BE7224FE26C1008D3C27 /* Panner.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Panner.xib; sourceTree = "<group>"; };
+		3EB8BE7424FE2835008D3C27 /* PannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PannerViewController.swift; sourceTree = "<group>"; };
 		3EB9304821996353008E45F8 /* FilterBand.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterBand.xib; sourceTree = "<group>"; };
 		3EB9304A21996376008E45F8 /* FilterBandViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBandViewController.swift; sourceTree = "<group>"; };
 		3EBA52F41FC2E29E007F902F /* KeyCodeConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCodeConstants.swift; sourceTree = "<group>"; };
@@ -1546,7 +1550,7 @@
 		3EE7D72F244EDCC2005D76FA /* PlayerColorSchemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerColorSchemeViewController.swift; sourceTree = "<group>"; };
 		3EE7D732244EE0C5005D76FA /* PlaylistColorScheme.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistColorScheme.xib; sourceTree = "<group>"; };
 		3EE7D734244EE1AB005D76FA /* PlaylistColorSchemeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistColorSchemeViewController.swift; sourceTree = "<group>"; };
-		3EE7ED9224F80BF40011CA93 /* OutputDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputDevicesViewController.swift; sourceTree = "<group>"; };
+		3EE7ED9224F80BF40011CA93 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
 		3EE8E98524BF06570024FD0C /* TickedCircularSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickedCircularSlider.swift; sourceTree = "<group>"; };
 		3EE93BD324423D4C009A70D9 /* PlayerViewPopupMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewPopupMenuController.swift; sourceTree = "<group>"; };
 		3EE97B38245C47C20063ADB2 /* ColorSchemeHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeHistory.swift; sourceTree = "<group>"; };
@@ -1622,8 +1626,8 @@
 		3E01BA2F24F7F50800F76DEE /* Sound */ = {
 			isa = PBXGroup;
 			children = (
-				3E01BA3024F7F52800F76DEE /* OutputDevices.xib */,
-				3EE7ED9224F80BF40011CA93 /* OutputDevicesViewController.swift */,
+				3EBC6FD924FE253B00231F4F /* Devices */,
+				3EBC6FD824FE252E00231F4F /* Panner */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -3277,6 +3281,24 @@
 			path = ffmpeg;
 			sourceTree = "<group>";
 		};
+		3EBC6FD824FE252E00231F4F /* Panner */ = {
+			isa = PBXGroup;
+			children = (
+				3EB8BE7224FE26C1008D3C27 /* Panner.xib */,
+				3EB8BE7424FE2835008D3C27 /* PannerViewController.swift */,
+			);
+			path = Panner;
+			sourceTree = "<group>";
+		};
+		3EBC6FD924FE253B00231F4F /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				3E01BA3024F7F52800F76DEE /* Devices.xib */,
+				3EE7ED9224F80BF40011CA93 /* DevicesViewController.swift */,
+			);
+			path = Devices;
+			sourceTree = "<group>";
+		};
 		3EC2A0F9249F8810008E85E9 /* SearchAndSort */ = {
 			isa = PBXGroup;
 			children = (
@@ -3526,7 +3548,7 @@
 			files = (
 				3EDDF6AC1FB4FF5100DF2E9A /* MainWindow.xib in Resources */,
 				3E85F25C1EFA78D6007BE830 /* Assets.xcassets in Resources */,
-				3E01BA3124F7F52800F76DEE /* OutputDevices.xib in Resources */,
+				3E01BA3124F7F52800F76DEE /* Devices.xib in Resources */,
 				3EF5E5B41FBDA3DB004270A4 /* LibraryTracks.xib in Resources */,
 				3E0835F72459A9FA00822FA8 /* ColorSchemesEditor.xib in Resources */,
 				3E0ED6B81FBB1C34008268B3 /* Reverb.xib in Resources */,
@@ -3540,6 +3562,7 @@
 				3E89CA2E246337590057D3EE /* PlayingTrackFunctions.xib in Resources */,
 				3E2F104F21556A2D0099FD06 /* BookmarksEditor.xib in Resources */,
 				3E3F296B215A395A00581EFE /* Filter.xib in Resources */,
+				3EB8BE7324FE26C1008D3C27 /* Panner.xib in Resources */,
 				3E176603217DE43D001C6CF9 /* TracksPlaylistSort.xib in Resources */,
 				3EF18478217C8EFF00D24F39 /* Visualizer.xib in Resources */,
 				3E850D571FB4461E0017CD02 /* PlaylistSortDialog.xib in Resources */,
@@ -3638,7 +3661,7 @@
 				3ECD17471F6BBF3600492F56 /* ITunesParser.swift in Sources */,
 				3EE7D725244EC8D1005D76FA /* ColorState.swift in Sources */,
 				3E2188A61F0767290085BAB3 /* DetailedTrackInfoRowView.swift in Sources */,
-				3EE7ED9324F80BF40011CA93 /* OutputDevicesViewController.swift in Sources */,
+				3EE7ED9324F80BF40011CA93 /* DevicesViewController.swift in Sources */,
 				3EF743B1218C50420060BDE0 /* FilterBandsViewDelegate.swift in Sources */,
 				3E5D681724EBB6B700F25723 /* PlayableItem.swift in Sources */,
 				3E5D681924EC062000F25723 /* PlayQueueTrack.swift in Sources */,
@@ -3962,6 +3985,7 @@
 				3ED06EDE24AA750A00E69277 /* CueSheetIO.swift in Sources */,
 				3E6341D8243DC28500190502 /* ControlsPreferences.swift in Sources */,
 				3E5F00C82153993100A76C23 /* BookmarksDelegateProtocol.swift in Sources */,
+				3EB8BE7524FE2835008D3C27 /* PannerViewController.swift in Sources */,
 				3E7B61E61F31AB1800F269F0 /* ValueFormatter.swift in Sources */,
 				3E06C02A1FB6B120003EE9AB /* History.swift in Sources */,
 				3EB5784F244E4B8C002D1F87 /* AudioGraphState.swift in Sources */,
