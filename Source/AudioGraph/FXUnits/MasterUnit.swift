@@ -3,7 +3,6 @@ import Foundation
 class MasterUnit: FXUnit, NotificationSubscriber {
     
     var slaveUnits: [FXUnit]
-    let presets: MasterPresets = MasterPresets()
     
     var eqUnit: EQUnit
     var pitchUnit: PitchUnit
@@ -12,7 +11,7 @@ class MasterUnit: FXUnit, NotificationSubscriber {
     var delayUnit: DelayUnit
     var filterUnit: FilterUnit
 
-    init(_ appState: AudioGraphState, _ slaveUnits: [FXUnit]) {
+    init(_ slaveUnits: [FXUnit]) {
         
         self.slaveUnits = slaveUnits
         
@@ -23,8 +22,7 @@ class MasterUnit: FXUnit, NotificationSubscriber {
         delayUnit = slaveUnits.first(where: {$0 is DelayUnit})! as! DelayUnit
         filterUnit = slaveUnits.first(where: {$0 is FilterUnit})! as! FilterUnit
         
-        super.init(.master, appState.masterUnit.state)
-        presets.addPresets(appState.masterUnit.userPresets)
+        super.init(.master)
         
         Messenger.subscribe(self, .fx_unitActivated, self.ensureActive)
     }
@@ -35,89 +33,14 @@ class MasterUnit: FXUnit, NotificationSubscriber {
 
             // Active -> Inactive
             // If a unit was active (i.e. not bypassed), mark it as now being suppressed by the master bypass
-            slaveUnits.forEach({$0.suppress()})
+            slaveUnits.forEach {$0.suppress()}
             
         } else {
             
             // Inactive -> Active
-            slaveUnits.forEach({$0.unsuppress()})
+            slaveUnits.forEach {$0.unsuppress()}
         }
         
         return state
-    }
-    
-    override func savePreset(_ presetName: String) {
-        
-        let eqPreset = eqUnit.settingsAsPreset
-        eqPreset.name = String(format: "EQ settings for Master preset: '%@'", presetName)
-        
-        let pitchPreset = pitchUnit.settingsAsPreset
-        pitchPreset.name = String(format: "Pitch settings for Master preset: '%@'", presetName)
-        
-        let timePreset = timeUnit.settingsAsPreset
-        timePreset.name = String(format: "Time settings for Master preset: '%@'", presetName)
-        
-        let reverbPreset = reverbUnit.settingsAsPreset
-        reverbPreset.name = String(format: "Reverb settings for Master preset: '%@'", presetName)
-        
-        let delayPreset = delayUnit.settingsAsPreset
-        delayPreset.name = String(format: "Delay settings for Master preset: '%@'", presetName)
-        
-        let filterPreset = filterUnit.settingsAsPreset
-        filterPreset.name = String(format: "Filter settings for Master preset: '%@'", presetName)
-        
-        // Save the new preset
-        let masterPreset = MasterPreset(presetName, eqPreset, pitchPreset, timePreset, reverbPreset, delayPreset, filterPreset, false)
-        presets.addPreset(masterPreset)
-    }
-    
-    var settingsAsPreset: MasterPreset {
-        
-        let eqPreset = eqUnit.settingsAsPreset
-        let pitchPreset = pitchUnit.settingsAsPreset
-        let timePreset = timeUnit.settingsAsPreset
-        let reverbPreset = reverbUnit.settingsAsPreset
-        let delayPreset = delayUnit.settingsAsPreset
-        let filterPreset = filterUnit.settingsAsPreset
-        
-        return MasterPreset("masterSettings", eqPreset, pitchPreset, timePreset, reverbPreset, delayPreset, filterPreset, false)
-    }
-    
-    override func applyPreset(_ presetName: String) {
-        
-        if let preset = presets.presetByName(presetName) {
-            applyPreset(preset)
-        }
-    }
-    
-    func applyPreset(_ preset: MasterPreset) {
-        
-        eqUnit.applyPreset(preset.eq)
-        eqUnit.state = preset.eq.state
-        
-        pitchUnit.applyPreset(preset.pitch)
-        pitchUnit.state = preset.pitch.state
-        
-        timeUnit.applyPreset(preset.time)
-        timeUnit.state = preset.time.state
-        
-        reverbUnit.applyPreset(preset.reverb)
-        reverbUnit.state = preset.reverb.state
-        
-        delayUnit.applyPreset(preset.delay)
-        delayUnit.state = preset.delay.state
-        
-        filterUnit.applyPreset(preset.filter)
-        filterUnit.state = preset.filter.state
-    }
-    
-    var persistentState: MasterUnitState {
-
-        let unitState = MasterUnitState()
-
-        unitState.state = state
-        unitState.userPresets = presets.userDefinedPresets
-
-        return unitState
     }
 }

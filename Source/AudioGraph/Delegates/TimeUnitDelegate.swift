@@ -3,6 +3,7 @@ import Foundation
 class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
     
     let preferences: SoundPreferences
+    let presets: TimePresets = TimePresets()
     
     override var unitDescription: String {"Time Stretch"}
     
@@ -28,12 +29,16 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
     
     var formattedPitch: String {ValueFormatter.formatPitchShift(PitchShift(fromCents: roundedInt(unit.pitch)))}
     
-    var presets: TimePresets {unit.presets}
-    
-    init(_ unit: TimeUnit, _ preferences: SoundPreferences) {
+    init(_ unit: TimeUnit, _ persistentUnitState: TimeUnitState, _ preferences: SoundPreferences) {
         
         self.preferences = preferences
         super.init(unit)
+        
+        unit.state = persistentUnitState.state
+        unit.rate = persistentUnitState.rate
+        unit.shiftPitch = persistentUnitState.shiftPitch
+        
+        presets.addPresets(persistentUnitState.userPresets)
     }
     
     func increaseRate() -> (rate: Float, rateString: String) {
@@ -68,4 +73,39 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
             rate = AppDefaults.timeStretchRate
         }
     }
+    
+    override func savePreset(_ presetName: String) {
+//        presets.addPreset(TimePreset(presetName, .active, node.rate, node.overlap, node.shiftPitch, false))
+    }
+    
+    override func applyPreset(_ presetName: String) {
+        
+        if let preset = presets.presetByName(presetName) {
+            applyPreset(preset)
+        }
+    }
+    
+    func applyPreset(_ preset: TimePreset) {
+        
+        rate = preset.rate
+//        overlap = preset.overlap
+        shiftPitch = preset.shiftPitch
+    }
+    
+//    var settingsAsPreset: TimePreset {
+//        return TimePreset("timeSettings", state, rate, overlap, shiftPitch, false)
+//    }
+    
+        var persistentState: TimeUnitState {
+
+            let unitState = TimeUnitState()
+
+            unitState.state = state
+            unitState.rate = rate
+//            unitState.overlap = overlap
+            unitState.shiftPitch = shiftPitch
+            unitState.userPresets = presets.userDefinedPresets
+
+            return unitState
+        }
 }

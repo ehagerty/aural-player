@@ -3,17 +3,15 @@ import AVFoundation
 class ReverbUnit: FXUnit, ReverbUnitProtocol {
     
     private let node: AVAudioUnitReverb = AVAudioUnitReverb()
-    let presets: ReverbPresets = ReverbPresets()
     
-    init(_ appState: AudioGraphState) {
+    init() {
         
-        let reverbState = appState.reverbUnit
+        avSpace = ReverbSpaces.smallRoom.avPreset
         
-        avSpace = reverbState.space.avPreset
-        super.init(.reverb, reverbState.state)
+        super.init(.reverb)
         
-        amount = reverbState.amount
-        presets.addPresets(reverbState.userPresets)
+//        avSpace = reverbState.space.avPreset
+//        amount = reverbState.amount
     }
     
     override var avNodes: [AVAudioNode] {return [node]}
@@ -42,38 +40,5 @@ class ReverbUnit: FXUnit, ReverbUnitProtocol {
         
         super.stateChanged()
         node.bypass = !isActive
-    }
-    
-    override func savePreset(_ presetName: String) {
-        presets.addPreset(ReverbPreset(presetName, .active, space, amount, false))
-    }
-    
-    override func applyPreset(_ presetName: String) {
-        
-        if let preset = presets.presetByName(presetName) {
-            applyPreset(preset)
-        }
-    }
-    
-    func applyPreset(_ preset: ReverbPreset) {
-        
-        space = preset.space
-        amount = preset.amount
-    }
-    
-    var settingsAsPreset: ReverbPreset {
-        return ReverbPreset("reverbSettings", state, space, amount, false)
-    }
-    
-    var persistentState: ReverbUnitState {
-
-        let unitState = ReverbUnitState()
-
-        unitState.state = state
-        unitState.space = space
-        unitState.amount = amount
-        unitState.userPresets = presets.userDefinedPresets
-
-        return unitState
     }
 }

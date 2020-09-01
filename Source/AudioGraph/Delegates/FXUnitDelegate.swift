@@ -27,10 +27,10 @@ class FXUnitDelegate<T: FXUnit>: FXUnitDelegateProtocol {
     }
     
     func savePreset(_ presetName: String) {
-        unit.savePreset(presetName)
+//        unit.savePreset(presetName)
     }
     
     func applyPreset(_ presetName: String) {
-        unit.applyPreset(presetName)
+//        unit.applyPreset(presetName)
     }
 }

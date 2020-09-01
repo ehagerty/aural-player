@@ -17,10 +17,10 @@ class FXUnit {
     
     var isActive: Bool {return state == .active}
     
-    init(_ unitType: EffectsUnit, _ state: EffectsUnitState) {
+    init(_ unitType: EffectsUnit) {
         
         self.unitType = unitType
-        self.state = state
+        self.state = .bypassed
         stateChanged()
     }
     
@@ -53,10 +53,6 @@ class FXUnit {
     }
     
     func reset() {}
-    
-    func savePreset(_ presetName: String) {}
-    
-    func applyPreset(_ presetName: String) {}
 }
 
 // Enumeration of all the effects units

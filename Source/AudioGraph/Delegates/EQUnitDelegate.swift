@@ -3,13 +3,20 @@ import Foundation
 class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
     
     let preferences: SoundPreferences
+    let presets: EQPresets = EQPresets()
     
     override var unitDescription: String {"Equalizer"}
     
-    init(_ unit: EQUnit, _ preferences: SoundPreferences) {
+    init(_ unit: EQUnit, _ persistentUnitState: EQUnitState, _ preferences: SoundPreferences) {
         
         self.preferences = preferences
         super.init(unit)
+        
+        unit.state = persistentUnitState.state
+        unit.bands = persistentUnitState.bands
+        unit.globalGain = persistentUnitState.globalGain
+        
+        presets.addPresets(persistentUnitState.userPresets)
     }
     
     var globalGain: Float {
@@ -23,8 +30,6 @@ class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
         get {return unit.bands}
         set(newValue) {unit.bands = newValue}
     }
-    
-    var presets: EQPresets {return unit.presets}
     
     func setBand(_ index: Int, gain: Float) {
         unit.setBand(index, gain: gain)
@@ -76,5 +81,38 @@ class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
             // Reset to "flat" preset (because it is equivalent to an inactive EQ)
             bands = EQPresets.defaultPreset.bands
         }
+    }
+    
+    override func savePreset(_ presetName: String) {
+        presets.addPreset(EQPreset(presetName, .active, bands, globalGain, false))
+    }
+    
+    override func applyPreset(_ presetName: String) {
+        
+        if let preset = presets.presetByName(presetName) {
+            applyPreset(preset)
+        }
+    }
+    
+    func applyPreset(_ preset: EQPreset) {
+        
+        bands = preset.bands
+        globalGain = preset.globalGain
+    }
+    
+    var settingsAsPreset: EQPreset {
+        return EQPreset("eqSettings", state, bands, globalGain, false)
+    }
+    
+    var persistentState: EQUnitState {
+        
+        let unitState = EQUnitState()
+        
+        unitState.state = state
+        unitState.bands = bands
+        unitState.globalGain = globalGain
+        unitState.userPresets = presets.userDefinedPresets
+        
+        return unitState
     }
 }

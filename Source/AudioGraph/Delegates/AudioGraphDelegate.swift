@@ -4,7 +4,7 @@
 
 import AVFoundation
 
-class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
+class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber, PersistentModelObject {
     
     var availableDevices: AudioDeviceList {graph.availableDevices}
     
@@ -29,7 +29,8 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
     // User preferences
     private let preferences: SoundPreferences
     
-    var soundProfiles: SoundProfiles {return graph.soundProfiles}
+//    var soundProfiles: SoundProfiles {return graph.soundProfiles}
+    var soundProfiles: SoundProfiles
     
     private let notificationQueue: DispatchQueue = .global(qos: .userInteractive)
     
@@ -39,13 +40,19 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         self.player = player
         self.preferences = preferences
         
-        masterUnit = MasterUnitDelegate(graph)
-        eqUnit = EQUnitDelegate(graph.eqUnit, preferences)
-        pitchUnit = PitchUnitDelegate(graph.pitchUnit, preferences)
-        timeUnit = TimeUnitDelegate(graph.timeUnit, preferences)
-        reverbUnit = ReverbUnitDelegate(graph.reverbUnit)
-        delayUnit = DelayUnitDelegate(graph.delayUnit)
-        filterUnit = FilterUnitDelegate(graph.filterUnit)
+        self.soundProfiles = SoundProfiles(graphState.soundProfiles)
+        
+//        soundProfiles.audioGraph = graph
+//        self.soundProfiles = soundProfiles
+        
+        eqUnit = EQUnitDelegate(graph.eqUnit, graphState.eqUnit, preferences)
+        pitchUnit = PitchUnitDelegate(graph.pitchUnit, graphState.pitchUnit, preferences)
+        timeUnit = TimeUnitDelegate(graph.timeUnit, graphState.timeUnit, preferences)
+        reverbUnit = ReverbUnitDelegate(graph.reverbUnit, graphState.reverbUnit)
+        delayUnit = DelayUnitDelegate(graph.delayUnit, graphState.delayUnit)
+        filterUnit = FilterUnitDelegate(graph.filterUnit, graphState.filterUnit)
+        
+        masterUnit = MasterUnitDelegate(graph.masterUnit, slaveUnits: [eqUnit, pitchUnit, timeUnit, reverbUnit, delayUnit, filterUnit])
         
         // Set volume and effects based on user preference
         
@@ -70,9 +77,9 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         Messenger.subscribe(self, .fx_deleteSoundProfile, self.deleteSoundProfile)
     }
     
-    var settingsAsMasterPreset: MasterPreset {
-        return graph.settingsAsMasterPreset
-    }
+//    var settingsAsMasterPreset: MasterPreset {
+//        return graph.settingsAsMasterPreset
+//    }
     
     var volume: Float {
         
@@ -186,4 +193,35 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         // Proceed with exit
         request.acceptResponse(okToExit: true)
     }
+    
+
+        var persistentState: PersistentState {
+            
+            let state: AudioGraphState = AudioGraphState()
+            
+//            let outputDevice = deviceManager.outputDevice
+//
+//            state.outputDevice.name = outputDevice.name
+//            state.outputDevice.uid = outputDevice.uid
+//
+//            // TODO: This whole func moves to Delegate, this value is obtained from preferences.
+//            state.useSystemDevice = true
+//
+//            // Volume and pan (balance)
+//            state.volume = playerVolume
+//            state.muted = muted
+//            state.balance = playerNode.pan
+//
+//            state.masterUnit = masterUnit.persistentState
+//            state.eqUnit = eqUnit.persistentState
+//            state.pitchUnit = pitchUnit.persistentState
+//            state.timeUnit = timeUnit.persistentState
+//            state.reverbUnit = reverbUnit.persistentState
+//            state.delayUnit = delayUnit.persistentState
+//            state.filterUnit = filterUnit.persistentState
+            
+    //        state.soundProfiles.append(contentsOf: soundProfiles.all())
+            
+            return state
+        }
 }

@@ -3,17 +3,9 @@ import AVFoundation
 class PitchUnit: FXUnit, PitchShiftUnitProtocol {
     
     private let node: AVAudioUnitTimePitch = AVAudioUnitTimePitch()
-    let presets: PitchPresets = PitchPresets()
     
-    // TODO: Pass in PitchUnitState (use generics to pass in type T)
-    init(_ appState: AudioGraphState) {
-        
-        super.init(.pitch, appState.pitchUnit.state)
-        
-        node.pitch = appState.pitchUnit.pitch
-        node.overlap = appState.pitchUnit.overlap
-        
-        presets.addPresets(appState.pitchUnit.userPresets)
+    init() {
+        super.init(.pitch)
     }
     
     override var avNodes: [AVAudioNode] {return [node]}
@@ -34,36 +26,5 @@ class PitchUnit: FXUnit, PitchShiftUnitProtocol {
         
         super.stateChanged()
         node.bypass = !isActive
-    }
-    
-    override func savePreset(_ presetName: String) {
-        presets.addPreset(PitchPreset(presetName, .active, PitchShift(fromCents: roundedInt(pitch)), false))
-    }
-
-    override func applyPreset(_ presetName: String) {
-
-        if let preset = presets.presetByName(presetName) {
-            applyPreset(preset)
-        }
-    }
-    
-    func applyPreset(_ preset: PitchPreset) {
-        pitch = Float(preset.pitch.asCents)
-    }
-    
-    var settingsAsPreset: PitchPreset {
-        return PitchPreset("pitchSettings", state, PitchShift(fromCents: roundedInt(pitch)), false)
-    }
-    
-    var persistentState: PitchUnitState {
-        
-        let unitState = PitchUnitState()
-        
-        unitState.state = state
-        unitState.pitch = pitch
-        unitState.overlap = overlap
-        unitState.userPresets = presets.userDefinedPresets
-        
-        return unitState
     }
 }

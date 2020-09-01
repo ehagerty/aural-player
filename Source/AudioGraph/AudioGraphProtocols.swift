@@ -21,10 +21,6 @@ protocol AudioGraphProtocol: PlayerGraphProtocol, RecorderGraphProtocol {
     var delayUnit: DelayUnit {get set}
     var filterUnit: FilterUnit {get set}
     
-    var settingsAsMasterPreset: MasterPreset {get}
-    
-    var soundProfiles: SoundProfiles {get set}
-    
     // Shuts down the audio graph, releasing all its resources
     func tearDown()
 }

@@ -2,15 +2,23 @@ import Foundation
 
 class SoundProfiles: TrackKeyedMap<SoundProfile> {
     
+    init(_ profiles: [SoundProfile]) {
+//        profiles.forEach {add($0.file, $0)}
+        super.init()
+        for profile in profiles {
+            map[profile.file] = profile
+        }
+    }
+    
     // TODO: Remove this (circular) dependency !!!
-    var audioGraph: AudioGraphProtocol!
+//    var audioGraph: AudioGraphProtocol!
     
     func add(_ track: Track) {
         self.add(track.file)
     }
     
     func add(_ file: URL) {
-        self.add(file, SoundProfile(file: file, volume: audioGraph.volume, balance: audioGraph.balance, effects: audioGraph.settingsAsMasterPreset))
+//        self.add(file, SoundProfile(file: file, volume: audioGraph.volume, balance: audioGraph.balance, effects: audioGraph.settingsAsMasterPreset))
     }
 }
 

@@ -2,20 +2,10 @@ import AVFoundation
 
 class EQUnit: FXUnit, EQUnitProtocol {
     
-    private let node: ParametricEQNode
-    let presets: EQPresets = EQPresets()
+    private let node: ParametricEQNode = ParametricEQNode()
     
-    init(_ appState: AudioGraphState) {
-        
-        let eqState = appState.eqUnit
-        
-        node = ParametricEQNode()
-        super.init(.eq, eqState.state)
-        
-        bands = eqState.bands
-        globalGain = eqState.globalGain
-        
-        presets.addPresets(eqState.userPresets)
+    init() {
+        super.init(.eq)
     }
     
     override func stateChanged() {
@@ -64,38 +54,5 @@ class EQUnit: FXUnit, EQUnitProtocol {
     
     func decreaseTreble(_ decrement: Float) -> [Float] {
         return node.decreaseTreble(decrement)
-    }
-    
-    override func savePreset(_ presetName: String) {
-        presets.addPreset(EQPreset(presetName, .active, bands, globalGain, false))
-    }
-    
-    override func applyPreset(_ presetName: String) {
-        
-        if let preset = presets.presetByName(presetName) {
-            applyPreset(preset)
-        }
-    }
-    
-    func applyPreset(_ preset: EQPreset) {
-        
-        bands = preset.bands
-        globalGain = preset.globalGain
-    }
-    
-    var settingsAsPreset: EQPreset {
-        return EQPreset("eqSettings", state, bands, globalGain, false)
-    }
-    
-    var persistentState: EQUnitState {
-
-        let unitState = EQUnitState()
-
-        unitState.state = state
-        unitState.bands = bands
-        unitState.globalGain = globalGain
-        unitState.userPresets = presets.userDefinedPresets
-
-        return unitState
     }
 }

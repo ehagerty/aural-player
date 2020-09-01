@@ -4,7 +4,7 @@ import AVFoundation
 /*
     Wrapper around AVAudioEngine. Manages the AVAudioEngine audio graph.
  */
-class AudioGraph: AudioGraphProtocol, PersistentModelObject {
+class AudioGraph: AudioGraphProtocol {
     
     var availableDevices: AudioDeviceList {deviceManager.allDevices}
     
@@ -24,17 +24,15 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     
     // FX units
     var masterUnit: MasterUnit
-    var eqUnit: EQUnit
-    var pitchUnit: PitchUnit
-    var timeUnit: TimeUnit
-    var reverbUnit: ReverbUnit
-    var delayUnit: DelayUnit
-    var filterUnit: FilterUnit
+    var eqUnit: EQUnit = EQUnit()
+    var pitchUnit: PitchUnit = PitchUnit()
+    var timeUnit: TimeUnit = TimeUnit()
+    var reverbUnit: ReverbUnit = ReverbUnit()
+    var delayUnit: DelayUnit = DelayUnit()
+    var filterUnit: FilterUnit = FilterUnit()
     
     // Sound setting value holders
     private var playerVolume: Float
-    
-    var soundProfiles: SoundProfiles
     
     // Sets up the audio engine
     init(_ state: AudioGraphState) {
@@ -57,25 +55,11 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         self.outputNode = engine.outputNode
         auxMixer = AVAudioMixerNode()
         
-        eqUnit = EQUnit(state)
-        pitchUnit = PitchUnit(state)
-        timeUnit = TimeUnit(state)
-        reverbUnit = ReverbUnit(state)
-        delayUnit = DelayUnit(state)
-        filterUnit = FilterUnit(state)
-        
         let slaveUnits = [eqUnit, pitchUnit, timeUnit, reverbUnit, delayUnit, filterUnit]
-        masterUnit = MasterUnit(state, slaveUnits)
+        masterUnit = MasterUnit(slaveUnits)
 
         deviceManager = DeviceManager(outputAudioUnit: engine.outputNode.audioUnit!,
                                       preferredDeviceUID: state.useSystemDevice ? nil : state.outputDevice.uid)
-        
-        soundProfiles = SoundProfiles()
-        state.soundProfiles.forEach({
-            soundProfiles.add($0.file, $0)
-        })
-        
-        soundProfiles.audioGraph = self
         
         let nodes = [playerNode, auxMixer] + slaveUnits.flatMap {$0.avNodes}
         nodes.forEach {engine.attach($0)}
@@ -132,10 +116,6 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     var muted: Bool {
         didSet {playerNode.volume = muted ? 0 : playerVolume}
     }
-    
-    var settingsAsMasterPreset: MasterPreset {
-        return masterUnit.settingsAsPreset
-    }
 
     func reconnectPlayerNodeWithFormat(_ format: AVAudioFormat) {
         
@@ -162,36 +142,6 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         [delayUnit, reverbUnit].forEach({
             if $0.isActive {$0.reset()}
         })
-    }
-    
-    var persistentState: PersistentState {
-        
-        let state: AudioGraphState = AudioGraphState()
-        
-        let outputDevice = deviceManager.outputDevice
-        
-        state.outputDevice.name = outputDevice.name
-        state.outputDevice.uid = outputDevice.uid
-        
-        // TODO: This whole func moves to Delegate, this value is obtained from preferences.
-        state.useSystemDevice = true
-        
-        // Volume and pan (balance)
-        state.volume = playerVolume
-        state.muted = muted
-        state.balance = playerNode.pan
-        
-        state.masterUnit = masterUnit.persistentState
-        state.eqUnit = eqUnit.persistentState
-        state.pitchUnit = pitchUnit.persistentState
-        state.timeUnit = timeUnit.persistentState
-        state.reverbUnit = reverbUnit.persistentState
-        state.delayUnit = delayUnit.persistentState
-        state.filterUnit = filterUnit.persistentState
-        
-        state.soundProfiles.append(contentsOf: soundProfiles.all())
-        
-        return state
     }
     
     func tearDown() {

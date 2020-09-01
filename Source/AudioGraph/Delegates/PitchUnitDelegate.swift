@@ -3,29 +3,25 @@ import Foundation
 class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     
     let preferences: SoundPreferences
+    let presets: PitchPresets = PitchPresets()
     
     override var unitDescription: String {"Pitch Shift"}
     
     var pitch: PitchShift {
         
         get {PitchShift(fromCents: roundedInt(unit.pitch))}
-        
-        set(shift) {
-            
-            let cents = (shift.octaves * AppConstants.ValueConversions.pitch_octaveToCents) +
-                        (shift.semitones * AppConstants.ValueConversions.pitch_semitoneToCents) +
-                        shift.cents
-            
-            unit.pitch = Float(cents)
-        }
+        set(shift) {unit.pitch = Float(shift.asCents)}
     }
     
-    var presets: PitchPresets {return unit.presets}
-    
-    init(_ unit: PitchUnit, _ preferences: SoundPreferences) {
+    init(_ unit: PitchUnit, _ persistentUnitState: PitchUnitState, _ preferences: SoundPreferences) {
         
         self.preferences = preferences
         super.init(unit)
+        
+        unit.state = persistentUnitState.state
+        unit.pitch = persistentUnitState.pitch
+        
+        presets.addPresets(persistentUnitState.userPresets)
     }
     
     func increasePitch() -> PitchShift {
@@ -55,4 +51,35 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
             unit.pitch = AppDefaults.pitch
         }
     }
+    
+    override func savePreset(_ presetName: String) {
+//        presets.addPreset(PitchPreset(presetName, .active, PitchShift(fromCents: roundedInt(pitch)), false))
+    }
+
+    override func applyPreset(_ presetName: String) {
+
+        if let preset = presets.presetByName(presetName) {
+            applyPreset(preset)
+        }
+    }
+    
+    func applyPreset(_ preset: PitchPreset) {
+//        pitch = Float(preset.pitch.asCents)
+    }
+    
+//    var settingsAsPreset: PitchPreset {
+//        return PitchPreset("pitchSettings", state, PitchShift(fromCents: roundedInt(pitch)), false)
+//    }
+    
+    var persistentState: PitchUnitState {
+            
+            let unitState = PitchUnitState()
+            
+            unitState.state = state
+//            unitState.pitch = pitch
+//            unitState.overlap = overlap
+    //        unitState.userPresets = presets.userDefinedPresets
+            
+            return unitState
+        }
 }

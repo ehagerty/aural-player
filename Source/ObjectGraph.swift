@@ -204,7 +204,7 @@ class ObjectGraph {
         
         // Gather all pieces of app state into the appState object
         
-        appState.audioGraph = (audioGraph as! AudioGraph).persistentState as! AudioGraphState
+        appState.audioGraph = (audioGraphDelegate as! AudioGraphDelegate).persistentState as! AudioGraphState
         appState.playlist = (playlist as! Playlist).persistentState as! PlaylistState
         appState.library = (library as! Library).persistentState as! LibraryState
         appState.playQueue = (playQueue as! PlayQueue).persistentState as! PlayQueueState

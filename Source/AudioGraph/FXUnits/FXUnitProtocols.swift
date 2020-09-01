@@ -12,19 +12,6 @@ protocol FXUnitProtocol {
     func unsuppress()
     
     var avNodes: [AVAudioNode] {get}
-    
-    associatedtype PresetType: EffectsUnitPreset
-    associatedtype PresetsType: FXPresetsProtocol
-    
-    var presets: PresetsType {get}
-    
-    func savePreset(_ presetName: String)
-    
-    func applyPreset(_ presetName: String)
-    
-    func applyPreset(_ preset: PresetType)
-    
-    var settingsAsPreset: PresetType {get}
 }
 
 protocol MasterUnitProtocol: FXUnitProtocol {}

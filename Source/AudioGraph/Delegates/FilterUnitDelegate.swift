@@ -2,7 +2,7 @@ import AVFoundation
 
 class FilterUnitDelegate: FXUnitDelegate<FilterUnit>, FilterUnitDelegateProtocol {
 
-    var presets: FilterPresets {return unit.presets}
+    let presets: FilterPresets = FilterPresets()
     
     override var unitDescription: String {"Filter"}
     
@@ -10,6 +10,16 @@ class FilterUnitDelegate: FXUnitDelegate<FilterUnit>, FilterUnitDelegateProtocol
         
         get {return unit.bands}
         set(newValue) {unit.bands = newValue}
+    }
+    
+    init(_ unit: FilterUnit, _ persistentUnitState: FilterUnitState) {
+
+        super.init(unit)
+        
+        unit.state = persistentUnitState.state
+        unit.bands = persistentUnitState.bands
+        
+        presets.addPresets(persistentUnitState.userPresets)
     }
     
     func addBand(_ band: FilterBand) -> Int {
@@ -31,4 +41,44 @@ class FilterUnitDelegate: FXUnitDelegate<FilterUnit>, FilterUnitDelegateProtocol
     func getBand(_ index: Int) -> FilterBand {
         return unit.getBand(index)
     }
+    
+    override func savePreset(_ presetName: String) {
+        
+        // Need to clone the filter's bands to create separate identical copies so that changes to the current filter bands don't modify the preset's bands
+        var presetBands: [FilterBand] = []
+        bands.forEach({presetBands.append($0.clone())})
+        
+        presets.addPreset(FilterPreset(presetName, .active, presetBands, false))
+    }
+    
+    override func applyPreset(_ presetName: String) {
+        
+        if let preset = presets.presetByName(presetName) {
+            applyPreset(preset)
+        }
+    }
+    
+    func applyPreset(_ preset: FilterPreset) {
+        
+        // Need to clone the filter's bands to create separate identical copies so that changes to the current filter bands don't modify the preset's bands
+        var filterBands: [FilterBand] = []
+        preset.bands.forEach({filterBands.append($0.clone())})
+        
+        bands = filterBands
+    }
+    
+    var settingsAsPreset: FilterPreset {
+        return FilterPreset("filterSettings", state, bands, false)
+    }
+    
+    var persistentState: FilterUnitState {
+            
+            let filterState = FilterUnitState()
+            
+            filterState.state = state
+            filterState.bands = bands
+            filterState.userPresets = presets.userDefinedPresets
+            
+            return filterState
+        }
 }
