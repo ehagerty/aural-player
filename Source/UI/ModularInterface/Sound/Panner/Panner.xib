@@ -23,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nd1-j7-SyA" userLabel="Pan Value" customClass="FunctionValueLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="215" y="62" width="118" height="28"/>
+                    <rect key="frame" x="205" y="62" width="118" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="0" id="gyA-Om-vQc">
                         <font key="font" size="13" name="Play-Regular"/>
@@ -32,7 +32,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0lv-Gs-PFX" userLabel="Unit Caption" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="86" y="147" width="187" height="28"/>
+                    <rect key="frame" x="65" y="147" width="187" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Panner" id="bfU-sb-th3" customClass="FXUnitCaptionCell" customModule="Aural" customModuleProvider="target">
                         <font key="font" size="14" name="AlegreyaSansSC-Regular"/>
@@ -41,7 +41,7 @@
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nD2-Ku-krm" userLabel="Pan Slider">
-                    <rect key="frame" x="141" y="86" width="265" height="18"/>
+                    <rect key="frame" x="131" y="86" width="265" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="-100" maxValue="100" tickMarkPosition="below" numberOfTickMarks="21" sliderType="linear" id="PKd-KD-BnP" customClass="PanTickedSliderCell" customModule="Aural" customModuleProvider="target"/>
                     <connections>
@@ -49,7 +49,7 @@
                     </connections>
                 </slider>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B3t-nQ-xoB" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="412" y="87" width="60" height="24"/>
+                    <rect key="frame" x="402" y="87" width="60" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Right" id="hxp-Ku-gaf">
                         <font key="font" size="13" name="Play-Regular"/>
@@ -58,7 +58,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lHN-aU-Iw5" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="81" y="87" width="52" height="24"/>
+                    <rect key="frame" x="71" y="87" width="52" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Left" id="Thi-a3-Dju">
                         <font key="font" size="13" name="Play-Regular"/>

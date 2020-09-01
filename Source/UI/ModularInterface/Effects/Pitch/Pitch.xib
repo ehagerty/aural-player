@@ -292,7 +292,7 @@
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Of-5W-wt9" userLabel="Master Unit Caption" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="86" y="147" width="152" height="28"/>
+                    <rect key="frame" x="65" y="147" width="152" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Pitch  Shift" id="3xV-Xk-gYm" customClass="FXUnitCaptionCell" customModule="Aural" customModuleProvider="target">
                         <font key="font" size="14" name="AlegreyaSansSC-Regular"/>
@@ -301,7 +301,7 @@
                     </textFieldCell>
                 </textField>
                 <button wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cMs-rU-Eon" userLabel="Bypass button" customClass="EffectsUnitTriStateBypassButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="63" y="150" width="14" height="14"/>
+                    <rect key="frame" x="42" y="150" width="14" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Kmt-hq-Jgu">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
