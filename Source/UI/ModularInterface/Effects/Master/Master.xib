@@ -218,7 +218,7 @@
                     </connections>
                 </button>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="St1-EV-PgQ" userLabel="Pitch img" customClass="EffectsUnitTriStateBypassImage" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="111" y="87" width="11" height="11"/>
+                    <rect key="frame" x="108" y="87" width="11" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="EQTab" id="vPR-nV-xLX"/>
                     <userDefinedRuntimeAttributes>
@@ -228,7 +228,7 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1tW-hm-k1j" customClass="EffectsUnitTriStateLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="126" y="82" width="78" height="25"/>
+                    <rect key="frame" x="123" y="82" width="78" height="25"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Equalizer" id="Yv4-sC-ZVG" customClass="VALabelCell" customModule="Aural" customModuleProvider="target">
                         <font key="font" size="12" name="AlegreyaSansSC-Regular"/>

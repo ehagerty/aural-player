@@ -337,8 +337,10 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="offStateImage" value="PannerTab"/>
                                                     <userDefinedRuntimeAttribute type="image" keyPath="onStateImage" value="PannerTab"/>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="offStateTooltip" value="Output devices"/>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="onStateTooltip" value="Output devices"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="offStateTooltip" value="Panner unit"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="onStateTooltip" value="Panner unit"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="mixedStateImage" value="PannerTab"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="mixedStateTooltip" value="Panner unit"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="tabViewAction:" target="-2" id="5x8-k1-of7"/>
@@ -356,6 +358,8 @@
                                                     <userDefinedRuntimeAttribute type="image" keyPath="onStateImage" value="DevicesTab"/>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="offStateTooltip" value="Output devices"/>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="onStateTooltip" value="Output devices"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="mixedStateImage" value="DevicesTab"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="mixedStateTooltip" value="Output devices"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="tabViewAction:" target="-2" id="qme-3U-Umj"/>

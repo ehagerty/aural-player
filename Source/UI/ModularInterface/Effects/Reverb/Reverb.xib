@@ -36,26 +36,14 @@
                     <rect key="frame" x="360" y="46" width="40" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="value">
-                            <integer key="value" value="6"/>
-                        </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="minValue">
                             <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
                             <real key="value" value="100"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="radius">
-                            <real key="value" value="30"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
-                            <real key="value" value="4"/>
-                        </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="interval">
                             <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="initialValue">
-                            <real key="value" value="50"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>

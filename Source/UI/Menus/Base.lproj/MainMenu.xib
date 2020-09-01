@@ -188,13 +188,6 @@
                 <outlet property="timeRemainingMenuItem_seconds" destination="dpf-Rp-xFl" id="OjR-xo-gMB"/>
             </connections>
         </customObject>
-        <customObject id="TVr-fw-yU3" customClass="PlaylistViewPopupMenuController" customModule="Aural" customModuleProvider="target">
-            <connections>
-                <outlet property="textSizeLargerMenuItem" destination="fdP-w5-f1I" id="xPI-9q-MJ0"/>
-                <outlet property="textSizeLargestMenuItem" destination="mNh-kR-wvy" id="Fn6-0n-Mc3"/>
-                <outlet property="textSizeNormalMenuItem" destination="G8v-bX-69u" id="se8-aj-hyS"/>
-            </connections>
-        </customObject>
         <customObject id="REd-Fk-TGW" customClass="EffectsViewPopupMenuController" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="textSizeLargerMenuItem" destination="DZs-Y8-cOe" id="AxJ-MH-r3n"/>
@@ -1491,29 +1484,17 @@ CA
                                                 <items>
                                                     <menuItem title="Normal" id="G8v-bX-69u">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="changeTextSizeAction:" target="TVr-fw-yU3" id="SvQ-Gl-mIA"/>
-                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Larger" tag="1" id="fdP-w5-f1I">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="changeTextSizeAction:" target="TVr-fw-yU3" id="yPh-a7-wYe"/>
-                                                        </connections>
                                                     </menuItem>
                                                     <menuItem title="Largest" tag="2" id="mNh-kR-wvy">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="changeTextSizeAction:" target="TVr-fw-yU3" id="fLL-Pg-EZN"/>
-                                                        </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
                                     </items>
-                                    <connections>
-                                        <outlet property="delegate" destination="TVr-fw-yU3" id="BiG-tM-bto"/>
-                                    </connections>
                                 </menu>
                             </menuItem>
                             <menuItem title="  Effects view" indentationLevel="1" id="XdU-vv-wWn" userLabel="Effects view">

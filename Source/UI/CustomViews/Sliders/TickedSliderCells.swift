@@ -9,7 +9,12 @@ class TickedSliderCell: HorizontalSliderCell {
     
     var tickVerticalSpacing: CGFloat {return 1}
     var tickWidth: CGFloat {return 2}
-    var tickColor: NSColor {return Colors.sliderNotchColor}
+    var tickColor: NSColor {return Colors.Effects.sliderTickColor}
+    override var knobColor: NSColor {return Colors.Effects.sliderKnobColorForState(.active)}
+    
+    override var backgroundGradient: NSGradient {
+        return Colors.Effects.sliderBackgroundGradient
+    }
     
     override internal func drawBar(inside aRect: NSRect, flipped: Bool) {
         
@@ -59,13 +64,17 @@ class PanTickedSliderCell: TickedSliderCell {
     override var knobRadius: CGFloat {return 1}
     override var knobHeightOutsideBar: CGFloat {return 2}
     
+    var backgroundColor: NSColor {ColorSchemes.systemScheme.effects.sliderBackgroundColor}
+    var foregroundColor: NSColor {ColorSchemes.systemScheme.effects.activeUnitStateColor}
+    
     // Draw entire bar with single gradient
     override internal func drawBar(inside aRect: NSRect, flipped: Bool) {
         
         let offsetRect = aRect.offsetBy(dx: 0, dy: 0.25)
         
         var drawPath = NSBezierPath.init(roundedRect: offsetRect, xRadius: barRadius, yRadius: barRadius)
-        backgroundGradient.draw(in: drawPath, angle: -UIConstants.verticalGradientDegrees)
+        backgroundColor.setFill()
+        drawPath.fill()
         
         drawTicks(aRect)
         
@@ -79,7 +88,8 @@ class PanTickedSliderCell: TickedSliderCell {
             
             let panRect = NSRect(x: panRectX, y: offsetRect.minY, width: panRectWidth, height: offsetRect.height)
             drawPath = NSBezierPath.init(roundedRect: panRect, xRadius: barRadius, yRadius: barRadius)
-            foregroundGradient.draw(in: drawPath, angle: -UIConstants.verticalGradientDegrees)
+            foregroundColor.setFill()
+            drawPath.fill()
         }
     }
     
@@ -113,13 +123,7 @@ class EffectsTickedSliderCell: TickedSliderCell, EffectsUnitSliderCellProtocol {
         return Colors.Effects.sliderKnobColorForState(self.unitState)
     }
     
-    override var tickColor: NSColor {return Colors.Effects.sliderTickColor}
-    
     override var tickVerticalSpacing: CGFloat {return 1}
-    
-    override var backgroundGradient: NSGradient {
-        return Colors.Effects.sliderBackgroundGradient
-    }
     
     override var foregroundGradient: NSGradient {
      
