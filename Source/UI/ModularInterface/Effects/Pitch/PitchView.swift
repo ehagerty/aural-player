@@ -10,7 +10,7 @@ class PitchView: NSView {
     @IBOutlet weak var lblSemitones: NSTextField!
     @IBOutlet weak var lblCents: NSTextField!
     
-    private var sliders: [EffectsUnitSliderProtocol] = []
+    private var sliders: [TickedCircularSlider] = []
     
     override func awakeFromNib() {
         sliders = [octavesSlider, semitonesSlider, centsSlider]
@@ -18,7 +18,7 @@ class PitchView: NSView {
     
     func initialize(_ stateFunction: @escaping () -> EffectsUnitState) {
         
-        for var slider in sliders {
+        for slider in sliders {
             
             slider.stateFunction = stateFunction
             slider.updateState()
@@ -85,10 +85,7 @@ class PitchView: NSView {
     }
     
     func setUnitState(_ state: EffectsUnitState) {
-        
-        for var slider in sliders {
-            slider.unitState = state
-        }
+        sliders.forEach {$0.unitState = state}
     }
     
     func pitchUpdated() {
@@ -99,7 +96,7 @@ class PitchView: NSView {
     }
     
     func stateChanged() {
-        sliders.forEach({$0.updateState()})
+        sliders.forEach {$0.updateState()}
     }
     
     func applyPreset(_ preset: PitchPreset) {
@@ -110,6 +107,6 @@ class PitchView: NSView {
     }
     
     func redrawSliders() {
-//        [pitchSlider, pitchOverlapSlider].forEach({$0?.redraw()})
+        sliders.forEach {$0.redraw()}
     }
 }
