@@ -6,9 +6,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     @IBOutlet weak var lblCaption: VALabel!
     
-    @IBOutlet weak var btnSystemDevice: NSButton!
-    @IBOutlet weak var lblSystemDevice: VALabel!
-    
     @IBOutlet weak var devicesView: NSTableView!
     
     private let baseImage: NSImage = Images.imgRadioButton
@@ -25,7 +22,7 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
         applyColorScheme(ColorSchemes.systemScheme)
         
         Messenger.subscribeAsync(self, .deviceManager_deviceListUpdated, self.updateDevicesList, queue: .main)
-        Messenger.subscribeAsync(self, .deviceManager_deviceChanged, self.updateDevicesList, queue: .main)
+        Messenger.subscribeAsync(self, .audioGraph_outputDeviceChanged, self.updateDevicesList, queue: .main)
         
         Messenger.subscribe(self, .fx_changeTextSize, self.changeTextSize(_:))
         Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
@@ -46,10 +43,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     private func updateDevicesList() {
         
         deviceList = graph.availableDevices
-        
-        btnSystemDevice.onIf(graph.useSystemDevice)
-        lblSystemDevice.textColor = btnSystemDevice.isOn ? Colors.Effects.functionValueTextColor : Colors.Effects.functionCaptionTextColor
-        
         devicesView.reloadData()
     }
     
@@ -115,17 +108,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     // Row selection
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {false}
     
-    @IBAction func systemDeviceSelectorAction(_ sender: NSButton) {
-        
-        graph.useSystemDevice = sender.isOn
-        
-        if sender.isOn {
-            updateDevicesList()
-        }
-        
-        lblSystemDevice.textColor = btnSystemDevice.isOn ? Colors.Effects.functionValueTextColor : Colors.Effects.functionCaptionTextColor
-    }
-    
     @IBAction func deviceSelectorAction(_ sender: NSButton) {
         
         let device = deviceList.allDevices[sender.tag]
@@ -137,8 +119,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     private func changeTextSize(_ textSize: TextSize) {
         
         lblCaption.font = Fonts.Effects.unitCaptionFont
-        lblSystemDevice.font = Fonts.Effects.unitFunctionFont
-        
         devicesView.reloadData(forRowIndexes: IndexSet(0..<devicesView.numberOfRows), columnIndexes: [1])
     }
     
@@ -146,11 +126,7 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
         
         changeBackgroundColor(scheme.general.backgroundColor)
         changeMainCaptionTextColor(scheme.general.mainCaptionTextColor)
-        lblSystemDevice.textColor = btnSystemDevice.isOn ? Colors.Effects.functionValueTextColor : Colors.Effects.functionCaptionTextColor
-        
-        btnSystemDevice.image = btnSystemDevice.image?.applyingTint(Colors.Effects.bypassedUnitStateColor)
-        btnSystemDevice.alternateImage = btnSystemDevice.alternateImage?.applyingTint(Colors.Effects.activeUnitStateColor)
-        
+
         offStateImage = baseImage.applyingTint(Colors.Effects.bypassedUnitStateColor)
         onStateImage = baseImage.applyingTint(Colors.Effects.activeUnitStateColor)
         
@@ -169,10 +145,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     func changeFunctionCaptionTextColor(_ color: NSColor) {
         
-        if btnSystemDevice.isOff {
-            lblSystemDevice.textColor = Colors.Effects.functionCaptionTextColor
-        }
-        
         var indicesOfNonOutputDevices = Array(deviceList.allDevices.indices)
         if let deviceIndex = deviceList.allDevices.firstIndex(where: {$0.uid == deviceList.outputDevice.uid}) {
             
@@ -183,10 +155,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     func changeFunctionValueTextColor(_ color: NSColor) {
         
-        if btnSystemDevice.isOn {
-            lblSystemDevice.textColor = Colors.Effects.functionValueTextColor
-        }
-        
         if let deviceIndex = deviceList.allDevices.firstIndex(where: {$0.uid == deviceList.outputDevice.uid}) {
             devicesView.reloadData(forRowIndexes: IndexSet([deviceIndex]), columnIndexes: [1])
         }
@@ -194,7 +162,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     func changeActiveUnitStateColor(_ color: NSColor) {
         
-        btnSystemDevice.alternateImage = btnSystemDevice.alternateImage?.applyingTint(Colors.Effects.activeUnitStateColor)
         onStateImage = baseImage.applyingTint(Colors.Effects.activeUnitStateColor)
         
         if let deviceIndex = deviceList.allDevices.firstIndex(where: {$0.uid == deviceList.outputDevice.uid}) {
@@ -204,7 +171,6 @@ class OutputDevicesViewController: NSViewController, NSTableViewDelegate, NSTabl
     
     func changeBypassedUnitStateColor(_ color: NSColor) {
         
-        btnSystemDevice.image = btnSystemDevice.image?.applyingTint(Colors.Effects.bypassedUnitStateColor)
         offStateImage = baseImage.applyingTint(Colors.Effects.bypassedUnitStateColor)
         
         var indicesOfNonOutputDevices = Array(deviceList.allDevices.indices)

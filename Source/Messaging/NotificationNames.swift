@@ -143,7 +143,7 @@ extension Notification.Name {
     // Signifies that the audio engine has been restarted in response to an output device change
     // eg. when the user plugs headphones in or out of the system, or connects to
     // a new set of speakers.
-    static let audioGraph_engineRestarted = Notification.Name("audioGraph_engineRestarted")
+    static let audioGraph_outputDeviceChanged = Notification.Name("audioGraph_outputDeviceChanged")
     
     // ----------------------------------------------------------------------------------------
     

@@ -14,12 +14,6 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber {
         set {graph.outputDevice = newValue}
     }
     
-    var useSystemDevice: Bool {
-        
-        get {graph.useSystemDevice}
-        set {graph.useSystemDevice = newValue}
-    }
-    
     var masterUnit: MasterUnitDelegateProtocol
     var eqUnit: EQUnitDelegateProtocol
     var pitchUnit: PitchUnitDelegateProtocol

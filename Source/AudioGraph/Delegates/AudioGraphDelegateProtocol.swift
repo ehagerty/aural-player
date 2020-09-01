@@ -8,7 +8,6 @@ protocol AudioGraphDelegateProtocol {
     
     var availableDevices: AudioDeviceList {get}
     var outputDevice: AudioDevice {get set}
-    var useSystemDevice: Bool {get set}
     
     // NOTE - All functions that return String values return user-friendly text representations of the value being get/set, for display in the UI. For instance, setDelayLowPassCutoff(64) might return a value like "64 Hz"
     var volume: Float {get set}

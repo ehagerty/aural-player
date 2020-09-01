@@ -15,33 +15,28 @@ class DeviceList {
     // id -> Device
     private var devicesMap: [AudioDeviceID: AudioDevice] = [:]
     
-    // TODO: Make this thread-safe ???
     private var lastRebuildTime: Double = 0
     
-    func deviceById(_ id: AudioDeviceID) -> AudioDevice? {devicesMap[id]}
-    func deviceByUID(_ uid: String) -> AudioDevice? {devices.first(where: {$0.uid == uid})}
-
+    // Used to ensure that simultaneous reads/writes cannot occur.
+    private let semaphore = DispatchSemaphore(value: 1)
+    
     init() {
         
         rebuildList()
         
         // Devices list change listener
         AudioObjectAddPropertyListenerBlock(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, DispatchQueue.global(qos: .utility), {_, _ in
-            
-            let now = CFAbsoluteTimeGetCurrent()
-            let timeDiff = now - self.lastRebuildTime
-            
-            self.lastRebuildTime = now
-            
-            if timeDiff > 0.1 {
-                
-                self.rebuildList()
-                Messenger.publish(.deviceManager_deviceListUpdated)
-            }
+            self.rebuildList()
         })
     }
     
     private func rebuildList() {
+     
+        semaphore.wait()
+        defer {semaphore.signal()}
+        
+        let now = CFAbsoluteTimeGetCurrent()
+        if (now - self.lastRebuildTime) < 0.1 {return}
         
         var propSize: UInt32 = 0
         if AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress,
@@ -51,6 +46,8 @@ class DeviceList {
         var deviceIds: [AudioDeviceID] = Array(repeating: AudioDeviceID(), count: numDevices)
         
         if AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, 0, nil, &propSize, &deviceIds) == noErr {
+            
+            self.lastRebuildTime = now
             
             devices.removeAll()
             devicesMap.removeAll()
@@ -67,8 +64,24 @@ class DeviceList {
                     }
                 }
             }
+            
+            Messenger.publish(.deviceManager_deviceListUpdated)
         }
     }
     
-    func isDeviceAvailable(_ device: AudioDevice) -> Bool {devicesMap[device.id] != nil}
+    func deviceById(_ id: AudioDeviceID) -> AudioDevice? {
+
+        semaphore.wait()
+        defer {semaphore.signal()}
+        
+        return devicesMap[id]
+    }
+    
+    func deviceByUID(_ uid: String) -> AudioDevice? {
+        
+        semaphore.wait()
+        defer {semaphore.signal()}
+        
+        return devices.first(where: {$0.uid == uid})
+    }
 }

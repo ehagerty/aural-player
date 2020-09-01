@@ -14,12 +14,6 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         set {deviceManager.outputDevice = newValue}
     }
     
-    var useSystemDevice: Bool {
-        
-        get {deviceManager.useSystemDevice}
-        set {deviceManager.useSystemDevice = newValue}
-    }
-    
     private let engine: AVAudioEngine
     internal let outputNode: AVAudioOutputNode
     internal let playerNode: AuralPlayerNode
@@ -27,7 +21,6 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     private let auxMixer: AVAudioMixerNode  // Used for conversions of sample rates / channel counts
     
     private let deviceManager: DeviceManager
-    private let audioEngineHelper: AudioEngineHelper
     
     // FX units
     var masterUnit: MasterUnit
@@ -64,8 +57,6 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         self.outputNode = engine.outputNode
         auxMixer = AVAudioMixerNode()
         
-        audioEngineHelper = AudioEngineHelper(engine: engine)
-        
         eqUnit = EQUnit(state)
         pitchUnit = PitchUnit(state)
         timeUnit = TimeUnit(state)
@@ -77,7 +68,6 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         masterUnit = MasterUnit(state, slaveUnits)
 
         deviceManager = DeviceManager(outputAudioUnit: engine.outputNode.audioUnit!,
-                                      useSystemDevice: state.useSystemDevice,
                                       preferredDeviceUID: state.useSystemDevice ? nil : state.outputDevice.uid)
         
         soundProfiles = SoundProfiles()
@@ -117,18 +107,10 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
     
     @objc func engineStopped(_ notif: Notification) {
         
-        NSLog("AVAudioEngineConfigurationChange - Engine stopped !")
-        
-        let newDevice = deviceManager.allDevices.outputDevice
-        print("\nNew device now: \(newDevice.name)")
-        
-        if !engine.isRunning {
-            //            print("\nACTUALLY Restarting engine")
-            startEngine()
-        }
+        startEngine()
         
         // Send out a notification
-        Messenger.publish(.audioGraph_engineRestarted)
+        Messenger.publish(.audioGraph_outputDeviceChanged)
     }
     
     var volume: Float {
@@ -165,13 +147,11 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         print("\nNewFormat: \(format.channelLayout?.layoutTag) \(format.sampleRate)")
         print(cur.sampleRate == format.sampleRate, cur == format, cur.isEqual(to: format))
         
-        if cur.isEqual(to: format) {
+        if !cur.isEqual(to: format) {
             
-            print("\nGAPLESS PLAYBACK !!!")
-            return
+            engine.disconnectNodeOutput(playerNode)
+            engine.connect(playerNode, to: auxMixer, format: format)
         }
-        
-        audioEngineHelper.reconnectNodes(playerNode, outputNode: auxMixer, format: format)
     }
     
     // MARK: Miscellaneous functions
@@ -193,7 +173,8 @@ class AudioGraph: AudioGraphProtocol, PersistentModelObject {
         state.outputDevice.name = outputDevice.name
         state.outputDevice.uid = outputDevice.uid
         
-        state.useSystemDevice = useSystemDevice
+        // TODO: This whole func moves to Delegate, this value is obtained from preferences.
+        state.useSystemDevice = true
         
         // Volume and pan (balance)
         state.volume = playerVolume

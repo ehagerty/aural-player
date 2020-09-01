@@ -8,10 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="OutputDevicesViewController" customModule="Aural" customModuleProvider="target">
             <connections>
-                <outlet property="btnSystemDevice" destination="MDP-vl-fpU" id="uUZ-0A-q3c"/>
                 <outlet property="devicesView" destination="4HG-OX-FaG" id="No9-Q3-6JW"/>
                 <outlet property="lblCaption" destination="TH1-Tu-5YI" id="HaF-go-eMP"/>
-                <outlet property="lblSystemDevice" destination="TPv-gw-Hgj" id="b2b-xh-kgW"/>
                 <outlet property="view" destination="c22-O7-iKe" id="8ia-3j-SRX"/>
             </connections>
         </customObject>
@@ -30,26 +28,15 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MDP-vl-fpU" userLabel="Use System Device" customClass="EffectsUnitTriStateCheckButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="88" y="108" width="35" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NotChecked" imagePosition="left" alignment="left" alternateImage="Checked" controlSize="mini" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="wIi-ly-aQ1" customClass="FXFunctionCheckRadioButtonCell" customModule="Aural" customModuleProvider="target">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" size="13" name="Play-Regular"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="systemDeviceSelectorAction:" target="-2" id="CE5-QT-rQJ"/>
-                    </connections>
-                </button>
                 <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="25" horizontalPageScroll="10" verticalLineScroll="25" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGW-3c-wQJ">
-                    <rect key="frame" x="98" y="30" width="400" height="75"/>
+                    <rect key="frame" x="98" y="30" width="400" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="mzT-a5-gOD">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="75"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="25" viewBased="YES" id="4HG-OX-FaG">
-                                <rect key="frame" x="0.0" y="0.0" width="400" height="75"/>
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="100"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -135,21 +122,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPv-gw-Hgj" userLabel="Rate" customClass="CenterTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="120" y="112" width="375" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title=" Use system output device" id="uek-vd-jVV">
-                        <font key="font" size="13" name="Play-Regular"/>
-                        <color key="textColor" white="0.40263488479999998" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <point key="canvasLocation" x="141" y="153.5"/>
         </customView>
     </objects>
-    <resources>
-        <image name="Checked" width="200" height="200"/>
-        <image name="NotChecked" width="200" height="200"/>
-    </resources>
 </document>
