@@ -447,9 +447,9 @@ struct Fonts {
             }
         }
         
-        private static let masterUnitFunctionFont_normal: NSFont = Constants.captionFont_13
-        private static let masterUnitFunctionFont_larger: NSFont = Constants.captionFont_14
-        private static let masterUnitFunctionFont_largest: NSFont = Constants.captionFont_15
+        private static let masterUnitFunctionFont_normal: NSFont = Constants.captionFont_12
+        private static let masterUnitFunctionFont_larger: NSFont = Constants.captionFont_13
+        private static let masterUnitFunctionFont_largest: NSFont = Constants.captionFont_14
         
         static var masterUnitFunctionFont: NSFont {
             

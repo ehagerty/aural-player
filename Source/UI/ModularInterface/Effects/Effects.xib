@@ -34,7 +34,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="225" y="78" width="530" height="230"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <value key="minSize" type="size" width="530" height="230"/>
             <value key="maxSize" type="size" width="530" height="230"/>
             <view key="contentView" id="AK5-1a-Nc7">
@@ -319,7 +319,7 @@
                                                     <action selector="tabViewAction:" target="-2" id="lmK-Kj-NRS"/>
                                                 </connections>
                                             </button>
-                                            <button toolTip="Output devices" verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="kVQ-1j-qr7" userLabel="Panner button" customClass="EffectsUnitTabButton" customModule="Aural" customModuleProvider="target">
+                                            <button toolTip="Panner unit" verticalHuggingPriority="750" fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="kVQ-1j-qr7" userLabel="Panner button" customClass="EffectsUnitTabButton" customModule="Aural" customModuleProvider="target">
                                                 <rect key="frame" x="410" y="-1" width="34" height="24"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PannerTab" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="cDE-gC-xVz" customClass="EffectsUnitTabButtonCell" customModule="Aural" customModuleProvider="target">
