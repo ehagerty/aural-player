@@ -40,6 +40,7 @@ struct PreferencesDefaults {
         
         static let eqDelta: Float = 1
         static let pitchDelta: Int = 100
+        static let pitchDeltaUnit: PitchDeltaUnit = .cents
         static let timeDelta: Float = 0.05
         
         static let effectsSettingsOnStartupOption: EffectsSettingsStartupOptions = .rememberFromLastAppLaunch

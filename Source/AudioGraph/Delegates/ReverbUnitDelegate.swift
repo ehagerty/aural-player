@@ -34,7 +34,7 @@ class ReverbUnitDelegate: FXUnitDelegate<ReverbUnit>, ReverbUnitDelegateProtocol
     }
     
     override func savePreset(_ presetName: String) {
-        presets.addPreset(ReverbPreset(presetName, .active, space, amount, false))
+        presets.addPreset(ReverbPreset(presetName, .active, unit.space, unit.amount, false))
     }
     
     override func applyPreset(_ presetName: String) {
@@ -46,21 +46,21 @@ class ReverbUnitDelegate: FXUnitDelegate<ReverbUnit>, ReverbUnitDelegateProtocol
     
     func applyPreset(_ preset: ReverbPreset) {
         
-        space = preset.space
-        amount = preset.amount
+        unit.space = preset.space
+        unit.amount = preset.amount
     }
     
     var settingsAsPreset: ReverbPreset {
-        return ReverbPreset("reverbSettings", state, space, amount, false)
+        return ReverbPreset("reverbSettings", unit.state, unit.space, unit.amount, false)
     }
     
     var persistentState: ReverbUnitState {
         
         let unitState = ReverbUnitState()
         
-        unitState.state = state
-        unitState.space = space
-        unitState.amount = amount
+        unitState.state = unit.state
+        unitState.space = unit.space
+        unitState.amount = unit.amount
         unitState.userPresets = presets.userDefinedPresets
         
         return unitState

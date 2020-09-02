@@ -6,31 +6,34 @@ class FXUnitDelegate<T: FXUnit>: FXUnitDelegateProtocol {
     
     var unitType: EffectsUnit {unit.unitType}
     
+    // Override this property
     var unitDescription: String {""}
     
     init(_ unit: T) {
         self.unit = unit
     }
     
-    var state: EffectsUnitState {return unit.state}
+    var state: EffectsUnitState {
+        
+        get {unit.state}
+        set {unit.state = newValue}
+    }
     
-    var stateFunction: EffectsUnitStateFunction {return unit.stateFunction}
+    var stateFunction: EffectsUnitStateFunction {unit.stateFunction}
     
-    var isActive: Bool {return unit.isActive}
+    var isActive: Bool {unit.isActive}
     
     func toggleState() -> EffectsUnitState {
-        return unit.toggleState()
+        unit.toggleState()
     }
     
     func ensureActive() {
         unit.ensureActive()
     }
     
-    func savePreset(_ presetName: String) {
-//        unit.savePreset(presetName)
-    }
+    // Override these 2 functions
     
-    func applyPreset(_ presetName: String) {
-//        unit.applyPreset(presetName)
-    }
+    func savePreset(_ presetName: String) {}
+    
+    func applyPreset(_ presetName: String) {}
 }

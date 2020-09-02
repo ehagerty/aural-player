@@ -47,7 +47,7 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
         
         // Rate is increased by an amount set in the user preferences
         // TODO: Put this value in a constant
-        rate = min(4, rate + preferences.timeDelta)
+        unit.rate = min(4, rate + preferences.timeDelta)
         
         return (rate, formattedRate)
     }
@@ -58,7 +58,7 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
         
         // Rate is decreased by an amount set in the user preferences
         // TODO: Put this value in a constant
-        rate = max(0.25, rate - preferences.timeDelta)
+        unit.rate = max(0.25, rate - preferences.timeDelta)
         
         return (rate, formattedRate)
     }
@@ -70,12 +70,12 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
             _ = toggleState()
             
             // If the time unit is currently inactive, start at default playback rate, before the increase
-            rate = AppDefaults.timeStretchRate
+            unit.rate = AppDefaults.timeStretchRate
         }
     }
     
     override func savePreset(_ presetName: String) {
-//        presets.addPreset(TimePreset(presetName, .active, node.rate, node.overlap, node.shiftPitch, false))
+        presets.addPreset(TimePreset(presetName, .active, unit.rate, unit.shiftPitch, false))
     }
     
     override func applyPreset(_ presetName: String) {
@@ -87,25 +87,23 @@ class TimeUnitDelegate: FXUnitDelegate<TimeUnit>, TimeUnitDelegateProtocol {
     
     func applyPreset(_ preset: TimePreset) {
         
-        rate = preset.rate
-//        overlap = preset.overlap
-        shiftPitch = preset.shiftPitch
+        unit.rate = preset.rate
+        unit.shiftPitch = preset.shiftPitch
     }
     
-//    var settingsAsPreset: TimePreset {
-//        return TimePreset("timeSettings", state, rate, overlap, shiftPitch, false)
-//    }
+    var settingsAsPreset: TimePreset {
+        return TimePreset("timeSettings", unit.state, unit.rate, unit.shiftPitch, false)
+    }
     
-        var persistentState: TimeUnitState {
-
-            let unitState = TimeUnitState()
-
-            unitState.state = state
-            unitState.rate = rate
-//            unitState.overlap = overlap
-            unitState.shiftPitch = shiftPitch
-            unitState.userPresets = presets.userDefinedPresets
-
-            return unitState
-        }
+    var persistentState: TimeUnitState {
+        
+        let unitState = TimeUnitState()
+        
+        unitState.state = unit.state
+        unitState.rate = unit.rate
+        unitState.shiftPitch = unit.shiftPitch
+        unitState.userPresets = presets.userDefinedPresets
+        
+        return unitState
+    }
 }

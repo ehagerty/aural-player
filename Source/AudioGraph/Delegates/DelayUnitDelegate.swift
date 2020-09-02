@@ -52,7 +52,7 @@ class DelayUnitDelegate: FXUnitDelegate<DelayUnit>, DelayUnitDelegateProtocol {
     }
     
     override func savePreset(_ presetName: String) {
-        presets.addPreset(DelayPreset(presetName, .active, amount, time, feedback, lowPassCutoff, false))
+        presets.addPreset(DelayPreset(presetName, .active, unit.amount, unit.time, unit.feedback, unit.lowPassCutoff, false))
     }
     
     override func applyPreset(_ presetName: String) {
@@ -64,25 +64,25 @@ class DelayUnitDelegate: FXUnitDelegate<DelayUnit>, DelayUnitDelegateProtocol {
     
     func applyPreset(_ preset: DelayPreset) {
         
-        time = preset.time
-        amount = preset.amount
-        feedback = preset.feedback
-        lowPassCutoff = preset.lowPassCutoff
+        unit.time = preset.time
+        unit.amount = preset.amount
+        unit.feedback = preset.feedback
+        unit.lowPassCutoff = preset.lowPassCutoff
     }
     
     var settingsAsPreset: DelayPreset {
-        return DelayPreset("delaySettings", state, amount, time, feedback, lowPassCutoff, false)
+        return DelayPreset("delaySettings", unit.state, unit.amount, unit.time, unit.feedback, unit.lowPassCutoff, false)
     }
     
     var persistentState: DelayUnitState {
         
         let unitState = DelayUnitState()
         
-        unitState.state = state
-        unitState.time = time
-        unitState.amount = amount
-        unitState.feedback = feedback
-        unitState.lowPassCutoff = lowPassCutoff
+        unitState.state = unit.state
+        unitState.time = unit.time
+        unitState.amount = unit.amount
+        unitState.feedback = unit.feedback
+        unitState.lowPassCutoff = unit.lowPassCutoff
         unitState.userPresets = presets.userDefinedPresets
         
         return unitState

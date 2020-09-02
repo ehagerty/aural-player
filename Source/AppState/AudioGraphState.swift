@@ -120,16 +120,27 @@ fileprivate func deserializeEQPreset(_ map: NSDictionary) -> EQPreset {
 
 class PitchUnitState: FXUnitState<PitchPreset>, PersistentState {
     
-    var pitch: Float = AppDefaults.pitch
-    var overlap: Float = AppDefaults.pitchOverlap
+    // TODO MIGRATION: v2 -> v3
+//    var pitch: Float = AppDefaults.pitch
+    var pitch: PitchShift = AppDefaults.pitch
     
     static func deserialize(_ map: NSDictionary) -> PersistentState {
         
         let state: PitchUnitState = PitchUnitState()
         
         state.state = mapEnum(map, "state", AppDefaults.pitchState)
-        state.pitch = mapNumeric(map, "pitch", AppDefaults.pitch)
-        state.overlap = mapNumeric(map, "overlap", AppDefaults.pitchOverlap)
+        
+        // TODO MIGRATION: v2 -> v3
+//        state.pitch = mapNumeric(map, "pitch", AppDefaults.pitch)
+        
+        if let pitchDict = map["pitch"] as? NSDictionary {
+            
+            let octaves = mapNumeric(pitchDict, "octaves", AppDefaults.pitchOctaves).clampedTo(range: AppConstants.Sound.pitchOctavesRange)
+            let semitones = mapNumeric(pitchDict, "semitones", AppDefaults.pitchSemitones).clampedTo(range: AppConstants.Sound.pitchSemitonesRange)
+            let cents = mapNumeric(pitchDict, "cents", AppDefaults.pitchCents).clampedTo(range: AppConstants.Sound.pitchCentsRange)
+            
+            state.pitch = PitchShift(octaves: octaves, semitones: semitones, cents: cents)
+        }
         
         // Pitch user presets
         if let userPresets = map["userPresets"] as? [NSDictionary] {
@@ -151,24 +162,35 @@ fileprivate func deserializePitchPreset(_ map: NSDictionary) -> PitchPreset {
     
     let name = map["name"] as? String ?? ""
     let state = mapEnum(map, "state", AppDefaults.pitchState)
-    let pitch: Float = mapNumeric(map, "pitch", AppDefaults.pitch)
     
-    return PitchPreset(name, state, PitchShift(fromCents: roundedInt(pitch)), false)
+    // TODO MIGRATION: v2 -> v3
+//    let pitch: Float = mapNumeric(map, "pitch", AppDefaults.pitch)
+    
+    var pitch = AppDefaults.pitch
+    
+    if let pitchDict = map["pitch"] as? NSDictionary {
+        
+        let octaves = mapNumeric(pitchDict, "octaves", AppDefaults.pitchOctaves).clampedTo(range: AppConstants.Sound.pitchOctavesRange)
+        let semitones = mapNumeric(pitchDict, "semitones", AppDefaults.pitchSemitones).clampedTo(range: AppConstants.Sound.pitchSemitonesRange)
+        let cents = mapNumeric(pitchDict, "cents", AppDefaults.pitchCents).clampedTo(range: AppConstants.Sound.pitchCentsRange)
+        
+        pitch = PitchShift(octaves: octaves, semitones: semitones, cents: cents)
+    }
+    
+    return PitchPreset(name, state, pitch, false)
 }
 
 class TimeUnitState: FXUnitState<TimePreset>, PersistentState {
     
     var rate: Float = AppDefaults.timeStretchRate
     var shiftPitch: Bool = AppDefaults.timeShiftPitch
-    var overlap: Float = AppDefaults.timeOverlap
     
     static func deserialize(_ map: NSDictionary) -> PersistentState {
         
         let timeState: TimeUnitState = TimeUnitState()
         
-        timeState.state = mapEnum(map, "state", AppDefaults.pitchState)
+        timeState.state = mapEnum(map, "state", AppDefaults.timeState)
         timeState.rate = mapNumeric(map, "rate", AppDefaults.timeStretchRate)
-        timeState.overlap = mapNumeric(map, "overlap", AppDefaults.timeOverlap)
         timeState.shiftPitch = mapDirectly(map, "shiftPitch", AppDefaults.timeShiftPitch)
         
         // Time user presets
@@ -192,10 +214,9 @@ fileprivate func deserializeTimePreset(_ map: NSDictionary) -> TimePreset {
     let name = map["name"] as? String ?? ""
     let state = mapEnum(map, "state", AppDefaults.timeState)
     let rate: Float = mapNumeric(map, "rate", AppDefaults.timeStretchRate)
-    let overlap: Float = mapNumeric(map, "overlap", AppDefaults.timeOverlap)
     let shiftPitch: Bool = mapDirectly(map, "shiftPitch", AppDefaults.timeShiftPitch)
     
-    return TimePreset(name, state, rate, overlap, shiftPitch, false)
+    return TimePreset(name, state, rate, shiftPitch, false)
 }
 
 class ReverbUnitState: FXUnitState<ReverbPreset>, PersistentState {

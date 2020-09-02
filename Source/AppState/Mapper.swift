@@ -184,7 +184,7 @@ func mapDirectly<T: Any>(_ map: NSDictionary, _ key: String) -> T? {
     if let value = map[key] as? T {return value} else {return nil}
 }
 
-func mapNumeric<T: Any>(_ map: NSDictionary, _ key: String, _ defaultValue: T) -> T {
+func mapNumeric<T: Numeric>(_ map: NSDictionary, _ key: String, _ defaultValue: T) -> T {
     
     if let value = map[key] as? NSNumber {
         return doMapNumeric(value, T.self)
@@ -193,7 +193,7 @@ func mapNumeric<T: Any>(_ map: NSDictionary, _ key: String, _ defaultValue: T) -
     return defaultValue
 }
 
-fileprivate func doMapNumeric<T: Any>(_ value: NSNumber, _ type: T.Type) -> T {
+fileprivate func doMapNumeric<T: Numeric>(_ value: NSNumber, _ type: T.Type) -> T {
     
     switch String(describing: type) {
         
@@ -210,7 +210,7 @@ fileprivate func doMapNumeric<T: Any>(_ value: NSNumber, _ type: T.Type) -> T {
 }
 
 // Allows optional values
-func mapNumeric<T: Any>(_ map: NSDictionary, _ key: String) -> T? {
+func mapNumeric<T: Numeric>(_ map: NSDictionary, _ key: String) -> T? {
     
     if let value = map[key] as? NSNumber {
         return doMapNumeric(value, T.self)

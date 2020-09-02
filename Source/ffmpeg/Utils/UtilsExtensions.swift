@@ -4,7 +4,7 @@ import Foundation
 /// Extensions that provide helper functions or properties for added convenience.
 ///
 
-extension BinaryInteger {
+extension Int {
     
     mutating func clamp(minValue: Self, maxValue: Self) {
         
@@ -14,6 +14,17 @@ extension BinaryInteger {
         } else if self > maxValue {
             self = maxValue
         }
+    }
+    
+    func clampedTo(range: ClosedRange<Int>) -> Int {
+        
+        if range.contains(self) {return self}
+        
+        if self < range.lowerBound {
+            return range.lowerBound
+        }
+        
+        return range.upperBound
     }
     
     mutating func clamp(minValue: Self) {

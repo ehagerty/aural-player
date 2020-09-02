@@ -45,40 +45,33 @@ class FilterUnitDelegate: FXUnitDelegate<FilterUnit>, FilterUnitDelegateProtocol
     override func savePreset(_ presetName: String) {
         
         // Need to clone the filter's bands to create separate identical copies so that changes to the current filter bands don't modify the preset's bands
-        var presetBands: [FilterBand] = []
-        bands.forEach({presetBands.append($0.clone())})
-        
-        presets.addPreset(FilterPreset(presetName, .active, presetBands, false))
+        presets.addPreset(FilterPreset(presetName, .active, unit.bands.map {$0.clone()}, false))
     }
     
     override func applyPreset(_ presetName: String) {
         
+        // Need to clone the filter's bands to create separate identical copies so that changes to the current filter bands don't modify the preset's bands
         if let preset = presets.presetByName(presetName) {
             applyPreset(preset)
         }
     }
     
     func applyPreset(_ preset: FilterPreset) {
-        
-        // Need to clone the filter's bands to create separate identical copies so that changes to the current filter bands don't modify the preset's bands
-        var filterBands: [FilterBand] = []
-        preset.bands.forEach({filterBands.append($0.clone())})
-        
-        bands = filterBands
+        unit.bands = preset.bands.map {$0.clone()}
     }
     
     var settingsAsPreset: FilterPreset {
-        return FilterPreset("filterSettings", state, bands, false)
+        return FilterPreset("filterSettings", unit.state, unit.bands, false)
     }
     
     var persistentState: FilterUnitState {
-            
-            let filterState = FilterUnitState()
-            
-            filterState.state = state
-            filterState.bands = bands
-            filterState.userPresets = presets.userDefinedPresets
-            
-            return filterState
-        }
+        
+        let filterState = FilterUnitState()
+        
+        filterState.state = unit.state
+        filterState.bands = unit.bands
+        filterState.userPresets = presets.userDefinedPresets
+        
+        return filterState
+    }
 }

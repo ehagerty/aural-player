@@ -79,12 +79,12 @@ class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
             _ = toggleState()
             
             // Reset to "flat" preset (because it is equivalent to an inactive EQ)
-            bands = EQPresets.defaultPreset.bands
+            unit.bands = EQPresets.defaultPreset.bands
         }
     }
     
     override func savePreset(_ presetName: String) {
-        presets.addPreset(EQPreset(presetName, .active, bands, globalGain, false))
+        presets.addPreset(EQPreset(presetName, .active, unit.bands, unit.globalGain, false))
     }
     
     override func applyPreset(_ presetName: String) {
@@ -96,21 +96,21 @@ class EQUnitDelegate: FXUnitDelegate<EQUnit>, EQUnitDelegateProtocol {
     
     func applyPreset(_ preset: EQPreset) {
         
-        bands = preset.bands
-        globalGain = preset.globalGain
+        unit.bands = preset.bands
+        unit.globalGain = preset.globalGain
     }
     
     var settingsAsPreset: EQPreset {
-        return EQPreset("eqSettings", state, bands, globalGain, false)
+        return EQPreset("eqSettings", unit.state, unit.bands, unit.globalGain, false)
     }
     
     var persistentState: EQUnitState {
         
         let unitState = EQUnitState()
         
-        unitState.state = state
-        unitState.bands = bands
-        unitState.globalGain = globalGain
+        unitState.state = unit.state
+        unitState.bands = unit.bands
+        unitState.globalGain = unit.globalGain
         unitState.userPresets = presets.userDefinedPresets
         
         return unitState

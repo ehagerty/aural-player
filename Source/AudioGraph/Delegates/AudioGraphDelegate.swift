@@ -29,7 +29,6 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber, Pe
     // User preferences
     private let preferences: SoundPreferences
     
-//    var soundProfiles: SoundProfiles {return graph.soundProfiles}
     var soundProfiles: SoundProfiles
     
     private let notificationQueue: DispatchQueue = .global(qos: .userInteractive)
@@ -41,9 +40,6 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber, Pe
         self.preferences = preferences
         
         self.soundProfiles = SoundProfiles(graphState.soundProfiles)
-        
-//        soundProfiles.audioGraph = graph
-//        self.soundProfiles = soundProfiles
         
         eqUnit = EQUnitDelegate(graph.eqUnit, graphState.eqUnit, preferences)
         pitchUnit = PitchUnitDelegate(graph.pitchUnit, graphState.pitchUnit, preferences)
@@ -199,26 +195,26 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber, Pe
             
             let state: AudioGraphState = AudioGraphState()
             
-//            let outputDevice = deviceManager.outputDevice
-//
-//            state.outputDevice.name = outputDevice.name
-//            state.outputDevice.uid = outputDevice.uid
-//
+            let outputDevice = graph.outputDevice
+
+            state.outputDevice.name = outputDevice.name
+            state.outputDevice.uid = outputDevice.uid
+
 //            // TODO: This whole func moves to Delegate, this value is obtained from preferences.
 //            state.useSystemDevice = true
 //
 //            // Volume and pan (balance)
-//            state.volume = playerVolume
-//            state.muted = muted
-//            state.balance = playerNode.pan
+            state.volume = graph.volume
+            state.muted = graph.muted
+            state.balance = graph.balance
 //
-//            state.masterUnit = masterUnit.persistentState
-//            state.eqUnit = eqUnit.persistentState
-//            state.pitchUnit = pitchUnit.persistentState
-//            state.timeUnit = timeUnit.persistentState
-//            state.reverbUnit = reverbUnit.persistentState
-//            state.delayUnit = delayUnit.persistentState
-//            state.filterUnit = filterUnit.persistentState
+            state.masterUnit = (masterUnit as! MasterUnitDelegate).persistentState
+            state.eqUnit = (eqUnit as! EQUnitDelegate).persistentState
+            state.pitchUnit = (pitchUnit as! PitchUnitDelegate).persistentState
+            state.timeUnit = (timeUnit as! TimeUnitDelegate).persistentState
+            state.reverbUnit = (reverbUnit as! ReverbUnitDelegate).persistentState
+            state.delayUnit = (delayUnit as! DelayUnitDelegate).persistentState
+            state.filterUnit = (filterUnit as! FilterUnitDelegate).persistentState
             
     //        state.soundProfiles.append(contentsOf: soundProfiles.all())
             

@@ -14,13 +14,11 @@ class TimePresets: FXPresets<TimePreset> {
 class TimePreset: EffectsUnitPreset {
     
     let rate: Float
-    let overlap: Float
     let shiftPitch: Bool
     
-    init(_ name: String, _ state: EffectsUnitState, _ rate: Float, _ overlap: Float, _ shiftPitch: Bool, _ systemDefined: Bool) {
+    init(_ name: String, _ state: EffectsUnitState, _ rate: Float, _ shiftPitch: Bool, _ systemDefined: Bool) {
         
         self.rate = rate
-        self.overlap = overlap
         self.shiftPitch = shiftPitch
         super.init(name, state, systemDefined)
     }
@@ -32,7 +30,7 @@ fileprivate struct SystemDefinedTimePresets {
         
         var arr: [TimePreset] = []
         SystemDefinedTimePresetParams.allValues.forEach({
-            arr.append(TimePreset($0.rawValue, $0.state, $0.rate, $0.overlap, $0.shiftPitch, true))
+            arr.append(TimePreset($0.rawValue, $0.state, $0.rate, $0.shiftPitch, true))
         })
         
         return arr
@@ -93,10 +91,6 @@ fileprivate enum SystemDefinedTimePresetParams: String {
         case .slowLikeMolasses: return 0.8
             
         }
-    }
-    
-    var overlap: Float {
-        return 8
     }
     
     var shiftPitch: Bool {

@@ -42,7 +42,7 @@ protocol AudioGraphDelegateProtocol {
     
 //    var settingsAsMasterPreset: MasterPreset {get}
     
-    var masterUnit: MasterUnitDelegateProtocol {get set}
+    var masterUnit: MasterUnitDelegateProtocol {get}
     var eqUnit: EQUnitDelegateProtocol {get set}
     var pitchUnit: PitchUnitDelegateProtocol {get set}
     var timeUnit: TimeUnitDelegateProtocol {get set}
@@ -157,6 +157,106 @@ struct PitchShift {
         cents -= semitones * AppConstants.ValueConversions.pitch_semitoneToCents
         
         self.cents = cents
+    }
+    
+    func adding(absCents: Int) -> PitchShift {
+        
+        var octaves: Int = 0
+        var semitones: Int = 0
+        var cents: Int = 0
+        
+        var cDelta = absCents
+        let oDelta = cDelta / AppConstants.ValueConversions.pitch_octaveToCents
+        
+        if oDelta > 0 {
+            
+            octaves = self.octaves + oDelta
+            cDelta -= oDelta * AppConstants.ValueConversions.pitch_octaveToCents
+        }
+        
+        let sDelta = cents / AppConstants.ValueConversions.pitch_semitoneToCents
+        
+        if sDelta > 0 {
+            
+            semitones = self.semitones + sDelta
+            
+            if semitones > AppConstants.Sound.pitchSemitonesRange.upperBound {
+                
+                semitones -= AppConstants.Sound.pitchSemitonesRange.upperBound
+                octaves.increment()
+            }
+            
+            cDelta -= sDelta * AppConstants.ValueConversions.pitch_semitoneToCents
+        }
+        
+        if cDelta > 0 {
+            
+            cents = self.cents + cDelta
+            
+            if cents > AppConstants.Sound.pitchCentsRange.upperBound {
+                
+                cents -= AppConstants.Sound.pitchCentsRange.upperBound
+                semitones.increment()
+                
+                if semitones > AppConstants.Sound.pitchSemitonesRange.upperBound {
+                    
+                    semitones -= AppConstants.Sound.pitchSemitonesRange.upperBound
+                    octaves.increment()
+                }
+            }
+        }
+        
+        return PitchShift(octaves: octaves, semitones: semitones, cents: cents)
+    }
+    
+    func subtracting(absCents: Int) -> PitchShift {
+        
+        var octaves: Int = 0
+        var semitones: Int = 0
+        var cents: Int = 0
+        
+        var cDelta = absCents
+        let oDelta = cDelta / AppConstants.ValueConversions.pitch_octaveToCents
+        
+        if oDelta > 0 {
+            
+            octaves = self.octaves - oDelta
+            cDelta -= oDelta * AppConstants.ValueConversions.pitch_octaveToCents
+        }
+        
+        let sDelta = cents / AppConstants.ValueConversions.pitch_semitoneToCents
+        
+        if sDelta > 0 {
+            
+            semitones = self.semitones - sDelta
+            
+            if semitones < AppConstants.Sound.pitchSemitonesRange.lowerBound {
+                
+                semitones -= AppConstants.Sound.pitchSemitonesRange.lowerBound
+                octaves.decrement()
+            }
+            
+            cDelta -= sDelta * AppConstants.ValueConversions.pitch_semitoneToCents
+        }
+        
+        if cDelta > 0 {
+            
+            cents = self.cents - cDelta
+            
+            if cents < AppConstants.Sound.pitchCentsRange.lowerBound {
+                
+                cents -= AppConstants.Sound.pitchCentsRange.lowerBound
+                semitones.decrement()
+                
+                if semitones < AppConstants.Sound.pitchSemitonesRange.lowerBound {
+                    
+                    semitones -= AppConstants.Sound.pitchSemitonesRange.lowerBound
+                    octaves.decrement()
+                }
+            }
+        }
+        
+        return PitchShift(octaves: octaves, semitones: semitones, cents: cents)
     }
 }
 

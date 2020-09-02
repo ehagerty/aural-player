@@ -1,5 +1,9 @@
 import Cocoa
 
+enum PitchDeltaUnit: String {
+    case octaves, semitones, cents
+}
+
 class SoundPreferences: PersistentPreferencesProtocol {
     
     var outputDeviceOnStartup: OutputDeviceOnStartup
@@ -18,6 +22,26 @@ class SoundPreferences: PersistentPreferencesProtocol {
     
     var eqDelta: Float
     var pitchDelta: Int
+    var pitchDeltaUnit: PitchDeltaUnit
+    
+    var pitchDeltaAsCents: Int {
+        
+        switch pitchDeltaUnit {
+            
+        case .octaves:
+            
+            return pitchDelta * AppConstants.ValueConversions.pitch_octaveToCents
+            
+        case .semitones:
+            
+            return pitchDelta * AppConstants.ValueConversions.pitch_semitoneToCents
+            
+        case .cents:
+            
+            return pitchDelta
+        }
+    }
+    
     var timeDelta: Float
     
     var effectsSettingsOnStartupOption: EffectsSettingsStartupOptions
@@ -29,6 +53,7 @@ class SoundPreferences: PersistentPreferencesProtocol {
     private var controlsPreferences: ControlsPreferences!
     
     convenience init(_ defaultsDictionary: [String: Any], _ controlsPreferences: ControlsPreferences) {
+        
         self.init(defaultsDictionary)
         self.controlsPreferences = controlsPreferences
     }
@@ -65,6 +90,14 @@ class SoundPreferences: PersistentPreferencesProtocol {
         
         eqDelta = defaultsDictionary["sound.eqDelta"] as? Float ?? PreferencesDefaults.Sound.eqDelta
         pitchDelta = defaultsDictionary["sound.pitchDelta"] as? Int ?? PreferencesDefaults.Sound.pitchDelta
+        
+        if let pitchDeltaUnitStr = defaultsDictionary["sound.pitchDeltaUnit"] as? String {
+            pitchDeltaUnit = PitchDeltaUnit(rawValue: pitchDeltaUnitStr) ?? PreferencesDefaults.Sound.pitchDeltaUnit
+            
+        } else {
+            pitchDeltaUnit = PreferencesDefaults.Sound.pitchDeltaUnit
+        }
+        
         timeDelta = defaultsDictionary["sound.timeDelta"] as? Float ?? PreferencesDefaults.Sound.timeDelta
         
         if let effectsSettingsOnStartupOptionStr = defaultsDictionary["sound.effectsSettingsOnStartup.option"] as? String {
@@ -104,6 +137,7 @@ class SoundPreferences: PersistentPreferencesProtocol {
         
         defaults.set(eqDelta, forKey: "sound.eqDelta")
         defaults.set(pitchDelta, forKey: "sound.pitchDelta")
+        defaults.set(pitchDeltaUnit.rawValue, forKey: "sound.pitchDeltaUnit")
         defaults.set(timeDelta, forKey: "sound.timeDelta")
         
         defaults.set(effectsSettingsOnStartupOption.rawValue, forKey: "sound.effectsSettingsOnStartup.option")

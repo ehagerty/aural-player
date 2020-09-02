@@ -10,9 +10,6 @@ class SoundProfiles: TrackKeyedMap<SoundProfile> {
         }
     }
     
-    // TODO: Remove this (circular) dependency !!!
-//    var audioGraph: AudioGraphProtocol!
-    
     func add(_ track: Track) {
         self.add(track.file)
     }
@@ -49,7 +46,7 @@ class TrackKeyedMap<T> {
     }
     
     func hasFor(_ track: Track) -> Bool {
-        return get(track) != nil
+        return map[track.file] != nil
     }
     
     func remove(_ track: Track) {

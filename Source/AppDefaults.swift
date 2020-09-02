@@ -20,7 +20,12 @@ struct AppDefaults {
     static let eqBandGain: Float = 0
     
     static let pitchState: EffectsUnitState = .bypassed
-    static let pitch: Float = 0
+    static let pitch: PitchShift = PitchShift(fromCents: 0)
+    
+    static let pitchOctaves: Int = 0
+    static let pitchSemitones: Int = 0
+    static let pitchCents: Int = 0
+    
     static let pitchOverlap: Float = 8
     
     static let timeState: EffectsUnitState = .bypassed
