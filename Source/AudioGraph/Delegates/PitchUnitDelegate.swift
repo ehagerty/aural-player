@@ -30,15 +30,7 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     func increasePitch() -> PitchShift {
         
         ensureActiveAndResetPitch()
-
-        let curPitchCents = self.pitch.asCents
-        var delta: Int = preferences.pitchDeltaAsCents
-        
-        if !AppConstants.Sound.pitchRange.contains(curPitchCents + delta) {
-            delta = AppConstants.Sound.pitchRange.upperBound - curPitchCents
-        }
-        
-        self.pitch = self.pitch.adding(absCents: delta)
+        self.pitch = PitchShift(fromCents: (self.pitch.asCents + preferences.pitchDeltaAsCents).clampedTo(range: AppConstants.Sound.pitchRange))
         
         return self.pitch
     }
@@ -46,15 +38,7 @@ class PitchUnitDelegate: FXUnitDelegate<PitchUnit>, PitchUnitDelegateProtocol {
     func decreasePitch() -> PitchShift {
         
         ensureActiveAndResetPitch()
-
-        let curPitchCents = self.pitch.asCents
-        var delta: Int = preferences.pitchDeltaAsCents
-        
-        if !AppConstants.Sound.pitchRange.contains(curPitchCents - delta) {
-            delta = curPitchCents - AppConstants.Sound.pitchRange.lowerBound
-        }
-        
-        self.pitch = self.pitch.subtracting(absCents: delta)
+        self.pitch = PitchShift(fromCents: (self.pitch.asCents - preferences.pitchDeltaAsCents).clampedTo(range: AppConstants.Sound.pitchRange))
         
         return self.pitch
     }
