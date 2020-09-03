@@ -150,7 +150,7 @@ class LibraryWindowController: NSWindowController, NSTabViewDelegate, Notificati
     }
     
     @IBAction func closeWindowAction(_ sender: AnyObject) {
-        Messenger.publish(.windowManager_togglePlaylistWindow)
+        window?.close()
     }
     
     private func checkIfLibraryIsBeingModified() -> Bool {

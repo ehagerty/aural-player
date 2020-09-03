@@ -14,12 +14,15 @@ class ModularInterface: InterfaceProtocol {
     }
     
     // App's main window
-    var mainWindow: NSWindow = WindowFactory.mainWindow
+    var mainWindowController: MainWindowController = MainWindowController()
+    lazy var mainWindow: NSWindow = mainWindowController.window!
     
     // Load these optional windows only if/when needed
-    var effectsWindow: NSWindow = WindowFactory.effectsWindow
+    var effectsWindowController: EffectsWindowController = EffectsWindowController()
+    lazy var effectsWindow: NSWindow = effectsWindowController.window!
     
-    var playlistWindow: NSWindow = WindowFactory.playlistWindow
+    var libraryWindowController: LibraryWindowController = LibraryWindowController()
+    lazy var libraryWindow: NSWindow = libraryWindowController.window!
     
     lazy var playQueueWindowController: PlayQueueWindowViewController = PlayQueueWindowViewController()
     lazy var playQueueWindow: NSWindow = playQueueWindowController.window!
@@ -84,13 +87,13 @@ class ModularInterface: InterfaceProtocol {
         
         if layout.showPlaylist {
             
-            mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.below)
-            playlistWindow.setFrame(layout.playlistWindowFrame!, display: true)
+            mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.below)
+            libraryWindow.setFrame(layout.playlistWindowFrame!, display: true)
         }
         
         mainWindow.setIsVisible(true)
         effectsWindow.setIsVisible(layout.showEffects)
-        playlistWindow.setIsVisible(layout.showPlaylist)
+        libraryWindow.setIsVisible(layout.showPlaylist)
         
         Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: layout.showPlaylist, showingEffectsWindow: layout.showEffects))
     }
@@ -98,17 +101,21 @@ class ModularInterface: InterfaceProtocol {
     var currentWindowLayout: WindowLayout {
         
         let effectsWindowOrigin = isShowingEffects ? effectsWindow.origin : nil
-        let playlistWindowFrame = isShowingPlaylist ? playlistWindow.frame : nil
+        let playlistWindowFrame = isShowingLibrary ? libraryWindow.frame : nil
         
-        return WindowLayout("_currentWindowLayout_", isShowingEffects, isShowingPlaylist, mainWindow.origin, effectsWindowOrigin, playlistWindowFrame, false)
+        return WindowLayout("_currentWindowLayout_", isShowingEffects, isShowingLibrary, mainWindow.origin, effectsWindowOrigin, playlistWindowFrame, false)
     }
     
     var isShowingEffects: Bool {
         return effectsWindow.isVisible
     }
     
-    var isShowingPlaylist: Bool {
-        return playlistWindow.isVisible
+    var isShowingLibrary: Bool {
+        return libraryWindow.isVisible
+    }
+    
+    var isShowingPlayQueue: Bool {
+        return playQueueWindow.isVisible
     }
     
     // NOTE - Boolean short-circuiting is important here. Otherwise, the chapters list window will be unnecessarily loaded.
@@ -130,19 +137,18 @@ class ModularInterface: InterfaceProtocol {
     }
     
     var playlistWindowFrame: NSRect {
-        return playlistWindow.frame
+        return libraryWindow.frame
     }
     
     // MARK ----------- View toggling code ----------------------------------------------------
     
     // Shows/hides the effects window
     func toggleEffects() {
-        
         isShowingEffects ? hideEffects() : showEffects()
     }
     
     // Shows the effects window
-    private func showEffects() {
+    func showEffects() {
         
         mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.above)
         effectsWindow.show()
@@ -155,25 +161,32 @@ class ModularInterface: InterfaceProtocol {
     }
     
     // Shows/hides the playlist window
-    func togglePlaylist() {
-        
-        isShowingPlaylist ? hidePlaylist() : showPlaylist()
+    func toggleLibrary() {
+        isShowingLibrary ? hideLibrary() : showLibrary()
     }
     
     // Shows the playlist window
-    private func showPlaylist() {
+    func showLibrary() {
         
-        mainWindow.addChildWindow(playlistWindow, ordered: NSWindow.OrderingMode.above)
-        playlistWindow.show()
-        playlistWindow.orderFront(self)
+        mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.above)
+        libraryWindow.show()
+        libraryWindow.orderFront(self)
     }
     
     // Hides the playlist window
-    private func hidePlaylist() {
-        playlistWindow.hide()
+    private func hideLibrary() {
+        libraryWindow.hide()
     }
     
-    func showPlayQueue() {
+    func togglePlayQueue() {
+        isShowingPlayQueue ? hidePlayQueue() : showPlayQueue()
+    }
+    
+    private func hidePlayQueue() {
+        playQueueWindow.hide()
+    }
+    
+    private func showPlayQueue() {
 
         mainWindow.addChildWindow(playQueueWindow, ordered: NSWindow.OrderingMode.above)
         playQueueWindow.show()
@@ -181,20 +194,19 @@ class ModularInterface: InterfaceProtocol {
     }
     
     func toggleChaptersList() {
-        
         isShowingChaptersList ? hideChaptersList() : showChaptersList()
     }
     
     func showChaptersList() {
         
-        playlistWindow.addChildWindow(chaptersListWindow, ordered: NSWindow.OrderingMode.above)
+        libraryWindow.addChildWindow(chaptersListWindow, ordered: NSWindow.OrderingMode.above)
         chaptersListWindow.makeKeyAndOrderFront(self)
         
         // This will happen only once after each app launch - the very first time the window is shown.
         // After that, the window will be restored to its previous on-screen location
         if !chaptersListWindowLoaded {
             
-            UIUtils.centerDialogWRTWindow(chaptersListWindow, playlistWindow)
+            UIUtils.centerDialogWRTWindow(chaptersListWindow, libraryWindow)
             chaptersListWindowLoaded = true
         }
     }
@@ -221,11 +233,11 @@ class ModularInterface: InterfaceProtocol {
         
         mainWindow.setFrameOrigin(NSPoint(x: mainWindowX, y: mainWindowY))
         
-        var playlistFrame = playlistWindow.frame
+        var playlistFrame = libraryWindow.frame
         
         playlistFrame.origin = NSPoint(x: playlistX, y: playlistY)
         playlistFrame.size = NSSize(width: width, height: height)
-        playlistWindow.setFrame(playlistFrame, display: true)
+        libraryWindow.setFrame(playlistFrame, display: true)
     }
     
     // MARK ----------- Message handling ----------------------------------------------------
@@ -279,14 +291,14 @@ class ModularInterface: InterfaceProtocol {
     // Sorted by order of relevance
     private func getCandidateWindowsForSnap(_ movedWindow: SnappingWindow) -> [NSWindow] {
         
-        if movedWindow === playlistWindow {
+        if movedWindow === libraryWindow {
             return [mainWindow, effectsWindow]
             
         } else if movedWindow === effectsWindow {
-            return [mainWindow, playlistWindow]
+            return [mainWindow, libraryWindow]
             
         } else if movedWindow === chaptersListWindow {
-            return [playlistWindow, mainWindow, effectsWindow]
+            return [libraryWindow, mainWindow, effectsWindow]
         }
         
         // Main window

@@ -150,7 +150,7 @@ class EffectsWindowController: NSWindowController, NotificationSubscriber {
     }
     
     @IBAction func closeWindowAction(_ sender: AnyObject) {
-        Messenger.publish(.windowManager_toggleEffectsWindow)
+        window?.close()
     }
     
     private func changeTextSize(_ textSize: TextSize) {

@@ -69,7 +69,7 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         
         updateSummary()
     }
-    
+
     // Invokes the Open file dialog, to allow the user to add tracks/playlists to the app playlist
     @IBAction func addTracksAction(_ sender: AnyObject) {
         addTracks()

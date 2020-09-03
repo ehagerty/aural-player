@@ -37,7 +37,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button toolTip="Hide the playlist" wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4yV-Um-Fno" userLabel="Close Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                                    <rect key="frame" x="15" y="375" width="10" height="10"/>
+                                    <rect key="frame" x="10" y="380" width="10" height="10"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Close" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FdM-lY-tWt">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -51,10 +51,10 @@
                                     </connections>
                                 </button>
                                 <popUpButton toolTip="Playlist View" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5p1-sr-Ddg" userLabel="Playlist View Menu">
-                                    <rect key="frame" x="566" y="372" width="24" height="15"/>
+                                    <rect key="frame" x="570" y="380" width="24" height="10"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="24" id="6xX-Mm-Azc"/>
-                                        <constraint firstAttribute="height" constant="15" id="isf-UK-I6g"/>
+                                        <constraint firstAttribute="height" constant="10" id="isf-UK-I6g"/>
                                     </constraints>
                                     <popUpButtonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" preferredEdge="maxX" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="asW-PK-IIU" id="Apu-zJ-JGW">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -93,8 +93,8 @@
                                 </popUpButton>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="5p1-sr-Ddg" secondAttribute="trailing" constant="10" id="P55-hS-5eC"/>
-                                <constraint firstItem="5p1-sr-Ddg" firstAttribute="top" secondItem="Mfx-0r-dRQ" secondAttribute="top" constant="13" id="zvN-Sl-c8H"/>
+                                <constraint firstAttribute="trailing" secondItem="5p1-sr-Ddg" secondAttribute="trailing" constant="6" id="P55-hS-5eC"/>
+                                <constraint firstItem="5p1-sr-Ddg" firstAttribute="top" secondItem="Mfx-0r-dRQ" secondAttribute="top" constant="10" id="zvN-Sl-c8H"/>
                             </constraints>
                         </view>
                         <color key="borderColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -218,7 +218,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dDG-Dw-rbl" userLabel="Window Title" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
-                        <rect key="frame" x="228" y="370" width="144" height="22"/>
+                        <rect key="frame" x="228" y="375" width="144" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="km8-Ni-5c7"/>
                             <constraint firstAttribute="width" constant="140" id="t0K-A8-rE4"/>
@@ -423,10 +423,10 @@
                     <constraint firstItem="cxn-q8-bzF" firstAttribute="bottom" secondItem="1Q2-QW-76b" secondAttribute="bottom" constant="1" id="Pin-YJ-oLB"/>
                     <constraint firstItem="c2A-EN-gcy" firstAttribute="trailing" secondItem="dys-ee-q5g" secondAttribute="trailing" constant="-20" id="SYH-9q-B7w"/>
                     <constraint firstAttribute="bottom" secondItem="iHo-XB-cHx" secondAttribute="bottom" constant="7" id="Thi-no-tOq"/>
-                    <constraint firstItem="7gy-gy-XW7" firstAttribute="bottom" secondItem="dDG-Dw-rbl" secondAttribute="bottom" constant="-4" id="Tul-bi-07F"/>
+                    <constraint firstItem="7gy-gy-XW7" firstAttribute="bottom" secondItem="dDG-Dw-rbl" secondAttribute="bottom" constant="1" id="Tul-bi-07F"/>
                     <constraint firstAttribute="bottom" secondItem="vr6-WN-12B" secondAttribute="bottom" constant="7" id="TvW-4o-FpH"/>
                     <constraint firstAttribute="bottom" secondItem="rC3-II-PTW" secondAttribute="bottom" constant="7" id="UAT-7Y-zWc"/>
-                    <constraint firstItem="dDG-Dw-rbl" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="8" id="UYZ-Ot-NAf"/>
+                    <constraint firstItem="dDG-Dw-rbl" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="3" id="UYZ-Ot-NAf"/>
                     <constraint firstItem="7gy-gy-XW7" firstAttribute="leading" secondItem="dDG-Dw-rbl" secondAttribute="leading" constant="18" id="XTy-bx-Tby"/>
                     <constraint firstItem="cxn-q8-bzF" firstAttribute="leading" secondItem="eyY-tJ-e9l" secondAttribute="trailing" constant="20" id="ZZN-3I-MUC"/>
                     <constraint firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" constant="20" id="aKQ-uM-LJ5"/>
