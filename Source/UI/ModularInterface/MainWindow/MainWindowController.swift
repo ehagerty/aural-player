@@ -21,8 +21,6 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     @IBOutlet weak var btnMinimize: TintedImageButton!
     
     // Buttons to toggle the playlist/effects views
-    @IBOutlet weak var btnToggleEffects: OnOffImageButton!
-    @IBOutlet weak var btnTogglePlaylist: OnOffImageButton!
     @IBOutlet weak var btnSettingsMenu: NSPopUpButton!
     
     @IBOutlet weak var settingsMenuIconItem: TintedIconMenuItem!
@@ -42,8 +40,6 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
         initWindow()
         theWindow.setIsVisible(false)
         
-//        theWindow.delegate = WindowManager.windowDelegate
-        
         activateGestureHandler()
         initSubscriptions()
     }
@@ -56,19 +52,9 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
         
         addSubViews()
         
-        let appState = ObjectGraph.appState.ui.windowLayout
-        
         [btnQuit, btnMinimize].forEach({$0?.tintFunction = {return Colors.viewControlButtonColor}})
         
-        [btnToggleEffects, btnTogglePlaylist].forEach({
-            $0?.onStateTintFunction = {return Colors.viewControlButtonColor}
-            $0?.offStateTintFunction = {return Colors.toggleButtonOffStateColor}
-        })
-        
         logoImage.tintFunction = {return Colors.appLogoColor}
-        
-//        btnToggleEffects.onIf(appState.showEffects)
-//        btnTogglePlaylist.onIf(appState.showPlaylist)
         
         changeTextSize(PlayerViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
@@ -97,7 +83,6 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
         Messenger.subscribe(self, .changeAppLogoColor, self.changeAppLogoColor(_:))
         Messenger.subscribe(self, .changeBackgroundColor, self.changeBackgroundColor(_:))
         Messenger.subscribe(self, .changeViewControlButtonColor, self.changeViewControlButtonColor(_:))
-        Messenger.subscribe(self, .changeToggleButtonOffStateColor, self.changeToggleButtonOffStateColor(_:))
 
         Messenger.subscribe(self, .windowManager_togglePlaylistWindow, self.togglePlaylistWindow)
         Messenger.subscribe(self, .windowManager_toggleEffectsWindow, self.toggleEffectsWindow)
@@ -113,7 +98,6 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     private func togglePlaylistWindow() {
 
 //        WindowManager.togglePlaylist()
-        btnTogglePlaylist.toggle()
     }
     
     // Shows/hides the effects panel on the main window
@@ -124,7 +108,6 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     private func toggleEffectsWindow() {
         
 //        WindowManager.toggleEffects()
-        btnToggleEffects.toggle()
     }
     
     // Quits the app
@@ -145,7 +128,6 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
         
         changeBackgroundColor(scheme.general.backgroundColor)
         changeViewControlButtonColor(scheme.general.viewControlButtonColor)
-        changeToggleButtonOffStateColor(scheme.general.toggleButtonOffStateColor)
         changeAppLogoColor(scheme.general.appLogoColor)
     }
     
@@ -159,16 +141,8 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     private func changeViewControlButtonColor(_ color: NSColor) {
         
-        [btnQuit, btnMinimize, btnTogglePlaylist, btnToggleEffects, settingsMenuIconItem].forEach({
+        [btnQuit, btnMinimize, settingsMenuIconItem].forEach({
             ($0 as? Tintable)?.reTint()
-        })
-    }
-    
-    private func changeToggleButtonOffStateColor(_ color: NSColor) {
-        
-        // These are the only 2 buttons that have off states
-        [btnTogglePlaylist, btnToggleEffects].forEach({
-            $0.reTint()
         })
     }
     
@@ -180,7 +154,7 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     func windowLayoutChanged(_ notification: WindowLayoutChangedNotification) {
         
-        btnToggleEffects.onIf(notification.showingEffectsWindow)
-        btnTogglePlaylist.onIf(notification.showingPlaylistWindow)
+//        btnToggleEffects.onIf(notification.showingEffectsWindow)
+//        btnTogglePlaylist.onIf(notification.showingPlaylistWindow)
     }
 }

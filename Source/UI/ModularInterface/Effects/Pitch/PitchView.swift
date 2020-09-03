@@ -39,6 +39,7 @@ class PitchView: NSView {
             semitonesSlider.setValue(newValue.semitones)
             centsSlider.setValue(newValue.cents)
             
+            applyCorrection()
             pitchUpdated()
         }
     }
@@ -93,8 +94,6 @@ class PitchView: NSView {
         lblOctaves.stringValue = String(octavesSlider.integerValue)
         lblSemitones.stringValue = String(semitonesSlider.integerValue)
         lblCents.stringValue = String(centsSlider.integerValue)
-        
-        applyCorrection()
     }
     
     func stateChanged() {

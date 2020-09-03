@@ -297,7 +297,7 @@ class ValueFormatter {
     }
     
     static func formatDelayAmount(_ value: Float) -> String {
-        return ValueFormatter.formatValue(NSNumber(value: value), 0)
+        return formatReverbAmount(value)
     }
     
     static func formatDelayFeedback(_ value: Float) -> String {
