@@ -236,3 +236,24 @@ func mapNSSize(_ map: NSDictionary) -> NSSize? {
     
     return nil
 }
+
+func mapNSRect(_ map: NSDictionary) -> NSRect? {
+    
+    if let px = map["x"] as? NSNumber, let py = map["y"] as? NSNumber,
+        let wd = map["width"] as? NSNumber, let ht = map["height"] as? NSNumber {
+        
+        return NSRect(x: px.cgFloat, y: py.cgFloat, width: wd.cgFloat, height: ht.cgFloat)
+        
+    } else if let originDict = map["origin"] as? NSDictionary, let sizeDict = map["size"] as? NSDictionary,
+        let origin = mapNSPoint(originDict), let size = mapNSSize(sizeDict) {
+        
+        return NSRect(origin: origin, size: size)
+    }
+    
+    return nil
+}
+
+extension NSNumber {
+    
+    var cgFloat: CGFloat {CGFloat(self.floatValue)}
+}

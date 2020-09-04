@@ -211,7 +211,7 @@ class ObjectGraph {
         appState.playbackProfiles = playbackDelegate.profiles.all()
         
         appState.ui = UIState()
-//        appState.ui.windowLayout = WindowManager.persistentState
+        appState.ui.windowLayout = interfaceManager.modularInterface.persistentState.windowLayout
         appState.ui.colorSchemes = ColorSchemes.persistentState
         appState.ui.player = PlayerViewState.persistentState
         appState.ui.playlist = PlaylistViewState.persistentState

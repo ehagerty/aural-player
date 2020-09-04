@@ -1,6 +1,8 @@
 import Cocoa
 
 class WindowLayoutPopupMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
+    
+    private let modularInterface: ModularInterface = ObjectGraph.interfaceManager.modularInterface
 
     private lazy var layoutNamePopover: StringInputPopoverViewController = StringInputPopoverViewController.create(self)
 
@@ -23,7 +25,7 @@ class WindowLayoutPopupMenuController: NSObject, NSMenuDelegate, StringInputRece
     }
 
     @IBAction func btnLayoutAction(_ sender: NSMenuItem) {
-//        WindowManager.layout(sender.title)
+        modularInterface.layout(sender.title)
     }
     
     @IBAction func saveWindowLayoutAction(_ sender: NSMenuItem) {

@@ -6,13 +6,15 @@ class WindowLayouts {
         
         var map = [String: WindowLayout]()
         
-        WindowLayoutPresets.allCases.forEach({
+        WindowLayoutPreset.allCases.forEach {
             
             let presetName = $0.description
             
-            // TODO: each variable is computed multiple times ... make this more efficient
-            map[presetName] = WindowLayout(presetName, $0.showEffects, $0.showPlaylist, $0.mainWindowOrigin, $0.effectsWindowOrigin, $0.playlistWindowFrame, true)
-        })
+            let layout = WindowLayout(presetName, true, mainWindow: $0.mainWindow)
+            layout.windows = $0.windows
+            
+            map[presetName] = layout
+        }
         
         return map
     }()
@@ -26,7 +28,7 @@ class WindowLayouts {
     }
     
     static var defaultLayout: WindowLayout {
-        return layoutByName(WindowLayoutPresets.verticalFullStack.description)!
+        return layoutByName(WindowLayoutPreset.tallStack.description)!
     }
     
     static func layoutByName(_ name: String, _ acceptDefault: Bool = true) -> WindowLayout? {
@@ -34,7 +36,7 @@ class WindowLayouts {
         let layout = layouts[name] ?? (acceptDefault ? defaultLayout : nil)
         
         if let lt = layout, lt.systemDefined {
-            WindowLayoutPresets.recompute(lt)
+            WindowLayoutPreset.recompute(lt)
         }
         
         return layout
@@ -66,7 +68,7 @@ class WindowLayouts {
     }
     
     static func recomputeSystemDefinedLayouts() {
-        systemDefinedLayouts.forEach({WindowLayoutPresets.recompute($0)})
+        systemDefinedLayouts.forEach({WindowLayoutPreset.recompute($0)})
     }
 
     // Assume preset with this name doesn't already exist

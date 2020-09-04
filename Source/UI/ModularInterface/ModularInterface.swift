@@ -77,33 +77,54 @@ class ModularInterface: InterfaceProtocol {
     
     func layout(_ layout: WindowLayout) {
         
-        mainWindow.setFrameOrigin(layout.mainWindowOrigin)
+        mainWindow.setFrameOrigin(layout.mainWindow.frame.origin)
         
-        if layout.showEffects {
+        for window in layout.windows {
             
-            mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
-            effectsWindow.setFrameOrigin(layout.effectsWindowOrigin!)
+            switch window.id {
+                
+            case NSUserInterfaceItemIdentifier.soundWindow.rawValue:
+                
+                mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
+                effectsWindow.setFrameOrigin(window.frame.origin)
+                
+            case NSUserInterfaceItemIdentifier.playQueueWindow.rawValue:
+                
+                mainWindow.addChildWindow(playQueueWindow, ordered: NSWindow.OrderingMode.below)
+//                playQueueWindow.setFrameOrigin(window.frame.origin)
+                playQueueWindow.setFrame(window.frame, display: true)
+                
+            default:
+                
+                print("\nOther window")
+            }
         }
-        
-        if layout.showPlaylist {
-            
-            mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.below)
-            libraryWindow.setFrame(layout.playlistWindowFrame!, display: true)
-        }
-        
+//
+//        if layout.showEffects {
+//
+//            mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
+//            effectsWindow.setFrameOrigin(layout.effectsWindowOrigin!)
+//        }
+//
+//        if layout.showPlaylist {
+//
+//            mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.below)
+//            libraryWindow.setFrame(layout.playlistWindowFrame!, display: true)
+//        }
+//
         mainWindow.setIsVisible(true)
-        effectsWindow.setIsVisible(layout.showEffects)
-        libraryWindow.setIsVisible(layout.showPlaylist)
-        
-        Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: layout.showPlaylist, showingEffectsWindow: layout.showEffects))
+//        effectsWindow.setIsVisible(layout.showEffects)
+//        libraryWindow.setIsVisible(layout.showPlaylist)
+//
+//        Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: layout.showPlaylist, showingEffectsWindow: layout.showEffects))
     }
     
     var currentWindowLayout: WindowLayout {
         
-        let effectsWindowOrigin = isShowingEffects ? effectsWindow.origin : nil
-        let playlistWindowFrame = isShowingLibrary ? libraryWindow.frame : nil
+//        let effectsWindowOrigin = isShowingEffects ? effectsWindow.origin : nil
+//        let playlistWindowFrame = isShowingLibrary ? libraryWindow.frame : nil
         
-        return WindowLayout("_currentWindowLayout_", isShowingEffects, isShowingLibrary, mainWindow.origin, effectsWindowOrigin, playlistWindowFrame, false)
+        return WindowLayout("_currentWindowLayout_", false, mainWindow: LayoutWindow(id: "", frame: mainWindow.frame))
     }
     
     var isShowingEffects: Bool {
@@ -242,9 +263,12 @@ class ModularInterface: InterfaceProtocol {
     
     // MARK ----------- Message handling ----------------------------------------------------
     
-    var persistentState: WindowLayoutState {
+    var persistentState: ModularInterfaceState {
         
-        let uiState = WindowLayoutState()
+        let state = ModularInterfaceState()
+        
+        state.windowLayout.rememberedLayout = WindowLayout("_rememberedModularInterfaceWindowLayout_", true,
+                                                           mainWindow: LayoutWindow(id: mainWindow.identifier!.rawValue, frame: mainWindow.frame))
         
 //        uiState.showEffects = effectsWindow.isVisible
 //        uiState.showPlaylist = playlistWindow.isVisible
@@ -254,9 +278,9 @@ class ModularInterface: InterfaceProtocol {
 //        uiState.effectsWindowOrigin = effectsWindow.origin
 //        uiState.playlistWindowFrame = playlistWindow.frame
         
-        uiState.userLayouts = WindowLayouts.userDefinedLayouts
+//        state.userLayouts = WindowLayouts.userDefinedLayouts
         
-        return uiState
+        return state
     }
     
     // MARK: NSWindowDelegate functions
@@ -313,14 +337,20 @@ class SnappingWindowDelegate: NSObject, NSWindowDelegate {
     }
 }
 
-class ModularInterfaceState {
+class ModularInterfaceState: PersistentState {
     
-    var showEffects: Bool = true
-    var showPlaylist: Bool = true
+    var windowLayout: WindowLayoutState = WindowLayoutState()
     
-    var mainWindowOrigin: NSPoint = NSPoint.zero
-    var effectsWindowOrigin: NSPoint? = nil
-    var playlistWindowFrame: NSRect? = nil
-    
-    var userLayouts: [WindowLayout] = [WindowLayout]()
+    static func deserialize(_ map: NSDictionary) -> PersistentState {
+        
+        let state = ModularInterfaceState()
+        
+        if let windowLayoutDict = map["windowLayout"] as? NSDictionary,
+            let windowLayoutState = WindowLayoutState.deserialize(windowLayoutDict) as? WindowLayoutState {
+            
+            state.windowLayout = windowLayoutState
+        }
+        
+        return state
+    }
 }

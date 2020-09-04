@@ -363,7 +363,7 @@
                                                     <menu key="submenu" title="Window layout" id="yiL-Aw-PVn">
                                                         <items>
                                                             <menuItem isSeparatorItem="YES" id="tGa-6w-I86"/>
-                                                            <menuItem title="Vertical full stack" image="WindowLayout-VerticalStack" id="KSu-L0-WGd">
+                                                            <menuItem title="Tall stack" image="WindowLayout-VerticalStack" id="KSu-L0-WGd" userLabel="Tall stack">
                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                 <connections>
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="Crw-b8-o53"/>

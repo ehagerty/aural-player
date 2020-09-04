@@ -117,7 +117,8 @@ class MainWindowController: NSWindowController, NotificationSubscriber {
     
     // Minimizes the window (and any child windows)
     @IBAction func minimizeAction(_ sender: AnyObject) {
-        theWindow.miniaturize(self)
+//        theWindow.miniaturize(self)
+        print("\nMainWindow frame: \(theWindow.frame)")
     }
     
     private func changeTextSize(_ textSize: TextSize) {
