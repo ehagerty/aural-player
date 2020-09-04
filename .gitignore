@@ -11,3 +11,6 @@ Resources/ffmpeg/codecs.txt
 Resources/ffmpeg/fmts.txt
 Source/AudioGraph/Utils/OtherDM.swift
 
+Resources/ffmpeg/codecs-inst.txt
+Resources/ffmpeg/codecs-mine.txt
+Resources/ffmpeg/missing.txt

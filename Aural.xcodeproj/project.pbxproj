@@ -297,9 +297,9 @@
 		3E24F4D021699E5000B9CDA6 /* EffectsPresetsEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E24F4CF21699E5000B9CDA6 /* EffectsPresetsEditor.xib */; };
 		3E24F4D92169A15500B9CDA6 /* EffectsPresetsEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24F4D82169A15500B9CDA6 /* EffectsPresetsEditorViewController.swift */; };
 		3E24F4DB2169A26700B9CDA6 /* SoundProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E24F4DA2169A26700B9CDA6 /* SoundProfile.swift */; };
-		3E2604512454E72800CFEC86 /* AlegreyaSansSC-Medium.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E26044F2454E6E600CFEC86 /* AlegreyaSansSC-Medium.ttf */; };
-		3E2604522454E72800CFEC86 /* AlegreyaSansSC-Regular.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E26044D2454E6E600CFEC86 /* AlegreyaSansSC-Regular.ttf */; };
-		3E2604532454E72800CFEC86 /* Play-Regular.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3E26044E2454E6E600CFEC86 /* Play-Regular.ttf */; };
+		3E2604512454E72800CFEC86 /* AlegreyaSansSC-Medium.ttf in Copy fonts */ = {isa = PBXBuildFile; fileRef = 3E26044F2454E6E600CFEC86 /* AlegreyaSansSC-Medium.ttf */; };
+		3E2604522454E72800CFEC86 /* AlegreyaSansSC-Regular.ttf in Copy fonts */ = {isa = PBXBuildFile; fileRef = 3E26044D2454E6E600CFEC86 /* AlegreyaSansSC-Regular.ttf */; };
+		3E2604532454E72800CFEC86 /* Play-Regular.ttf in Copy fonts */ = {isa = PBXBuildFile; fileRef = 3E26044E2454E6E600CFEC86 /* Play-Regular.ttf */; };
 		3E26B92B1FBC177F00FA3274 /* AutoHidingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E26B92A1FBC177F00FA3274 /* AutoHidingView.swift */; };
 		3E26B92D1FBC207C00FA3274 /* MultiStateImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E26B92C1FBC207C00FA3274 /* MultiStateImageButton.swift */; };
 		3E26B9311FBC53A700FA3274 /* GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E26B9301FBC53A700FA3274 /* GestureHandler.swift */; };
@@ -583,6 +583,16 @@
 		3E8718D02466B61D007D9672 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8718CF2466B61D007D9672 /* MathUtils.swift */; };
 		3E8718D32466B856007D9672 /* MathUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8718D22466B856007D9672 /* MathUtilsTests.swift */; };
 		3E8718DD2466DEAD007D9672 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8718DC2466DEAD007D9672 /* StringExtensions.swift */; };
+		3E8812DD2501F540008D2291 /* libavcodec.58.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E2B4D7224DD7296002C7AF6 /* libavcodec.58.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3E8812DE2501F542008D2291 /* libavformat.58.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E2B4D6F24DD7296002C7AF6 /* libavformat.58.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3E8812DF2501F543008D2291 /* libavutil.56.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E2B4D7024DD7296002C7AF6 /* libavutil.56.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3E8812E02501F545008D2291 /* libswresample.3.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E2B4D7124DD7296002C7AF6 /* libswresample.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3E8812E42501FE36008D2291 /* libspeex.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E8812E12501FE36008D2291 /* libspeex.1.dylib */; };
+		3E8812E52501FE36008D2291 /* libopencore-amrwb.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E8812E22501FE36008D2291 /* libopencore-amrwb.0.dylib */; };
+		3E8812E62501FE36008D2291 /* libopencore-amrnb.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E8812E32501FE36008D2291 /* libopencore-amrnb.0.dylib */; };
+		3E8812E72501FE5E008D2291 /* libopencore-amrnb.0.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E8812E32501FE36008D2291 /* libopencore-amrnb.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3E8812E82501FE5F008D2291 /* libopencore-amrwb.0.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E8812E22501FE36008D2291 /* libopencore-amrwb.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		3E8812E92501FE5F008D2291 /* libspeex.1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = 3E8812E12501FE36008D2291 /* libspeex.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3E89CA24246316F10057D3EE /* PlayingTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89CA23246316F10057D3EE /* PlayingTrackViewController.swift */; };
 		3E89CA26246317B90057D3EE /* WaitingTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E89CA25246317B90057D3EE /* WaitingTrackViewController.swift */; };
 		3E89CA28246323030057D3EE /* WaitingTrack.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E89CA27246323030057D3EE /* WaitingTrack.xib */; };
@@ -668,9 +678,6 @@
 		3EA9D090249D534B0054EF00 /* Messenger_AsynchronousNotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA9D08F249D534B0054EF00 /* Messenger_AsynchronousNotificationsTests.swift */; };
 		3EAB1BD524A8BC0F007D130F /* GroupingPlaylistTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB1BD424A8BC0F007D130F /* GroupingPlaylistTableViews.swift */; };
 		3EAB1BD724A8CC67007D130F /* FlatPlaylistTableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB1BD624A8CC67007D130F /* FlatPlaylistTableViews.swift */; };
-		3EAC65ED249109E600E7D56B /* libswiftAVFoundation.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EAC65EB249109D800E7D56B /* libswiftAVFoundation.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3EAC65EE249109E600E7D56B /* libswiftsimd.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EAC65EC249109D800E7D56B /* libswiftsimd.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		3EAC65EF249109E600E7D56B /* libswiftSwiftOnoneSupport.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3EAC65EA249109D800E7D56B /* libswiftSwiftOnoneSupport.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		3EAD098F216478440007D7DF /* MasterPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD098E216478440007D7DF /* MasterPresets.swift */; };
 		3EAD0991216482B60007D7DF /* EffectsUnitPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAD0990216482B60007D7DF /* EffectsUnitPreset.swift */; };
 		3EAEBCAC1FDCD644000FBC04 /* BannerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAEBCAB1FDCD644000FBC04 /* BannerLabel.swift */; };
@@ -893,28 +900,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		3E2604502454E70E00CFEC86 /* CopyFiles */ = {
+		3E2604502454E70E00CFEC86 /* Copy fonts */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = Fonts;
 			dstSubfolderSpec = 7;
 			files = (
-				3E2604512454E72800CFEC86 /* AlegreyaSansSC-Medium.ttf in CopyFiles */,
-				3E2604522454E72800CFEC86 /* AlegreyaSansSC-Regular.ttf in CopyFiles */,
-				3E2604532454E72800CFEC86 /* Play-Regular.ttf in CopyFiles */,
+				3E2604512454E72800CFEC86 /* AlegreyaSansSC-Medium.ttf in Copy fonts */,
+				3E2604522454E72800CFEC86 /* AlegreyaSansSC-Regular.ttf in Copy fonts */,
+				3E2604532454E72800CFEC86 /* Play-Regular.ttf in Copy fonts */,
 			);
+			name = "Copy fonts";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3EAC65E72491091200E7D56B /* CopyFiles */ = {
+		3EAC65E72491091200E7D56B /* Copy dylibs */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3EAC65ED249109E600E7D56B /* libswiftAVFoundation.dylib in CopyFiles */,
-				3EAC65EE249109E600E7D56B /* libswiftsimd.dylib in CopyFiles */,
-				3EAC65EF249109E600E7D56B /* libswiftSwiftOnoneSupport.dylib in CopyFiles */,
+				3E8812E72501FE5E008D2291 /* libopencore-amrnb.0.dylib in Copy dylibs */,
+				3E8812E82501FE5F008D2291 /* libopencore-amrwb.0.dylib in Copy dylibs */,
+				3E8812E92501FE5F008D2291 /* libspeex.1.dylib in Copy dylibs */,
+				3E8812DD2501F540008D2291 /* libavcodec.58.dylib in Copy dylibs */,
+				3E8812DE2501F542008D2291 /* libavformat.58.dylib in Copy dylibs */,
+				3E8812E02501F545008D2291 /* libswresample.3.dylib in Copy dylibs */,
+				3E8812DF2501F543008D2291 /* libavutil.56.dylib in Copy dylibs */,
 			);
+			name = "Copy dylibs";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1311,6 +1324,9 @@
 		3E8718CF2466B61D007D9672 /* MathUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
 		3E8718D22466B856007D9672 /* MathUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilsTests.swift; sourceTree = "<group>"; };
 		3E8718DC2466DEAD007D9672 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		3E8812E12501FE36008D2291 /* libspeex.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libspeex.1.dylib; sourceTree = "<group>"; };
+		3E8812E22501FE36008D2291 /* libopencore-amrwb.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libopencore-amrwb.0.dylib"; sourceTree = "<group>"; };
+		3E8812E32501FE36008D2291 /* libopencore-amrnb.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = "libopencore-amrnb.0.dylib"; sourceTree = "<group>"; };
 		3E89CA23246316F10057D3EE /* PlayingTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingTrackViewController.swift; sourceTree = "<group>"; };
 		3E89CA25246317B90057D3EE /* WaitingTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingTrackViewController.swift; sourceTree = "<group>"; };
 		3E89CA27246323030057D3EE /* WaitingTrack.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WaitingTrack.xib; sourceTree = "<group>"; };
@@ -1397,9 +1413,6 @@
 		3EA9D08F249D534B0054EF00 /* Messenger_AsynchronousNotificationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messenger_AsynchronousNotificationsTests.swift; sourceTree = "<group>"; };
 		3EAB1BD424A8BC0F007D130F /* GroupingPlaylistTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupingPlaylistTableViews.swift; sourceTree = "<group>"; };
 		3EAB1BD624A8CC67007D130F /* FlatPlaylistTableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatPlaylistTableViews.swift; sourceTree = "<group>"; };
-		3EAC65EA249109D800E7D56B /* libswiftSwiftOnoneSupport.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswiftSwiftOnoneSupport.dylib; path = "Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/macosx/libswiftSwiftOnoneSupport.dylib"; sourceTree = DEVELOPER_DIR; };
-		3EAC65EB249109D800E7D56B /* libswiftAVFoundation.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswiftAVFoundation.dylib; path = "Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/macosx/libswiftAVFoundation.dylib"; sourceTree = DEVELOPER_DIR; };
-		3EAC65EC249109D800E7D56B /* libswiftsimd.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswiftsimd.dylib; path = "Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/macosx/libswiftsimd.dylib"; sourceTree = DEVELOPER_DIR; };
 		3EAD098E216478440007D7DF /* MasterPresets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterPresets.swift; sourceTree = "<group>"; };
 		3EAD0990216482B60007D7DF /* EffectsUnitPreset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectsUnitPreset.swift; sourceTree = "<group>"; };
 		3EAEBCAB1FDCD644000FBC04 /* BannerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerLabel.swift; sourceTree = "<group>"; };
@@ -1610,6 +1623,9 @@
 				3E2B4D7324DD7296002C7AF6 /* libavformat.58.dylib in Frameworks */,
 				3E2B4D7424DD7296002C7AF6 /* libavutil.56.dylib in Frameworks */,
 				3E2B4D7524DD7296002C7AF6 /* libswresample.3.dylib in Frameworks */,
+				3E8812E62501FE36008D2291 /* libopencore-amrnb.0.dylib in Frameworks */,
+				3E8812E52501FE36008D2291 /* libopencore-amrwb.0.dylib in Frameworks */,
+				3E8812E42501FE36008D2291 /* libspeex.1.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3230,9 +3246,9 @@
 				3E2B4D6F24DD7296002C7AF6 /* libavformat.58.dylib */,
 				3E2B4D7024DD7296002C7AF6 /* libavutil.56.dylib */,
 				3E2B4D7124DD7296002C7AF6 /* libswresample.3.dylib */,
-				3EAC65EB249109D800E7D56B /* libswiftAVFoundation.dylib */,
-				3EAC65EC249109D800E7D56B /* libswiftsimd.dylib */,
-				3EAC65EA249109D800E7D56B /* libswiftSwiftOnoneSupport.dylib */,
+				3E8812E32501FE36008D2291 /* libopencore-amrnb.0.dylib */,
+				3E8812E22501FE36008D2291 /* libopencore-amrwb.0.dylib */,
+				3E8812E12501FE36008D2291 /* libspeex.1.dylib */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -3470,8 +3486,8 @@
 				3E85F2521EFA78D6007BE830 /* Sources */,
 				3E85F2531EFA78D6007BE830 /* Frameworks */,
 				3E85F2541EFA78D6007BE830 /* Resources */,
-				3E2604502454E70E00CFEC86 /* CopyFiles */,
-				3EAC65E72491091200E7D56B /* CopyFiles */,
+				3E2604502454E70E00CFEC86 /* Copy fonts */,
+				3EAC65E72491091200E7D56B /* Copy dylibs */,
 			);
 			buildRules = (
 			);
