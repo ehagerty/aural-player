@@ -151,7 +151,8 @@
                 <outlet property="saveColorSchemeMenuItem" destination="WVj-ng-OeL" id="3XH-d1-FXP"/>
                 <outlet property="toggleChaptersListMenuItem" destination="9Al-PA-rnK" id="0SK-l3-ET4"/>
                 <outlet property="toggleEffectsMenuItem" destination="fK8-7g-oqx" id="xo8-0f-yDo"/>
-                <outlet property="togglePlaylistMenuItem" destination="0PH-nx-xo9" id="60y-S3-b3m"/>
+                <outlet property="toggleLibraryMenuItem" destination="0PH-nx-xo9" id="60y-S3-b3m"/>
+                <outlet property="togglePlayQueueMenuItem" destination="TZQ-6P-2wA" id="Wa3-QC-DbX"/>
                 <outlet property="windowLayoutsMenu" destination="S2A-E2-dfO" id="791-vR-GsR"/>
             </connections>
         </customObject>
@@ -1288,17 +1289,17 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" autoenablesItems="NO" id="Fd0-9b-tm8">
                         <items>
-                            <menuItem title=" Library window" state="on" image="TogglePlaylistView-Small" keyEquivalent="1" id="0PH-nx-xo9" userLabel="Playlist">
+                            <menuItem title=" Library" state="on" image="TogglePlaylistView-Small" keyEquivalent="1" id="0PH-nx-xo9" userLabel="Library">
                                 <connections>
-                                    <action selector="togglePlaylistAction:" target="xzd-WN-BuR" id="pGa-5C-cvc"/>
+                                    <action selector="toggleLibraryAction:" target="xzd-WN-BuR" id="pGa-5C-cvc"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Play Queue window" image="ToggleChaptersList-Small" keyEquivalent="2" id="TZQ-6P-2wA" userLabel="Play Queue">
+                            <menuItem title=" Play Queue" image="ToggleChaptersList-Small" keyEquivalent="2" id="TZQ-6P-2wA" userLabel="Play Queue">
                                 <connections>
                                     <action selector="togglePlayQueueAction:" target="xzd-WN-BuR" id="iDa-iv-HvV"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title=" Effects window" state="on" image="ToggleEffectsView-Small" keyEquivalent="3" id="fK8-7g-oqx" userLabel="Effects">
+                            <menuItem title=" Effects" state="on" image="ToggleEffectsView-Small" keyEquivalent="3" id="fK8-7g-oqx" userLabel="Effects">
                                 <connections>
                                     <action selector="toggleEffectsAction:" target="xzd-WN-BuR" id="fHz-aJ-KZK"/>
                                 </connections>

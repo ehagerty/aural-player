@@ -10,7 +10,8 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     @IBOutlet weak var playerMenuItem: NSMenuItem!
     
     // Menu items whose states are toggled when they (or others) are clicked
-    @IBOutlet weak var togglePlaylistMenuItem: NSMenuItem!
+    @IBOutlet weak var toggleLibraryMenuItem: NSMenuItem!
+    @IBOutlet weak var togglePlayQueueMenuItem: NSMenuItem!
     @IBOutlet weak var toggleEffectsMenuItem: NSMenuItem!
     @IBOutlet weak var toggleChaptersListMenuItem: NSMenuItem!
     
@@ -52,15 +53,13 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     // When the menu is about to open, set the menu item states according to the current window/view state
     func menuWillOpen(_ menu: NSMenu) {
         
-        [togglePlaylistMenuItem, toggleEffectsMenuItem].forEach({$0?.show()})
-        
-//        togglePlaylistMenuItem.onIf(WindowManager.isShowingPlaylist)
-//        toggleEffectsMenuItem.onIf(WindowManager.isShowingEffects)
+        toggleLibraryMenuItem.onIf(modularInterface.isShowingLibrary)
+        togglePlayQueueMenuItem.onIf(modularInterface.isShowingPlayQueue)
+        toggleEffectsMenuItem.onIf(modularInterface.isShowingEffects)
 //        toggleChaptersListMenuItem.onIf(WindowManager.isShowingChaptersList)
 //
-//
 //        playlistViewMenuItem.showIf_elseHide(WindowManager.isShowingPlaylist)
-//        effectsViewMenuItem.showIf_elseHide(WindowManager.isShowingEffects)
+        effectsViewMenuItem.showIf_elseHide(modularInterface.isShowingEffects)
         
         // Recreate the custom layout items
         self.windowLayoutsMenu.items.forEach({
@@ -87,8 +86,7 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     }
  
     // Shows/hides the playlist window
-    @IBAction func togglePlaylistAction(_ sender: AnyObject) {
-//        Messenger.publish(.windowManager_togglePlaylistWindow)
+    @IBAction func toggleLibraryAction(_ sender: AnyObject) {
         modularInterface.toggleLibrary()
     }
     
