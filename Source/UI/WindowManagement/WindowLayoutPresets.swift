@@ -90,6 +90,12 @@ enum WindowLayoutPreset: String, CaseIterable {
             let frame = NSRect(origin: origin, size: NSSize(width: Dimensions.mainWindowWidth, height: Dimensions.mainWindowHeight))
             return LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: frame)
             
+        case .tripleDecker:
+            
+            let origin = mainWindowOrigin
+            let frame = NSRect(origin: origin, size: NSSize(width: Dimensions.mainWindowWidth, height: Dimensions.mainWindowHeight))
+            return LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: frame)
+            
         default:
             
             return LayoutWindow(id: "", frame: NSRect.zero)
@@ -125,6 +131,12 @@ enum WindowLayoutPreset: String, CaseIterable {
 
             let xPadding = visibleFrame.width - mainWindowWidth
             x = visibleFrame.minX + (xPadding / 2)
+            y = visibleFrame.maxY - mainWindowHeight
+            
+        case .tripleDecker:
+            
+            let centerX = visibleFrame.centerX
+            x = centerX - mainWindowWidth
             y = visibleFrame.maxY - mainWindowHeight
             
         default:
@@ -176,21 +188,38 @@ enum WindowLayoutPreset: String, CaseIterable {
         return NSPoint(x: x, y: y)
     }
     
+    var soundWindow: LayoutWindow {
+        
+        let origin = effectsWindowOrigin
+        let size = NSSize(width: Dimensions.effectsWindowWidth, height: Dimensions.effectsWindowHeight)
+        return LayoutWindow(id: NSUserInterfaceItemIdentifier.soundWindow.rawValue, frame: NSRect(origin: origin, size: size))
+    }
+    
+    var playQueueWindow: LayoutWindow {
+        
+        let origin = playQueueWindowOrigin
+        let size = NSSize(width: playQueueWidth, height: playQueueHeight)
+        return LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: NSRect(origin: origin, size: size))
+    }
+    
+    var libraryWindow: LayoutWindow {
+        
+        let origin = libraryWindowOrigin
+        let size = NSSize(width: libraryWidth, height: libraryHeight)
+        return LayoutWindow(id: NSUserInterfaceItemIdentifier.libraryWindow.rawValue, frame: NSRect(origin: origin, size: size))
+    }
+    
     var windows: [LayoutWindow] {
         
         switch self {
             
         case .tallStack:
             
-            var origin = effectsWindowOrigin
-            var size = NSSize(width: Dimensions.effectsWindowWidth, height: Dimensions.effectsWindowHeight)
-            let soundWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.soundWindow.rawValue, frame: NSRect(origin: origin, size: size))
-            
-            origin = playQueueWindowOrigin
-            size = NSSize(width: playQueueWidth, height: playQueueHeight)
-            let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: NSRect(origin: origin, size: size))
-            
             return [soundWindow, playQueueWindow]
+            
+        case .tripleDecker:
+            
+            return [soundWindow, playQueueWindow, libraryWindow]
             
         default:
             
@@ -200,7 +229,7 @@ enum WindowLayoutPreset: String, CaseIterable {
     
     var effectsWindowOrigin: NSPoint {
 
-//        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
         let effectsWindowHeight: CGFloat = Dimensions.effectsWindowHeight
 
         let gap = gapBetweenWindows
@@ -215,6 +244,11 @@ enum WindowLayoutPreset: String, CaseIterable {
 
             x = mwo.x
             y = mwo.y - gap - effectsWindowHeight
+            
+        case .tripleDecker:
+            
+            x = mwo.x + mainWindowWidth
+            y = mwo.y
 
 //        case .horizontalFullStack:
 //
@@ -254,6 +288,10 @@ enum WindowLayoutPreset: String, CaseIterable {
         switch self {
 
         case .tallStack:    return visibleFrame.height - (mainWindowHeight + effectsWindowHeight + twoGaps)
+            
+        case .tripleDecker:
+            
+            return (visibleFrame.height - (mainWindowHeight + twoGaps)) / 2
 
 //        case .horizontalFullStack, .horizontalPlayerAndPlaylist:  return mainWindowHeight
 //
@@ -269,9 +307,9 @@ enum WindowLayoutPreset: String, CaseIterable {
     var playQueueWidth: CGFloat {
 
         let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
-//        let effectsWindowWidth: CGFloat = Dimensions.effectsWindowWidth
+        let effectsWindowWidth: CGFloat = Dimensions.effectsWindowWidth
 
-//        let gap = gapBetweenWindows
+        let gap = gapBetweenWindows
 //        let twoGaps = 2 * gap
 //        let minWidth = Dimensions.minPlaylistWidth
 
@@ -281,6 +319,8 @@ enum WindowLayoutPreset: String, CaseIterable {
         switch self {
 
         case .tallStack, .tallQueue, .tallQueueWithLibrary:    return mainWindowWidth
+            
+        case .tripleDecker:    return mainWindowWidth + gap + effectsWindowWidth
 
 //        case .horizontalFullStack:    return max(visibleFrame.width - (mainWindowWidth + effectsWindowWidth + twoGaps), minWidth)
 //
@@ -300,10 +340,11 @@ enum WindowLayoutPreset: String, CaseIterable {
 //        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
 //
 //        let effectsWindowWidth: CGFloat = Dimensions.effectsWindowWidth
+        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
 //        let effectsWindowHeight: CGFloat = Dimensions.effectsWindowHeight
 //
-//        let gap = gapBetweenWindows
-//        let twoGaps = 2 * gap
+        let gap = gapBetweenWindows
+        let twoGaps = 2 * gap
         let mwo = mainWindowOrigin
 
         var x: CGFloat = 0
@@ -318,6 +359,11 @@ enum WindowLayoutPreset: String, CaseIterable {
 
             x = mwo.x
             y = visibleFrame.minY
+            
+        case .tripleDecker:
+            
+            x = mwo.x
+            y = ((visibleFrame.height - (mainWindowHeight + twoGaps)) / 2) + gap
 
 //        case .horizontalFullStack:
 //
@@ -350,6 +396,124 @@ enum WindowLayoutPreset: String, CaseIterable {
             y = 0
         }
 
+        return NSPoint(x: x, y: y)
+    }
+    
+    var libraryHeight: CGFloat {
+        
+        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
+//        let effectsWindowHeight: CGFloat = Dimensions.effectsWindowHeight
+        
+        let gap = gapBetweenWindows
+        let twoGaps = 2 * gap
+        
+        // Compute this only once
+        let visibleFrame = screenVisibleFrame
+        
+        switch self {
+            
+        case .tripleDecker:
+            
+            return (visibleFrame.height - (mainWindowHeight + twoGaps)) / 2
+            
+            //        case .horizontalFullStack, .horizontalPlayerAndPlaylist:  return mainWindowHeight
+            //
+            //        case .bigRightPlaylist:   return mainWindowHeight + gap + effectsWindowHeight
+            //
+            //        case .verticalPlayerAndPlaylist:   return visibleFrame.height - (mainWindowHeight + gap)
+            
+        default:    return 0
+            
+        }
+    }
+    
+    var libraryWidth: CGFloat {
+        
+        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        let effectsWindowWidth: CGFloat = Dimensions.effectsWindowWidth
+        
+        let gap = gapBetweenWindows
+        //        let twoGaps = 2 * gap
+        //        let minWidth = Dimensions.minPlaylistWidth
+        
+        // Compute this only once
+        //        let visibleFrame = screenVisibleFrame
+        
+        switch self {
+            
+        case .tallQueueWithLibrary:    return mainWindowWidth
+            
+        case .tripleDecker:    return mainWindowWidth + gap + effectsWindowWidth
+            
+            //        case .horizontalFullStack:    return max(visibleFrame.width - (mainWindowWidth + effectsWindowWidth + twoGaps), minWidth)
+            //
+            //        case .bigBottomPlaylist:    return mainWindowWidth + gap + effectsWindowWidth
+            //
+            //        case .bigRightPlaylist:   return mainWindowWidth
+            //
+            //        case .horizontalPlayerAndPlaylist: return visibleFrame.width - (mainWindowWidth + gap)
+            
+        default:    return 0
+            
+        }
+    }
+    
+    var libraryWindowOrigin: NSPoint {
+        
+        //        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        //
+        //        let effectsWindowWidth: CGFloat = Dimensions.effectsWindowWidth
+//        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
+//        let effectsWindowHeight: CGFloat = Dimensions.effectsWindowHeight
+        //
+//        let gap = gapBetweenWindows
+//        let twoGaps = 2 * gap
+        let mwo = mainWindowOrigin
+        
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        
+        // Compute this only once
+//        let visibleFrame = screenVisibleFrame
+        
+        switch self {
+            
+        case .tripleDecker:
+            
+            x = mwo.x
+            y = 0
+            
+            //        case .horizontalFullStack:
+            //
+            //            x = mwo.x + mainWindowWidth + effectsWindowWidth + twoGaps
+            //            y = mwo.y
+            //
+            //        case .bigBottomPlaylist:
+            //
+            //            x = mwo.x
+            //            y = mwo.y - gap - playlistHeight
+            //
+            //        case .bigRightPlaylist:
+            //
+            //            x = mwo.x + mainWindowWidth + gap
+            //            y = mwo.y - gap - effectsWindowHeight
+            //
+            //        case .verticalPlayerAndPlaylist:
+            //
+            //            x = mwo.x
+            //            y = visibleFrame.minY
+            //
+            //        case .horizontalPlayerAndPlaylist:
+            //
+            //            x = mwo.x + mainWindowWidth + gap
+            //            y = mwo.y
+            
+        default:
+            
+            x = 0
+            y = 0
+        }
+        
         return NSPoint(x: x, y: y)
     }
     

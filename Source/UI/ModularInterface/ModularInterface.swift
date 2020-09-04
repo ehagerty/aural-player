@@ -17,15 +17,30 @@ class ModularInterface: InterfaceProtocol {
     var mainWindowController: MainWindowController = MainWindowController()
     lazy var mainWindow: NSWindow = mainWindowController.window!
     
+    private var playQueueWindowLoaded: Bool = false
+    private lazy var playQueueWindowController: PlayQueueWindowViewController = PlayQueueWindowViewController()
+    private lazy var playQueueWindow: NSWindow = {
+        
+        playQueueWindowLoaded = true
+        return playQueueWindowController.window!
+    }()
+    
+    private var libraryWindowLoaded: Bool = false
+    private lazy var libraryWindowController: LibraryWindowController = LibraryWindowController()
+    lazy var libraryWindow: NSWindow = {
+        
+        libraryWindowLoaded = true
+        return libraryWindowController.window!
+    }()
+    
     // Load these optional windows only if/when needed
-    var effectsWindowController: EffectsWindowController = EffectsWindowController()
-    lazy var effectsWindow: NSWindow = effectsWindowController.window!
-    
-    var libraryWindowController: LibraryWindowController = LibraryWindowController()
-    lazy var libraryWindow: NSWindow = libraryWindowController.window!
-    
-    lazy var playQueueWindowController: PlayQueueWindowViewController = PlayQueueWindowViewController()
-    lazy var playQueueWindow: NSWindow = playQueueWindowController.window!
+    private var soundWindowLoaded: Bool = false
+    lazy var effectsWindowController: EffectsWindowController = EffectsWindowController()
+    lazy var soundWindow: NSWindow = {
+        
+        soundWindowLoaded = true
+        return effectsWindowController.window!
+    }()
     
     // Helps with lazy loading of chapters list window
     private var chaptersListWindowLoaded: Bool = false
@@ -85,38 +100,26 @@ class ModularInterface: InterfaceProtocol {
                 
             case NSUserInterfaceItemIdentifier.soundWindow.rawValue:
                 
-                mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
-                effectsWindow.setFrameOrigin(window.frame.origin)
+                mainWindow.addChildWindow(soundWindow, ordered: NSWindow.OrderingMode.below)
+                soundWindow.setFrameOrigin(window.frame.origin)
                 
             case NSUserInterfaceItemIdentifier.playQueueWindow.rawValue:
                 
                 mainWindow.addChildWindow(playQueueWindow, ordered: NSWindow.OrderingMode.below)
-//                playQueueWindow.setFrameOrigin(window.frame.origin)
                 playQueueWindow.setFrame(window.frame, display: true)
+                
+            case NSUserInterfaceItemIdentifier.libraryWindow.rawValue:
+                
+                mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.below)
+                libraryWindow.setFrame(window.frame, display: true)
                 
             default:
                 
-                print("\nOther window")
+                print("\nOther window: \(window.id)")
             }
         }
-//
-//        if layout.showEffects {
-//
-//            mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.below)
-//            effectsWindow.setFrameOrigin(layout.effectsWindowOrigin!)
-//        }
-//
-//        if layout.showPlaylist {
-//
-//            mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.below)
-//            libraryWindow.setFrame(layout.playlistWindowFrame!, display: true)
-//        }
-//
+
         mainWindow.setIsVisible(true)
-//        effectsWindow.setIsVisible(layout.showEffects)
-//        libraryWindow.setIsVisible(layout.showPlaylist)
-//
-//        Messenger.publish(WindowLayoutChangedNotification(showingPlaylistWindow: layout.showPlaylist, showingEffectsWindow: layout.showEffects))
     }
     
     var currentWindowLayout: WindowLayout {
@@ -128,7 +131,7 @@ class ModularInterface: InterfaceProtocol {
     }
     
     var isShowingEffects: Bool {
-        return effectsWindow.isVisible
+        return soundWindowLoaded && soundWindow.isVisible
     }
     
     var isShowingLibrary: Bool {
@@ -154,7 +157,7 @@ class ModularInterface: InterfaceProtocol {
     }
     
     var effectsWindowFrame: NSRect {
-        return effectsWindow.frame
+        return soundWindow.frame
     }
     
     var playlistWindowFrame: NSRect {
@@ -171,14 +174,14 @@ class ModularInterface: InterfaceProtocol {
     // Shows the effects window
     func showEffects() {
         
-        mainWindow.addChildWindow(effectsWindow, ordered: NSWindow.OrderingMode.above)
-        effectsWindow.show()
-        effectsWindow.orderFront(self)
+        mainWindow.addChildWindow(soundWindow, ordered: NSWindow.OrderingMode.above)
+        soundWindow.show()
+        soundWindow.orderFront(self)
     }
     
     // Hides the effects window
     private func hideEffects() {
-        effectsWindow.hide()
+        soundWindow.hide()
     }
     
     // Shows/hides the playlist window
@@ -270,6 +273,8 @@ class ModularInterface: InterfaceProtocol {
         state.windowLayout.rememberedLayout = WindowLayout("_rememberedModularInterfaceWindowLayout_", true,
                                                            mainWindow: LayoutWindow(id: mainWindow.identifier!.rawValue, frame: mainWindow.frame))
         
+        
+        
 //        uiState.showEffects = effectsWindow.isVisible
 //        uiState.showPlaylist = playlistWindow.isVisible
 //        
@@ -316,13 +321,13 @@ class ModularInterface: InterfaceProtocol {
     private func getCandidateWindowsForSnap(_ movedWindow: SnappingWindow) -> [NSWindow] {
         
         if movedWindow === libraryWindow {
-            return [mainWindow, effectsWindow]
+            return [mainWindow, soundWindow]
             
-        } else if movedWindow === effectsWindow {
+        } else if movedWindow === soundWindow {
             return [mainWindow, libraryWindow]
             
         } else if movedWindow === chaptersListWindow {
-            return [libraryWindow, mainWindow, effectsWindow]
+            return [libraryWindow, mainWindow, soundWindow]
         }
         
         // Main window

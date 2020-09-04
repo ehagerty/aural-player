@@ -369,7 +369,7 @@
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="Crw-b8-o53"/>
                                                                 </connections>
                                                             </menuItem>
-                                                            <menuItem title="Horizontal full stack" image="WindowLayout-HorizontalStack" id="ZAr-P0-9nl">
+                                                            <menuItem title="Triple decker" image="WindowLayout-HorizontalStack" id="ZAr-P0-9nl">
                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                 <connections>
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="sbS-qO-lRS"/>
