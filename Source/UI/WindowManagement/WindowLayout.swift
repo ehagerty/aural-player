@@ -61,10 +61,37 @@ class WindowLayout {
         
         switch preset {
             
-        case.tripleDecker:  return tripleDecker()
+        case .tallStack:
             
-        default:    return tallStack()
+            return tallStack()
             
+        case .tallStackWithLibrary:
+            
+            return tallStackWithLibrary()
+            
+        case .tallQueue:
+            
+            return tallQueue()
+            
+        case .tallQueueWithLibrary:
+            
+            return tallQueueWithLibrary()
+            
+        case .tripleDecker:
+            
+            return tripleDecker()
+            
+        case .twoByTwoGrid:
+            
+            return twoByTwoGrid()
+            
+        case .libraryBrowsing:
+            
+            return libraryBrowsing()
+            
+        default:
+            
+            return tallStack()
         }
     }
     
@@ -72,7 +99,7 @@ class WindowLayout {
      
         let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
         let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
-        let soundWindowHeight: CGFloat = Dimensions.effectsWindowHeight
+        let soundWindowHeight: CGFloat = Dimensions.soundWindowHeight
         
         let gap = CGFloat(ObjectGraph.preferences.viewPreferences.windowGap)
         
@@ -99,6 +126,92 @@ class WindowLayout {
             .withChildWindow(playQueueWindow)
     }
     
+    private static func tallStackWithLibrary() -> WindowLayout {
+     
+        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
+        let soundWindowHeight: CGFloat = Dimensions.soundWindowHeight
+        
+        let gap = CGFloat(ObjectGraph.preferences.viewPreferences.windowGap)
+        
+        let visibleFrame = screenVisibleFrame
+        let x = visibleFrame.centerX - mainWindowWidth
+        
+        let mainWindowY = visibleFrame.maxY - mainWindowHeight
+        let mainWindowOrigin = NSPoint(x: x, y: mainWindowY)
+        let mainWindowFrame: NSRect = NSRect(origin: mainWindowOrigin, size: Dimensions.mainWindowSize)
+        let mainWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: mainWindowFrame)
+        
+        let soundWindowOrigin = NSPoint(x: x, y: mainWindowOrigin.y - gap - soundWindowHeight)
+        let soundWindowFrame: NSRect = NSRect(origin: soundWindowOrigin, size: Dimensions.soundWindowSize)
+        let soundWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.soundWindow.rawValue, frame: soundWindowFrame)
+        
+        let playQueueWindowOrigin = NSPoint(x: x, y: visibleFrame.minY)
+        let playQueueWindowHeight = visibleFrame.height - (mainWindowHeight + soundWindowHeight + (2 * gap))
+        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth, height: playQueueWindowHeight))
+        let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: playQueueWindowFrame)
+        
+        let libraryWindowOrigin = NSPoint(x: x + mainWindowWidth + gap, y: visibleFrame.minY)
+        let libraryWindowFrame: NSRect = NSRect(origin: libraryWindowOrigin, size: NSSize(width: mainWindowWidth, height: visibleFrame.height))
+        let libraryWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.libraryWindow.rawValue, frame: libraryWindowFrame)
+        
+        return WindowLayout(WindowLayoutPreset.tallStackWithLibrary.description, true, mainWindow: mainWindow)
+            .withChildWindow(soundWindow)
+            .withChildWindow(playQueueWindow)
+            .withChildWindow(libraryWindow)
+    }
+    
+    private static func tallQueue() -> WindowLayout {
+     
+        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
+        let gap = CGFloat(ObjectGraph.preferences.viewPreferences.windowGap)
+        
+        let visibleFrame = screenVisibleFrame
+        let xPadding = visibleFrame.width - mainWindowWidth
+        let x = visibleFrame.minX + (xPadding / 2)
+        
+        let mainWindowY = visibleFrame.maxY - mainWindowHeight
+        let mainWindowOrigin = NSPoint(x: x, y: mainWindowY)
+        let mainWindowFrame: NSRect = NSRect(origin: mainWindowOrigin, size: Dimensions.mainWindowSize)
+        let mainWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: mainWindowFrame)
+        
+        let playQueueWindowOrigin = NSPoint(x: x, y: visibleFrame.minY)
+        let playQueueWindowHeight = visibleFrame.height - (mainWindowHeight + gap)
+        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth, height: playQueueWindowHeight))
+        let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: playQueueWindowFrame)
+        
+        return WindowLayout(WindowLayoutPreset.tallQueue.description, true, mainWindow: mainWindow).withChildWindow(playQueueWindow)
+    }
+    
+    private static func tallQueueWithLibrary() -> WindowLayout {
+     
+        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
+        let gap = CGFloat(ObjectGraph.preferences.viewPreferences.windowGap)
+        
+        let visibleFrame = screenVisibleFrame
+        let x = visibleFrame.centerX - mainWindowWidth
+        
+        let mainWindowY = visibleFrame.maxY - mainWindowHeight
+        let mainWindowOrigin = NSPoint(x: x, y: mainWindowY)
+        let mainWindowFrame: NSRect = NSRect(origin: mainWindowOrigin, size: Dimensions.mainWindowSize)
+        let mainWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: mainWindowFrame)
+        
+        let playQueueWindowOrigin = NSPoint(x: x, y: visibleFrame.minY)
+        let playQueueWindowHeight = visibleFrame.height - (mainWindowHeight + gap)
+        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth, height: playQueueWindowHeight))
+        let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: playQueueWindowFrame)
+        
+        let libraryWindowOrigin = NSPoint(x: x + mainWindowWidth + gap, y: visibleFrame.minY)
+        let libraryWindowFrame: NSRect = NSRect(origin: libraryWindowOrigin, size: NSSize(width: mainWindowWidth, height: visibleFrame.height))
+        let libraryWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.libraryWindow.rawValue, frame: libraryWindowFrame)
+        
+        return WindowLayout(WindowLayoutPreset.tallQueueWithLibrary.description, true, mainWindow: mainWindow)
+            .withChildWindow(playQueueWindow)
+            .withChildWindow(libraryWindow)
+    }
+    
     private static func tripleDecker() -> WindowLayout {
      
         let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
@@ -121,7 +234,7 @@ class WindowLayout {
         
         let playQueueWindowHeight = (visibleFrame.height - (mainWindowHeight + twoGaps)) / 2
         let playQueueWindowOrigin = NSPoint(x: x, y: playQueueWindowHeight + gap)
-        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth + soundWindowFrame.width, height: playQueueWindowHeight))
+        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth + gap + soundWindowFrame.width, height: playQueueWindowHeight))
         let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: playQueueWindowFrame)
         
         let libraryWindowOrigin = NSPoint(x: x, y: visibleFrame.minY)
@@ -134,18 +247,69 @@ class WindowLayout {
             .withChildWindow(libraryWindow)
     }
     
-    private static func tripldddeDecker() -> WindowLayout {
+    private static func twoByTwoGrid() -> WindowLayout {
      
         let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
         let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
         
         let gap = CGFloat(ObjectGraph.preferences.viewPreferences.windowGap)
-        let twoGaps = 2 * gap
         
         let visibleFrame = screenVisibleFrame
-        let x = visibleFrame.centerX - mainWindowWidth
         
+        let mainWindowX = visibleFrame.centerX - mainWindowWidth
         let mainWindowY = visibleFrame.maxY - mainWindowHeight
+        let mainWindowOrigin = NSPoint(x: mainWindowX, y: mainWindowY)
+        let mainWindowFrame: NSRect = NSRect(origin: mainWindowOrigin, size: Dimensions.mainWindowSize)
+        let mainWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: mainWindowFrame)
+        
+        let soundWindowOrigin = NSPoint(x: mainWindowX + mainWindowWidth + gap, y: mainWindowY)
+        let soundWindowFrame: NSRect = NSRect(origin: soundWindowOrigin, size: Dimensions.soundWindowSize)
+        let soundWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.soundWindow.rawValue, frame: soundWindowFrame)
+        
+        let playQueueWindowHeight = visibleFrame.height - (mainWindowHeight + gap)
+        let playQueueWindowOrigin = NSPoint(x: mainWindowX, y: visibleFrame.minY)
+        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth, height: playQueueWindowHeight))
+        let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: playQueueWindowFrame)
+        
+        let libraryWindowHeight = visibleFrame.height - (soundWindowFrame.height + gap)
+        let libraryWindowOrigin = NSPoint(x: soundWindowOrigin.x, y: visibleFrame.minY)
+        let libraryWindowFrame: NSRect = NSRect(origin: libraryWindowOrigin, size: NSSize(width: soundWindowFrame.width, height: libraryWindowHeight))
+        let libraryWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.libraryWindow.rawValue, frame: libraryWindowFrame)
+        
+        return WindowLayout(WindowLayoutPreset.twoByTwoGrid.description, true, mainWindow: mainWindow)
+            .withChildWindow(soundWindow)
+            .withChildWindow(playQueueWindow)
+            .withChildWindow(libraryWindow)
+    }
+    
+    private static func libraryBrowsing() -> WindowLayout {
+     
+        let mainWindowWidth: CGFloat = Dimensions.mainWindowWidth
+        let mainWindowHeight: CGFloat = Dimensions.mainWindowHeight
+        
+        let soundWindowWidth: CGFloat = Dimensions.soundWindowWidth
+        let libraryWindowHeight: CGFloat = 500
+        
+        let gap = CGFloat(ObjectGraph.preferences.viewPreferences.windowGap)
+        let twoGaps = 2 * gap
+        
+        let totalWidth: CGFloat = (2 * mainWindowWidth) + soundWindowWidth + twoGaps
+        let totalHeight: CGFloat = mainWindowHeight + gap + libraryWindowHeight
+        
+        let visibleFrame = screenVisibleFrame
+        
+        let xPadding = visibleFrame.width - totalWidth
+        let x = visibleFrame.minX + (xPadding / 2)
+        
+        let yPadding = visibleFrame.height - totalHeight
+        
+        let libraryWindowY = visibleFrame.minY + (yPadding / 2)
+        let libraryWindowWidth = mainWindowWidth + gap + soundWindowWidth
+        let libraryWindowOrigin = NSPoint(x: x, y: libraryWindowY)
+        let libraryWindowFrame: NSRect = NSRect(origin: libraryWindowOrigin, size: NSSize(width: libraryWindowWidth, height: libraryWindowHeight))
+        let libraryWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.libraryWindow.rawValue, frame: libraryWindowFrame)
+        
+        let mainWindowY = libraryWindowY + libraryWindowHeight + gap
         let mainWindowOrigin = NSPoint(x: x, y: mainWindowY)
         let mainWindowFrame: NSRect = NSRect(origin: mainWindowOrigin, size: Dimensions.mainWindowSize)
         let mainWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.mainWindow.rawValue, frame: mainWindowFrame)
@@ -154,16 +318,13 @@ class WindowLayout {
         let soundWindowFrame: NSRect = NSRect(origin: soundWindowOrigin, size: Dimensions.soundWindowSize)
         let soundWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.soundWindow.rawValue, frame: soundWindowFrame)
         
-        let playQueueWindowHeight = (visibleFrame.height - (mainWindowHeight + twoGaps)) / 2
-        let playQueueWindowOrigin = NSPoint(x: x, y: playQueueWindowHeight + gap)
-        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth + soundWindowFrame.width, height: playQueueWindowHeight))
+        let playQueueWindowX = x + mainWindowWidth + soundWindowWidth + twoGaps
+        let playQueueWindowHeight = mainWindowHeight + gap + libraryWindowFrame.height
+        let playQueueWindowOrigin = NSPoint(x: playQueueWindowX, y: libraryWindowOrigin.y)
+        let playQueueWindowFrame: NSRect = NSRect(origin: playQueueWindowOrigin, size: NSSize(width: mainWindowWidth, height: playQueueWindowHeight))
         let playQueueWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.playQueueWindow.rawValue, frame: playQueueWindowFrame)
         
-        let libraryWindowOrigin = NSPoint(x: x, y: visibleFrame.minY)
-        let libraryWindowFrame: NSRect = NSRect(origin: libraryWindowOrigin, size: NSSize(width: playQueueWindowFrame.width, height: playQueueWindowHeight))
-        let libraryWindow = LayoutWindow(id: NSUserInterfaceItemIdentifier.libraryWindow.rawValue, frame: libraryWindowFrame)
-        
-        return WindowLayout(WindowLayoutPreset.tripleDecker.description, true, mainWindow: mainWindow)
+        return WindowLayout(WindowLayoutPreset.libraryBrowsing.description, true, mainWindow: mainWindow)
             .withChildWindow(soundWindow)
             .withChildWindow(playQueueWindow)
             .withChildWindow(libraryWindow)

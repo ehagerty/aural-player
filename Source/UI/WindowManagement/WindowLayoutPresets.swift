@@ -63,7 +63,7 @@ enum WindowLayoutPreset: String, CaseIterable {
             
         case .rightQueue: return "Queue on the right"
             
-        case .twoByTwoGrid: return "2 x 2 grid"
+        case .twoByTwoGrid: return "2x2 grid"
             
         case .tripleDecker: return "Triple decker"
             

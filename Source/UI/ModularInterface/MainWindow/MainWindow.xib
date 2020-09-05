@@ -369,13 +369,31 @@
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="Crw-b8-o53"/>
                                                                 </connections>
                                                             </menuItem>
+                                                            <menuItem title="Tall stack (with Library)" image="WindowLayout-VerticalStack" id="uU1-xP-jKt">
+                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                                <connections>
+                                                                    <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="D5j-vT-anI"/>
+                                                                </connections>
+                                                            </menuItem>
+                                                            <menuItem title="Tall queue" image="WindowLayout-VerticalStack" id="KQs-zg-aH9">
+                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                                <connections>
+                                                                    <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="vKs-Sa-R0D"/>
+                                                                </connections>
+                                                            </menuItem>
+                                                            <menuItem title="Tall queue (with Library)" image="WindowLayout-VerticalStack" id="gLr-g0-vHQ">
+                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                                <connections>
+                                                                    <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="MYK-Ah-VUl"/>
+                                                                </connections>
+                                                            </menuItem>
                                                             <menuItem title="Triple decker" image="WindowLayout-HorizontalStack" id="ZAr-P0-9nl">
                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                 <connections>
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="sbS-qO-lRS"/>
                                                                 </connections>
                                                             </menuItem>
-                                                            <menuItem title="Big bottom playlist" image="WindowLayout-BigBottomPlaylist" id="i2s-Ws-ntU">
+                                                            <menuItem title="2x2 grid" image="WindowLayout-BigBottomPlaylist" id="i2s-Ws-ntU">
                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                 <connections>
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="QvI-sg-eJR"/>
@@ -387,7 +405,7 @@
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="RVk-2p-8EK"/>
                                                                 </connections>
                                                             </menuItem>
-                                                            <menuItem title="Big left playlist" image="WindowLayout-BigLeftPlaylist" id="shG-Lq-iLv">
+                                                            <menuItem title="Library browsing" image="WindowLayout-BigLeftPlaylist" id="shG-Lq-iLv">
                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                 <connections>
                                                                     <action selector="btnLayoutAction:" target="lwq-x3-5V8" id="VgW-bP-nhu"/>
