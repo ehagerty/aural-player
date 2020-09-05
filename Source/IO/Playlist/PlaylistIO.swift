@@ -3,7 +3,7 @@ import Foundation
 protocol PlaylistIOProtocol {
     
     // Save current playlist to an output file
-    static func savePlaylist(_ file: URL)
+    static func save(tracks: [Track], to file: URL)
     
     static func loadPlaylist(_ playlistFile: URL) -> SavedPlaylist?
 }
@@ -20,8 +20,8 @@ class PlaylistIO: PlaylistIOProtocol {
     }
     
     // Save current playlist to an output file
-    static func savePlaylist(_ file: URL) {
-        M3UPlaylistIO.savePlaylist(file)
+    static func save(tracks: [Track], to file: URL) {
+        M3UPlaylistIO.save(tracks: tracks, to: file)
     }
     
     // Load playlist from file into current playlist.

@@ -120,7 +120,7 @@ class PlaylistDelegate: PlaylistDelegateProtocol, NotificationSubscriber {
         
         // Perform asynchronously, to unblock the main thread
         DispatchQueue.global(qos: .userInitiated).async {
-            PlaylistIO.savePlaylist(file)
+            PlaylistIO.save(tracks: self.tracks, to: file)
         }
     }
     

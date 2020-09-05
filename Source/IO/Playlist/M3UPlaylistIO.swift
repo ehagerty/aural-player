@@ -15,12 +15,12 @@ class M3UPlaylistIO: PlaylistIOProtocol {
     }
     
     // Save current playlist to an output file
-    static func savePlaylist(_ file: URL) {
+    static func save(tracks: [Track], to file: URL) {
         
         var contents: String = header + "\n"
         
         // Buffer the output
-        for track in playlist.tracks {
+        for track in tracks {
             
             // EXTINF line consists of the prefix, followed by duration and track name (without extension)
             let extInfo = String(format: "%@%d,%@", infoPrefix, roundedInt(track.duration), track.defaultDisplayName)
@@ -35,7 +35,8 @@ class M3UPlaylistIO: PlaylistIOProtocol {
         // Write to output file
         do {
             
-            try contents.write(to: file, atomically: true, encoding: String.Encoding.utf8)
+            let useUTF8: Bool = file.pathExtension.lowercased() == AppConstants.SupportedTypes.m3u8
+            try contents.write(to: file, atomically: true, encoding: useUTF8 ? .utf8 : .macOSRoman)
             
         } catch let error as NSError {
             NSLog("Error writing playlist file '%@': %@", file.path, error.description)

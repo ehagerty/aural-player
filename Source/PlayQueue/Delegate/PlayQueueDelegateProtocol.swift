@@ -42,5 +42,7 @@ protocol PlayQueueDelegateProtocol {
     
     func dropTracks(_ sourceIndices: IndexSet, _ dropIndex: Int) -> [TrackMoveResult]
     
+    func export(to file: URL)
+    
     func clear()
 }

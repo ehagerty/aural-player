@@ -253,6 +253,14 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         return playQueue.dropTracks(sourceIndices, dropIndex)
     }
     
+    func export(to file: URL) {
+        
+        // Perform asynchronously, to unblock the main thread
+        DispatchQueue.global(qos: .userInitiated).async {
+            PlaylistIO.save(tracks: self.tracks, to: file)
+        }
+    }
+    
     func clear() {
         playQueue.clear()
     }

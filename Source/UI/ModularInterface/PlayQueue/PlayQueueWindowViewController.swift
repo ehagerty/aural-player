@@ -58,13 +58,17 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         
         Messenger.subscribe(self, .playQueue_addTracks, self.addTracks)
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
+        
+        Messenger.subscribe(self, .playQueue_exportAsPlaylistFile, self.exportToPlaylist)
         Messenger.subscribe(self, .playQueue_clear, self.clear)
         
         Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
         Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
+        
         Messenger.subscribe(self, .playQueue_moveTracksToTop, self.moveTracksToTop)
         Messenger.subscribe(self, .playQueue_moveTracksToBottom, self.moveTracksToBottom)
-        
+
+        Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
         Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
         
         updateSummary()
@@ -191,6 +195,10 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         lblDurationSummary.stringValue = ValueFormatter.formatSecondsToHMS(summary.totalDuration)
     }
     
+    @IBAction func removeTracksAction(_ sender: AnyObject) {
+        removeSelectedTracks()
+    }
+    
     private func removeSelectedTracks() {
         
         let selectedRows = self.selectedRows
@@ -218,10 +226,42 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         clearSelection()
     }
     
+    @IBAction func exportToPlaylistAction(_ sender: AnyObject) {
+        exportToPlaylist()
+    }
+    
+    private func exportToPlaylist() {
+        
+        //        if playlist.isBeingModified {
+        //
+        //            alertDialog.showAlert(.error, "Playlist not modified", "The playlist cannot be modified while tracks are being added", "Please wait till the playlist is done adding tracks ...")
+        //            return
+        //        }
+        
+        // Make sure there is at least one track to save
+        if playQueue.size > 0 {
+            
+            let dialog = DialogsAndAlerts.savePlaylistDialog
+            if dialog.runModal() == NSApplication.ModalResponse.OK, let file = dialog.url {
+                playQueue.export(to: file)
+            }
+        }
+    }
+    
+    @IBAction func clearAction(_ sender: AnyObject) {
+        clear()
+    }
+    
     func clear() {
         
         playQueue.clear()
         playQueueView.reloadData()
+        
+        updateSummary()
+    }
+    
+    @IBAction func moveTracksUpAction(_ sender: AnyObject) {
+        moveTracksUp()
     }
     
     // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
@@ -233,6 +273,10 @@ class PlayQueueWindowViewController: NSWindowController, NotificationSubscriber 
         
         moveAndReloadItems(results.sorted(by: TrackMoveResult.compareAscending))
         playQueueView.scrollRowToVisible(selectedRows.min()!)
+    }
+    
+    @IBAction func moveTracksDownAction(_ sender: AnyObject) {
+        moveTracksDown()
     }
     
     // Must have a non-empty playlist, and at least one selected row, but not all rows selected.

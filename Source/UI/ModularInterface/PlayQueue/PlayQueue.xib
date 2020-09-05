@@ -114,6 +114,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Up"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="moveTracksUpAction:" target="-2" id="rcO-F6-pKW"/>
+                        </connections>
                     </button>
                     <button toolTip="Move selected tracks down" translatesAutoresizingMaskIntoConstraints="NO" id="eyY-tJ-e9l" userLabel="Down" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="323" y="5" width="12" height="12"/>
@@ -129,6 +132,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Down"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="moveTracksDownAction:" target="-2" id="ROa-Nv-f2P"/>
+                        </connections>
                     </button>
                     <button toolTip="Save current playlist" translatesAutoresizingMaskIntoConstraints="NO" id="vr6-WN-12B" userLabel="Save" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="264" y="7" width="10" height="10"/>
@@ -144,6 +150,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Save"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="exportToPlaylistAction:" target="-2" id="ZCg-rT-Uln"/>
+                        </connections>
                     </button>
                     <button toolTip="Clear the playlist" translatesAutoresizingMaskIntoConstraints="NO" id="rC3-II-PTW" userLabel="Clear" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="279" y="7" width="11" height="11"/>
@@ -159,6 +168,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Clear"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="clearAction:" target="-2" id="xdI-ep-jrG"/>
+                        </connections>
                     </button>
                     <button toolTip="Remove selected tracks from playlist" translatesAutoresizingMaskIntoConstraints="NO" id="zBd-Ar-1Of" userLabel="Remove" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="230" y="7" width="10" height="9"/>
@@ -172,6 +184,9 @@
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Remove"/>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="removeTracksAction:" target="-2" id="l8d-rt-hcB"/>
+                        </connections>
                     </button>
                     <button toolTip="Sort playlist" translatesAutoresizingMaskIntoConstraints="NO" id="41L-Fn-ftI" userLabel="Sort" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="372" y="5" width="14" height="14"/>

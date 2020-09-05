@@ -135,8 +135,6 @@ class ObjectGraph {
         
         // Initialize utility classes.
         
-        PlaylistIO.initialize(playlist)
-        
         library = Library()
         libraryDelegate = LibraryDelegate(library, appState.library, preferences)
         
