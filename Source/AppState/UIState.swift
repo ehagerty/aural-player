@@ -123,7 +123,6 @@ class PlayerUIState: PersistentState {
 class WindowLayoutState: PersistentState {
     
     var rememberedLayout: WindowLayout?
-    
     var userLayouts: [WindowLayout] = [WindowLayout]()
     
     static func deserialize(_ map: NSDictionary) -> PersistentState {
@@ -149,50 +148,23 @@ class WindowLayoutState: PersistentState {
     
     private static func deserializeLayout(from layoutDict: NSDictionary, havingName name: String, isSystemDefined: Bool) -> WindowLayout? {
         
-        var mainWindow: LayoutWindow?
-        
-        if let mainWindowDict = layoutDict["mainWindow"] as? NSDictionary, let window = deserializeWindow(from: mainWindowDict) {
-            mainWindow = window
+        if let mainWindowDict = layoutDict["mainWindow"] as? NSDictionary, let mainWindow = deserializeWindow(from: mainWindowDict),
+            let childWindowDicts = layoutDict["childWindows"] as? [NSDictionary] {
+            
+            let childWindows = childWindowDicts.compactMap {deserializeWindow(from: $0)}
+            return WindowLayout(name, isSystemDefined, mainWindow: mainWindow).withChildWindows(childWindows)
         }
-//
-//        if let effectsWindowOriginDict = layoutDict["effectsWindowOrigin"] as? NSDictionary, let origin = mapNSPoint(effectsWindowOriginDict) {
-//            effectsWindowOrigin = origin
-//        }
-//
-//        if let frameDict = layoutDict["playlistWindowFrame"] as? NSDictionary, let originDict = frameDict["origin"] as? NSDictionary, let origin = mapNSPoint(originDict), let sizeDict = frameDict["size"] as? NSDictionary, let size = mapNSSize(sizeDict) {
-//
-//            playlistWindowFrame = NSRect(origin: origin, size: size)
-//        }
-//
-//        guard let mustShowEffects = showEffects, let mustShowPlaylist = showPlaylist, let theMainWindowOrigin = mainWindowOrigin else {return nil}
-//
-//        if !mustShowEffects || effectsWindowOrigin != nil, !mustShowPlaylist || playlistWindowFrame != nil {
-////            return WindowLayout(name, showEffects!, showPlaylist!, theMainWindowOrigin, effectsWindowOrigin, playlistWindowFrame, isSystemDefined)
-//            return WindowLayout(name, isSystemDefined, mainWindow: LayoutWindow(id: "", frame: NSRect.zero))
-//        }
         
-        return WindowLayout(name, isSystemDefined, mainWindow: mainWindow ?? LayoutWindow(id: "", frame: NSRect.zero))
+        return nil
     }
     
     private static func deserializeWindow(from windowDict: NSDictionary) -> LayoutWindow? {
         
-        var id: String = "<Unknown>"
-        var frame: NSRect = NSRect.zero
-        var screenRelativeOrigin: NSPoint = NSPoint.zero
-        
-        if let idStr = windowDict["id"] as? String {
-            id = idStr
+        if let id = windowDict["id"] as? String, let frameDict = windowDict["frame"] as? NSDictionary, let frame = mapNSRect(frameDict) {
+            return LayoutWindow(id: id, frame: frame)
         }
         
-        if let frameDict = windowDict["frame"] as? NSDictionary, let rect = mapNSRect(frameDict) {
-            frame = rect
-        }
-        
-        if let originDict = windowDict["screenRelativeOrigin"] as? NSDictionary, let origin = mapNSPoint(originDict) {
-            screenRelativeOrigin = origin
-        }
-        
-        return LayoutWindow(id: id, frame: frame, screenRelativeOrigin: screenRelativeOrigin)
+        return nil
     }
 }
 

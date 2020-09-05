@@ -27,12 +27,10 @@ public class DeviceManager {
             let foundDevice = list.deviceByUID(thePreferredDeviceUID) {
             
             // Try to remember the preferred output device
-            print("\nRemembered device: \(foundDevice.name)")
             outputDeviceId = foundDevice.id
             
         } else {    // Default to the system device
             
-            print("\nDid NOT remember device, defaulting to system device.")
             outputDeviceId = systemDeviceId
         }
     }

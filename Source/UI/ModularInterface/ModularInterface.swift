@@ -73,7 +73,11 @@ class ModularInterface: InterfaceProtocol {
         } else {
             
             // Remember from last app launch
-            layout(layoutForNextLaunch ?? WindowLayouts.defaultLayout)
+            if let rememberedLayout = layoutForNextLaunch, rememberedLayout.isApplicable {
+                layout(rememberedLayout)
+            } else {
+                layout(WindowLayouts.defaultLayout)
+            }
         }
     }
     
@@ -81,45 +85,54 @@ class ModularInterface: InterfaceProtocol {
         
     }
     
-    // Revert to default layout if app state is corrupted
-    private func defaultLayout() {
-        layout(WindowLayouts.defaultLayout)
-    }
-    
     func layout(_ name: String) {
-        layout(WindowLayouts.layoutByName(name)!)
+        
+        // TODO: Error or alert if not applicable.
+        
+        if let theLayout = WindowLayouts.layoutByName(name), theLayout.isApplicable {
+            layout(theLayout)
+        }
     }
     
-    func layout(_ layout: WindowLayout) {
+    private func layout(_ layout: WindowLayout) {
         
         mainWindow.setFrameOrigin(layout.mainWindow.frame.origin)
+        mainWindow.childWindows?.forEach {$0.hide()}
         
-        for window in layout.windows {
+        for window in layout.childWindows {
             
-            switch window.id {
-                
-            case NSUserInterfaceItemIdentifier.soundWindow.rawValue:
-                
-                mainWindow.addChildWindow(soundWindow, ordered: NSWindow.OrderingMode.below)
-                soundWindow.setFrameOrigin(window.frame.origin)
-                
-            case NSUserInterfaceItemIdentifier.playQueueWindow.rawValue:
-                
-                mainWindow.addChildWindow(playQueueWindow, ordered: NSWindow.OrderingMode.below)
-                playQueueWindow.setFrame(window.frame, display: true)
-                
-            case NSUserInterfaceItemIdentifier.libraryWindow.rawValue:
-                
-                mainWindow.addChildWindow(libraryWindow, ordered: NSWindow.OrderingMode.below)
-                libraryWindow.setFrame(window.frame, display: true)
-                
-            default:
-                
-                print("\nOther window: \(window.id)")
+            if let theWindow: NSWindow = mapWindowIdToWindow(window.id) {
+            
+                mainWindow.addChildWindow(theWindow, ordered: NSWindow.OrderingMode.below)
+                theWindow.setFrame(window.frame, display: true)
+                theWindow.show()
             }
         }
 
         mainWindow.setIsVisible(true)
+    }
+    
+    func mapWindowIdToWindow(_ id: String) -> NSWindow? {
+        
+        switch id {
+            
+        case NSUserInterfaceItemIdentifier.soundWindow.rawValue:
+            
+            return soundWindow
+            
+        case NSUserInterfaceItemIdentifier.playQueueWindow.rawValue:
+            
+            return playQueueWindow
+            
+        case NSUserInterfaceItemIdentifier.libraryWindow.rawValue:
+            
+            return libraryWindow
+            
+        default:
+            
+            print("\nOther window: \(id)")
+            return nil
+        }
     }
     
     var currentWindowLayout: WindowLayout {
@@ -270,20 +283,11 @@ class ModularInterface: InterfaceProtocol {
         
         let state = ModularInterfaceState()
         
-        state.windowLayout.rememberedLayout = WindowLayout("_rememberedModularInterfaceWindowLayout_", true,
+        let layout = WindowLayout("_rememberedModularInterfaceWindowLayout_", true,
                                                            mainWindow: LayoutWindow(id: mainWindow.identifier!.rawValue, frame: mainWindow.frame))
         
-        
-        
-//        uiState.showEffects = effectsWindow.isVisible
-//        uiState.showPlaylist = playlistWindow.isVisible
-//        
-//        uiState.mainWindowOrigin = mainWindow.origin
-//        
-//        uiState.effectsWindowOrigin = effectsWindow.origin
-//        uiState.playlistWindowFrame = playlistWindow.frame
-        
-//        state.userLayouts = WindowLayouts.userDefinedLayouts
+        state.windowLayout.rememberedLayout = layout.withChildWindows(mainWindow.childWindows?.map {LayoutWindow($0)} ?? [])
+        state.windowLayout.userLayouts = WindowLayouts.userDefinedLayouts
         
         return state
     }

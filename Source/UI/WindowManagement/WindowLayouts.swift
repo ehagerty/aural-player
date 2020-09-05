@@ -7,13 +7,7 @@ class WindowLayouts {
         var map = [String: WindowLayout]()
         
         WindowLayoutPreset.allCases.forEach {
-            
-            let presetName = $0.description
-            
-            let layout = WindowLayout(presetName, true, mainWindow: $0.mainWindow)
-            layout.windows = $0.windows
-            
-            map[presetName] = layout
+            map[$0.description] = WindowLayout.fromPreset($0)
         }
         
         return map

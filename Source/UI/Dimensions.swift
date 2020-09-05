@@ -9,10 +9,12 @@ struct Dimensions {
     // Main window size (never changes)
     static let mainWindowWidth: CGFloat = 530
     static let mainWindowHeight: CGFloat = 230
+    static let mainWindowSize: NSSize = NSSize(width: 530, height: 230)
     
     // Effects window size (never changes)
     static let effectsWindowWidth: CGFloat = 530
     static let effectsWindowHeight: CGFloat = 230
+    static let soundWindowSize: NSSize = NSSize(width: 530, height: 230)
     
     static let minPlaylistWidth: CGFloat = 530
     static let minPlaylistHeight: CGFloat = 180
