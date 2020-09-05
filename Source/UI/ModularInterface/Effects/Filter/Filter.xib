@@ -25,11 +25,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <view id="e4i-Mp-MMA" customClass="FilterView" customModule="Aural" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+            <rect key="frame" x="0.0" y="0.0" width="530" height="180"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N6p-bI-VWV" userLabel="Bypass button" customClass="EffectsUnitTriStateBypassButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="42" y="150" width="14" height="14"/>
+                    <rect key="frame" x="42" y="155" width="14" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FVo-JD-Fe2">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -40,7 +40,7 @@
                     </connections>
                 </button>
                 <box fixedFrame="YES" boxType="custom" borderType="none" cornerRadius="4" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="pTF-TT-2rE">
-                    <rect key="frame" x="65" y="84" width="350" height="21"/>
+                    <rect key="frame" x="65" y="89" width="350" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="zP9-SS-Z40">
                         <rect key="frame" x="0.0" y="0.0" width="350" height="21"/>
@@ -48,7 +48,7 @@
                     </view>
                 </box>
                 <button wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ix6-8B-1a4" userLabel="Bands-Left" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="48" y="86" width="14" height="14"/>
+                    <rect key="frame" x="48" y="91" width="14" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="FilterBandsTabs-Left" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="5x5-sf-fJc">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -62,7 +62,7 @@
                     </connections>
                 </button>
                 <button wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z8Q-IY-snQ" userLabel="Bands-Right" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="417" y="86" width="14" height="14"/>
+                    <rect key="frame" x="417" y="91" width="14" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="FilterBandsTabs-Right" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Bmb-za-MqI">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -76,16 +76,16 @@
                     </connections>
                 </button>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WKo-oZ-DDd" customClass="FilterChart" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="61" y="107" width="439" height="33"/>
+                    <rect key="frame" x="61" y="112" width="439" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
                 <tabView fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="jYE-vo-rzA" userLabel="Bands">
-                    <rect key="frame" x="65" y="7" width="350" height="75"/>
+                    <rect key="frame" x="65" y="7" width="350" height="80"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <font key="font" metaFont="system"/>
                 </tabView>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dAC-v2-fWg" userLabel="Add button">
-                    <rect key="frame" x="430" y="62" width="65" height="19"/>
+                    <rect key="frame" x="430" y="67" width="65" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="+  Band" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2bl-kU-qiq" customClass="FXTextButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -96,7 +96,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="obx-WP-Bye" userLabel="Remove button">
-                    <rect key="frame" x="430" y="40" width="65" height="19"/>
+                    <rect key="frame" x="430" y="45" width="65" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="-  Band" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CJv-7G-f4Q" customClass="FXTextButtonCell" customModule="Aural" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -161,7 +161,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jRc-cy-UPp" userLabel="Master Desc" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
-                    <rect key="frame" x="65" y="147" width="130" height="29"/>
+                    <rect key="frame" x="65" y="152" width="130" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Filter" id="yYO-6E-8CP" customClass="FXUnitCaptionCell" customModule="Aural" customModuleProvider="target">
                         <font key="font" size="14" name="AlegreyaSansSC-Regular"/>

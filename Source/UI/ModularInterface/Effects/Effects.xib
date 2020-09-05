@@ -34,7 +34,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="225" y="78" width="530" height="230"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="530" height="230"/>
             <value key="maxSize" type="size" width="530" height="230"/>
             <view key="contentView" id="AK5-1a-Nc7">
@@ -49,7 +49,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button toolTip="Hide the effects panel" wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NDE-AU-hEg" userLabel="Close Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
-                                    <rect key="frame" x="10" y="210" width="10" height="10"/>
+                                    <rect key="frame" x="6" y="214" width="8" height="8"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Close" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="LZT-fd-SBv">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -63,7 +63,7 @@
                                     </connections>
                                 </button>
                                 <popUpButton toolTip="Effects View" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HsC-2z-eFh" userLabel="Playlist View Menu">
-                                    <rect key="frame" x="500" y="210" width="24" height="10"/>
+                                    <rect key="frame" x="504" y="215" width="24" height="8"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="disclosure" bezelStyle="roundedDisclosure" alignment="center" lineBreakMode="truncatingTail" inset="2" pullsDown="YES" arrowPosition="noArrow" preferredEdge="maxX" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="g9l-VG-eGh" id="wQk-S7-HzL">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -108,81 +108,8 @@
                                         </menu>
                                     </popUpButtonCell>
                                 </popUpButton>
-                                <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" cornerRadius="5" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Jtw-Y5-1IX" userLabel="Effects Box">
-                                    <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <view key="contentView" id="906-wq-IiK">
-                                        <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <subviews>
-                                            <tabView focusRingType="none" appearanceType="darkAqua" fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NVs-Zs-ocb" userLabel="Tab group">
-                                                <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                                <tabViewItems>
-                                                    <tabViewItem label="Master" identifier="0" id="83v-kE-bxA" userLabel="Master">
-                                                        <view key="view" id="3tH-T8-1bs">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="EQ" identifier="1" id="b9J-kH-3vF">
-                                                        <view key="view" id="2Lz-au-e4g">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Pitch Shift" identifier="2" id="XfC-ME-cUm">
-                                                        <view key="view" id="heI-Be-MGY">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Time Stretch" identifier="3" id="Fb8-WN-OxZ">
-                                                        <view key="view" id="AYT-co-YJR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Reverb" identifier="4" id="s94-U9-dAg">
-                                                        <view key="view" id="Nw5-og-BcT">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Delay" identifier="5" id="XxR-dF-hta">
-                                                        <view key="view" id="mbl-Dg-xGD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Filter" identifier="6" id="UlR-Hk-5ew">
-                                                        <view key="view" id="dwe-yZ-WGI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Panner" identifier="7" id="QfO-C5-CQF">
-                                                        <view key="view" id="C4P-lY-Fua">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                    <tabViewItem label="Devices" identifier="8" id="a0d-pM-HPa">
-                                                        <view key="view" id="gmZ-Cf-Byi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        </view>
-                                                    </tabViewItem>
-                                                </tabViewItems>
-                                            </tabView>
-                                        </subviews>
-                                    </view>
-                                    <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="fillColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </box>
                                 <box fixedFrame="YES" boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Zhk-zz-laJ" userLabel="Tab Buttons Box">
-                                    <rect key="frame" x="-1" y="179" width="532" height="24"/>
+                                    <rect key="frame" x="-1" y="183" width="532" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <view key="contentView" id="b0o-w1-EZ9">
                                         <rect key="frame" x="1" y="1" width="530" height="22"/>
@@ -370,12 +297,85 @@
                                     <color key="borderColor" white="0.1245721678408451" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </box>
+                                <box fixedFrame="YES" boxType="custom" borderType="none" borderWidth="0.0" cornerRadius="5" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Jtw-Y5-1IX" userLabel="Effects Box">
+                                    <rect key="frame" x="0.0" y="0.0" width="530" height="180"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <view key="contentView" id="906-wq-IiK">
+                                        <rect key="frame" x="0.0" y="0.0" width="530" height="180"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <tabView focusRingType="none" appearanceType="darkAqua" fixedFrame="YES" drawsBackground="NO" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="NVs-Zs-ocb" userLabel="Tab group">
+                                                <rect key="frame" x="0.0" y="5" width="530" height="175"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <tabViewItems>
+                                                    <tabViewItem label="Master" identifier="0" id="83v-kE-bxA" userLabel="Master">
+                                                        <view key="view" id="3tH-T8-1bs">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="EQ" identifier="1" id="b9J-kH-3vF">
+                                                        <view key="view" id="2Lz-au-e4g">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Pitch Shift" identifier="2" id="XfC-ME-cUm">
+                                                        <view key="view" id="heI-Be-MGY">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Time Stretch" identifier="3" id="Fb8-WN-OxZ">
+                                                        <view key="view" id="AYT-co-YJR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Reverb" identifier="4" id="s94-U9-dAg">
+                                                        <view key="view" id="Nw5-og-BcT">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Delay" identifier="5" id="XxR-dF-hta">
+                                                        <view key="view" id="mbl-Dg-xGD">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Filter" identifier="6" id="UlR-Hk-5ew">
+                                                        <view key="view" id="dwe-yZ-WGI">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Panner" identifier="7" id="QfO-C5-CQF">
+                                                        <view key="view" id="C4P-lY-Fua">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                    <tabViewItem label="Devices" identifier="8" id="a0d-pM-HPa">
+                                                        <view key="view" id="gmZ-Cf-Byi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="530" height="175"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </view>
+                                                    </tabViewItem>
+                                                </tabViewItems>
+                                            </tabView>
+                                        </subviews>
+                                    </view>
+                                    <color key="borderColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="fillColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </box>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M7i-h0-Wr5" userLabel="Window Title">
                                     <rect key="frame" x="227" y="212" width="77" height="16"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Sound" id="Esa-te-ZGO">
-                                        <font key="font" size="12" name="AlegreyaSansSC-Medium"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <font key="font" size="10" name="AlegreyaSansSC-Regular"/>
+                                        <color key="textColor" white="0.70157877599999996" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
@@ -407,7 +407,7 @@
         </customObject>
     </objects>
     <resources>
-        <image name="Close" width="18" height="18"/>
+        <image name="Close" width="20" height="20"/>
         <image name="DelayTab" width="23" height="22"/>
         <image name="DelayTab-Mixed" width="23" height="22"/>
         <image name="DelayTab-On" width="23" height="22"/>
