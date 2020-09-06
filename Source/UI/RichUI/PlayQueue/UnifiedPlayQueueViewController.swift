@@ -1,6 +1,6 @@
 import Cocoa
 
-class PlayQueueViewController: NSViewController, NotificationSubscriber {
+class UnifiedPlayQueueViewController: NSViewController, NotificationSubscriber {
     
     @IBOutlet weak var playQueueView: NSTableView!
     @IBOutlet weak var lblTracksSummary: NSTextField!

@@ -1,8 +1,8 @@
 import Cocoa
 
-class PlayQueueTableViewController: AuralViewController {
+class PlayQueueViewController: AuralViewController {
     
-    override var nibName: String? {return "PlayQueueTableView"}
+    override var nibName: String? {return "PlayQueueListView"}
     
     @IBOutlet weak var playQueueView: NSTableView!
     @IBOutlet weak var scroller: NSScroller!
@@ -10,21 +10,21 @@ class PlayQueueTableViewController: AuralViewController {
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
-    private var selectedRows: IndexSet {playQueueView.selectedRowIndexes}
+    var selectedRows: IndexSet {playQueueView.selectedRowIndexes}
     
-    private var selectedRowsArr: [Int] {playQueueView.selectedRowIndexes.toArray()}
+    var selectedRowsArr: [Int] {playQueueView.selectedRowIndexes.toArray()}
     
-    private var selectedRowCount: Int {playQueueView.numberOfSelectedRows}
+    var selectedRowCount: Int {playQueueView.numberOfSelectedRows}
     
-    private var atLeastOneSelectedRow: Bool {playQueueView.numberOfSelectedRows > 0}
+    var atLeastOneSelectedRow: Bool {playQueueView.numberOfSelectedRows > 0}
     
-    private var rowCount: Int {playQueueView.numberOfRows}
+    var rowCount: Int {playQueueView.numberOfRows}
     
-    private var atLeastOneRow: Bool {playQueueView.numberOfRows > 0}
+    var atLeastOneRow: Bool {playQueueView.numberOfRows > 0}
     
-    private var lastRow: Int {rowCount - 1}
+    var lastRow: Int {rowCount - 1}
     
-    private let allColumns: IndexSet = [0, 1, 2]
+    var allColumns: IndexSet {playQueueView.columnIndexes(in: playQueueView.visibleRect)}
     
     override func initializeUI() {
         
@@ -43,8 +43,6 @@ class PlayQueueTableViewController: AuralViewController {
         
         // Only respond if the playing track was updated
         Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:), queue: .main)
-        
-        Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
         
         Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
         Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
@@ -151,14 +149,7 @@ class PlayQueueTableViewController: AuralViewController {
         playQueueView.selectRowIndexes(IndexSet(), byExtendingSelection: false)
     }
     
-    private func removeSelectedTracks() {
-        
-        let selectedRows = self.selectedRows
-        
-        // Ensure at least one selected row
-        guard let firstRemovedRow = selectedRows.min() else {return}
-        
-        _ = playQueue.removeTracks(selectedRows)
+    func tracksRemoved(fromRows removedRows: IndexSet) {
         
         // Tell the playlist view that the number of rows has changed (should result in removal of rows)
         playQueueView.noteNumberOfRowsChanged()
@@ -167,9 +158,8 @@ class PlayQueueTableViewController: AuralViewController {
         let lastPlaylistRowAfterRemove = playQueue.size - 1
         
         // This will be true unless a contiguous block of tracks was removed from the bottom of the playQueue.
-        if firstRemovedRow <= lastPlaylistRowAfterRemove {
+        if let firstRemovedRow = removedRows.min(), firstRemovedRow <= lastPlaylistRowAfterRemove {
             
-            // Refresh only the index column for all these rows
             let refreshIndexes = IndexSet(firstRemovedRow...lastPlaylistRowAfterRemove)
             playQueueView.reloadData(forRowIndexes: refreshIndexes, columnIndexes: allColumns)
         }
@@ -335,4 +325,12 @@ class PlayQueueTableViewController: AuralViewController {
             playQueueView.reloadData(forRowIndexes: IndexSet([playingTrackIndex]), columnIndexes: IndexSet([0]))
         }
     }
+}
+
+class PlayQueueListViewController: PlayQueueViewController {
+    override var nibName: String? {return "PlayQueueListView"}
+}
+
+class PlayQueueTableViewController: PlayQueueViewController {
+    override var nibName: String? {return "PlayQueueTableView"}
 }

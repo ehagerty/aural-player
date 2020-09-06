@@ -68,18 +68,6 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
         PlayQueueUIState.view = tabView.selectedIndex == 0 ? .list : .table
         request.acceptResponse(okToExit: true)
     }
-    
-//    @IBAction func listViewAction(_ sender: AnyObject) {
-//
-//        btnListView.state = UIConstants.onState
-//        btnTableView.state = UIConstants.offState
-//    }
-//
-//    @IBAction func tableViewAction(_ sender: AnyObject) {
-//
-//        btnTableView.state = UIConstants.onState
-//        btnListView.state = UIConstants.offState
-//    }
 
     // Invokes the Open file dialog, to allow the user to add tracks/playlists to the app playlist
     @IBAction func addTracksAction(_ sender: AnyObject) {
@@ -118,8 +106,15 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     
     @IBAction func removeTracksAction(_ sender: AnyObject) {
         
-//        guard !checkIfLibraryIsBeingModified() else {return}
-//        Messenger.publish(.library_removeTracks, payload: PlaylistViewSelector.forView(PlaylistViewState.current))
+        let selectedRows = (tabView.selectedIndex == 0 ? listViewController : tableViewController).selectedRows
+        
+        if !selectedRows.isEmpty {
+            
+            _ = playQueue.removeTracks(selectedRows)
+            
+            [listViewController, tableViewController].forEach {$0.tracksRemoved(fromRows: selectedRows)}
+            updateSummary()
+        }
     }
     
     @IBAction func exportToPlaylistAction(_ sender: AnyObject) {
