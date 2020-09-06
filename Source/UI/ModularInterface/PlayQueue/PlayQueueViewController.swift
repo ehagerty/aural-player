@@ -44,9 +44,6 @@ class PlayQueueViewController: AuralViewController {
         // Only respond if the playing track was updated
         Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:), queue: .main)
         
-        Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
-        Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
-        
         Messenger.subscribe(self, .playQueue_moveTracksToTop, self.moveTracksToTop)
         Messenger.subscribe(self, .playQueue_moveTracksToBottom, self.moveTracksToBottom)
 
@@ -173,26 +170,22 @@ class PlayQueueViewController: AuralViewController {
         playQueueView.reloadData()
     }
     
-    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
-    private func moveTracksUp() {
-        
-        guard rowCount > 1 && (1..<rowCount).contains(selectedRowCount) else {return}
-        
-        let results = playQueue.moveTracksUp(selectedRows)
-        
-        moveAndReloadItems(results.sorted(by: TrackMoveResult.compareAscending))
-        playQueueView.scrollRowToVisible(selectedRows.min()!)
+    func refreshTableView() {
+        playQueueView.reloadData()
     }
     
     // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
-    private func moveTracksDown() {
+    func tracksMovedUp(results: [TrackMoveResult]) {
         
-        guard rowCount > 1 && (1..<rowCount).contains(selectedRowCount) else {return}
-        
-        let results = playQueue.moveTracksDown(selectedRows)
+        moveAndReloadItems(results.sorted(by: TrackMoveResult.compareAscending))
+        playQueueView.scrollRowToVisible(results.map{$0.destinationIndex}.min()!)
+    }
+    
+    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
+    func tracksMovedDown(results: [TrackMoveResult]) {
         
         moveAndReloadItems(results.sorted(by: TrackMoveResult.compareDescending))
-        playQueueView.scrollRowToVisible(selectedRows.min()!)
+        playQueueView.scrollRowToVisible(results.map{$0.destinationIndex}.min()!)
     }
     
     // Rearranges tracks within the view that have been reordered

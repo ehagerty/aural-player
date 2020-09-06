@@ -23,6 +23,9 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     private lazy var tableViewController: PlayQueueTableViewController = PlayQueueTableViewController()
     private lazy var tableView: NSView = tableViewController.view
     
+    private var viewControllers: [PlayQueueViewController] = []
+    private var currentViewController: PlayQueueViewController {tabView.selectedIndex == 0 ? listViewController : tableViewController}
+    
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
@@ -34,6 +37,7 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     override func windowDidLoad() {
         
         viewControlButtons = [btnClose, viewMenuIconItem]
+        viewControllers = [listViewController, tableViewController]
         
         changeTextSize(PlaylistViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
@@ -106,13 +110,13 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     
     @IBAction func removeTracksAction(_ sender: AnyObject) {
         
-        let selectedRows = (tabView.selectedIndex == 0 ? listViewController : tableViewController).selectedRows
+        let selectedRows = currentViewController.selectedRows
         
         if !selectedRows.isEmpty {
             
             _ = playQueue.removeTracks(selectedRows)
             
-            [listViewController, tableViewController].forEach {$0.tracksRemoved(fromRows: selectedRows)}
+            viewControllers.forEach {$0.tracksRemoved(fromRows: selectedRows)}
             updateSummary()
         }
     }
@@ -146,13 +150,38 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     func clear() {
         
         playQueue.clear()
+        viewControllers.forEach {$0.refreshTableView()}
         updateSummary()
     }
     
     @IBAction func moveTracksUpAction(_ sender: AnyObject) {
+        
+        let rowCount = currentViewController.rowCount
+        let selectedRows = currentViewController.selectedRows
+        let selectedRowCount = selectedRows.count
+        
+        if rowCount > 1 && (1..<rowCount).contains(selectedRowCount) {
+            
+            let results = playQueue.moveTracksUp(selectedRows)
+            if !results.isEmpty {
+                viewControllers.forEach {$0.tracksMovedUp(results: results)}
+            }
+        }
     }
     
     @IBAction func moveTracksDownAction(_ sender: AnyObject) {
+        
+        let rowCount = currentViewController.rowCount
+        let selectedRows = currentViewController.selectedRows
+        let selectedRowCount = selectedRows.count
+        
+        if rowCount > 1 && (1..<rowCount).contains(selectedRowCount) {
+            
+            let results = playQueue.moveTracksDown(selectedRows)
+            if !results.isEmpty {
+                viewControllers.forEach {$0.tracksMovedDown(results: results)}
+            }
+        }
     }
   
     @IBAction func closeWindowAction(_ sender: AnyObject) {
