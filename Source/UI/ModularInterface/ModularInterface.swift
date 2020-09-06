@@ -18,7 +18,7 @@ class ModularInterface: InterfaceProtocol {
     lazy var mainWindow: NSWindow = mainWindowController.window!
     
     private var playQueueWindowLoaded: Bool = false
-    private lazy var playQueueWindowController: PlayQueueWindowViewController = PlayQueueWindowViewController()
+    private lazy var playQueueWindowController: PlayQueueWindowController = PlayQueueWindowController()
     private lazy var playQueueWindow: NSWindow = {
         
         playQueueWindowLoaded = true

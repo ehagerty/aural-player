@@ -206,17 +206,24 @@ extension NSUserInterfaceItemIdentifier {
     static let uid_chapterDuration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier(UIConstants.chapterDurationColumnID)
     
 
-    static let playQueue_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_index")
+    static let playQueue_listView_art: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_listView_art")
     
-    static let playQueue_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_title")
+    static let playQueue_listView_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_listView_title")
     
-    static let playQueue_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_duration")
+    static let playQueue_listView_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_listView_duration")
     
-    static let playQueue_artist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_artist")
     
-    static let playQueue_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_album")
+    static let playQueue_tableView_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_index")
     
-    static let playQueue_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_genre")
+    static let playQueue_tableView_artistTitle: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_artistTitle")
+    
+    static let playQueue_tableView_title: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_title")
+    
+    static let playQueue_tableView_artist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_artist")
+    
+    static let playQueue_tableView_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_album")
+    
+    static let playQueue_tableView_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_genre")
     
     
     static let library_index: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("library_index")

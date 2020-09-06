@@ -234,6 +234,8 @@
 		3E136A952477E648001C0A7C /* SequencerTrackSelectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E136A942477E648001C0A7C /* SequencerTrackSelectionTests.swift */; };
 		3E136A972477E698001C0A7C /* SequencerBeginAndEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E136A962477E698001C0A7C /* SequencerBeginAndEndTests.swift */; };
 		3E136A992477E769001C0A7C /* SequencerIteration_TracksPlaylist_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E136A982477E769001C0A7C /* SequencerIteration_TracksPlaylist_Tests.swift */; };
+		3E13DBF62504BE5A00CFC2C8 /* PlayQueueListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E13DBF52504BE5A00CFC2C8 /* PlayQueueListView.xib */; };
+		3E13DBF82504BEA100CFC2C8 /* PlayQueueListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E13DBF72504BEA100CFC2C8 /* PlayQueueListViewController.swift */; };
 		3E154D7921DCC206006DBD22 /* AudioDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E154D7821DCC206006DBD22 /* AudioDataSource.swift */; };
 		3E154D7B21DCC21F006DBD22 /* FileSystemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E154D7A21DCC21F006DBD22 /* FileSystemDataSource.swift */; };
 		3E16722C246CFFAB00A57F64 /* AVAudioExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E16722B246CFFAB00A57F64 /* AVAudioExtensions.swift */; };
@@ -1002,6 +1004,8 @@
 		3E136A942477E648001C0A7C /* SequencerTrackSelectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerTrackSelectionTests.swift; sourceTree = "<group>"; };
 		3E136A962477E698001C0A7C /* SequencerBeginAndEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerBeginAndEndTests.swift; sourceTree = "<group>"; };
 		3E136A982477E769001C0A7C /* SequencerIteration_TracksPlaylist_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerIteration_TracksPlaylist_Tests.swift; sourceTree = "<group>"; };
+		3E13DBF52504BE5A00CFC2C8 /* PlayQueueListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayQueueListView.xib; sourceTree = "<group>"; };
+		3E13DBF72504BEA100CFC2C8 /* PlayQueueListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueListViewController.swift; sourceTree = "<group>"; };
 		3E154D7821DCC206006DBD22 /* AudioDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDataSource.swift; sourceTree = "<group>"; };
 		3E154D7A21DCC21F006DBD22 /* FileSystemDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemDataSource.swift; sourceTree = "<group>"; };
 		3E16722B246CFFAB00A57F64 /* AVAudioExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioExtensions.swift; sourceTree = "<group>"; };
@@ -1648,6 +1652,24 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+		3E13DBF32504BDAD00CFC2C8 /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				3E13DBF52504BE5A00CFC2C8 /* PlayQueueListView.xib */,
+				3E13DBF72504BEA100CFC2C8 /* PlayQueueListViewController.swift */,
+				3E18A58624ED91520014E850 /* PlayQueueViewDelegate.swift */,
+				3E18A58824ED91D00014E850 /* PlayQueueViewDataSource.swift */,
+			);
+			path = ListView;
+			sourceTree = "<group>";
+		};
+		3E13DBF42504BDB600CFC2C8 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
 		3E167233246DB3FA00A57F64 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1668,8 +1690,8 @@
 			children = (
 				3E18A58224ED8B680014E850 /* PlayQueue.xib */,
 				3E18A58424ED8D510014E850 /* PlayQueueWindowViewController.swift */,
-				3E18A58624ED91520014E850 /* PlayQueueViewDelegate.swift */,
-				3E18A58824ED91D00014E850 /* PlayQueueViewDataSource.swift */,
+				3E13DBF32504BDAD00CFC2C8 /* ListView */,
+				3E13DBF42504BDB600CFC2C8 /* TableView */,
 			);
 			path = PlayQueue;
 			sourceTree = "<group>";
@@ -3622,6 +3644,7 @@
 				3EF62FF1244C427200AD7172 /* ColorSchemes.xib in Resources */,
 				3E0C9939216C82B600E396DB /* DelayPresetsEditor.xib in Resources */,
 				3EB1701321748DBC00B82D3A /* JumpToTimeEditorDialog.xib in Resources */,
+				3E13DBF62504BE5A00CFC2C8 /* PlayQueueListView.xib in Resources */,
 				3EF5E5C11FBDB637004270A4 /* Genres.xib in Resources */,
 				3E24C79D24EAACF3009C93AF /* NowPlaying.xib in Resources */,
 				3E3F29632159B69900581EFE /* LayoutsEditor.xib in Resources */,
@@ -3675,6 +3698,7 @@
 				3E642D1724B634BD000152B2 /* Grouping.swift in Sources */,
 				3E8718D02466B61D007D9672 /* MathUtils.swift in Sources */,
 				3ECD17471F6BBF3600492F56 /* ITunesParser.swift in Sources */,
+				3E13DBF82504BEA100CFC2C8 /* PlayQueueListViewController.swift in Sources */,
 				3EE7D725244EC8D1005D76FA /* ColorState.swift in Sources */,
 				3E2188A61F0767290085BAB3 /* DetailedTrackInfoRowView.swift in Sources */,
 				3EE7ED9324F80BF40011CA93 /* DevicesViewController.swift in Sources */,
