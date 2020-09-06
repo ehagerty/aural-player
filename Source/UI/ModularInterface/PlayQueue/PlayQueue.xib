@@ -276,12 +276,12 @@
                         </connections>
                     </button>
                     <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="xnM-kX-OXF" userLabel="Tab Group" customClass="AuralTabView" customModule="Aural" customModuleProvider="target">
-                        <rect key="frame" x="10" y="53" width="580" height="300"/>
+                        <rect key="frame" x="10" y="53" width="580" height="290"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="List View" identifier="" id="iup-YO-O3I" customClass="AuralTabViewItem" customModule="Aural" customModuleProvider="target">
                                 <view key="view" id="7et-fY-hk2">
-                                    <rect key="frame" x="0.0" y="0.0" width="580" height="300"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="580" height="290"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <connections>
@@ -368,7 +368,7 @@
                     <constraint firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" constant="20" id="aKQ-uM-LJ5"/>
                     <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="xnM-kX-OXF" secondAttribute="leading" id="bPK-ud-KVi"/>
                     <constraint firstItem="c2A-EN-gcy" firstAttribute="leading" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="cfG-P1-sRH"/>
-                    <constraint firstItem="xnM-kX-OXF" firstAttribute="top" secondItem="uno-jX-4ff" secondAttribute="bottom" id="dEB-w4-59h"/>
+                    <constraint firstItem="xnM-kX-OXF" firstAttribute="top" secondItem="uno-jX-4ff" secondAttribute="bottom" constant="10" id="dEB-w4-59h"/>
                     <constraint firstAttribute="trailing" secondItem="YoY-1j-kEY" secondAttribute="trailing" id="dJ3-0l-ysk"/>
                     <constraint firstItem="rC3-II-PTW" firstAttribute="trailing" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" constant="-10" id="fAb-de-Ytg"/>
                     <constraint firstItem="cxn-q8-bzF" firstAttribute="centerY" secondItem="41L-Fn-ftI" secondAttribute="centerY" constant="1" id="feJ-AF-tXu"/>

@@ -20,6 +20,9 @@ class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
     private lazy var listViewController: PlayQueueListViewController = PlayQueueListViewController()
     private lazy var listView: NSView = listViewController.view
     
+    private lazy var tableViewController: PlayQueueTableViewController = PlayQueueTableViewController()
+    private lazy var tableView: NSView = tableViewController.view
+    
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
@@ -35,9 +38,11 @@ class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
         changeTextSize(PlaylistViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
         
-        tabView.addViewsForTabs([listView])
-        [0].forEach({tabView.selectTabViewItem(at: $0)})
+        tabView.addViewsForTabs([listView, tableView])
         listView.anchorToView(tabView.tabViewItem(at: 0).view!)
+        tableView.anchorToView(tabView.tabViewItem(at: 1).view!)
+        
+        [1, 0].forEach({tabView.selectTabViewItem(at: $0)})
         
         Messenger.subscribeAsync(self, .playQueue_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)

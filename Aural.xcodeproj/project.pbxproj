@@ -324,6 +324,8 @@
 		3E2F97F024ECDDF900463F9A /* ModularInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */; };
 		3E2F97F324ED013E00463F9A /* RichUIEffects.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2F97F224ED013E00463F9A /* RichUIEffects.xib */; };
 		3E2F97F524ED017100463F9A /* RichUIEffectsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2F97F424ED017100463F9A /* RichUIEffectsWindowController.swift */; };
+		3E2FA2192504D492001AD4E8 /* PlayQueueTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2FA2182504D492001AD4E8 /* PlayQueueTableViewDelegate.swift */; };
+		3E2FA21B2504D4C5001AD4E8 /* PlayQueueTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2FA21A2504D4C5001AD4E8 /* PlayQueueTableViewDataSource.swift */; };
 		3E309B741FB70BB800C61E72 /* InfoPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E309B731FB70BB800C61E72 /* InfoPopup.xib */; };
 		3E309B781FB70D1F00C61E72 /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E309B771FB70D1F00C61E72 /* InfoPopupViewController.swift */; };
 		3E30F5892488BAE400EF7F8C /* TestablePlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E30F5882488BAE400EF7F8C /* TestablePlaylist.swift */; };
@@ -884,6 +886,8 @@
 		3EF743B1218C50420060BDE0 /* FilterBandsViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF743B0218C50420060BDE0 /* FilterBandsViewDelegate.swift */; };
 		3EF86045245D491E0067583A /* GradientOptionsRadioButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF86044245D491E0067583A /* GradientOptionsRadioButtonGroup.swift */; };
 		3EF86047245DAB470067583A /* SettingsPopupMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF86046245DAB470067583A /* SettingsPopupMenuController.swift */; };
+		3EF873E72504D22100618C8D /* PlayQueueTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF873E62504D22100618C8D /* PlayQueueTableView.xib */; };
+		3EF873E92504D28400618C8D /* PlayQueueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF873E82504D28400618C8D /* PlayQueueTableViewController.swift */; };
 		3EFB192B1FB8268700690C60 /* MetadataDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFB192A1FB8268700690C60 /* MetadataDataSource.swift */; };
 		3EFC506D1F607D4A0032BE21 /* PlaybackInfoDelegateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFC506C1F607D4A0032BE21 /* PlaybackInfoDelegateProtocol.swift */; };
 		3EFFE6B91F036E81003728BD /* PlaylistIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFFE6B81F036E81003728BD /* PlaylistIO.swift */; };
@@ -1093,6 +1097,8 @@
 		3E2F97EF24ECDDF900463F9A /* ModularInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularInterface.swift; sourceTree = "<group>"; };
 		3E2F97F224ED013E00463F9A /* RichUIEffects.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUIEffects.xib; sourceTree = "<group>"; };
 		3E2F97F424ED017100463F9A /* RichUIEffectsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichUIEffectsWindowController.swift; sourceTree = "<group>"; };
+		3E2FA2182504D492001AD4E8 /* PlayQueueTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTableViewDelegate.swift; sourceTree = "<group>"; };
+		3E2FA21A2504D4C5001AD4E8 /* PlayQueueTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTableViewDataSource.swift; sourceTree = "<group>"; };
 		3E309B731FB70BB800C61E72 /* InfoPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoPopup.xib; sourceTree = "<group>"; };
 		3E309B771FB70D1F00C61E72 /* InfoPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
 		3E30F5882488BAE400EF7F8C /* TestablePlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestablePlaylist.swift; sourceTree = "<group>"; };
@@ -1611,6 +1617,8 @@
 		3EF743B0218C50420060BDE0 /* FilterBandsViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBandsViewDelegate.swift; sourceTree = "<group>"; };
 		3EF86044245D491E0067583A /* GradientOptionsRadioButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientOptionsRadioButtonGroup.swift; sourceTree = "<group>"; };
 		3EF86046245DAB470067583A /* SettingsPopupMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPopupMenuController.swift; sourceTree = "<group>"; };
+		3EF873E62504D22100618C8D /* PlayQueueTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayQueueTableView.xib; sourceTree = "<group>"; };
+		3EF873E82504D28400618C8D /* PlayQueueTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueTableViewController.swift; sourceTree = "<group>"; };
 		3EFB192A1FB8268700690C60 /* MetadataDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataDataSource.swift; sourceTree = "<group>"; };
 		3EFC506C1F607D4A0032BE21 /* PlaybackInfoDelegateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackInfoDelegateProtocol.swift; sourceTree = "<group>"; };
 		3EFFE6B81F036E81003728BD /* PlaylistIO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistIO.swift; sourceTree = "<group>"; };
@@ -1666,6 +1674,10 @@
 		3E13DBF42504BDB600CFC2C8 /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				3EF873E62504D22100618C8D /* PlayQueueTableView.xib */,
+				3EF873E82504D28400618C8D /* PlayQueueTableViewController.swift */,
+				3E2FA2182504D492001AD4E8 /* PlayQueueTableViewDelegate.swift */,
+				3E2FA21A2504D4C5001AD4E8 /* PlayQueueTableViewDataSource.swift */,
 			);
 			path = TableView;
 			sourceTree = "<group>";
@@ -3603,6 +3615,7 @@
 				3EB8BE7324FE26C1008D3C27 /* Panner.xib in Resources */,
 				3E176603217DE43D001C6CF9 /* TracksPlaylistSort.xib in Resources */,
 				3EF18478217C8EFF00D24F39 /* Visualizer.xib in Resources */,
+				3EF873E72504D22100618C8D /* PlayQueueTableView.xib in Resources */,
 				3E850D571FB4461E0017CD02 /* PlaylistSortDialog.xib in Resources */,
 				3E82888A24AE04C20032D0CE /* Sidebar.xib in Resources */,
 				3EE4D43E21D6E2F0000110FC /* Alerts.xib in Resources */,
@@ -3844,6 +3857,7 @@
 				3E357B521F9C79E900C8F7B1 /* GroupingPlaylistProtocols.swift in Sources */,
 				3E82888C24AE051B0032D0CE /* SidebarViewController.swift in Sources */,
 				3E94E8622154D69000C57AD8 /* WindowManager.swift in Sources */,
+				3E2FA2192504D492001AD4E8 /* PlayQueueTableViewDelegate.swift in Sources */,
 				3E50DC982193A3B500D42373 /* FXUnit.swift in Sources */,
 				3E154D7B21DCC21F006DBD22 /* FileSystemDataSource.swift in Sources */,
 				3EE6C73924E028BB00379163 /* TimeStretchSlider.swift in Sources */,
@@ -3933,6 +3947,7 @@
 				3E18A58524ED8D510014E850 /* PlayQueueWindowController.swift in Sources */,
 				3E722F7B1EFCF4EC00916BF2 /* LibraryTracksViewDataSource.swift in Sources */,
 				3ED0C40121E73E21002757A7 /* ID3Spec.swift in Sources */,
+				3E2FA21B2504D4C5001AD4E8 /* PlayQueueTableViewDataSource.swift in Sources */,
 				3E06C0271FB6B0BF003EE9AB /* HistoryMenuControllers.swift in Sources */,
 				3E35778821D305DC009486F7 /* ConcurrentCollections.swift in Sources */,
 				3E76D9BC1F0F4228007FF3F8 /* AppDefaults.swift in Sources */,
@@ -4147,6 +4162,7 @@
 				3EB1701521748ED200B82D3A /* JumpToTimeEditorWindowController.swift in Sources */,
 				3ED43339216CA387000617A3 /* PlaybackGap.swift in Sources */,
 				3EFB192B1FB8268700690C60 /* MetadataDataSource.swift in Sources */,
+				3EF873E92504D28400618C8D /* PlayQueueTableViewController.swift in Sources */,
 				3EB2A7EE1F04697E001DF748 /* GraphicsUtils.swift in Sources */,
 				3E26B92B1FBC177F00FA3274 /* AutoHidingView.swift in Sources */,
 				3E18A58924ED91D00014E850 /* PlayQueueViewDataSource.swift in Sources */,

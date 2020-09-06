@@ -11,9 +11,7 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
     private let invalidDragOperation: NSDragOperation = []
     
     // Returns the total number of playlist rows
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return playQueue.size
-    }
+    func numberOfRows(in tableView: NSTableView) -> Int {playQueue.size}
     
     // MARK: Drag n drop
     

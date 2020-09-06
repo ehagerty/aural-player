@@ -10,13 +10,6 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
     private var theHeaderView: NSTableHeaderView!
     
     @IBOutlet weak var columnsMenu: NSMenu!
-    @IBOutlet weak var indexColumn: NSTableColumn!
-    @IBOutlet weak var artistTitleColumn: NSTableColumn!
-    @IBOutlet weak var durationColumn: NSTableColumn!
-    @IBOutlet weak var titleColumn: NSTableColumn!
-    @IBOutlet weak var artistColumn: NSTableColumn!
-    @IBOutlet weak var albumColumn: NSTableColumn!
-    @IBOutlet weak var genreColumn: NSTableColumn!
     
     private lazy var customColumnEditor: CustomColumnEditorDialogController = CustomColumnEditorDialogController()
     
@@ -36,12 +29,6 @@ class LibraryTracksViewDataSource: NSObject, NSTableViewDataSource, NSMenuDelega
         Messenger.subscribe(self, .library_toggleTableHeader, self.toggleTableHeader)
         Messenger.subscribe(self, .library_addCustomColumn, self.addCustomColumn(_:))
     }
-    
-    var isShowingArtistColumn: Bool {artistColumn.isShown}
-    
-    var isShowingAlbumColumn: Bool {albumColumn.isShown}
-    
-    var isShowingGenreColumn: Bool {genreColumn.isShown}
     
     func menuWillOpen(_ menu: NSMenu) {
         

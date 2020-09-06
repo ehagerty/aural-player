@@ -11,8 +11,6 @@ class LibraryTracksViewDelegate: NSObject, NSTableViewDelegate {
     private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
     
-    // MARK: Table view functions --------------------------------------------------------------------------------
-    
     override func awakeFromNib() {
         
         if let clipView = libraryView.enclosingScrollView?.contentView {
