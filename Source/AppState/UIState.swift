@@ -9,6 +9,7 @@ class UIState: PersistentState {
     var colorSchemes: ColorSchemesState = ColorSchemesState()
     var player: PlayerUIState = PlayerUIState()
     var playlist: PlaylistUIState = PlaylistUIState()
+    var playQueue: PlayQueueUIPersistentState = PlayQueueUIPersistentState()
     var effects: EffectsUIState = EffectsUIState()
     
     static func deserialize(_ map: NSDictionary) -> PersistentState {
@@ -35,6 +36,12 @@ class UIState: PersistentState {
         
         if let playlistMap = map["playlist"] as? NSDictionary {
             state.playlist = PlaylistUIState.deserialize(playlistMap) as! PlaylistUIState
+        }
+        
+        if let playQueueMap = map["playQueue"] as? NSDictionary,
+            let playQueueState = PlayQueueUIPersistentState.deserialize(playQueueMap) as? PlayQueueUIPersistentState {
+            
+            state.playQueue = playQueueState
         }
         
         return state

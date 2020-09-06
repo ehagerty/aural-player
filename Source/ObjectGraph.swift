@@ -184,6 +184,7 @@ class ObjectGraph {
         PlayerViewState.initialize(appState.ui.player)
         PlaylistViewState.initialize(appState.ui.playlist)
         EffectsViewState.initialize(appState.ui.effects)
+        PlayQueueUIState.initialize(fromPersistentState: appState.ui.playQueue)
         
         interfaceManager = InterfaceManager(appState.ui, preferences.viewPreferences)
     }
@@ -214,6 +215,7 @@ class ObjectGraph {
         appState.ui.player = PlayerViewState.persistentState
         appState.ui.playlist = PlaylistViewState.persistentState
         appState.ui.effects = EffectsViewState.persistentState
+        appState.ui.playQueue = PlayQueueUIState.persistentState
         
         appState.history = (historyDelegate as! HistoryDelegate).persistentState as! HistoryState
         appState.favorites = (favoritesDelegate as! FavoritesDelegate).persistentState

@@ -657,6 +657,7 @@
 		3E9A910324DDA9170027D414 /* FFmpegFrameBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A90FE24DDA9170027D414 /* FFmpegFrameBuffer.swift */; };
 		3E9A910824DDA9BB0027D414 /* UtilsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A910624DDA9BB0027D414 /* UtilsExtensions.swift */; };
 		3E9A910D24DDAAF00027D414 /* FFmpegTrackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9A910B24DDAAF00027D414 /* FFmpegTrackMetadata.swift */; };
+		3E9DF4AE25050626001FCF2F /* PlayQueueUIState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9DF4AD25050626001FCF2F /* PlayQueueUIState.swift */; };
 		3EA0074F1FC4E21E00AC7612 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0074E1FC4E21E00AC7612 /* DateUtils.swift */; };
 		3EA085F224EADB42009F2477 /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA085F124EADB42009F2477 /* NowPlayingViewController.swift */; };
 		3EA19C211FC16A3C0072929E /* ControlsPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA19C201FC16A3C0072929E /* ControlsPreferencesViewController.swift */; };
@@ -1397,6 +1398,7 @@
 		3E9A90FE24DDA9170027D414 /* FFmpegFrameBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegFrameBuffer.swift; sourceTree = "<group>"; };
 		3E9A910624DDA9BB0027D414 /* UtilsExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsExtensions.swift; sourceTree = "<group>"; };
 		3E9A910B24DDAAF00027D414 /* FFmpegTrackMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFmpegTrackMetadata.swift; sourceTree = "<group>"; };
+		3E9DF4AD25050626001FCF2F /* PlayQueueUIState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayQueueUIState.swift; sourceTree = "<group>"; };
 		3EA0074E1FC4E21E00AC7612 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		3EA085F124EADB42009F2477 /* NowPlayingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
 		3EA19C201FC16A3C0072929E /* ControlsPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsPreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1702,6 +1704,7 @@
 			children = (
 				3E18A58224ED8B680014E850 /* PlayQueue.xib */,
 				3E18A58424ED8D510014E850 /* PlayQueueWindowController.swift */,
+				3E9DF4AD25050626001FCF2F /* PlayQueueUIState.swift */,
 				3E13DBF32504BDAD00CFC2C8 /* ListView */,
 				3E13DBF42504BDB600CFC2C8 /* TableView */,
 			);
@@ -3864,6 +3867,7 @@
 				3E1BF76524310DBD00B6B9F9 /* RecordingParams.swift in Sources */,
 				3E5F00D421543D3800A76C23 /* StringInputReceiver.swift in Sources */,
 				3E186FC021CE2CE400FD5F34 /* AlbumArtCache.swift in Sources */,
+				3E9DF4AE25050626001FCF2F /* PlayQueueUIState.swift in Sources */,
 				3E27D20B246FCC1800B6170B /* EndPlaybackSequenceAction.swift in Sources */,
 				3EDA1FB9214F278C003591FA /* TrackPeekingButton.swift in Sources */,
 				3E426F7E1EFDD9CF002F5F18 /* Player.swift in Sources */,

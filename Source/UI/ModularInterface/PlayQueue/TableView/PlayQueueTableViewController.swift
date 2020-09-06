@@ -335,5 +335,4 @@ class PlayQueueTableViewController: AuralViewController {
             playQueueView.reloadData(forRowIndexes: IndexSet([playingTrackIndex]), columnIndexes: IndexSet([0]))
         }
     }
-
 }

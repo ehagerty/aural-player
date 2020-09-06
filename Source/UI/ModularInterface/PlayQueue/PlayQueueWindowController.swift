@@ -1,6 +1,6 @@
 import Cocoa
 
-class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
+class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, NotificationSubscriber {
     
     override var windowNibName: String? {return "PlayQueue"}
     
@@ -42,7 +42,7 @@ class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
         listView.anchorToView(tabView.tabViewItem(at: 0).view!)
         tableView.anchorToView(tabView.tabViewItem(at: 1).view!)
         
-        [1, 0].forEach({tabView.selectTabViewItem(at: $0)})
+        (PlayQueueUIState.view == .list ? [1, 0] : [0, 1]).forEach({tabView.selectTabViewItem(at: $0)})
         
         Messenger.subscribeAsync(self, .playQueue_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
@@ -58,7 +58,15 @@ class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
         Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
         
+        Messenger.subscribe(self, .application_exitRequest, self.onAppExit(_:))
+        
         updateSummary()
+    }
+    
+    private func onAppExit(_ request: AppExitRequestNotification) {
+        
+        PlayQueueUIState.view = tabView.selectedIndex == 0 ? .list : .table
+        request.acceptResponse(okToExit: true)
     }
     
 //    @IBAction func listViewAction(_ sender: AnyObject) {

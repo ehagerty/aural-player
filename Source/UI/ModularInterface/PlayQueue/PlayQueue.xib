@@ -298,6 +298,9 @@
                                 </connections>
                             </tabViewItem>
                         </tabViewItems>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="3ZW-B8-ENH"/>
+                        </connections>
                     </tabView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dDG-Dw-rbl" userLabel="Window Title" customClass="TopTextLabel" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="228" y="377" width="144" height="22"/>

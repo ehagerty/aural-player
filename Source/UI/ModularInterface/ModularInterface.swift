@@ -79,6 +79,8 @@ class ModularInterface: InterfaceProtocol {
                 layout(WindowLayouts.defaultLayout)
             }
         }
+        
+        Messenger.publish(.modularInterface_initialLayoutCompleted)
     }
     
     func hide() {
@@ -362,4 +364,10 @@ class ModularInterfaceState: PersistentState {
         
         return state
     }
+}
+
+extension NSNotification.Name {
+    
+    // All windows have been laid out after app launch.
+    static let modularInterface_initialLayoutCompleted: NSNotification.Name = NSNotification.Name("modularInterface_initialLayoutCompleted")
 }

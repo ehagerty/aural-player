@@ -18,15 +18,45 @@ class PlayQueueTableViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate,
             clipView.contentInsets.top = header.height
         }
         
+        var displayedColumnIds: [String] = PlayQueueUIState.tableViewColumns.map {$0.id}
+        
+        // Show default columns if none have been selected (eg. first time app is launched).
+        if displayedColumnIds.isEmpty {
+            
+            displayedColumnIds = [NSUserInterfaceItemIdentifier.playQueue_tableView_index, NSUserInterfaceItemIdentifier.playQueue_tableView_artistTitle, NSUserInterfaceItemIdentifier.playQueue_tableView_duration].map {$0.rawValue}
+        }
+        
         for column in playQueueView.tableColumns {
+            
             column.headerCell = LibraryTableHeaderCell(stringValue: column.headerCell.stringValue)
+            column.isHidden = !displayedColumnIds.contains(column.identifier.rawValue)
+        }
+        
+        for (index, columnId) in displayedColumnIds.enumerated() {
+            
+            let oldIndex = playQueueView.column(withIdentifier: NSUserInterfaceItemIdentifier(columnId))
+            playQueueView.moveColumn(oldIndex, toColumn: index)
         }
         
         theHeaderView = header
         Messenger.subscribe(self, .library_toggleTableHeader, self.toggleTableHeader)
         //            Messenger.subscribe(self, .library_addCustomColumn, self.addCustomColumn(_:))
+        Messenger.subscribe(self, .modularInterface_initialLayoutCompleted, self.initialLayoutCompleted)
+        Messenger.subscribe(self, .application_exitRequest, self.onAppExit(_:))
     }
     
+    func initialLayoutCompleted() {
+        
+        for column in PlayQueueUIState.tableViewColumns {
+            playQueueView.tableColumn(withIdentifier: NSUserInterfaceItemIdentifier(column.id))?.width = column.width
+        }
+    }
+    
+    private func onAppExit(_ request: AppExitRequestNotification) {
+        
+        PlayQueueUIState.tableViewColumns = playQueueView.tableColumns.filter {$0.isShown}.map {DisplayedTableColumn(id: $0.identifier.rawValue, width: $0.width)}
+        request.acceptResponse(okToExit: true)
+    }
     
     func menuWillOpen(_ menu: NSMenu) {
         
@@ -47,6 +77,8 @@ class PlayQueueTableViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate,
     }
     
     @IBAction func toggleColumnAction(_ sender: NSMenuItem) {
+        
+        // TODO: Validation - Don't allow 0 columns to be shown.
         
         if let id = sender.identifier {
             playQueueView.tableColumn(withIdentifier: id)?.isHidden.toggle()
