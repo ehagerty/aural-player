@@ -14,6 +14,7 @@
                 <outlet property="lblDurationSummary" destination="c2A-EN-gcy" id="X20-MA-KGD"/>
                 <outlet property="lblTracksSummary" destination="GqF-KI-QYQ" id="SXJ-JQ-Cuh"/>
                 <outlet property="rootContainerBox" destination="YoY-1j-kEY" id="J5R-V0-Plh"/>
+                <outlet property="tabView" destination="xnM-kX-OXF" id="bfb-Bu-lkv"/>
                 <outlet property="viewMenuIconItem" destination="asW-PK-IIU" id="ajO-XS-aqX"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="CG6-bH-8AI"/>
             </connections>
@@ -116,9 +117,6 @@
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                         <font key="font" size="11" name="AlegreyaSansSC-Regular"/>
                                     </buttonCell>
-                                    <connections>
-                                        <action selector="listViewAction:" target="-2" id="Sig-pQ-O14"/>
-                                    </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="tAE-Y5-cnJ" userLabel="TableView nav button">
                                     <rect key="frame" x="304" y="0.0" width="30" height="21"/>
@@ -130,9 +128,6 @@
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                         <font key="font" size="11" name="AlegreyaSansSC-Regular"/>
                                     </buttonCell>
-                                    <connections>
-                                        <action selector="tableViewAction:" target="-2" id="jEf-Kw-RSq"/>
-                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>

@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PlayQueueListViewController" customModule="Aural" customModuleProvider="target">
             <connections>
+                <outlet property="playQueueView" destination="jJO-6A-dsO" id="8Fg-il-ca2"/>
+                <outlet property="scroller" destination="erP-lH-c4N" id="bkP-Fb-yDg"/>
                 <outlet property="view" destination="pby-oD-O03" id="LXD-PZ-COI"/>
             </connections>
         </customObject>
@@ -53,7 +55,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="4Z8-8A-eNY">
-                                                <rect key="frame" x="27" y="79" width="20" height="17"/>
+                                                <rect key="frame" x="29" y="79" width="20" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="5Jr-QM-Dv8"/>
                                             </imageView>
@@ -259,7 +261,7 @@
                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                 <prototypeCellViews>
                                     <tableCellView id="9LM-iE-Z5F" customClass="DurationCellView" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="1" y="1" width="4" height="30"/>
+                                        <rect key="frame" x="1" y="1" width="0.0" height="30"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fwj-qU-0F1">
@@ -325,7 +327,7 @@
                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                 <prototypeCellViews>
                                     <tableCellView id="DYa-KS-thF" customClass="ArtistTitleRichTextCellView" customModule="Aural" customModuleProvider="target">
-                                        <rect key="frame" x="1" y="1" width="4" height="30"/>
+                                        <rect key="frame" x="1" y="1" width="0.0" height="30"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a1J-MY-E0g">
@@ -411,6 +413,11 @@
                                 </prototypeCellViews>
                             </tableColumn>
                         </tableColumns>
+                        <connections>
+                            <action trigger="doubleAction" selector="playSelectedTrackAction:" target="-2" id="kKr-fH-U0g"/>
+                            <outlet property="dataSource" destination="3WC-po-jPH" id="YXr-Ef-ss3"/>
+                            <outlet property="delegate" destination="zj3-0s-lbP" id="BBO-1w-uIE"/>
+                        </connections>
                     </tableView>
                 </subviews>
                 <nil key="backgroundColor"/>
@@ -425,5 +432,15 @@
             </scroller>
             <point key="canvasLocation" x="140" y="493"/>
         </scrollView>
+        <customObject id="3WC-po-jPH" customClass="PlayQueueViewDataSource" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="playQueueView" destination="jJO-6A-dsO" id="Y9s-jp-hVB"/>
+            </connections>
+        </customObject>
+        <customObject id="zj3-0s-lbP" customClass="PlayQueueViewDelegate" customModule="Aural" customModuleProvider="target">
+            <connections>
+                <outlet property="playQueueView" destination="jJO-6A-dsO" id="yce-Ck-3L5"/>
+            </connections>
+        </customObject>
     </objects>
 </document>

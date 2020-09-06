@@ -9,11 +9,16 @@ class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
     @IBOutlet weak var btnClose: TintedImageButton!
     @IBOutlet weak var viewMenuIconItem: TintedIconMenuItem!
     
+    @IBOutlet weak var tabView: AuralTabView!
+    
     @IBOutlet weak var btnListView: NSButton!
     @IBOutlet weak var btnTableView: NSButton!
     
     @IBOutlet weak var lblTracksSummary: NSTextField!
     @IBOutlet weak var lblDurationSummary: NSTextField!
+    
+    private lazy var listViewController: PlayQueueListViewController = PlayQueueListViewController()
+    private lazy var listView: NSView = listViewController.view
     
     private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
     private let playbackInfo: PlaybackInfoDelegateProtocol = ObjectGraph.playbackInfoDelegate
@@ -29,6 +34,10 @@ class PlayQueueWindowController: NSWindowController, NotificationSubscriber {
         
         changeTextSize(PlaylistViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
+        
+        tabView.addViewsForTabs([listView])
+        [0].forEach({tabView.selectTabViewItem(at: $0)})
+        listView.anchorToView(tabView.tabViewItem(at: 0).view!)
         
         Messenger.subscribeAsync(self, .playQueue_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
