@@ -55,6 +55,13 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
         Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:), queue: .main)
         
         Messenger.subscribe(self, .playQueue_addTracks, self.addTracks)
+        Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
+        
+        Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
+        Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
+        
+        Messenger.subscribe(self, .playQueue_moveTracksToTop, self.moveTracksToTop)
+        Messenger.subscribe(self, .playQueue_moveTracksToBottom, self.moveTracksToBottom)
         
         Messenger.subscribe(self, .playQueue_exportAsPlaylistFile, self.exportToPlaylist)
         Messenger.subscribe(self, .playQueue_clear, self.clear)
@@ -109,6 +116,10 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     }
     
     @IBAction func removeTracksAction(_ sender: AnyObject) {
+        removeSelectedTracks()
+    }
+    
+    func removeSelectedTracks() {
         
         let selectedRows = currentViewController.selectedRows
         
@@ -155,6 +166,10 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     }
     
     @IBAction func moveTracksUpAction(_ sender: AnyObject) {
+        moveTracksUp()
+    }
+    
+    func moveTracksUp() {
         
         let rowCount = currentViewController.rowCount
         let selectedRows = currentViewController.selectedRows
@@ -170,6 +185,10 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     }
     
     @IBAction func moveTracksDownAction(_ sender: AnyObject) {
+        moveTracksDown()
+    }
+    
+    func moveTracksDown() {
         
         let rowCount = currentViewController.rowCount
         let selectedRows = currentViewController.selectedRows
@@ -180,6 +199,37 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
             let results = playQueue.moveTracksDown(selectedRows)
             if !results.isEmpty {
                 viewControllers.forEach {$0.tracksMovedDown(results: results)}
+            }
+        }
+    }
+    
+    private func moveTracksToTop() {
+        
+        let rowCount = currentViewController.rowCount
+        let selectedRows = currentViewController.selectedRows
+        let selectedRowCount = selectedRows.count
+        
+        if rowCount > 1 && (1..<rowCount).contains(selectedRowCount) {
+        
+            let results = playQueue.moveTracksToTop(selectedRows)
+            if !results.isEmpty {
+                viewControllers.forEach {$0.tracksMovedToTop(results: results)}
+            }
+        }
+    }
+    
+    // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
+    private func moveTracksToBottom() {
+        
+        let rowCount = currentViewController.rowCount
+        let selectedRows = currentViewController.selectedRows
+        let selectedRowCount = selectedRows.count
+        
+        if rowCount > 1 && (1..<rowCount).contains(selectedRowCount) {
+        
+            let results = playQueue.moveTracksToBottom(selectedRows)
+            if !results.isEmpty {
+                viewControllers.forEach {$0.tracksMovedToBottom(results: results)}
             }
         }
     }
