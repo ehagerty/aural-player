@@ -9,6 +9,11 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     @IBOutlet weak var btnClose: TintedImageButton!
     @IBOutlet weak var viewMenuIconItem: TintedIconMenuItem!
     
+    @IBOutlet weak var tabButtonsBox: NSBox!
+    
+    @IBOutlet weak var controlsBox: NSBox!
+    @IBOutlet weak var controlButtonsSuperview: NSView!
+    
     @IBOutlet weak var tabView: AuralTabView!
     
     @IBOutlet weak var btnListView: NSButton!
@@ -33,11 +38,17 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     
     private var viewControlButtons: [Tintable] = []
     private var functionButtons: [TintedImageButton] = []
+    private var childContainerBoxes: [NSBox] = []
+    private var tabButtons: [NSButton] = []
     
     override func windowDidLoad() {
         
-        viewControlButtons = [btnClose, viewMenuIconItem]
         viewControllers = [listViewController, tableViewController]
+        
+        childContainerBoxes = [rootContainerBox, tabButtonsBox, controlsBox]
+        viewControlButtons = [btnClose, viewMenuIconItem]
+        functionButtons = controlButtonsSuperview.subviews.compactMap {$0 as? TintedImageButton}
+        tabButtons = [btnListView, btnTableView]
         
         changeTextSize(PlaylistViewState.textSize)
         applyColorScheme(ColorSchemes.systemScheme)
@@ -297,7 +308,7 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
     }
     
     private func changeBackgroundColor(_ color: NSColor) {
-        rootContainerBox.fillColor = color
+        childContainerBoxes.forEach {$0.fillColor = color}
     }
     
     private func changeViewControlButtonColor(_ color: NSColor) {
