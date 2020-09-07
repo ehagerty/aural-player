@@ -1,7 +1,7 @@
 import Foundation
 
 class PlayQueueDelegate: PlayQueueDelegateProtocol {
-    
+
     private let playQueue: PlayQueueProtocol
     private let library: LibraryProtocol
     
@@ -263,5 +263,13 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     
     func clear() {
         playQueue.clear()
+    }
+    
+    func sort(_ sort: Sort) {
+        _ = playQueue.sort(sort)
+    }
+    
+    func sort(by comparator: (Track, Track) -> Bool) {
+        playQueue.sort(by: comparator)
     }
 }

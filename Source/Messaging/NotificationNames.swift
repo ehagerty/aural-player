@@ -136,6 +136,8 @@ extension Notification.Name {
     
     static let playQueue_tracksRemoved = Notification.Name("playQueue_tracksRemoved")
     
+    static let playQueue_sorted = Notification.Name("playQueue_sorted")
+    
     // ----------------------------------------------------------------------------------------
     
     // MARK: Notifications published by the audio graph (i.e. audio engine).

@@ -38,6 +38,10 @@ protocol PlayQueueProtocol: SequencingProtocol {
     func dropTracks(_ sourceIndices: IndexSet, _ dropIndex: Int) -> [TrackMoveResult]
     
     func clear()
+    
+    func sort(_ sort: Sort) -> SortResults
+    
+    func sort(by comparator: (Track, Track) -> Bool)
 }
 
 /*

@@ -41,6 +41,8 @@ class PlayQueueViewController: AuralViewController {
         Messenger.subscribeAsync(self, .playQueue_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
         
+        Messenger.subscribe(self, .playQueue_sorted, self.refreshTableView)
+        
         // Only respond if the playing track was updated
         Messenger.subscribeAsync(self, .player_trackInfoUpdated, self.trackInfoUpdated(_:), queue: .main)
         

@@ -207,6 +207,16 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
         return nil
     }
     
+    func sort(_ sort: Sort) -> SortResults {
+        
+        tracks.sort(by: SortComparator(sort, {track in track.defaultDisplayName}).compareTracks)
+        return SortResults(.tracks, sort)
+    }
+    
+    func sort(by comparator: (Track, Track) -> Bool) {
+        tracks.sort(by: comparator)
+    }
+    
     // MARK: Sequencing functions --------------------------------------------------------------------------------
     
     func begin() -> Track? {

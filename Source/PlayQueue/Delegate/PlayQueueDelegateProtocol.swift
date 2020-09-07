@@ -45,4 +45,8 @@ protocol PlayQueueDelegateProtocol {
     func export(to file: URL)
     
     func clear()
+    
+    func sort(_ sort: Sort)
+    
+    func sort(by comparator: (Track, Track) -> Bool)
 }
