@@ -55,6 +55,8 @@ extension NSView {
         return true
     }
     
+    var isVisibleOnScreen: Bool {self.window != nil}
+    
     func coLocate(_ other: NSView) {
         self.frame.origin = other.frame.origin
     }

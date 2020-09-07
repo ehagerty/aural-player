@@ -56,6 +56,9 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
         
         Messenger.subscribe(self, .playQueue_addTracks, self.addTracks)
         Messenger.subscribe(self, .playQueue_removeTracks, self.removeSelectedTracks)
+        Messenger.subscribe(self, .playQueue_clear, self.clear)
+        
+        Messenger.subscribe(self, .playQueue_playSelectedItem, self.playSelectedItem)
         
         Messenger.subscribe(self, .playQueue_moveTracksUp, self.moveTracksUp)
         Messenger.subscribe(self, .playQueue_moveTracksDown, self.moveTracksDown)
@@ -63,8 +66,16 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
         Messenger.subscribe(self, .playQueue_moveTracksToTop, self.moveTracksToTop)
         Messenger.subscribe(self, .playQueue_moveTracksToBottom, self.moveTracksToBottom)
         
+        Messenger.subscribe(self, .playQueue_clearSelection, self.clearSelection)
+        Messenger.subscribe(self, .playQueue_cropSelection, self.cropSelection)
+        Messenger.subscribe(self, .playQueue_invertSelection, self.invertSelection)
+        
+        Messenger.subscribe(self, .playQueue_scrollToTop, self.scrollToTop)
+        Messenger.subscribe(self, .playQueue_scrollToBottom, self.scrollToBottom)
+        Messenger.subscribe(self, .playQueue_pageUp, self.pageUp)
+        Messenger.subscribe(self, .playQueue_pageDown, self.pageDown)
+        
         Messenger.subscribe(self, .playQueue_exportAsPlaylistFile, self.exportToPlaylist)
-        Messenger.subscribe(self, .playQueue_clear, self.clear)
         
         Messenger.subscribe(self, .playlist_changeTextSize, self.changeTextSize(_:))
         Messenger.subscribe(self, .applyColorScheme, self.applyColorScheme(_:))
@@ -154,6 +165,10 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
         }
     }
     
+    func playSelectedItem() {
+        currentViewController.playSelectedTrack()
+    }
+    
     @IBAction func clearAction(_ sender: AnyObject) {
         clear()
     }
@@ -232,6 +247,43 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
                 viewControllers.forEach {$0.tracksMovedToBottom(results: results)}
             }
         }
+    }
+    
+    func clearSelection() {
+        currentViewController.clearSelection()
+    }
+    
+    func invertSelection() {
+        currentViewController.invertSelection()
+    }
+    
+    func cropSelection() {
+        
+        let rowsToDelete: IndexSet = currentViewController.invertedSelection
+        
+        if !rowsToDelete.isEmpty {
+            
+            _ = playQueue.removeTracks(rowsToDelete)
+            viewControllers.forEach {$0.refreshTableView()}
+            
+            updateSummary()
+        }
+    }
+    
+    func scrollToTop() {
+        currentViewController.scrollToTop()
+    }
+    
+    func scrollToBottom() {
+        currentViewController.scrollToBottom()
+    }
+    
+    func pageUp() {
+        currentViewController.pageUp()
+    }
+    
+    func pageDown() {
+        currentViewController.pageDown()
     }
   
     @IBAction func closeWindowAction(_ sender: AnyObject) {

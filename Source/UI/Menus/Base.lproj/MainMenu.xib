@@ -644,7 +644,7 @@ CA
                             </menuItem>
                             <menuItem title="  Export as playlist file" image="Save-Small" keyEquivalent="s" id="iwj-Ff-5kU">
                                 <connections>
-                                    <action selector="savePlaylistAction:" target="sXT-Pr-clR" id="tZ5-BG-mlL"/>
+                                    <action selector="exportPlayQueueAction:" target="EvH-oo-9ua" id="2kR-RR-3xp"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Clear play queue" image="Clear-Small" id="16r-k6-bn6">
@@ -652,7 +652,7 @@ CA
 CA
 </string>
                                 <connections>
-                                    <action selector="clearPlaylistAction:" target="sXT-Pr-clR" id="o4e-bc-XYy"/>
+                                    <action selector="clearPlayQueueAction:" target="EvH-oo-9ua" id="na4-yh-8nS"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" enabled="YES" id="a4x-lS-hDT"/>
@@ -662,20 +662,20 @@ DQ
 </string>
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="playSelectedItemAction:" target="sXT-Pr-clR" id="JNs-le-ZAs"/>
+                                    <action selector="playSelectedItemAction:" target="EvH-oo-9ua" id="8ru-H1-xFb"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" enabled="YES" id="BAj-9E-fEq"/>
                             <menuItem title=" Clear selection" image="InvertSelection-Small" id="LOQ-hE-pXB" userLabel="Clear selection">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="clearSelectionAction:" target="sXT-Pr-clR" id="ktY-vk-uC9"/>
+                                    <action selector="clearSelectionAction:" target="EvH-oo-9ua" id="gdf-7D-zLq"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Invert selection" image="InvertSelection-Small" id="eeC-H9-SfE" userLabel="Invert selection">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="invertSelectionAction:" target="sXT-Pr-clR" id="tTo-21-oi8"/>
+                                    <action selector="invertSelectionAction:" target="EvH-oo-9ua" id="vU0-D4-KJn"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Crop selection" image="CropSelection-Small" id="ni6-Cg-Lol" userLabel="Crop selection">
@@ -684,7 +684,7 @@ CA
 </string>
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
-                                    <action selector="cropSelectionAction:" target="sXT-Pr-clR" id="s6n-0I-mht"/>
+                                    <action selector="cropSelectionAction:" target="EvH-oo-9ua" id="PgP-YG-cfn"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="  Remove selected tracks" image="Remove-Small" id="HbX-0K-wz3" userLabel="Remove selected tracks">
@@ -737,25 +737,25 @@ CA
                             <menuItem title=" Scroll to top" image="ScrollToTop-Small" keyEquivalent="" id="xau-Ke-pjh">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
-                                    <action selector="scrollToTopAction:" target="sXT-Pr-clR" id="ArC-ey-KbW"/>
+                                    <action selector="scrollToTopAction:" target="EvH-oo-9ua" id="yYl-Zc-3Sb"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Scroll to bottom" image="ScrollToBottom-Small" keyEquivalent="" id="j0e-BX-nfx" userLabel="Scroll to bottom of playlist">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
-                                    <action selector="scrollToBottomAction:" target="sXT-Pr-clR" id="KJa-Xh-GST"/>
+                                    <action selector="scrollToBottomAction:" target="EvH-oo-9ua" id="I8d-j4-FSg"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Page up" image="PageUp-Small" keyEquivalent="" id="7IE-jP-x7U" userLabel="Page up">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="pageUpAction:" target="sXT-Pr-clR" id="KhX-b5-VIN"/>
+                                    <action selector="pageUpAction:" target="EvH-oo-9ua" id="8H8-oq-39U"/>
                                 </connections>
                             </menuItem>
                             <menuItem title=" Page down" image="PageDown-Small" keyEquivalent="" id="jkp-zW-yYV" userLabel="Page down">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="pageDownAction:" target="sXT-Pr-clR" id="5Gj-rz-a13"/>
+                                    <action selector="pageDownAction:" target="EvH-oo-9ua" id="QKs-ij-vyw"/>
                                 </connections>
                             </menuItem>
                         </items>

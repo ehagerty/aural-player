@@ -143,33 +143,27 @@ class PlayQueueMenuController: NSObject, NSMenuDelegate {
 //    @IBAction func removeGapsAction(_ sender: NSMenuItem) {
 //
 //        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_removeGaps, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
+//            Messenger.publish(.playQueue_removeGaps)
 //        }
 //    }
 //
 //    // Presents the search modal dialog to allow the user to search for playlist tracks
 //    @IBAction func playlistSearchAction(_ sender: Any) {
-//        Messenger.publish(.playlist_search)
+//        Messenger.publish(.playQueue_search)
 //    }
 //
 //    // Presents the sort modal dialog to allow the user to sort playlist tracks
 //    @IBAction func playlistSortAction(_ sender: Any) {
 //
 //        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_sort)
+//            Messenger.publish(.playQueue_sort)
 //        }
 //    }
 //
 //    // Plays the selected playlist item (track or group)
-//    @IBAction func playSelectedItemAction(_ sender: Any) {
-//
-//        if WindowManager.isChaptersListWindowKey {
-//            Messenger.publish(.chaptersList_playSelectedChapter)
-//
-//        } else {
-//            Messenger.publish(.playlist_playSelectedItem, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//        }
-//    }
+    @IBAction func playSelectedItemAction(_ sender: Any) {
+        Messenger.publish(.playQueue_playSelectedItem)
+    }
 //
 //    @IBAction func playSelectedItemAfterDelayAction(_ sender: NSMenuItem) {
 //
@@ -187,60 +181,44 @@ class PlayQueueMenuController: NSObject, NSMenuDelegate {
 //        }
 //    }
 //
-//    @IBAction func clearSelectionAction(_ sender: Any) {
-//        Messenger.publish(.playlist_clearSelection, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    @IBAction func invertSelectionAction(_ sender: Any) {
-//        Messenger.publish(.playlist_invertSelection, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    @IBAction func cropSelectionAction(_ sender: Any) {
-//
-//        if !checkIfPlayQueueIsBeingModified() {
-//            Messenger.publish(.playlist_cropSelection, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//        }
-//    }
-//
-//    @IBAction func expandSelectedGroupsAction(_ sender: Any) {
-//        Messenger.publish(.playlist_expandSelectedGroups, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    @IBAction func collapseSelectedItemsAction(_ sender: Any) {
-//        Messenger.publish(.playlist_collapseSelectedItems, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    @IBAction func expandAllGroupsAction(_ sender: Any) {
-//        Messenger.publish(.playlist_expandAllGroups, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    @IBAction func collapseAllGroupsAction(_ sender: Any) {
-//        Messenger.publish(.playlist_collapseAllGroups, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    // Scrolls the current playlist view to the very top
-//    @IBAction func scrollToTopAction(_ sender: Any) {
-//        Messenger.publish(.playlist_scrollToTop, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    // Scrolls the current playlist view to the very bottom
-//    @IBAction func scrollToBottomAction(_ sender: Any) {
-//        Messenger.publish(.playlist_scrollToBottom, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
-//    @IBAction func pageUpAction(_ sender: Any) {
-//        Messenger.publish(.playlist_pageUp, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//    @IBAction func pageDownAction(_ sender: Any) {
-//        Messenger.publish(.playlist_pageDown, payload: PlayQueueViewSelector.forView(PlaylistViewState.current))
-//    }
-//
+    @IBAction func clearSelectionAction(_ sender: Any) {
+        Messenger.publish(.playQueue_clearSelection)
+    }
+
+    @IBAction func invertSelectionAction(_ sender: Any) {
+        Messenger.publish(.playQueue_invertSelection)
+    }
+
+    @IBAction func cropSelectionAction(_ sender: Any) {
+
+        if !checkIfPlayQueueIsBeingModified() {
+            Messenger.publish(.playQueue_cropSelection)
+        }
+    }
+
+    // Scrolls the current playlist view to the very top
+    @IBAction func scrollToTopAction(_ sender: Any) {
+        Messenger.publish(.playQueue_scrollToTop)
+    }
+
+    // Scrolls the current playlist view to the very bottom
+    @IBAction func scrollToBottomAction(_ sender: Any) {
+        Messenger.publish(.playQueue_scrollToBottom)
+    }
+
+    @IBAction func pageUpAction(_ sender: Any) {
+        Messenger.publish(.playQueue_pageUp)
+    }
+    @IBAction func pageDownAction(_ sender: Any) {
+        Messenger.publish(.playQueue_pageDown)
+    }
+
 //    @IBAction func previousPlayQueueViewAction(_ sender: Any) {
-//        Messenger.publish(.playlist_previousView)
+//        Messenger.publish(.playQueue_previousView)
 //    }
 //
 //    @IBAction func nextPlayQueueViewAction(_ sender: Any) {
-//        Messenger.publish(.playlist_nextView)
+//        Messenger.publish(.playQueue_nextView)
 //    }
     
     private func checkIfPlayQueueIsBeingModified() -> Bool {

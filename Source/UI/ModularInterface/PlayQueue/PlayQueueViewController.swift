@@ -139,10 +139,6 @@ class PlayQueueViewController: AuralViewController {
         }
     }
     
-    private func clearSelection() {
-        playQueueView.selectRowIndexes(IndexSet(), byExtendingSelection: false)
-    }
-    
     func tracksRemoved(fromRows removedRows: IndexSet) {
         
         // Tell the playlist view that the number of rows has changed (should result in removal of rows)
@@ -206,9 +202,12 @@ class PlayQueueViewController: AuralViewController {
         // Refresh the relevant rows
         playQueueView.reloadData(forRowIndexes: IndexSet(0...maxSourceIndex), columnIndexes: allColumns)
         
-        // Select all the same rows but now at the top
-        playQueueView.scrollRowToVisible(0)
-        playQueueView.selectRowIndexes(IndexSet(results.map{$0.destinationIndex}), byExtendingSelection: false)
+        if view.isVisibleOnScreen {
+            
+            // Select all the same rows but now at the top
+            playQueueView.scrollRowToVisible(0)
+            playQueueView.selectRowIndexes(IndexSet(results.map{$0.destinationIndex}), byExtendingSelection: false)
+        }
     }
     
     // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
@@ -222,9 +221,12 @@ class PlayQueueViewController: AuralViewController {
         // Refresh the relevant rows
         playQueueView.reloadData(forRowIndexes: IndexSet(minSourceIndex...lastRow), columnIndexes: allColumns)
         
-        // Select all the same items but now at the bottom
-        playQueueView.scrollRowToVisible(lastRow)
-        playQueueView.selectRowIndexes(IndexSet(results.map{$0.destinationIndex}), byExtendingSelection: false)
+        if view.isVisibleOnScreen {
+            
+            // Select all the same items but now at the bottom
+            playQueueView.scrollRowToVisible(lastRow)
+            playQueueView.selectRowIndexes(IndexSet(results.map{$0.destinationIndex}), byExtendingSelection: false)
+        }
     }
     
     // Refreshes the playlist view by rearranging the items that were moved
@@ -234,6 +236,47 @@ class PlayQueueViewController: AuralViewController {
             
             playQueueView.removeRows(at: IndexSet(integer: result.sourceIndex), withAnimation: result.movedUp ? .slideUp : .slideDown)
             playQueueView.insertRows(at: IndexSet(integer: result.destinationIndex), withAnimation: result.movedUp ? .slideDown : .slideUp)
+        }
+    }
+    
+    func clearSelection() {
+        playQueueView.selectRowIndexes(IndexSet(), byExtendingSelection: false)
+    }
+    
+    func invertSelection() {
+        playQueueView.selectRowIndexes(invertedSelection, byExtendingSelection: false)
+    }
+    
+    var invertedSelection: IndexSet {
+        IndexSet((0..<rowCount).filter {!selectedRows.contains($0)})
+    }
+    
+    func scrollToTop() {
+        
+        if atLeastOneRow {
+            playQueueView.scrollRowToVisible(0)
+        }
+    }
+    
+    // Scrolls the playlist view to the very bottom
+    func scrollToBottom() {
+        
+        if atLeastOneRow {
+            playQueueView.scrollRowToVisible(lastRow)
+        }
+    }
+    
+    func pageUp() {
+        
+        if atLeastOneRow {
+            playQueueView.pageUp()
+        }
+    }
+    
+    func pageDown() {
+        
+        if atLeastOneRow {
+            playQueueView.pageDown()
         }
     }
     

@@ -366,8 +366,8 @@ class ModularInterfaceState: PersistentState {
     }
 }
 
-extension NSNotification.Name {
+extension Notification.Name {
     
     // All windows have been laid out after app launch.
-    static let modularInterface_initialLayoutCompleted: NSNotification.Name = NSNotification.Name("modularInterface_initialLayoutCompleted")
+    static let modularInterface_initialLayoutCompleted: Notification.Name = Notification.Name("modularInterface_initialLayoutCompleted")
 }

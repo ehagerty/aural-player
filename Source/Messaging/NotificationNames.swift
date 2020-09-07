@@ -420,10 +420,29 @@ extension Notification.Name {
     // Commands the play queue to remove any selected tracks.
     static let playQueue_exportAsPlaylistFile = Notification.Name("playQueue_exportAsPlaylistFile")
     
+    // Commands the playlist to initiate playback of a selected item.
+    static let playQueue_playSelectedItem = Notification.Name("playQueue_playSelectedItem")
+    
     static let playQueue_moveTracksUp = Notification.Name("playQueue_moveTracksUp")
     static let playQueue_moveTracksDown = Notification.Name("playQueue_moveTracksDown")
     static let playQueue_moveTracksToTop = Notification.Name("playQueue_moveTracksToTop")
     static let playQueue_moveTracksToBottom = Notification.Name("playQueue_moveTracksToBottom")
+    
+    static let playQueue_clearSelection = Notification.Name("playQueue_clearSelection")
+    static let playQueue_cropSelection = Notification.Name("playQueue_cropSelection")
+    static let playQueue_invertSelection = Notification.Name("playQueue_invertSelection")
+    
+    // Commands the playQueue to scroll to the top of its list view.
+    static let playQueue_scrollToTop = Notification.Name("playQueue_scrollToTop")
+
+    // Commands the playQueue to scroll to the bottom of its list view.
+    static let playQueue_scrollToBottom = Notification.Name("playQueue_scrollToBottom")
+
+    // Commands the playQueue to scroll one page up within its list view.
+    static let playQueue_pageUp = Notification.Name("playQueue_pageUp")
+
+    // Commands the playQueue to scroll one page down within its list view.
+    static let playQueue_pageDown = Notification.Name("playQueue_pageDown")
     
     // ----------------------------------------------------------------------------------------
     
