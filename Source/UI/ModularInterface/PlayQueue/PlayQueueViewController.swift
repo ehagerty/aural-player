@@ -184,11 +184,16 @@ class PlayQueueViewController: AuralViewController {
     // Rearranges tracks within the view that have been reordered
     private func moveAndReloadItems(_ results: [TrackMoveResult]) {
         
+        var rowsToRefresh: Set<Int> = Set()
+        
         for result in results {
             
             playQueueView.moveRow(at: result.sourceIndex, to: result.destinationIndex)
-            playQueueView.reloadData(forRowIndexes: IndexSet([result.sourceIndex, result.destinationIndex]), columnIndexes: allColumns)
+            rowsToRefresh.insert(result.sourceIndex)
+            rowsToRefresh.insert(result.destinationIndex)
         }
+        
+        playQueueView.reloadData(forRowIndexes: IndexSet(rowsToRefresh), columnIndexes: allColumns)
     }
     
     // Must have a non-empty playlist, and at least one selected row, but not all rows selected.
