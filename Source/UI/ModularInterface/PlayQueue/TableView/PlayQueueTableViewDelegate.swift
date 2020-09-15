@@ -184,6 +184,36 @@ class PlayQueueTableViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate,
                 return createTextCell(tableView, .playQueue_tableView_genre, genre, row)
             }
             
+        case .playQueue_tableView_trackNum:
+
+            if let trackNum = track.trackNumber {
+                
+                var text: String
+                
+                if let totalTracks = track.totalTracks {
+                    text = "\(trackNum) / \(totalTracks)"
+                } else {
+                    text = "\(trackNum)"
+                }
+                
+                return createTextCell(tableView, .playQueue_tableView_trackNum, text, row)
+            }
+            
+        case .playQueue_tableView_discNum:
+            
+            if let discNum = track.discNumber {
+                
+                var text: String
+                
+                if let totalDiscs = track.totalDiscs {
+                    text = "\(discNum) / \(totalDiscs)"
+                } else {
+                    text = "\(discNum)"
+                }
+                
+                return createTextCell(tableView, .playQueue_tableView_discNum, text, row)
+            }
+            
         default:
             
             return nil // Impossible

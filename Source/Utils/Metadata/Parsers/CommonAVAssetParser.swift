@@ -50,6 +50,7 @@ class CommonAVAssetParser: AVAssetParser {
     func getArtist(_ mapForTrack: AVFMetadataMap) -> String? {
         
         if let artistItem = mapForTrack.map[key_artist] {
+            print("\nReturning Artist from CommonParser !!!\n")
             return artistItem.stringValue
         }
         
@@ -105,6 +106,10 @@ class CommonAVAssetParser: AVAssetParser {
     }
     
     func getLyrics(_ mapForTrack: AVFMetadataMap) -> String? {
+        return nil
+    }
+    
+    func getYear(_ mapForTrack: AVFMetadataMap) -> Int? {
         return nil
     }
     

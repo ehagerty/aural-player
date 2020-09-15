@@ -46,39 +46,12 @@ class DefaultFFMpegMetadataParser: FFMpegMetadataParser {
         return metadata
     }
     
-    func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        return nil
-    }
-    
-    func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        return nil
-    }
-    
-    func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        return nil
-    }
-    
-    func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        return nil
-    }
-    
-    func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-        return nil
-    }
-    
-    func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
-        return nil
-    }
-    
-    func getTotalDiscs(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
-        return nil
-    }
-    
-    func getTrackNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
-        return nil
-    }
-    
-    func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
-        return nil
-    }
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+            
+    //        if let yearString = mapForTrack.vorbisMetadata?.essentialFields[key_year] {
+    //            return ParserUtils.parseYear(yearString)
+    //        }
+            
+            return nil
+        }
 }

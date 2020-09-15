@@ -225,6 +225,10 @@ extension NSUserInterfaceItemIdentifier {
     
     static let playQueue_tableView_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_genre")
     
+    static let playQueue_tableView_trackNum: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_trackNum")
+    
+    static let playQueue_tableView_discNum: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_discNum")
+    
     static let playQueue_tableView_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_duration")
     
     

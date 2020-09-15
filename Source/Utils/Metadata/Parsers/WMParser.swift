@@ -16,6 +16,8 @@ fileprivate let key_track = "tracknumber"
 fileprivate let key_track_zeroBased = "track"
 fileprivate let key_trackTotal = "tracktotal"
 
+fileprivate let key_year = "year"
+
 fileprivate let key_lyrics = "lyrics"
 fileprivate let key_syncLyrics = "lyrics_synchronised"
 
@@ -44,7 +46,7 @@ class WMParser: FFMpegMetadataParser {
     
     private let keyPrefix = "wm/"
     
-    private let essentialKeys: Set<String> = [key_title, key_artist, key_album, key_genre, key_genreId, key_disc, key_discTotal, key_track, key_track_zeroBased, key_trackTotal, key_lyrics]
+    private let essentialKeys: Set<String> = [key_title, key_artist, key_album, key_genre, key_genreId, key_disc, key_discTotal, key_track, key_track_zeroBased, key_trackTotal, key_year, key_lyrics]
     
     private let ignoredKeys: Set<String> = ["wmfsdkneeded"]
     
@@ -143,6 +145,15 @@ class WMParser: FFMpegMetadataParser {
         
         if let totalTracksStr = mapForTrack.wmMetadata?.essentialFields[key_trackTotal]?.trim(), let totalTracks = Int(totalTracksStr) {
             return totalTracks
+        }
+        
+        return nil
+    }
+    
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        
+        if let yearString = mapForTrack.wmMetadata?.essentialFields[key_year] {
+            return ParserUtils.parseYear(yearString)
         }
         
         return nil
@@ -255,7 +266,7 @@ class WMParser: FFMpegMetadataParser {
         
         map["country"] = "Country"
         
-        map["year"] = "Year"
+//        map["year"] = "Year"
         
         map["encodedby"] = "Encoded By"
         

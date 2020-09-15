@@ -123,6 +123,45 @@ class ParserUtils {
         }
     }
     
+    static func parseYear(_ item: AVMetadataItem) -> Int? {
+        
+        if let number = item.numberValue, number.intValue >= 1000, number.intValue <= 3000 {
+            return number.intValue
+        }
+        
+        if let stringValue = item.stringValue?.trim() {
+            
+            return parseYear(stringValue)
+
+        } else if let dataValue = item.dataValue {
+            
+            let vals = dataValue.filter({num -> Bool in num > 0})
+            
+            switch vals.count {
+                
+            case 0:
+                
+                return nil
+                
+            default:
+                
+                let year = Int(vals[0])
+                return year >= 1000 && year <= 3000 ? year : nil
+            }
+        }
+        
+        return nil
+    }
+    
+    static func parseYear(_ yearString: String) -> Int? {
+        
+        if let year = Int(yearString) {
+            return year >= 1000 && year <= 3000 ? year : nil
+        }
+        
+        return nil
+    }
+    
     static func getImageMetadata(_ image: NSData) -> ImageMetadata? {
         
         if let imageSourceRef = CGImageSourceCreateWithData(image, nil), let currentProperties = CGImageSourceCopyPropertiesAtIndex(imageSourceRef, 0, nil) {

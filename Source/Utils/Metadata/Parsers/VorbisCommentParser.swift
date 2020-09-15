@@ -105,6 +105,15 @@ class VorbisCommentParser: FFMpegMetadataParser {
         return nil
     }
     
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        
+//        if let yearString = mapForTrack.vorbisMetadata?.essentialFields[key_year] {
+//            return ParserUtils.parseYear(yearString)
+//        }
+        
+        return nil
+    }
+    
     func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
         return mapForTrack.vorbisMetadata?.essentialFields[key_lyrics]
     }

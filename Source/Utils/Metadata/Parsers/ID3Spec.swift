@@ -43,6 +43,9 @@ struct ID3_V22Spec {
     static let key_discNumber = String(format: "%@/%@", id3KeySpace, "TPA")
     static let key_trackNumber = String(format: "%@/%@", id3KeySpace, "TRK")
     
+    static let key_year = String(format: "%@/%@", id3KeySpace, "TYE")
+    static let key_originalReleaseYear = String(format: "%@/%@", id3KeySpace, "TOR")
+    
     static let key_lyrics = String(format: "%@/%@", id3KeySpace, "ULT")
     static let key_syncLyrics = String(format: "%@/%@", id3KeySpace, "SLT")
     
@@ -56,7 +59,7 @@ struct ID3_V22Spec {
     static let key_UFI: String = "UFI"
     static let key_mediaType: String = "TMT"
     
-    static let essentialFieldKeys: [String] = [key_duration, key_title, key_artist, key_album, key_genre, key_discNumber, key_trackNumber, key_lyrics, key_syncLyrics, key_art]
+    static let essentialFieldKeys: [String] = [key_duration, key_title, key_artist, key_album, key_genre, key_discNumber, key_trackNumber, key_year, key_originalReleaseYear, key_lyrics, key_syncLyrics, key_art]
     
     static let genericFields: [String: String] = {
         
@@ -158,6 +161,9 @@ struct ID3_V24Spec {
     static let key_discNumber = String(format: "%@/%@", id3KeySpace, AVMetadataKey.id3MetadataKeyPartOfASet.rawValue)
     static let key_trackNumber = String(format: "%@/%@", id3KeySpace, AVMetadataKey.id3MetadataKeyTrackNumber.rawValue)
     
+    static let key_year = String(format: "%@/%@", id3KeySpace, AVMetadataKey.id3MetadataKeyYear.rawValue)
+    static let key_originalReleaseYear = String(format: "%@/%@", id3KeySpace, AVMetadataKey.id3MetadataKeyOriginalReleaseYear.rawValue)
+    
     static let key_lyrics = String(format: "%@/%@", id3KeySpace, AVMetadataKey.id3MetadataKeyUnsynchronizedLyric.rawValue)
     static let key_syncLyrics = String(format: "%@/%@", id3KeySpace, AVMetadataKey.id3MetadataKeySynchronizedLyric.rawValue)
     
@@ -183,7 +189,7 @@ struct ID3_V24Spec {
     
     static let key_mediaType: String = "TMED"
     
-    static let essentialFieldKeys: [String] = [key_duration, key_title, key_artist, key_album, key_genre, key_discNumber, key_trackNumber, key_lyrics, key_syncLyrics, key_art]
+    static let essentialFieldKeys: [String] = [key_duration, key_title, key_artist, key_album, key_genre, key_discNumber, key_trackNumber, key_year, key_originalReleaseYear, key_lyrics, key_syncLyrics, key_art]
     
     static let genericFields: [String: String] = {
         

@@ -3,26 +3,28 @@ import AVFoundation
 
 class ID3Parser: AVAssetParser, FFMpegMetadataParser {
     
-    private let keys_duration: [String] = [ID3_V22Spec.key_duration, ID3_V24Spec.key_duration]
+    private let keys_duration: [String] = [ID3_V24Spec.key_duration, ID3_V22Spec.key_duration]
     
-    private let keys_title: [String] = [ID3_V1Spec.key_title, ID3_V22Spec.key_title, ID3_V24Spec.key_title]
-    private let rawKeys_title: [String] = [ID3_V1Spec.rawKey_title, ID3_V22Spec.rawKey_title, ID3_V24Spec.rawKey_title]
+    private let keys_title: [String] = [ID3_V24Spec.key_title, ID3_V22Spec.key_title, ID3_V1Spec.key_title]
+    private let rawKeys_title: [String] = [ID3_V24Spec.rawKey_title, ID3_V22Spec.rawKey_title, ID3_V1Spec.rawKey_title]
     
-    private let keys_artist: [String] = [ID3_V1Spec.key_artist, ID3_V22Spec.key_artist, ID3_V24Spec.key_artist]
-    private let keys_album: [String] = [ID3_V1Spec.key_album, ID3_V22Spec.key_album, ID3_V24Spec.key_album]
-    private let keys_genre: [String] = [ID3_V1Spec.key_genre, ID3_V22Spec.key_genre, ID3_V24Spec.key_genre]
+    private let keys_artist: [String] = [ID3_V24Spec.key_artist, ID3_V22Spec.key_artist, ID3_V1Spec.key_artist]
+    private let keys_album: [String] = [ID3_V24Spec.key_album, ID3_V22Spec.key_album, ID3_V1Spec.key_album]
+    private let keys_genre: [String] = [ID3_V24Spec.key_genre, ID3_V22Spec.key_genre, ID3_V1Spec.key_genre]
     
-    private let keys_discNumber: [String] = [ID3_V22Spec.key_discNumber, ID3_V24Spec.key_discNumber]
-    private let keys_trackNumber: [String] = [ID3_V1Spec.key_trackNumber, ID3_V22Spec.key_trackNumber, ID3_V24Spec.key_trackNumber]
+    private let keys_discNumber: [String] = [ID3_V24Spec.key_discNumber, ID3_V22Spec.key_discNumber]
+    private let keys_trackNumber: [String] = [ID3_V24Spec.key_trackNumber, ID3_V22Spec.key_trackNumber, ID3_V1Spec.key_trackNumber]
     
-    private let keys_lyrics: [String] = [ID3_V22Spec.key_lyrics, ID3_V22Spec.key_syncLyrics, ID3_V24Spec.key_lyrics, ID3_V24Spec.key_syncLyrics]
-    private let keys_art: [String] = [ID3_V22Spec.key_art, ID3_V24Spec.key_art]
+    private let keys_year: [String] = [ID3_V24Spec.key_year, ID3_V22Spec.key_year, ID3_V24Spec.key_originalReleaseYear, ID3_V22Spec.key_originalReleaseYear]
     
-    private let keys_GEOB: [String] = [ID3_V22Spec.key_GEO, ID3_V24Spec.key_GEOB]
-    private let keys_language: [String] = [ID3_V22Spec.key_language, ID3_V24Spec.key_language]
-    private let keys_playCounter: [String] = [ID3_V22Spec.key_playCounter, ID3_V24Spec.key_playCounter]
-    private let keys_compilation: [String] = [ID3_V22Spec.key_compilation, ID3_V24Spec.key_compilation]
-    private let keys_mediaType: [String] = [ID3_V22Spec.key_mediaType, ID3_V24Spec.key_mediaType]
+    private let keys_lyrics: [String] = [ID3_V24Spec.key_lyrics, ID3_V22Spec.key_lyrics, ID3_V24Spec.key_syncLyrics, ID3_V22Spec.key_syncLyrics]
+    private let keys_art: [String] = [ID3_V24Spec.key_art, ID3_V22Spec.key_art]
+    
+    private let keys_GEOB: [String] = [ID3_V24Spec.key_GEOB, ID3_V22Spec.key_GEO]
+    private let keys_language: [String] = [ID3_V24Spec.key_language, ID3_V22Spec.key_language]
+    private let keys_playCounter: [String] = [ID3_V24Spec.key_playCounter, ID3_V22Spec.key_playCounter]
+    private let keys_compilation: [String] = [ID3_V24Spec.key_compilation, ID3_V22Spec.key_compilation]
+    private let keys_mediaType: [String] = [ID3_V24Spec.key_mediaType, ID3_V22Spec.key_mediaType]
     
     private let essentialFieldKeys: Set<String> = {
         
@@ -333,6 +335,23 @@ class ID3Parser: AVAssetParser, FFMpegMetadataParser {
             }
         }
         
+        return nil
+    }
+    
+    func getYear(_ mapForTrack: AVFMetadataMap) -> Int? {
+        
+        for key in keys_year {
+            
+            if let item = mapForTrack.map[key] {
+                return ParserUtils.parseYear(item)
+            }
+        }
+        
+        return nil
+    }
+    
+    // TODO
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
         return nil
     }
     

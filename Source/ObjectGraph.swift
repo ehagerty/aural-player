@@ -51,12 +51,6 @@ class ObjectGraph {
     private static var bookmarks: Bookmarks!
     static var bookmarksDelegate: BookmarksDelegateProtocol!
     
-    static var avAssetReader: AVAssetReader!
-    static var commonAVAssetParser: CommonAVAssetParser!
-    static var id3Parser: ID3Parser!
-    static var iTunesParser: ITunesParser!
-    static var audioToolboxParser: AudioToolboxParser!
-    
     static var ffmpegReader: FFMpegReader!
     static var commonFFMpegParser: CommonFFMpegMetadataParser!
     static var wmParser: WMParser!
@@ -116,20 +110,13 @@ class ObjectGraph {
         sequencer = Sequencer(playlist, repeatMode, shuffleMode, playlistType)
         sequencerDelegate = SequencerDelegate(sequencer)
         
-        commonAVAssetParser = CommonAVAssetParser()
-        id3Parser = ID3Parser()
-        iTunesParser = ITunesParser()
-        audioToolboxParser = AudioToolboxParser()
-        
-        AVAssetReader.initialize(commonAVAssetParser, id3Parser, iTunesParser, audioToolboxParser)
-        
         commonFFMpegParser = CommonFFMpegMetadataParser()
         wmParser = WMParser()
         vorbisParser = VorbisCommentParser()
         apeParser = ApeV2Parser()
         defaultParser = DefaultFFMpegMetadataParser()
         
-        FFMpegReader.initialize(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
+//        FFMpegReader.initialize(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
 
         mediaKeyHandler = MediaKeyHandler(preferences.controlsPreferences)
         

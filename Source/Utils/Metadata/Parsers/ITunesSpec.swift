@@ -21,6 +21,9 @@ class ITunesSpec {
     static let key_discNumber2 = String(format: "%@/%@", keySpace, "disc")
     static let key_trackNumber = String(format: "%@/%@", keySpace, AVMetadataKey.iTunesMetadataKeyTrackNumber.rawValue)
     
+    static let key_releaseDate = String(format: "%@/%@", keySpace, AVMetadataKey.iTunesMetadataKeyReleaseDate.rawValue)
+    static let key_releaseYear = String(format: "%@/%@", keySpace, "original year")
+    
     static let key_lyrics = String(format: "%@/%@", keySpace, AVMetadataKey.iTunesMetadataKeyLyrics.rawValue)
     static let key_art: String = String(format: "%@/%@", keySpace, AVMetadataKey.iTunesMetadataKeyCoverArt.rawValue)
     static let id_art: AVMetadataIdentifier = AVMetadataItem.identifier(forKey: AVMetadataKey.iTunesMetadataKeyCoverArt.rawValue, keySpace: AVMetadataKeySpace.iTunes)!
@@ -344,7 +347,7 @@ class ITunesSpec {
         
         map["original lyricist"] = "Original Lyricist"
         
-        map["original year"] = "Original Release Year"
+//        map["original year"] = "Original Release Year"
         
         map["ownr"] = "Owner"
         

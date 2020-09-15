@@ -46,6 +46,7 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
                     
                     let track = Track(file)
                     track.loadPrimaryMetadata()
+                    track.loadSecondaryMetadata()
                     
                     if !track.isValidTrack {
                         print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")

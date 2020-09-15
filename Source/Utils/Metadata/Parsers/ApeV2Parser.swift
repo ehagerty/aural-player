@@ -78,7 +78,12 @@ class ApeV2Parser: FFMpegMetadataParser {
         return nil
     }
     
-    func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        
+        //        if let yearString = mapForTrack.vorbisMetadata?.essentialFields[key_year] {
+        //            return ParserUtils.parseYear(yearString)
+        //        }
+        
         return nil
     }
     

@@ -24,7 +24,7 @@ fileprivate let key_date = "date"
 
 class CommonFFMpegMetadataParser: FFMpegMetadataParser {
     
-    private let essentialKeys: Set<String> = [key_title, key_artist, key_album, key_genre, key_disc, key_track, key_lyrics]
+    private let essentialKeys: Set<String> = [key_title, key_artist, key_album, key_genre, key_disc, key_track, key_date, key_lyrics]
     
     private let genericKeys: [String: String] = [
         
@@ -36,7 +36,6 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         key_encodedBy: "Encoded By",
         key_encoder: "Encoder",
         key_language: "Language",
-        key_date: "Date",
         key_comment: "Comment"
     ]
     
@@ -105,6 +104,15 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
     }
     
     func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        return nil
+    }
+    
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        
+        if let yearString = mapForTrack.commonMetadata?.essentialFields[key_date] {
+            return ParserUtils.parseYear(yearString)
+        }
+        
         return nil
     }
     

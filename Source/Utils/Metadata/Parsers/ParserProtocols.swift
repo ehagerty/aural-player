@@ -28,6 +28,8 @@ protocol AVAssetParser {
     
     func getArt(_ asset: AVURLAsset) -> CoverArt?
     
+    func getYear(_ mapForTrack: AVFMetadataMap) -> Int?
+    
     func getGenericMetadata(_ mapForTrack: AVFMetadataMap) -> [String: MetadataEntry]
     
     // ----------- Chapter-related functions
@@ -57,5 +59,50 @@ protocol FFMpegMetadataParser {
     
     func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int?
     
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int?
+    
     func getGenericMetadata(_ mapForTrack: FFmpegMetadataReaderContext) -> [String: MetadataEntry]
+}
+
+extension FFMpegMetadataParser {
+    
+    func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
+        return nil
+    }
+    
+    func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
+        return nil
+    }
+    
+    func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
+        return nil
+    }
+    
+    func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
+        return nil
+    }
+    
+    func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
+        return nil
+    }
+    
+    func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
+        return nil
+    }
+    
+    func getTotalDiscs(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        return nil
+    }
+    
+    func getTrackNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
+        return nil
+    }
+    
+    func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        return nil
+    }
+    
+    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
+        return nil
+    }
 }

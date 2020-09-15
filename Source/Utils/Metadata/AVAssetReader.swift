@@ -3,19 +3,14 @@ import AVFoundation
 
 class AVAssetReader {
     
-    private static var allParsers: [AVAssetParser] = []
-    
-    static func initialize(_ commonAVAssetParser: CommonAVAssetParser, _ id3Parser: ID3Parser, _ iTunesParser: ITunesParser, _ audioToolboxParser: AudioToolboxParser) {
-
-        let osVersion = SystemUtils.osVersion
-
-        if (osVersion.majorVersion == 10 && osVersion.minorVersion >= 13) || osVersion.majorVersion > 10 {
-            self.allParsers = [commonAVAssetParser, id3Parser, iTunesParser, audioToolboxParser]
-
+    private static let allParsers: [AVAssetParser] = {
+        
+        if #available(OSX 10.13, *) {
+            return [CommonAVAssetParser(), ID3Parser(), ITunesParser(), AudioToolboxParser()]
         } else {
-            self.allParsers = [commonAVAssetParser, id3Parser, iTunesParser]
+            return [CommonAVAssetParser(), ID3Parser(), ITunesParser()]
         }
-    }
+    }()
     
     static func buildMap(for asset: AVURLAsset) -> AVFMetadataMap {
         

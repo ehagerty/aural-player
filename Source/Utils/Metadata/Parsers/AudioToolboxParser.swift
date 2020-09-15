@@ -1,28 +1,22 @@
 import Cocoa
 import AVFoundation
 
+@available(OSX 10.13, *)
 class AudioToolboxParser: AVAssetParser {
     
-    @available(OSX 10.13, *)
     static let keySpace: String = AVMetadataKeySpace.audioFile.rawValue
     
-    @available(OSX 10.13, *)
     static let key_title: String = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, "info-title")
     static let rawKey_title: String = "info-title"
     
-    @available(OSX 10.13, *)
     static let key_artist: String = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, "info-artist")
     
-    @available(OSX 10.13, *)
     static let key_album: String = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, "info-album")
     
-    @available(OSX 10.13, *)
     static let key_genre: String = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, "info-genre")
     
-    @available(OSX 10.13, *)
     static let key_trackNumber: String = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, "info-track number")
     
-    @available(OSX 10.13, *)
     static let key_duration: String = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, "info-approximate duration in seconds")
     
     private static let readableKeys: [String: String] = [
@@ -31,30 +25,22 @@ class AudioToolboxParser: AVAssetParser {
     ]
     
     private static let essentialFieldKeys: Set<String> = {
-        
-        if #available(OSX 10.13, *) {
-            return [key_title, key_artist, key_album, key_genre, key_duration, key_trackNumber]
-        }
-        
-        return []
+        [key_title, key_artist, key_album, key_genre, key_duration, key_trackNumber]
     }()
     
     func mapTrack(_ mapForTrack: AVFMetadataMap) {
         
-        if #available(OSX 10.13, *) {
-            
-            for item in mapForTrack.asset.metadata {
+        for item in mapForTrack.asset.metadata {
 
-                if item.keySpace == .audioFile, let key = item.keyAsString?.removingPercentEncoding {
+            if item.keySpace == .audioFile, let key = item.keyAsString?.removingPercentEncoding {
 
-                    let mapKey = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, key)
+                let mapKey = String(format: "%@/%@", AVMetadataKeySpace.audioFile.rawValue, key)
 
-                    if AudioToolboxParser.essentialFieldKeys.contains(mapKey) {
-                        mapForTrack.map[mapKey] = item
-                    } else {
-                        // Generic field
-                        mapForTrack.genericItems.append(item)
-                    }
+                if AudioToolboxParser.essentialFieldKeys.contains(mapKey) {
+                    mapForTrack.map[mapKey] = item
+                } else {
+                    // Generic field
+                    mapForTrack.genericItems.append(item)
                 }
             }
         }
@@ -62,7 +48,7 @@ class AudioToolboxParser: AVAssetParser {
     
     func getDuration(_ mapForTrack: AVFMetadataMap) -> Double? {
         
-        if #available(OSX 10.13, *), let item = mapForTrack.map[AudioToolboxParser.key_duration], let durationStr = item.stringValue, let durationSecs = Double(durationStr) {
+        if let item = mapForTrack.map[AudioToolboxParser.key_duration], let durationStr = item.stringValue, let durationSecs = Double(durationStr) {
             
             return durationSecs
         }
@@ -72,7 +58,7 @@ class AudioToolboxParser: AVAssetParser {
     
     func getTitle(_ mapForTrack: AVFMetadataMap) -> String? {
         
-        if #available(OSX 10.13, *), let titleItem = mapForTrack.map[AudioToolboxParser.key_title] {
+        if let titleItem = mapForTrack.map[AudioToolboxParser.key_title] {
             return titleItem.stringValue
         }
         
@@ -81,7 +67,7 @@ class AudioToolboxParser: AVAssetParser {
     
     func getArtist(_ mapForTrack: AVFMetadataMap) -> String? {
         
-        if #available(OSX 10.13, *), let artistItem = mapForTrack.map[AudioToolboxParser.key_artist] {
+        if let artistItem = mapForTrack.map[AudioToolboxParser.key_artist] {
             return artistItem.stringValue
         }
         
@@ -90,7 +76,7 @@ class AudioToolboxParser: AVAssetParser {
     
     func getAlbum(_ mapForTrack: AVFMetadataMap) -> String? {
         
-        if #available(OSX 10.13, *), let albumItem = mapForTrack.map[AudioToolboxParser.key_album] {
+        if let albumItem = mapForTrack.map[AudioToolboxParser.key_album] {
             return albumItem.stringValue
         }
         
@@ -99,7 +85,7 @@ class AudioToolboxParser: AVAssetParser {
     
     func getGenre(_ mapForTrack: AVFMetadataMap) -> String? {
         
-        if #available(OSX 10.13, *), let genreItem = mapForTrack.map[AudioToolboxParser.key_genre] {
+        if let genreItem = mapForTrack.map[AudioToolboxParser.key_genre] {
             return genreItem.stringValue
         }
         
@@ -112,7 +98,7 @@ class AudioToolboxParser: AVAssetParser {
     
     func getTrackNumber(_ mapForTrack: AVFMetadataMap) -> (number: Int?, total: Int?)? {
         
-        if #available(OSX 10.13, *), let trackNumItem = mapForTrack.map[AudioToolboxParser.key_trackNumber] {
+        if let trackNumItem = mapForTrack.map[AudioToolboxParser.key_trackNumber] {
             return parseDiscOrTrackNumber(trackNumItem)
         }
         
@@ -200,28 +186,24 @@ class AudioToolboxParser: AVAssetParser {
         return nil
     }
     
-    func getChapterTitle(_ items: [AVMetadataItem]) -> String? {
-        
-        if #available(OSX 10.13, *) {
-            return items.first(where: {$0.keySpace == .audioFile && $0.keyAsString == AudioToolboxParser.rawKey_title})?.stringValue
-        }
-        
+    func getYear(_ mapForTrack: AVFMetadataMap) -> Int? {
         return nil
+    }
+    
+    func getChapterTitle(_ items: [AVMetadataItem]) -> String? {
+        return items.first(where: {$0.keySpace == .audioFile && $0.keyAsString == AudioToolboxParser.rawKey_title})?.stringValue
     }
     
     func getGenericMetadata(_ mapForTrack: AVFMetadataMap) -> [String: MetadataEntry] {
         
         var metadata: [String: MetadataEntry] = [:]
         
-        if #available(OSX 10.13, *) {
+        for item in mapForTrack.genericItems.filter({item -> Bool in item.keySpace == .audioFile}) {
             
-            for item in mapForTrack.genericItems.filter({item -> Bool in item.keySpace == .audioFile}) {
+            if let key = item.keyAsString, let value = item.valueAsString {
                 
-                if let key = item.keyAsString, let value = item.valueAsString {
-                    
-                    let rKey = AudioToolboxParser.readableKeys[key] ?? key.replacingOccurrences(of: "info-", with: "").capitalizingFirstLetter()
-                    metadata[key] = MetadataEntry(.audioToolbox, rKey, value)
-                }
+                let rKey = AudioToolboxParser.readableKeys[key] ?? key.replacingOccurrences(of: "info-", with: "").capitalizingFirstLetter()
+                metadata[key] = MetadataEntry(.audioToolbox, rKey, value)
             }
         }
         
