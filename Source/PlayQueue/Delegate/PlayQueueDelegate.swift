@@ -181,7 +181,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         
         for track in addSessionTracks {
             
-            if track.isValidTrack {
+            if track.isPlayable {
                 
                 let index = enqueue(track)
                 let result = PlayQueueTrackAddResult(track: track, index: index)

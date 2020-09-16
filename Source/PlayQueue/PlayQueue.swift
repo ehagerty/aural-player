@@ -48,11 +48,11 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
                     track.loadPrimaryMetadata()
                     track.loadSecondaryMetadata()
                     
-                    if !track.isValidTrack {
+                    if !track.isPlayable {
                         print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
                     }
                     
-                    return track.isValidTrack ? track : nil
+                    return track.isPlayable ? track : nil
                 }
                 
                 if self.tracks.isNonEmpty {

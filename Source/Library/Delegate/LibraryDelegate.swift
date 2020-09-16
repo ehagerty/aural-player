@@ -212,7 +212,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         
         for track in addSessionTracks {
             
-            if track.isValidTrack, let result = self.library.addTrack(track) {
+            if track.isPlayable, let result = self.library.addTrack(track) {
                 
                 addSession.tracksAdded.increment()
                 addSession.results.append(TrackAddResult(track: track, flatPlaylistResult: result))
@@ -220,7 +220,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
                 let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
                 Messenger.publish(LibraryTrackAddedNotification(trackIndex: result, addOperationProgress: progress))
                 
-            } else if !track.isValidTrack {
+            } else if !track.isPlayable {
                 addSession.errors.append(track.validationError as? DisplayableError ?? InvalidTrackError(track))
             }
         }
