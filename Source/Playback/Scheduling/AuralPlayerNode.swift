@@ -175,9 +175,9 @@ class AuralPlayerNode: AVAudioPlayerNode {
 
         // If the frame count is less than the minimum required to continue playback,
         // schedule the minimum frame count for playback, to avoid crashes in the playerNode.
-        if frameCount < AuralPlayerNode.minFrames {
+        if frameCount < Self.minFrames {
 
-            frameCount = Int64(AuralPlayerNode.minFrames)
+            frameCount = Int64(Self.minFrames)
             firstFrame = lastFrame - frameCount + 1
         }
 

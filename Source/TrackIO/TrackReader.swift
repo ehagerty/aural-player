@@ -2,16 +2,43 @@ import Foundation
 
 class TrackReader {
     
+    let avfReader: AVAssetReader = AVAssetReader()
+    let ffmpegReader: FFMpegReader = FFMpegReader()
+    
     func loadPrimaryMetadata(for track: Track) {
         
         do {
             
-//            track.isNativelySupported ? try AVFTrackContext(for: self) : try FFmpegTrackContext(for: self)
+            let metadata: PrimaryMetadata
+            
+            if track.isNativelySupported {
+                metadata = try avfReader.getPrimaryMetadata(for: track.file)
+            } else {
+                metadata = try ffmpegReader.getPrimaryMetadata(for: track.file)
+            }
+
+            track.title = metadata.title
+            track.artist = metadata.artist
+            track.albumArtist = metadata.albumArtist
+            track.album = metadata.album
+            track.genre = metadata.genre
+
+            track.composer = metadata.composer
+            track.conductor = metadata.conductor
+            track.lyricist = metadata.lyricist
+            track.performer = metadata.performer
+            
+            track.year = metadata.year
+            track.bpm = metadata.bpm
+            
+            track.duration = metadata.duration
+            
+            track.art = metadata.art
             
         } catch {
             
-//            isPlayable = false
-//            validationError = error
+            track.isPlayable = false
+            track.validationError = error
         }
     }
     
@@ -23,5 +50,16 @@ class TrackReader {
     }
     
     func prepareForPlayback() throws {
+    }
+    
+    func loadFileSystemInfo(_ track: Track) {
+        
+        let attrs = FileSystemUtils.fileAttributes(path: track.file.path)
+        
+        // Filesystem info
+        track.fileSize = attrs.size
+        track.fileCreationDate = attrs.creationDate
+        track.fileLastModifiedDate = attrs.lastModified
+        track.fileLastOpenedDate = attrs.lastOpened
     }
 }

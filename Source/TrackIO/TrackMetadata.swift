@@ -1,20 +1,21 @@
 import Cocoa
 import AVFoundation
 
-class TrackMetadata {
+struct PrimaryMetadata {
     
     var fileType: String?
     var audioFormat: String?
     
-    var duration: Double = 0
-
     var title: String?
     var artist: String?
-    
+    var albumArtist: String?
     var album: String?
     var genre: String?
     
-    var art: CoverArt?
+    var composer: String?
+    var conductor: String?
+    var performer: String?
+    var lyricist: String?
     
     var trackNumber: Int?
     var totalTracks: Int?
@@ -22,14 +23,22 @@ class TrackMetadata {
     var discNumber: Int?
     var totalDiscs: Int?
     
+    var year: Int?
+    
+    var bpm: Int?
+    
+    var duration: Double = 0
+    
+    var art: CoverArt?
+}
+
+struct SecondaryMetadata {
+    
     var lyrics: String?
     
-    // Generic metadata
-    var genericMetadata: [String: MetadataEntry] = [:]
+    var genericMetadata: OrderedMetadataMap = OrderedMetadataMap()
     
     var chapters: [Chapter] = []
-    
-    var hasPrimaryMetadata: Bool = false
 }
 
 class CoverArt {
@@ -223,5 +232,43 @@ class OrderedMetadataMap {
     
     var keyValuePairs: [(key: String, value: String)] {
         array
+    }
+}
+
+
+// Denotes the type (format) of a metadata entry
+enum MetadataType: String {
+    
+    case common
+    case iTunes
+    case id3
+    case audioToolbox
+    case wma
+    case vorbis
+    case ape
+    case other
+    
+    // Smaller the number, higher the sort order
+    var sortOrder: Int {
+        
+        switch self {
+            
+        case .common:   return 0
+            
+        case .iTunes:  return 1
+            
+        case .id3:  return 2
+            
+        case .audioToolbox: return 3
+            
+        case .wma:  return 4
+            
+        case .vorbis:  return 5
+            
+        case .ape:  return 6
+            
+        case .other:    return 7
+            
+        }
     }
 }

@@ -9,6 +9,15 @@ class Track: Hashable, PlayableItem {
     let file: URL
     let fileExtension: String
     
+    var fileType: String
+    var audioFormat: String?
+    
+    var fileSize: Size?
+    
+    var fileLastModifiedDate: Date?
+    var fileCreationDate: Date?
+    var fileLastOpenedDate: Date?
+    
     let isNativelySupported: Bool
     
     var playbackContext: PlaybackContextProtocol?
@@ -34,8 +43,14 @@ class Track: Hashable, PlayableItem {
         return title
     }
     
+    var albumArtist: String?
     var album: String?
     var genre: String?
+    
+    var composer: String?
+    var conductor: String?
+    var performer: String?
+    var lyricist: String?
     
     var art: CoverArt?
     
@@ -44,6 +59,10 @@ class Track: Hashable, PlayableItem {
     
     var discNumber: Int?
     var totalDiscs: Int?
+    
+    var year: Int?
+    
+    var bpm: Int?
     
     var lyrics: String?
     
@@ -57,6 +76,7 @@ class Track: Hashable, PlayableItem {
 
         self.file = file
         self.fileExtension = file.pathExtension.lowercased()
+        self.fileType = file.pathExtension.uppercased()
         self.defaultDisplayName = file.deletingPathExtension().lastPathComponent
         
         self.isNativelySupported = AppConstants.SupportedTypes.nativeAudioExtensions.contains(fileExtension)
