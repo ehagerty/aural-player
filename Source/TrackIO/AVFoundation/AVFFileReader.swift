@@ -106,6 +106,10 @@ class AVFFileReader: FileReaderProtocol {
         return metadata
     }
     
+    func openForPlayback(file: URL) throws -> PlaybackContextProtocol {
+        return try AVFPlaybackContext(for: file)
+    }
+    
     // Reads all chapter metadata for a given track
     // NOTE - This code does not account for potential overlaps in chapter times due to bad metadata ... assumes no overlaps
     static func getChapters(_ track: Track) -> [Chapter] {

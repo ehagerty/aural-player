@@ -40,6 +40,7 @@ class PlayQueueViewController: AuralViewController {
         
         Messenger.subscribeAsync(self, .playQueue_trackAdded, self.trackAdded(_:), queue: .main)
         Messenger.subscribeAsync(self, .playQueue_tracksAdded, self.tracksAdded(_:), queue: .main)
+        Messenger.subscribe(self, .playQueue_tracksDragDropped, self.tracksDragDropped(notif:))
         
         Messenger.subscribe(self, .playQueue_sorted, self.refreshTableView)
         
@@ -181,6 +182,16 @@ class PlayQueueViewController: AuralViewController {
         
         moveAndReloadItems(results.sorted(by: TrackMoveResult.compareDescending))
         playQueueView.scrollRowToVisible(results.map{$0.destinationIndex}.min()!)
+    }
+    
+    func tracksDragDropped(notif: PlayQueueTracksDragDroppedNotification) {
+        
+        let sortedMoves = notif.results.filter{$0.movedDown}.sorted(by: TrackMoveResult.compareDescending) +
+            notif.results.filter{$0.movedUp}.sorted(by: TrackMoveResult.compareAscending)
+        
+        for move in sortedMoves {
+            playQueueView.moveRow(at: move.sourceIndex, to: move.destinationIndex)
+        }
     }
     
     // Rearranges tracks within the view that have been reordered
@@ -361,5 +372,30 @@ class PlayQueueListViewController: PlayQueueViewController {
 }
 
 class PlayQueueTableViewController: PlayQueueViewController {
+    
     override var nibName: String? {return "PlayQueueTableView"}
+    
+    override func tracksDragDropped(notif: PlayQueueTracksDragDroppedNotification) {
+        
+        let sortedMoves = notif.results.filter{$0.movedDown}.sorted(by: TrackMoveResult.compareDescending) +
+            notif.results.filter{$0.movedUp}.sorted(by: TrackMoveResult.compareAscending)
+        
+        var destinationIndices: [Int] = []
+        
+        for move in sortedMoves {
+            
+            playQueueView.moveRow(at: move.sourceIndex, to: move.destinationIndex)
+            destinationIndices.append(move.destinationIndex)
+        }
+        
+        let indexCol = playQueueView.column(withIdentifier: .playQueue_tableView_index)
+        if indexCol >= 0 {
+            
+            // Refresh only the index column for all the affected rows.
+            
+            let allIndices: Set<Int> = Set(destinationIndices + sortedMoves.map {$0.sourceIndex})
+            let reloadIndices: IndexSet = IndexSet(allIndices.min()!...allIndices.max()!)
+            playQueueView.reloadData(forRowIndexes: reloadIndices, columnIndexes: [indexCol])
+        }
+    }
 }

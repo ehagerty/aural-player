@@ -277,3 +277,8 @@ extension NSPasteboard.PasteboardType {
     // Enables drag/drop adding of tracks into the playlist from Finder
     static let file_URL: NSPasteboard.PasteboardType = NSPasteboard.PasteboardType(rawValue: String(kUTTypeFileURL))
 }
+
+extension NSDragOperation {
+    
+    static let invalid: NSDragOperation = []
+}

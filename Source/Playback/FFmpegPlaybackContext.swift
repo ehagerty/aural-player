@@ -3,6 +3,7 @@ import AVFoundation
 class FFmpegPlaybackContext: PlaybackContextProtocol {
     
     let fileContext: FFmpegFileContext
+    var file: URL {fileContext.file}
     
     var decoder: FFmpegDecoder!
     
@@ -36,12 +37,9 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     ///
     var sampleCountForDeferredPlayback: Int32 = 0
     
-    init(for fileContext: FFmpegFileContext) {
-        self.fileContext = fileContext
-    }
-    
-    func prepareForPlayback() throws {
+    init(for file: URL) throws {
         
+        self.fileContext = try FFmpegFileContext(for: file)
         self.decoder = try FFmpegDecoder(for: fileContext)
         
         if theAudioFormat == nil {

@@ -136,6 +136,8 @@ extension Notification.Name {
     
     static let playQueue_tracksRemoved = Notification.Name("playQueue_tracksRemoved")
     
+    static let playQueue_tracksDragDropped = Notification.Name("playQueue_tracksDragDropped")
+    
     static let playQueue_sorted = Notification.Name("playQueue_sorted")
     
     // ----------------------------------------------------------------------------------------

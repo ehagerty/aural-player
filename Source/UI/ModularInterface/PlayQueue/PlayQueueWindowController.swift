@@ -134,7 +134,7 @@ class PlayQueueWindowController: NSWindowController, NSTabViewDelegate, Notifica
         let numTracks = summary.size
         
         lblTracksSummary.stringValue = String(format: "%d track%@", numTracks, numTracks == 1 ? "" : "s")
-        lblDurationSummary.stringValue = ValueFormatter.formatSecondsToHMS(summary.totalDuration)
+        lblDurationSummary.stringValue = ValueFormatter.formatDurationSummary(summary.totalDuration)
     }
     
     @IBAction func removeTracksAction(_ sender: AnyObject) {

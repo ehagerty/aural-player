@@ -51,7 +51,13 @@ class TrackReader {
     func loadAllMetadata() {
     }
     
-    func prepareForPlayback() throws {
+    func prepareForPlayback(track: Track) throws {
+        
+        if track.isNativelySupported {
+            track.playbackContext = try avfReader.openForPlayback(file: track.file)
+        } else {
+            track.playbackContext = try ffmpegReader.openForPlayback(file: track.file)
+        }
     }
     
     func loadFileSystemInfo(_ track: Track) {

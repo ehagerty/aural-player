@@ -119,15 +119,15 @@ class AudioGraph: AudioGraphProtocol {
 
     func reconnectPlayerNodeWithFormat(_ format: AVAudioFormat) {
         
-        let cur = playerNode.outputFormat(forBus: 0)
+        let currentFormat = playerNode.outputFormat(forBus: 0)
         
         // TODO: If newFormat == curFormat, don't reconnect.
         
-        print("\nCurFormat: \(cur.channelLayout?.layoutTag) \(cur.sampleRate)")
+        print("\nCurFormat: \(currentFormat.channelLayout?.layoutTag) \(currentFormat.sampleRate)")
         print("\nNewFormat: \(format.channelLayout?.layoutTag) \(format.sampleRate)")
-        print(cur.sampleRate == format.sampleRate, cur == format, cur.isEqual(to: format))
+        print(currentFormat.sampleRate == format.sampleRate, currentFormat == format, currentFormat.isEqual(to: format))
         
-        if !cur.isEqual(to: format) {
+        if !currentFormat.isEqual(to: format) {
             
             engine.disconnectNodeOutput(playerNode)
             engine.connect(playerNode, to: auxMixer, format: format)

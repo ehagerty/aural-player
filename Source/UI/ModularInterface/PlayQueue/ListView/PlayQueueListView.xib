@@ -163,7 +163,7 @@
             </scroller>
             <point key="canvasLocation" x="140" y="493"/>
         </scrollView>
-        <customObject id="3WC-po-jPH" customClass="PlayQueueViewDataSource" customModule="Aural" customModuleProvider="target">
+        <customObject id="3WC-po-jPH" customClass="PlayQueueListViewDataSource" customModule="Aural" customModuleProvider="target">
             <connections>
                 <outlet property="playQueueView" destination="jJO-6A-dsO" id="Y9s-jp-hVB"/>
             </connections>

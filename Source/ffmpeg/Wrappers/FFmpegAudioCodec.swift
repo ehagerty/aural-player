@@ -6,6 +6,21 @@ import Foundation
 class FFmpegAudioCodec: FFmpegCodec {
     
     ///
+    /// Constant value to use as the number of parallel threads to use when decoding.
+    ///
+    /// This should equal the number of physical CPU cores in the system.
+    ///
+    static let threadCount: Int32 = Int32(SystemUtils.numberOfPhysicalCores)
+    
+    ///
+    /// The type of multithreading used by ffmpeg when decoding.
+    ///
+    /// *FF_THREAD_SLICE* means decode multiple segments
+    /// or "slices" of a frame concurrently.
+    ///
+    static let threadType: Int32 = FF_THREAD_SLICE
+    
+    ///
     /// Average bit rate of the encoded data.
     ///
     var bitRate: Int64 {params.bit_rate}
@@ -45,6 +60,10 @@ class FFmpegAudioCodec: FFmpegCodec {
         // Correct channel layout if necessary.
         // NOTE - This is necessary for some files like WAV files that don't specify a channel layout.
         self.channelLayout = context.channel_layout != 0 ? Int64(context.channel_layout) : av_get_default_channel_layout(context.channels)
+        
+        // Use multithreading to speed up decoding.
+        self.contextPointer.pointee.thread_count = Self.threadCount
+        self.contextPointer.pointee.thread_type = Self.threadType
     }
     
     override func open() throws {

@@ -7,6 +7,8 @@ protocol PlayableItem: Hashable {
 
 protocol PlaybackContextProtocol {
     
+    var file: URL {get}
+    
     var audioFormat: AVAudioFormat {get}
     
 //    func open()

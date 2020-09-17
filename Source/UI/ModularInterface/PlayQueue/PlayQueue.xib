@@ -194,24 +194,24 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PlayQueue" id="JLt-MV-OmP"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GqF-KI-QYQ" userLabel="Tracks Summary">
-                        <rect key="frame" x="8" y="20" width="294" height="25"/>
+                        <rect key="frame" x="13" y="20" width="279" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="qM8-AO-bJm"/>
                         </constraints>
-                        <textFieldCell key="cell" lineBreakMode="clipping" title=" 383 Tracks" id="qgc-Ve-ans">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title=" 383 Tracks" id="qgc-Ve-ans">
                             <font key="font" size="13" name="Play-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c2A-EN-gcy" userLabel="Duration Summary">
-                        <rect key="frame" x="298" y="20" width="294" height="25"/>
+                        <rect key="frame" x="308" y="20" width="279" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="25" id="Ed1-mo-NU5"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="qXW-J2-ods"/>
                             <constraint firstAttribute="height" constant="25" id="yFp-qr-x3R"/>
                         </constraints>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="0:00" id="wkM-BW-BXY">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="0:00" id="wkM-BW-BXY">
                             <font key="font" size="13" name="Play-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -390,13 +390,13 @@
                     <constraint firstItem="dDG-Dw-rbl" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="J4l-K2-gdJ"/>
                     <constraint firstAttribute="bottom" secondItem="pba-uo-WAM" secondAttribute="bottom" id="JtX-hW-M1a"/>
                     <constraint firstItem="c2A-EN-gcy" firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" id="Jyp-X5-fpn"/>
-                    <constraint firstItem="c2A-EN-gcy" firstAttribute="trailing" secondItem="xnM-kX-OXF" secondAttribute="trailing" id="SE0-TG-l1n"/>
+                    <constraint firstItem="c2A-EN-gcy" firstAttribute="trailing" secondItem="xnM-kX-OXF" secondAttribute="trailing" constant="-5" id="SE0-TG-l1n"/>
                     <constraint firstItem="7gy-gy-XW7" firstAttribute="bottom" secondItem="dDG-Dw-rbl" secondAttribute="bottom" constant="1" id="Tul-bi-07F"/>
                     <constraint firstItem="dDG-Dw-rbl" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="1" id="UYZ-Ot-NAf"/>
                     <constraint firstItem="7gy-gy-XW7" firstAttribute="leading" secondItem="dDG-Dw-rbl" secondAttribute="leading" constant="18" id="XTy-bx-Tby"/>
                     <constraint firstAttribute="bottom" secondItem="GqF-KI-QYQ" secondAttribute="bottom" constant="20" id="aKQ-uM-LJ5"/>
-                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="xnM-kX-OXF" secondAttribute="leading" id="bPK-ud-KVi"/>
-                    <constraint firstItem="c2A-EN-gcy" firstAttribute="leading" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="cfG-P1-sRH"/>
+                    <constraint firstItem="GqF-KI-QYQ" firstAttribute="leading" secondItem="xnM-kX-OXF" secondAttribute="leading" constant="5" id="bPK-ud-KVi"/>
+                    <constraint firstItem="c2A-EN-gcy" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" constant="10" id="cfG-P1-sRH"/>
                     <constraint firstItem="xnM-kX-OXF" firstAttribute="top" secondItem="uno-jX-4ff" secondAttribute="bottom" constant="10" id="dEB-w4-59h"/>
                     <constraint firstAttribute="trailing" secondItem="YoY-1j-kEY" secondAttribute="trailing" id="dJ3-0l-ysk"/>
                     <constraint firstItem="pba-uo-WAM" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="grt-0r-bBd"/>
@@ -405,7 +405,7 @@
                     <constraint firstItem="YoY-1j-kEY" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="oGY-NT-mbS"/>
                     <constraint firstAttribute="trailing" secondItem="uno-jX-4ff" secondAttribute="trailing" id="p1A-2G-VzT"/>
                     <constraint firstAttribute="trailing" secondItem="xnM-kX-OXF" secondAttribute="trailing" constant="10" id="u0e-Ff-D0z"/>
-                    <constraint firstAttribute="centerX" secondItem="GqF-KI-QYQ" secondAttribute="trailing" id="ufA-G7-3zX"/>
+                    <constraint firstAttribute="centerX" secondItem="GqF-KI-QYQ" secondAttribute="trailing" constant="10" id="ufA-G7-3zX"/>
                     <constraint firstItem="YoY-1j-kEY" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="vSs-Le-UJU"/>
                 </constraints>
             </view>

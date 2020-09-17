@@ -1,64 +1,16 @@
 import Cocoa
 
+class PlayQueueListViewDataSource: PlayQueueViewDataSource {}
+
 class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
     
     @IBOutlet weak var playQueueView: NSTableView!
     
-    private let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
-    private let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
-    
-    // Signifies an invalid drag/drop operation
-    private let invalidDragOperation: NSDragOperation = []
+    let playQueue: PlayQueueDelegateProtocol = ObjectGraph.playQueueDelegate
+    let library: LibraryDelegateProtocol = ObjectGraph.libraryDelegate
     
     // Returns the total number of playlist rows
     func numberOfRows(in tableView: NSTableView) -> Int {playQueue.size}
-    
-    // MARK: Sorting -------------------------------------------------------------------------------------------------------------------
-    
-    func tableView(_ tableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [NSSortDescriptor]) {
-        
-        guard let sortDescriptor = tableView.sortDescriptors.first, let key = sortDescriptor.key else {return}
-        let ascending = sortDescriptor.ascending
-        
-        let tracksSort: TracksSort = TracksSort()
-        let sort: Sort = Sort().withTracksSort(tracksSort)
-        
-        switch key {
-            
-        case "title":
-            
-            // TODO: Title sort should also take into consideration defaultDisplayName (in SortComparator)
-            _ = tracksSort.withFields(.title)
-            
-        case "artistTitle":
-            
-            _ = tracksSort.withFields(.artistTitle)
-            
-        case "duration":
-            
-            _ = tracksSort.withFields(.duration)
-            
-        case "artist":
-            
-            _ = tracksSort.withFields(.artist, .album, .discNumberAndTrackNumber)
-            
-        case "album":
-            
-            _ = tracksSort.withFields(.album, .discNumberAndTrackNumber)
-            
-        case "genre":
-            
-            _ = tracksSort.withFields(.genre, .artist, .album, .discNumberAndTrackNumber)
-            
-        default: return
-            
-        }
-        
-        _ = tracksSort.withOrder(ascending ? .ascending : .descending).withNoOptions()
-
-        playQueue.sort(sort)
-        Messenger.publish(.playQueue_sorted)
-    }
     
     // MARK: Drag n drop -------------------------------------------------------------------------------------------------------------------
     
@@ -88,7 +40,7 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int,
                    proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
         
-        if playQueue.isBeingModified {return invalidDragOperation}
+        if playQueue.isBeingModified {return .invalid}
         
         // If the source is the tableView, that means playlist tracks are being reordered
         if let sourceTableView = info.draggingSource as? NSTableView {
@@ -105,7 +57,7 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
                 return .move
             }
             
-            return invalidDragOperation
+            return .invalid
         }
         
         // Otherwise, files are being dragged in from outside the app (e.g. tracks/playlists from Finder)
@@ -127,36 +79,21 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
         
         if let sourceTableView = info.draggingSource as? NSTableView {
             
-            if sourceTableView.identifier == .playQueue, let sourceIndices = getSourceIndexes(info) {
+            // TODO: Should the 2 tableViews have different IDs ?
+            // Just check that sourceTV.id == tableView.id
+            if sourceTableView.identifier == tableView.identifier, let sourceIndices = getSourceIndexes(info) {
                 
                 let results = playQueue.dropTracks(sourceIndices, row)
-                
-                let sortedMoves = results.filter({$0.movedDown}).sorted(by: TrackMoveResult.compareDescending) +
-                    results.filter({$0.movedUp}).sorted(by: TrackMoveResult.compareAscending)
-                
-                var allIndices: [Int] = []
-                var destinationIndices: [Int] = []
-                
-                for move in sortedMoves {
-                    
-                    tableView.moveRow(at: move.sourceIndex, to: move.destinationIndex)
-                    
-                    // Collect source and destination indices for later
-                    allIndices += [move.sourceIndex, move.destinationIndex]
-                    destinationIndices.append(move.destinationIndex)
-                }
-                
-                // Reload all source and destination rows, and all rows in between
-                let reloadIndices: IndexSet = IndexSet(allIndices.min()!...allIndices.max()!)
-                tableView.reloadData(forRowIndexes: reloadIndices, columnIndexes: UIConstants.flatPlaylistViewColumnIndexes)
-                tableView.noteHeightOfRows(withIndexesChanged: reloadIndices)
-                
+                Messenger.publish(PlayQueueTracksDragDroppedNotification(results: results))
+
                 // Select all the destination rows (the new locations of the moved tracks)
+                let destinationIndices: [Int] = results.map {$0.destinationIndex}
                 tableView.selectRowIndexes(IndexSet(destinationIndices), byExtendingSelection: false)
                 
                 return true
             }
             
+            // Tracks have been dragged from the Library and dropped here.
             if sourceTableView.identifier == .library_tracksView, let sourceIndices = getSourceIndexes(info) {
                 
                 // Convert the indices from the library view into tracks, then enqueue them onto the play queue.
@@ -166,9 +103,8 @@ class PlayQueueViewDataSource: NSObject, NSTableViewDataSource {
                 
                 return true
             }
-        }
-        
-        else if let files = info.draggingPasteboard.readObjects(forClasses: [NSURL.self]) as? [URL] {
+            
+        } else if let files = info.draggingPasteboard.readObjects(forClasses: [NSURL.self]) as? [URL] {
 
             // Files added from Finder, add them to the playlist as URLs
             playQueue.addTracks(from: files)

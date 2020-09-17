@@ -4,15 +4,17 @@ import Foundation
     Prepares a track for playback:
 
     - delay (if defined in the request)
-    - transcoding (if required)
     - reading audio metadata
  */
 class AudioFilePreparationAction: PlaybackChainAction {
     
     private let player: PlayerProtocol
+    private let trackReader: TrackReader
     
-    init(_ player: PlayerProtocol) {
+    init(player: PlayerProtocol, trackReader: TrackReader) {
+        
         self.player = player
+        self.trackReader = trackReader
     }
     
     func execute(_ context: PlaybackRequestContext, _ chain: PlaybackChain) {
@@ -61,7 +63,7 @@ class AudioFilePreparationAction: PlaybackChainAction {
         
         do {
             
-            try track.prepareForPlayback()
+            try trackReader.prepareForPlayback(track: track)
 
             // Proceed if not waiting
             if !isWaiting {
@@ -72,6 +74,8 @@ class AudioFilePreparationAction: PlaybackChainAction {
             }
             
         } catch {
+            
+            print("\nCouldn't prepare track \(track.file.lastPathComponent) for playback: \(error)")
             
             // Track preparation failed, terminate the chain.
 //            chain.terminate(context, preparationError)

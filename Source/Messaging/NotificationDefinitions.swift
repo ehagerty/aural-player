@@ -307,6 +307,13 @@ struct PlayQueueTracksAddedNotification: NotificationPayload {
     let trackIndices: ClosedRange<Int>
 }
 
+struct PlayQueueTracksDragDroppedNotification: NotificationPayload {
+    
+    let notificationName: Notification.Name = .playQueue_tracksDragDropped
+    
+    let results: [TrackMoveResult]
+}
+
 // Indicates current progress associated with a TrackAddedNotification.
 struct TrackAddOperationProgress {
     

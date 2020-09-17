@@ -141,6 +141,10 @@ class FFmpegFileReader: FileReaderProtocol {
         return SecondaryMetadata()
     }
     
+    func openForPlayback(file: URL) throws -> PlaybackContextProtocol {
+        return try FFmpegPlaybackContext(for: file)
+    }
+    
     func loadPlaybackMetadata(for track: Track) {
         
         

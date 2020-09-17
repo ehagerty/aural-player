@@ -10,7 +10,7 @@ class StartPlaybackChain: PlaybackChain, NotificationSubscriber {
     private let player: PlayerProtocol
     private let sequencer: SequencerProtocol
     
-    init(_ player: PlayerProtocol, _ sequencer: SequencerProtocol, _ playlist: PlaylistCRUDProtocol, _ profiles: PlaybackProfiles, _ preferences: PlaybackPreferences) {
+    init(_ player: PlayerProtocol, _ sequencer: SequencerProtocol, _ playlist: PlaylistCRUDProtocol, trackReader: TrackReader, _ profiles: PlaybackProfiles, _ preferences: PlaybackPreferences) {
         
         self.player = player
         self.sequencer = sequencer
@@ -21,7 +21,7 @@ class StartPlaybackChain: PlaybackChain, NotificationSubscriber {
         .withAction(ValidateNewTrackAction())
         .withAction(ApplyPlaybackProfileAction(profiles, preferences))
         .withAction(SetPlaybackDelayAction(playlist))
-        .withAction(AudioFilePreparationAction(player))
+            .withAction(AudioFilePreparationAction(player: player, trackReader: trackReader))
         .withAction(StartPlaybackAction(player))
     }
     

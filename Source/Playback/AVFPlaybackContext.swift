@@ -11,6 +11,17 @@ class AVFPlaybackContext: PlaybackContextProtocol {
     let frameCount: AVAudioFramePosition
     let computedDuration: Double
     
+//    init(for file: URL) throws {
+//
+//        self.file = file
+//        self.audioFile = try AVAudioFile(forReading: file)
+//
+//        self.audioFormat = audioFile.processingFormat
+//        self.sampleRate = audioFormat.sampleRate
+//        self.frameCount = audioFile.length
+//        self.computedDuration = Double(frameCount) / sampleRate
+//    }
+    
     init(for file: URL) throws {
         
         self.file = file
@@ -18,8 +29,10 @@ class AVFPlaybackContext: PlaybackContextProtocol {
         
         self.audioFormat = audioFile.processingFormat
         self.sampleRate = audioFormat.sampleRate
-        self.frameCount = audioFile.length
-        self.computedDuration = Double(frameCount) / sampleRate
+        
+        let asset = AVURLAsset(url: file, options: [AVURLAssetPreferPreciseDurationAndTimingKey: true])
+        self.computedDuration = asset.duration.seconds
+        self.frameCount = AVAudioFramePosition(computedDuration * sampleRate)
     }
     
     // Called when preparing for playback

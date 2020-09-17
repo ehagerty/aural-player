@@ -155,6 +155,17 @@ class ValueFormatter {
         return hrs > 0 ? String(format: "%@%d:%02d:%02d", includeMinusPrefix ? "- " : "", hrs, mins, secs) : String(format: "%@%d:%02d", includeMinusPrefix ? "- " : "", mins, secs)
     }
     
+    static func formatDurationSummary(_ timeSecondsDouble: Double) -> String {
+        
+        let timeSeconds = roundedInt(timeSecondsDouble)
+        
+        let secs = timeSeconds % oneMin
+        let mins = (timeSeconds / oneMin) % oneMin
+        let hrs = timeSeconds / oneHour
+        
+        return hrs > 0 ? String(format: "%d hr %02d min %02d sec", hrs, mins, secs) : String(format: "%d min %02d sec", mins, secs)
+    }
+    
     // Formats a duration (time interval) from seconds to a displayable string showing minutes, and seconds. For example, 500 seconds becomes "8 min 20 sec", 120 seconds becomes "2 min", and 36 seconds becomes "36 sec"
     static func formatSecondsToHMS_minSec(_ duration: Int) -> String {
         
