@@ -1,6 +1,6 @@
 //import Cocoa
 //
-//class FFMpeg {
+//class FFmpeg {
 //
 //    static let ffprobeBinaryPath: String = Bundle.main.url(forResource: "ffprobe", withExtension: "")!.path
 //    static let ffmpegBinaryPath: String = Bundle.main.url(forResource: "ffmpeg", withExtension: "")!.path
@@ -150,12 +150,12 @@
 //
 //                oq.addOperation {
 //
-//                    let info = FFMpegWrapper.getMetadata(f)
+//                    let info = FFmpegWrapper.getMetadata(f)
 //
 //                    if let stream = info.audioStream {
 //
 //                        let of = URL(fileURLWithPath: f.path + "-transmuxed.mka")
-//                        FFMpeg.transmux(f, of)
+//                        FFmpeg.transmux(f, of)
 //
 //                        var path = of.lastPathComponent
 //                        var newPath = "/Users/kven/Test/MKA/" + path

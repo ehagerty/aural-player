@@ -1,6 +1,6 @@
 import Foundation
 
-class PlayQueueDelegate: PlayQueueDelegateProtocol {
+class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
 
     private let playQueue: PlayQueueProtocol
     private let library: LibraryProtocol
@@ -16,18 +16,54 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
     private let trackAddQueue: OperationQueue = OperationQueue()
     private let trackUpdateQueue: OperationQueue = OperationQueue()
     
+    private let trackReader: TrackReader
+    
     private var addSession: TrackAddSession<PlayQueueTrackAddResult>!
     
     private let concurrentAddOpCount = roundedInt(Double(SystemUtils.numberOfActiveCores) * 1.5)
     
     var isBeingModified: Bool {addSession != nil}
     
-    init(playQueue: PlayQueueProtocol, library: LibraryProtocol) {
+    init(playQueue: PlayQueueProtocol, library: LibraryProtocol, trackReader: TrackReader, persistentStateOnStartup: PlayQueueState) {
         
         self.playQueue = playQueue
         self.library = library
+        self.trackReader = trackReader
         
-        // TODO: Load tracks from persistent play queue state here, on app startup ... checking if the library already has the tracks.
+        // TODO: This needs to be done efficiently with the TrackLoader
+        
+        Messenger.subscribe(self, .library_doneAddingTracks, {
+            
+            // This should only be done once, the very first time tracks are added to the library (i.e. on app startup).
+            for file in persistentStateOnStartup.tracks {
+                
+                var track: Track
+                
+                if let trackInLibrary = self.library.findTrackByFile(file) {
+                    track = trackInLibrary
+                    
+                } else {
+                    
+                    track = Track(file)
+                    trackReader.loadPrimaryMetadata(for: track)
+                    track.loadSecondaryMetadata()
+                    
+                    if !track.isPlayable {
+                        print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
+                    }
+                }
+                
+                if track.isPlayable {
+                    _ = self.enqueue(track)
+                }
+            }
+            
+            if self.tracks.isNonEmpty {
+                Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: 0...self.tracks.lastIndex))
+            }
+            
+            Messenger.unsubscribe(self, .library_doneAddingTracks)
+        })
     }
     
     func indexOfTrack(_ track: Track) -> Int? {
@@ -176,7 +212,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol {
         
         // Process all tracks in batch concurrently and wait until the entire batch finishes.
         trackAddQueue.addOperations(addSessionTracks.compactMap {track in
-            track.hasPrimaryMetadata ? nil : BlockOperation {track.loadPrimaryMetadata()}
+            track.hasPrimaryMetadata ? nil : BlockOperation {self.trackReader.loadPrimaryMetadata(for: track)}
         }, waitUntilFinished: true)
         
         for track in addSessionTracks {

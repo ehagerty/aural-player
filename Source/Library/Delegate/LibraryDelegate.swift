@@ -6,6 +6,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     
     // The actual playlist
     private let library: LibraryProtocol
+    private let trackReader: TrackReader
     
     // Persistent playlist state (used upon app startup)
     private let libraryState: LibraryState
@@ -28,9 +29,10 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
     
     var duration: Double {library.duration}
     
-    init(_ library: LibraryProtocol, _ libraryState: LibraryState, _ preferences: Preferences) {
+    init(_ library: LibraryProtocol, trackReader: TrackReader, _ libraryState: LibraryState, _ preferences: Preferences) {
         
         self.library = library
+        self.trackReader = trackReader
         
         self.libraryState = libraryState
         self.preferences = preferences
@@ -208,7 +210,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
         let addSessionTracks: [Track] = batch.map({addSession.tracks[$0]})
         
         // Process all tracks in batch concurrently and wait until the entire batch finishes.
-        trackAddQueue.addOperations(addSessionTracks.map {track in BlockOperation {track.loadPrimaryMetadata()}}, waitUntilFinished: true)
+        trackAddQueue.addOperations(addSessionTracks.map {track in BlockOperation {self.trackReader.loadPrimaryMetadata(for: track)}}, waitUntilFinished: true)
         
         for track in addSessionTracks {
             

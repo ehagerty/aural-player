@@ -2,8 +2,8 @@ import Foundation
 
 class TrackReader {
     
-    let avfReader: AVAssetReader = AVAssetReader()
-    let ffmpegReader: FFMpegReader = FFMpegReader()
+    let avfReader: AVFFileReader = AVFFileReader()
+    let ffmpegReader: FFmpegFileReader = FFmpegFileReader()
     
     func loadPrimaryMetadata(for track: Track) {
         

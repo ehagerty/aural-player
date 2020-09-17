@@ -21,48 +21,14 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     // Stores the currently playing track, if there is one
     private(set) var currentTrack: Track?
     
-    private var persistentStateOnStartup: PlayQueueState?
-    
     init(library: LibraryProtocol, persistentStateOnStartup: PlayQueueState) {
         
         self.library = library
-        self.persistentStateOnStartup = persistentStateOnStartup
         
         self.tracks = []
         
         sequence = PlaybackSequence(persistentStateOnStartup.repeatMode, persistentStateOnStartup.shuffleMode)
         currentTrack = nil
-        
-        Messenger.subscribe(self, .library_doneAddingTracks, {
-            
-            // This should only be done once, the very first time tracks are added to the library (i.e. on app startup).
-            if let persistentState = self.persistentStateOnStartup {
-            
-                self.tracks = persistentState.tracks.compactMap {file in
-                    
-                    if let trackInLibrary = self.library.findTrackByFile(file) {
-                        return trackInLibrary
-                    }
-                    
-                    let track = Track(file)
-                    track.loadPrimaryMetadata()
-                    track.loadSecondaryMetadata()
-                    
-                    if !track.isPlayable {
-                        print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
-                    }
-                    
-                    return track.isPlayable ? track : nil
-                }
-                
-                if self.tracks.isNonEmpty {
-                    Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: 0...self.tracks.lastIndex))
-                }
-                
-                self.persistentStateOnStartup = nil
-                Messenger.unsubscribe(self, .library_doneAddingTracks)
-            }
-        })
     }
     
     func trackAtIndex(_ index: Int) -> Track? {

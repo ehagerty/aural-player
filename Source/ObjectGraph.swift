@@ -51,12 +51,7 @@ class ObjectGraph {
     private static var bookmarks: Bookmarks!
     static var bookmarksDelegate: BookmarksDelegateProtocol!
     
-    static var ffmpegReader: FFMpegReader!
-    static var commonFFMpegParser: CommonFFMpegMetadataParser!
-    static var wmParser: WMParser!
-    static var vorbisParser: VorbisCommentParser!
-    static var apeParser: ApeV2Parser!
-    static var defaultParser: DefaultFFMpegMetadataParser!
+    static var trackReader: TrackReader!
     
     static var mediaKeyHandler: MediaKeyHandler!
     
@@ -110,23 +105,17 @@ class ObjectGraph {
         sequencer = Sequencer(playlist, repeatMode, shuffleMode, playlistType)
         sequencerDelegate = SequencerDelegate(sequencer)
         
-        commonFFMpegParser = CommonFFMpegMetadataParser()
-        wmParser = WMParser()
-        vorbisParser = VorbisCommentParser()
-        apeParser = ApeV2Parser()
-        defaultParser = DefaultFFMpegMetadataParser()
+        trackReader = TrackReader()
         
-//        FFMpegReader.initialize(commonFFMpegParser, id3Parser, vorbisParser, apeParser, wmParser, defaultParser)
-
         mediaKeyHandler = MediaKeyHandler(preferences.controlsPreferences)
         
         // Initialize utility classes.
         
         library = Library()
-        libraryDelegate = LibraryDelegate(library, appState.library, preferences)
+        libraryDelegate = LibraryDelegate(library, trackReader: trackReader, appState.library, preferences)
         
         playQueue = PlayQueue(library: library, persistentStateOnStartup: appState.playQueue)
-        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue, library: library)
+        playQueueDelegate = PlayQueueDelegate(playQueue: playQueue, library: library, trackReader: trackReader, persistentStateOnStartup: appState.playQueue)
         
         let profiles = PlaybackProfiles()
         

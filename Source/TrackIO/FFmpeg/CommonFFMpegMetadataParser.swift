@@ -22,15 +22,12 @@ fileprivate let key_encoder = "encoder"
 fileprivate let key_language = "language"
 fileprivate let key_date = "date"
 
-class CommonFFMpegMetadataParser: FFMpegMetadataParser {
+class CommonFFmpegMetadataParser: FFmpegMetadataParser {
     
-    private let essentialKeys: Set<String> = [key_title, key_artist, key_album, key_genre, key_disc, key_track, key_date, key_lyrics]
+    private let essentialKeys: Set<String> = [key_title, key_artist, key_albumArtist, key_album, key_composer, key_performer, key_genre, key_disc, key_track, key_date, key_lyrics]
     
     private let genericKeys: [String: String] = [
         
-        key_albumArtist: "Album Artist",
-        key_composer: "Composer",
-        key_performer: "Performer",
         key_publisher: "Publisher",
         key_copyright: "Copyright",
         key_encodedBy: "Encoded By",
@@ -39,105 +36,110 @@ class CommonFFMpegMetadataParser: FFMpegMetadataParser {
         key_comment: "Comment"
     ]
     
-//    func mapTrack(_ mapForTrack: FFmpegMetadataReaderContext) {
-//        
-//        let metadata = FFmpegParserMetadataMap()
-//        mapForTrack.commonMetadata = metadata
-//        
-//        for (key, value) in mapForTrack.map {
-//            
-//            let lcKey = key.lowercased().trim()
-//            
-//            if essentialKeys.contains(lcKey) {
-//                
-//                metadata.essentialFields[lcKey] = value
-//                mapForTrack.map.removeValue(forKey: key)
-//                
-//            } else if genericKeys[lcKey] != nil {
-//                
-//                metadata.genericFields[lcKey] = value
-//                mapForTrack.map.removeValue(forKey: key)
-//            }
-//        }
-//    }
-//    
-//    func getTitle(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-//        return mapForTrack.commonMetadata?.essentialFields[key_title]
-//    }
-//    
-//    func getArtist(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-//        return mapForTrack.commonMetadata?.essentialFields[key_artist]
-//    }
-//    
-//    func getAlbum(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-//        return mapForTrack.commonMetadata?.essentialFields[key_album]
-//    }
-//    
-//    func getGenre(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-//        return mapForTrack.commonMetadata?.essentialFields[key_genre]
-//    }
-//    
-//    func getLyrics(_ mapForTrack: FFmpegMetadataReaderContext) -> String? {
-//        return mapForTrack.commonMetadata?.essentialFields[key_lyrics]
-//    }
-//    
-//    func getDiscNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
-//        
-//        if let discNumStr = mapForTrack.commonMetadata?.essentialFields[key_disc] {
-//            return ParserUtils.parseDiscOrTrackNumberString(discNumStr)
-//        }
-//        
-//        return nil
-//    }
-//    
-//    func getTotalDiscs(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
-//        return nil
-//    }
-//    
-//    func getTrackNumber(_ mapForTrack: FFmpegMetadataReaderContext) -> (number: Int?, total: Int?)? {
-//        
-//        if let trackNumStr = mapForTrack.commonMetadata?.essentialFields[key_track] {
-//            return ParserUtils.parseDiscOrTrackNumberString(trackNumStr)
-//        }
-//        
-//        return nil
-//    }
-//    
-//    func getTotalTracks(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
-//        return nil
-//    }
-//    
-//    func getYear(_ mapForTrack: FFmpegMetadataReaderContext) -> Int? {
-//        
-//        if let yearString = mapForTrack.commonMetadata?.essentialFields[key_date] {
-//            return ParserUtils.parseYear(yearString)
-//        }
-//        
-//        return nil
-//    }
-//    
-//    func getGenericMetadata(_ mapForTrack: FFmpegMetadataReaderContext) -> [String : MetadataEntry] {
-//        
-//        var metadata: [String: MetadataEntry] = [:]
-//        
-//        if let fields = mapForTrack.commonMetadata?.genericFields {
-//            
-//            for (key, var value) in fields {
-//                
-//                if key == key_language, let langName = LanguageMap.forCode(value.trim()) {
-//                    value = langName
-//                }
-//                
-//                value = StringUtils.cleanUpString(value)
-//                
-//                metadata[key] = MetadataEntry(.common, readableKey(key), value)
-//            }
-//        }
-//        
-//        return metadata
-//    }
-//    
-//    func readableKey(_ key: String) -> String {
-//        return genericKeys[key] ?? key.capitalizingFirstLetter()
-//    }
+    func mapTrack(_ meta: FFmpegMappedMetadata) {
+        
+        let metadata = meta.commonMetadata
+        
+        for key in meta.map.keys {
+            
+            let lcKey = key.lowercased().trim()
+            
+            if essentialKeys.contains(lcKey) {
+                
+                metadata.essentialFields[lcKey] = meta.map.removeValue(forKey: key)
+                
+            } else if genericKeys[lcKey] != nil {
+                
+                metadata.genericFields[lcKey] = meta.map.removeValue(forKey: key)
+            }
+        }
+    }
+    
+    func hasMetadataForTrack(_ meta: FFmpegMappedMetadata) -> Bool {
+        !meta.commonMetadata.essentialFields.isEmpty
+    }
+    
+    func getTitle(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_title]
+    }
+    
+    func getArtist(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_artist] ?? meta.commonMetadata.essentialFields[key_albumArtist]
+    }
+    
+    func getAlbumArtist(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_albumArtist]
+    }
+    
+    func getAlbum(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_album]
+    }
+    
+    func getComposer(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_composer]
+    }
+    
+    func getPerformer(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_performer]
+    }
+    
+    func getGenre(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_genre]
+    }
+    
+    func getLyrics(_ meta: FFmpegMappedMetadata) -> String? {
+        meta.commonMetadata.essentialFields[key_lyrics]
+    }
+    
+    func getDiscNumber(_ meta: FFmpegMappedMetadata) -> (number: Int?, total: Int?)? {
+        
+        if let discNumStr = meta.commonMetadata.essentialFields[key_disc] {
+            return ParserUtils.parseDiscOrTrackNumberString(discNumStr)
+        }
+        
+        return nil
+    }
+    
+    func getTrackNumber(_ meta: FFmpegMappedMetadata) -> (number: Int?, total: Int?)? {
+        
+        if let trackNumStr = meta.commonMetadata.essentialFields[key_track] {
+            return ParserUtils.parseDiscOrTrackNumberString(trackNumStr)
+        }
+        
+        return nil
+    }
+    
+    func getYear(_ meta: FFmpegMappedMetadata) -> Int? {
+        
+        if let yearString = meta.commonMetadata.essentialFields[key_date] {
+            return ParserUtils.parseYear(yearString)
+        }
+        
+        return nil
+    }
+    
+    //    func getGenericMetadata(_ meta: FFmpegMappedMetadata) -> [String : MetadataEntry] {
+    //
+    //        var metadata: [String: MetadataEntry] = [:]
+    //
+    //        if let fields = meta.commonMetadata?.genericFields {
+    //
+    //            for (key, var value) in fields {
+    //
+    //                if key == key_language, let langName = LanguageMap.forCode(value.trim()) {
+    //                    value = langName
+    //                }
+    //
+    //                value = StringUtils.cleanUpString(value)
+    //
+    //                metadata[key] = MetadataEntry(.common, readableKey(key), value)
+    //            }
+    //        }
+    //
+    //        return metadata
+    //    }
+    //
+    //    func readableKey(_ key: String) -> String {
+    //        return genericKeys[key] ?? key.capitalizingFirstLetter()
+    //    }
 }

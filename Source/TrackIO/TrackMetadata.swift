@@ -30,6 +30,8 @@ struct PrimaryMetadata {
     var duration: Double = 0
     
     var art: CoverArt?
+    
+    var isProtected: Bool?
 }
 
 struct SecondaryMetadata {

@@ -82,20 +82,6 @@ class Track: Hashable, PlayableItem {
         self.isNativelySupported = AppConstants.SupportedTypes.nativeAudioExtensions.contains(fileExtension)
     }
     
-    func loadPrimaryMetadata() {
-        
-//        do {
-//
-//            self.context = isNativelySupported ? try AVFTrackContext(for: self) : try FFmpegTrackContext(for: self)
-//            context.loadPrimaryMetadata()
-//
-//        } catch {
-//
-//            isPlayable = false
-//            validationError = error
-//        }
-    }
-    
     func loadSecondaryMetadata() {
 //        context?.loadSecondaryMetadata()
     }

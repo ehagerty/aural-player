@@ -14,7 +14,7 @@ fileprivate let key_language: String = AVMetadataKey.commonKeyLanguage.rawValue
 
 //fileprivate let essentialFieldKeys: Set<String> = [key_title, key_artist, key_album, key_genre, key_art]
 
-class CommonAVAssetParser: AVAssetParser {
+class CommonAVFMetadataParser: AVFMetadataParser {
     
     let keySpace: AVMetadataKeySpace = .common
     
@@ -52,11 +52,11 @@ class CommonAVAssetParser: AVAssetParser {
 //        })?.stringValue
 //    }
 //
-//    func getGenericMetadata(_ mapForTrack: AVFMetadata) -> [String: MetadataEntry] {
+//    func getGenericMetadata(_ meta: AVFMetadata) -> [String: MetadataEntry] {
 //
 //        var metadata: [String: MetadataEntry] = [:]
 //
-//        for item in mapForTrack.genericItems.filter({item -> Bool in item.keySpace == .common}) {
+//        for item in meta.genericItems.filter({item -> Bool in item.keySpace == .common}) {
 //
 //            if let key = item.commonKeyAsString, var value = item.valueAsString {
 //

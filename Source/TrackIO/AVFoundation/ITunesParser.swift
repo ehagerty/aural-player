@@ -4,7 +4,7 @@ import AVFoundation
 /*
     Specification for the iTunes metadata format.
  */
-class ITunesParser: AVAssetParser {
+class ITunesParser: AVFMetadataParser {
     
     let keySpace: AVMetadataKeySpace = .iTunes
         
@@ -23,19 +23,19 @@ class ITunesParser: AVAssetParser {
         // BUG TODO: Find out why ITunesNormalization tag is not being ignored in MP3 file
     //    private let ignoredKeys: Set<String> = [ITunesSpec.key_normalization, ITunesSpec.key_soundCheck]
     
-//    func mapTrack(_ mapForTrack: AVFMetadata) {
+//    func mapTrack(_ meta: AVFMetadata) {
 //    
-//        for item in mapForTrack.asset.metadata {
+//        for item in meta.asset.metadata {
 //            
 //            if item.keySpace == .iTunes, let key = item.keyAsString {
 //                
 //                let mapKey = String(format: "%@/%@", ITunesSpec.keySpace, key)
 //                
 //                if essentialFieldKeys.contains(mapKey) {
-//                    mapForTrack.map[mapKey] = item
+//                    meta.map[mapKey] = item
 //                } else {
 //                    // Generic field
-//                    mapForTrack.genericItems.append(item)
+//                    meta.genericItems.append(item)
 //                }
 //                
 //            } else if item.keySpace?.rawValue == ITunesSpec.longForm_keySpaceID, let key = item.keyAsString { // Long form
@@ -43,10 +43,10 @@ class ITunesParser: AVAssetParser {
 //                let mapKey = String(format: "%@/%@", ITunesSpec.keySpace, key)
 //                
 //                if essentialFieldKeys.contains(mapKey) {
-//                    mapForTrack.map[mapKey] = item
+//                    meta.map[mapKey] = item
 //                } else {
 //                    // Generic field
-//                    mapForTrack.genericItems.append(item)
+//                    meta.genericItems.append(item)
 //                }
 //            }
 //        }
@@ -190,11 +190,11 @@ class ITunesParser: AVAssetParser {
 //        return items.first(where: {$0.keySpace == .iTunes && $0.keyAsString == ITunesSpec.rawKey_title})?.stringValue
 //    }
 //    
-//    func getGenericMetadata(_ mapForTrack: AVFMetadata) -> [String: MetadataEntry] {
+//    func getGenericMetadata(_ meta: AVFMetadata) -> [String: MetadataEntry] {
 //        
 //        var metadata: [String: MetadataEntry] = [:]
 //        
-//        for item in mapForTrack.genericItems.filter({item -> Bool in item.keySpace == .iTunes || item.keySpace?.rawValue == ITunesSpec.longForm_keySpaceID}) {
+//        for item in meta.genericItems.filter({item -> Bool in item.keySpace == .iTunes || item.keySpace?.rawValue == ITunesSpec.longForm_keySpaceID}) {
 //            
 //            if let key = item.keyAsString {
 //                

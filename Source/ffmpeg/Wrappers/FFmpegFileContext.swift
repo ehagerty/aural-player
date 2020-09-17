@@ -30,6 +30,23 @@ class FFmpegFileContext {
     ///
     var pointer: UnsafeMutablePointer<AVFormatContext>!
     
+    var formatName: String {
+        String(cString: avContext.iformat.pointee.name)
+    }
+    
+    var formatLongName: String {
+        String(cString: avContext.iformat.pointee.long_name)
+    }
+    
+    var formatExtensions: String {
+        
+        if let extensions = avContext.iformat.pointee.extensions {
+            return String(cString: extensions)
+        }
+        
+        return ""
+    }
+    
     let avStreamPointers: [UnsafeMutablePointer<AVStream>]
     
     var streamCount: Int {Int(avContext.nb_streams)}
