@@ -35,6 +35,8 @@ class TrackReader {
             
             track.art = metadata.art
             
+            track.audioFormat = metadata.audioFormat
+            
         } catch {
             
             track.isPlayable = false

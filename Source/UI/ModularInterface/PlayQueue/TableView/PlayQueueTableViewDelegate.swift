@@ -152,15 +152,7 @@ class PlayQueueTableViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate,
 //
 //                }
                 
-            return createIndexTextCell(tableView, String(describing: (row + 1)), row)
-            
-        case .playQueue_tableView_artistTitle:
-            
-            return createArtistTitleCell(tableView, .playQueue_tableView_artistTitle, track.title == nil ? nil : track.artist, track.title ?? track.defaultDisplayName, row)
-            
-        case .playQueue_tableView_duration:
-            
-            return createDurationCell(tableView, ValueFormatter.formatSecondsToHMS(track.duration), row)
+            return createIndexTextCell(tableView, "\(row + 1)", row)
             
         case .playQueue_tableView_title:
 
@@ -171,11 +163,39 @@ class PlayQueueTableViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate,
             if let artist = track.artist {
                 return createTextCell(tableView, .playQueue_tableView_artist, artist, row)
             }
+            
+        case .playQueue_tableView_artistTitle:
+            
+            return createArtistTitleCell(tableView, .playQueue_tableView_artistTitle, track.title == nil ? nil : track.artist, track.title ?? track.defaultDisplayName, row)
 
         case .playQueue_tableView_album:
 
             if let album = track.album {
                 return createTextCell(tableView, .playQueue_tableView_album, album, row)
+            }
+            
+        case .playQueue_tableView_composer:
+
+            if let composer = track.composer {
+                return createTextCell(tableView, .playQueue_tableView_composer, composer, row)
+            }
+            
+        case .playQueue_tableView_conductor:
+            
+            if let conductor = track.conductor {
+                return createTextCell(tableView, .playQueue_tableView_conductor, conductor, row)
+            }
+            
+        case .playQueue_tableView_performer:
+            
+            if let performer = track.performer {
+                return createTextCell(tableView, .playQueue_tableView_performer, performer, row)
+            }
+            
+        case .playQueue_tableView_lyricist:
+            
+            if let lyricist = track.lyricist {
+                return createTextCell(tableView, .playQueue_tableView_lyricist, lyricist, row)
             }
 
         case .playQueue_tableView_genre:
@@ -213,6 +233,28 @@ class PlayQueueTableViewDelegate: NSObject, NSTableViewDelegate, NSMenuDelegate,
                 
                 return createTextCell(tableView, .playQueue_tableView_discNum, text, row)
             }
+            
+        case .playQueue_tableView_BPM:
+
+            if let bpm = track.bpm {
+                return createTextCell(tableView, .playQueue_tableView_BPM, "\(bpm)", row)
+            }
+            
+        case .playQueue_tableView_year:
+
+            if let year = track.year {
+                return createTextCell(tableView, .playQueue_tableView_year, "\(year)", row)
+            }
+            
+        case .playQueue_tableView_audioFormat:
+
+            if let audioFormat = track.audioFormat {
+                return createTextCell(tableView, .playQueue_tableView_audioFormat, audioFormat, row)
+            }
+            
+        case .playQueue_tableView_duration:
+            
+            return createDurationCell(tableView, ValueFormatter.formatSecondsToHMS(track.duration), row)
             
         default:
             

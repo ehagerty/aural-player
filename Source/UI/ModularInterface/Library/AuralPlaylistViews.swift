@@ -221,13 +221,29 @@ extension NSUserInterfaceItemIdentifier {
     
     static let playQueue_tableView_artist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_artist")
     
+    static let playQueue_tableView_albumArtist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_albumArtist")
+    
     static let playQueue_tableView_album: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_album")
     
+    static let playQueue_tableView_composer: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_composer")
+    
+    static let playQueue_tableView_conductor: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_conductor")
+    
+    static let playQueue_tableView_performer: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_performer")
+    
+    static let playQueue_tableView_lyricist: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_lyricist")
+    
     static let playQueue_tableView_genre: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_genre")
+    
+    static let playQueue_tableView_year: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_year")
     
     static let playQueue_tableView_trackNum: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_trackNum")
     
     static let playQueue_tableView_discNum: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_discNum")
+    
+    static let playQueue_tableView_BPM: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_BPM")
+    
+    static let playQueue_tableView_audioFormat: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_audioFormat")
     
     static let playQueue_tableView_duration: NSUserInterfaceItemIdentifier = NSUserInterfaceItemIdentifier("playQueue_tableView_duration")
     

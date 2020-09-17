@@ -33,9 +33,9 @@ let avfFormatDescriptions: [FourCharCode: String] = [
     
     kAudioFormatQUALCOMM: "QUALCOMM PureVoice",
     
-    kAudioFormatMPEGLayer1: "MPEG-1/2, Layer 1",
-    kAudioFormatMPEGLayer2: "MPEG-1/2, Layer 2",
-    kAudioFormatMPEGLayer3: "MPEG-1/2, Layer 3",
+    kAudioFormatMPEGLayer1: "MP1 (MPEG-1/2 Layer 1)",
+    kAudioFormatMPEGLayer2: "MP2 (MPEG-1/2 Layer 2)",
+    kAudioFormatMPEGLayer3: "MP3 (MPEG-1/2 Layer 3)",
 
     kAudioFormatTimeCode: "IO Audio",
     

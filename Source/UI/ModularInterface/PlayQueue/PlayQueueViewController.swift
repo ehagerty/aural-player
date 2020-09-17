@@ -24,7 +24,7 @@ class PlayQueueViewController: AuralViewController {
     
     var lastRow: Int {rowCount - 1}
     
-    var allColumns: IndexSet {playQueueView.columnIndexes(in: playQueueView.visibleRect)}
+    var allColumns: IndexSet {IndexSet(0..<playQueueView.tableColumns.count)}
     
     override func initializeUI() {
         
