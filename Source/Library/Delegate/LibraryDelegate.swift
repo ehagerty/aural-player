@@ -223,7 +223,7 @@ class LibraryDelegate: LibraryDelegateProtocol, NotificationSubscriber {
                 Messenger.publish(LibraryTrackAddedNotification(trackIndex: result, addOperationProgress: progress))
                 
             } else if !track.isPlayable {
-                addSession.errors.append(track.validationError as? DisplayableError ?? InvalidTrackError(track))
+                addSession.errors.append(track.validationError ?? InvalidTrackError(track.file, "Track is not playable."))
             }
         }
     }

@@ -2,13 +2,12 @@ import AVFoundation
 
 class FFmpegPlaybackContext: PlaybackContextProtocol {
     
-    let fileContext: FFmpegFileContext
-    var file: URL {fileContext.file}
+    let file: URL
     
+    var fileContext: FFmpegFileContext!
     var decoder: FFmpegDecoder!
     
-    private var theAudioFormat: AVAudioFormat!
-    var audioFormat: AVAudioFormat {theAudioFormat}
+    let audioFormat: AVAudioFormat
     
     ///
     /// The maximum number of samples that will be read, decoded, and scheduled for **immediate** playback,
@@ -39,52 +38,60 @@ class FFmpegPlaybackContext: PlaybackContextProtocol {
     
     init(for file: URL) throws {
         
+        self.file = file
         self.fileContext = try FFmpegFileContext(for: file)
         self.decoder = try FFmpegDecoder(for: fileContext)
         
-        if theAudioFormat == nil {
-            
-            let codec = decoder.codec
-            
-            let sampleRate: Int32 = codec.sampleRate
-            let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout)) ?? .stereo
-            self.theAudioFormat = AVAudioFormat(standardFormatWithSampleRate: Double(sampleRate), channelLayout: channelLayout)
+        let codec = decoder.codec
+        
+        let sampleRate: Int32 = codec.sampleRate
+        let channelLayout: AVAudioChannelLayout = FFmpegChannelLayoutsMapper.mapLayout(ffmpegLayout: Int(codec.channelLayout)) ?? .stereo
+        self.audioFormat = AVAudioFormat(standardFormatWithSampleRate: Double(sampleRate), channelLayout: channelLayout)
 
-            // The effective sample rate, which also takes into account the channel count, gives us a better idea
-            // of the computational cost of decoding and resampling the given file, as opposed to just the
-            // sample rate.
-            let channelCount: Int32 = codec.channelCount
-            let effectiveSampleRate: Int32 = sampleRate * channelCount
+        // The effective sample rate, which also takes into account the channel count, gives us a better idea
+        // of the computational cost of decoding and resampling the given file, as opposed to just the
+        // sample rate.
+        let channelCount: Int32 = codec.channelCount
+        let effectiveSampleRate: Int32 = sampleRate * channelCount
 
-            switch effectiveSampleRate {
+        switch effectiveSampleRate {
 
-            case 0..<100000:
+        case 0..<100000:
 
-                // 44.1 / 48 KHz stereo
+            // 44.1 / 48 KHz stereo
 
-                sampleCountForImmediatePlayback = 5 * sampleRate    // 5 seconds of audio
-                sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
+            sampleCountForImmediatePlayback = 5 * sampleRate    // 5 seconds of audio
+            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
 
-            case 100000..<500000:
+        case 100000..<500000:
 
-                // 96 / 192 KHz stereo
+            // 96 / 192 KHz stereo
 
-                sampleCountForImmediatePlayback = 3 * sampleRate    // 3 seconds of audio
-                sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
+            sampleCountForImmediatePlayback = 3 * sampleRate    // 3 seconds of audio
+            sampleCountForDeferredPlayback = 10 * sampleRate    // 10 seconds of audio
 
-            default:
+        default:
 
-                // 96 KHz surround and higher sample rates
+            // 96 KHz surround and higher sample rates
 
-                sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
-                sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
-            }
+            sampleCountForImmediatePlayback = 2 * sampleRate    // 2 seconds of audio
+            sampleCountForDeferredPlayback = 7 * sampleRate     // 7 seconds of audio
         }
     }
     
-    func playbackCompleted() {
+    func open() throws {
         
-        // TODO: Cleanup
+        if fileContext == nil {
+            
+            fileContext = try FFmpegFileContext(for: file)
+            decoder = try FFmpegDecoder(for: fileContext)
+        }
+    }
+    
+    func close() {
+
+        decoder = nil
+        fileContext = nil
     }
 }
 

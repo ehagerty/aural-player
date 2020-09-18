@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Configuration and initialization
 //        configureLogging()
         ObjectGraph.initialize()
+        SystemUtils.openFilesLimit = 10000
     }
     
     // Make sure all logging is done to the app's log file

@@ -185,14 +185,14 @@ struct DialogsAndAlerts {
         return alert
     }
     
-    static func trackNotPlayedAlertWithError(_ error: InvalidTrackError) -> NSAlert {
+    static func trackNotPlayedAlertWithError(_ error: DisplayableError) -> NSAlert {
         
         let alert = errorAlert
         
         alert.window.title = "Track not played"
         
-        if let track = error.track {
-            alert.messageText = String(format: "The track '%@' cannot be played back !", track.file.lastPathComponent)
+        if let dispError = error as? InvalidTrackError {
+            alert.messageText = String(format: "The track '%@' cannot be played back !", dispError.file.lastPathComponent)
         } else {
             alert.messageText = String(format: "The requested track cannot be played back !")
         }

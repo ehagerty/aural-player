@@ -173,7 +173,12 @@ class RichUIPlayerViewController: NSViewController, NotificationSubscriber {
         self.trackChanged(nil)
         
         let error = notification.error
-        alertDialog.showAlert(.error, "Track not played", error.track?.defaultDisplayName ?? "<Unknown>", error.message)
+        
+        if let invalidTrackError = error as? InvalidTrackError {
+            alertDialog.showAlert(.error, "Track not played", invalidTrackError.file.lastPathComponent, error.message)
+        } else {
+            alertDialog.showAlert(.error, "Track not played", "", error.message)
+        }
     }
     
     private func gapOrTranscodingStarted() {

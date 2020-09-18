@@ -40,8 +40,21 @@ class TrackReader {
         } catch {
             
             track.isPlayable = false
-            track.validationError = error
+            track.validationError = (error as? DisplayableError) ?? InvalidTrackError(track.file, "Track is not playable.")
         }
+    }
+    
+    func computePlaybackContext(for track: Track) throws {
+        
+        if track.isNativelySupported {
+            track.playbackContext = try avfReader.openForPlayback(file: track.file)
+        } else {
+            track.playbackContext = try ffmpegReader.openForPlayback(file: track.file)
+        }
+    }
+    
+    func prepareForPlayback(track: Track) throws {
+        try track.playbackContext?.open()
     }
     
     func loadSecondaryMetadata(for track: Track) {
@@ -49,15 +62,6 @@ class TrackReader {
     }
     
     func loadAllMetadata() {
-    }
-    
-    func prepareForPlayback(track: Track) throws {
-        
-        if track.isNativelySupported {
-            track.playbackContext = try avfReader.openForPlayback(file: track.file)
-        } else {
-            track.playbackContext = try ffmpegReader.openForPlayback(file: track.file)
-        }
     }
     
     func loadFileSystemInfo(_ track: Track) {

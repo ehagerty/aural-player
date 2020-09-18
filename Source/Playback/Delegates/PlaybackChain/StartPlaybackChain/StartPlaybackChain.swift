@@ -26,7 +26,7 @@ class StartPlaybackChain: PlaybackChain, NotificationSubscriber {
     }
     
     // Halts playback and ends the playback sequence when an error is encountered.
-    override func terminate(_ context: PlaybackRequestContext, _ error: InvalidTrackError) {
+    override func terminate(_ context: PlaybackRequestContext, _ error: DisplayableError) {
 
         player.stop()
         sequencer.end()

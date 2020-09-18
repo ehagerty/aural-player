@@ -116,6 +116,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
             
             // ------------------ UPDATE --------------------
             
+            // TODO: Here, compute playback context
             self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {result.track.loadSecondaryMetadata()}},
                                                 waitUntilFinished: false)
         }
@@ -229,7 +230,7 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
                 Messenger.publish(PlayQueueTrackAddedNotification(trackIndex: index, addOperationProgress: progress))
                 
             } else {
-                addSession.errors.append(track.validationError as? DisplayableError ?? InvalidTrackError(track))
+                addSession.errors.append(track.validationError ?? InvalidTrackError(track.file, "Track is not playable."))
             }
         }
     }

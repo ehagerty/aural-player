@@ -21,7 +21,7 @@ class AudioFilePreparationAction: PlaybackChainAction {
         
         guard let newTrack = context.requestedTrack else {
             
-            chain.terminate(context, InvalidTrackError.noRequestedTrack)
+            chain.terminate(context, NoRequestedTrackError.instance)
             return
         }
         

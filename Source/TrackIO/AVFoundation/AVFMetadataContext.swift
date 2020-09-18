@@ -16,14 +16,14 @@ class AVFMetadataContext {
         
         // TODO: Test against a protected iTunes file
         if asset.hasProtectedContent {
-            throw DRMProtectionError(track)
+            throw DRMProtectionError(track.file)
         }
         
         let assetTracks = asset.tracks(withMediaType: AVFoundation.AVMediaType.audio)
         
         // Check if the asset has any audio tracks
         guard let assetTrack = assetTracks.first else {
-            throw NoAudioTracksError(track)
+            throw NoAudioTracksError(track.file)
         }
         
         self.assetTrack = assetTrack
@@ -31,7 +31,7 @@ class AVFMetadataContext {
         // Find out if track is playable
         // TODO: What does isPlayable actually mean ?
         if !assetTrack.isPlayable {
-            throw TrackNotPlayableError(track)
+            throw TrackNotPlayableError(track.file)
         }
         
 //        self.map = AVAssetReader.buildMap(for: asset)

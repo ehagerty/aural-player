@@ -11,7 +11,7 @@ protocol PlaybackContextProtocol {
     
     var audioFormat: AVAudioFormat {get}
     
-//    func open()
-//
-//    func close()
+    func open() throws
+
+    func close()
 }

@@ -299,7 +299,7 @@ class FileSystemUtils {
 class SystemUtils {
     
     static var numberOfActiveCores: Int {
-        return ProcessInfo.processInfo.activeProcessorCount
+        ProcessInfo.processInfo.activeProcessorCount
     }
     
     static var numberOfPhysicalCores: Int {
@@ -307,6 +307,24 @@ class SystemUtils {
         var cores: Int = 1
         sysctlbyname("hw.physicalcpu", nil, &cores, nil, 0)
         return max(cores, 1)
+    }
+    
+    static var openFilesLimit: UInt64 {
+        
+        get {
+            
+            var limit: rlimit = rlimit()
+            getrlimit(RLIMIT_NOFILE, &limit)
+            return limit.rlim_cur
+        }
+        
+        set {
+            
+            var limit: rlimit = rlimit()
+            limit.rlim_cur = newValue
+            limit.rlim_max = newValue
+            setrlimit(RLIMIT_NOFILE, &limit)
+        }
     }
     
     static var osVersion: OperatingSystemVersion {

@@ -167,8 +167,12 @@ class PlaybackViewController: NSViewController, NotificationSubscriber {
         
         self.trackChanged(nil)
         
-        let error = notification.error
-        alertDialog.showAlert(.error, "Track not played", error.track?.defaultDisplayName ?? "<Unknown>", error.message)
+        if let invalidTrackError = notification.error as? InvalidTrackError {
+            alertDialog.showAlert(.error, "Track not played", invalidTrackError.file.lastPathComponent, notification.error.message)
+        } else {
+            alertDialog.showAlert(.error, "Track not played", "", notification.error.message)
+        }
+        
     }
     
     private func gapOrTranscodingStarted() {

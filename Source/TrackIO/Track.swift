@@ -23,7 +23,7 @@ class Track: Hashable, PlayableItem {
     var playbackContext: PlaybackContextProtocol?
     
     var isPlayable: Bool = true
-    var validationError: Error?
+    var validationError: DisplayableError?
     
     var hasPrimaryMetadata: Bool = false
     

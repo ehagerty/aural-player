@@ -336,7 +336,7 @@ struct TrackNotPlayedNotification: NotificationPayload {
     let oldTrack: Track?
     
     // An error object containing detailed information such as the failed track's file and the root cause.
-    let error: InvalidTrackError
+    let error: DisplayableError
 }
 
 // A user input mode that determines how the user provided a certain input, which in turn

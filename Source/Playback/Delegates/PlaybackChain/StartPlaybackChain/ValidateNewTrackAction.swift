@@ -10,7 +10,7 @@ class ValidateNewTrackAction: PlaybackChainAction {
         // Terminate if no requested track is specified
         guard let newTrack = context.requestedTrack else {
             
-            chain.terminate(context, InvalidTrackError.noRequestedTrack)
+            chain.terminate(context, NoRequestedTrackError.instance)
             return
         }
         
