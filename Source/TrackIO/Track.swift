@@ -72,7 +72,7 @@ class Track: Hashable, PlayableItem {
     var chapters: [Chapter] = []
     var hasChapters: Bool {!chapters.isEmpty}
     
-    init(_ file: URL) {
+    init(_ file: URL, fileMetadata: FileMetadata? = nil) {
 
         self.file = file
         self.fileExtension = file.pathExtension.lowercased()
@@ -80,6 +80,44 @@ class Track: Hashable, PlayableItem {
         self.defaultDisplayName = file.deletingPathExtension().lastPathComponent
         
         self.isNativelySupported = AppConstants.SupportedTypes.nativeAudioExtensions.contains(fileExtension)
+        
+        if let theFileMetadata = fileMetadata {
+            setPrimaryMetadata(from: theFileMetadata)
+        }
+    }
+    
+    func setPrimaryMetadata(from allMetadata: FileMetadata) {
+        
+        self.isPlayable = allMetadata.isPlayable
+        self.validationError = allMetadata.validationError
+        
+        guard let metadata: PrimaryMetadata = allMetadata.primary else {return}
+        
+        self.title = metadata.title
+        self.artist = metadata.artist
+        self.albumArtist = metadata.albumArtist
+        self.album = metadata.album
+        self.genre = metadata.genre
+        
+        self.composer = metadata.composer
+        self.conductor = metadata.conductor
+        self.lyricist = metadata.lyricist
+        self.performer = metadata.performer
+        
+        self.trackNumber = metadata.trackNumber
+        self.totalTracks = metadata.totalTracks
+        
+        self.discNumber = metadata.discNumber
+        self.totalDiscs = metadata.totalDiscs
+        
+        self.year = metadata.year
+        self.bpm = metadata.bpm
+        
+        self.duration = metadata.duration
+        
+        self.art = metadata.art
+        
+        self.audioFormat = metadata.audioFormat
     }
     
     func loadSecondaryMetadata() {

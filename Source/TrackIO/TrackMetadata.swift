@@ -1,6 +1,20 @@
 import Cocoa
 import AVFoundation
 
+class FileMetadata {
+    
+    var primary: PrimaryMetadata?
+    var playback: PlaybackContextProtocol?
+    
+    var isPlayable: Bool {validationError == nil}
+    var validationError: DisplayableError?
+}
+
+enum MetadataType {
+ 
+    case primary, playback
+}
+
 struct PrimaryMetadata {
     
     var fileType: String?
@@ -28,6 +42,7 @@ struct PrimaryMetadata {
     var bpm: Int?
     
     var duration: Double = 0
+    var durationIsAccurate: Bool = false
     
     var art: CoverArt?
     
@@ -125,16 +140,16 @@ class FileSystemInfo {
 class MetadataEntry {
     
     // Type: e.g. ID3 or iTunes
-    var type: MetadataType
+    var format: MetadataFormat
     
     // Key or "tag"
     let key: String
     
     let value: String
     
-    init(_ type: MetadataType, _ key: String, _ value: String) {
+    init(_ format: MetadataFormat, _ key: String, _ value: String) {
         
-        self.type = type
+        self.format = format
         self.key = key
         self.value = value
     }
@@ -239,7 +254,7 @@ class OrderedMetadataMap {
 
 
 // Denotes the type (format) of a metadata entry
-enum MetadataType: String {
+enum MetadataFormat: String {
     
     case common
     case iTunes

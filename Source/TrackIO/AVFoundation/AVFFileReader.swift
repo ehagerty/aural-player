@@ -53,8 +53,7 @@ class AVFFileReader: FileReaderProtocol {
         let meta = AVFMetadata(file: file)
         
         guard let audioTrack = meta.asset.tracks.first(where: {$0.mediaType == .audio}) else {
-//            throw NoAudioTracksError
-            throw NoAudioStreamError()
+            throw NoAudioTracksError(file)
         }
         
         var metadata = PrimaryMetadata()
@@ -91,6 +90,7 @@ class AVFFileReader: FileReaderProtocol {
         metadata.totalDiscs = discNum?.total
         
         metadata.duration = meta.asset.duration.seconds
+        metadata.durationIsAccurate = false
         
         if let art = parsers.firstNonNilMappedValue({$0.getArt(meta)}) {
             metadata.art = CoverArt(art)
@@ -106,7 +106,7 @@ class AVFFileReader: FileReaderProtocol {
         return metadata
     }
     
-    func openForPlayback(file: URL) throws -> PlaybackContextProtocol {
+    func getPlaybackMetadata(file: URL) throws -> PlaybackContextProtocol {
         return try AVFPlaybackContext(for: file)
     }
     

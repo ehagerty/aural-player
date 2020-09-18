@@ -127,6 +127,10 @@ class FFmpegFileContext {
     ///
     private lazy var estimatedDuration: Double? = avContext.duration > 0 ? (Double(avContext.duration) / Double(AV_TIME_BASE)) : nil
     
+    var estimatedDurationIsAccurate: Bool {
+        avContext.duration_estimation_method != AVFMT_DURATION_FROM_BITRATE
+    }
+    
     ///
     /// A duration computed with brute force, by building a packet table.
     /// Specified in seconds.

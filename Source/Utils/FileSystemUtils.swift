@@ -72,7 +72,8 @@ class FileSystemUtils {
         
         do {
             // Retrieve all files/subfolders within this folder
-            return try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: [], options: FileManager.DirectoryEnumerationOptions())
+            let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: [], options: FileManager.DirectoryEnumerationOptions())
+            return files.filter {$0.lastPathComponent != ".DS_Store"}
             
         } catch let error as NSError {
             NSLog("Error retrieving contents of directory '%@': %@", dir.path, error.description)

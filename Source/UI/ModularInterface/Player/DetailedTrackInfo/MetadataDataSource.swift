@@ -158,8 +158,8 @@ class MetadataDataSource: TrackInfoDataSource {
         
         sortedArr.sort(by: {e1, e2 -> Bool in
             
-            let t1 = e1.entry.type
-            let t2 = e2.entry.type
+            let t1 = e1.entry.format
+            let t2 = e2.entry.format
             
             // If both entries are of the same metadata type (e.g. both are iTunes), compare their formatted keys (ascending order)
             if t1 == t2 {

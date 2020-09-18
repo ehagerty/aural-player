@@ -100,6 +100,7 @@ class FFmpegFileReader: FileReaderProtocol {
         metadata.totalDiscs = discNumberAndTotal?.total
         
         metadata.duration = meta.fileCtx.duration
+        metadata.durationIsAccurate = metadata.duration > 0 && meta.fileCtx.estimatedDurationIsAccurate
         
         if let imageStream = meta.imageStream,
             let imageData = imageStream.attachedPic.data,
@@ -141,7 +142,7 @@ class FFmpegFileReader: FileReaderProtocol {
         return SecondaryMetadata()
     }
     
-    func openForPlayback(file: URL) throws -> PlaybackContextProtocol {
+    func getPlaybackMetadata(file: URL) throws -> PlaybackContextProtocol {
         return try FFmpegPlaybackContext(for: file)
     }
     

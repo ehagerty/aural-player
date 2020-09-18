@@ -1,6 +1,6 @@
 import Foundation
 
-class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
+class PlayQueueDelegate: PlayQueueDelegateProtocol, TrackListProtocol, NotificationSubscriber {
 
     private let playQueue: PlayQueueProtocol
     private let library: LibraryProtocol
@@ -22,6 +22,8 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
     
     private let concurrentAddOpCount = roundedInt(Double(SystemUtils.numberOfActiveCores) * 1.5)
     
+    let trackLoader: TrackLoader = TrackLoader()
+    
     var isBeingModified: Bool {addSession != nil}
     
     init(playQueue: PlayQueueProtocol, library: LibraryProtocol, trackReader: TrackReader, persistentStateOnStartup: PlayQueueState) {
@@ -34,34 +36,36 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
         
         Messenger.subscribe(self, .library_doneAddingTracks, {
             
-            // This should only be done once, the very first time tracks are added to the library (i.e. on app startup).
-            for file in persistentStateOnStartup.tracks {
-                
-                var track: Track
-                
-                if let trackInLibrary = self.library.findTrackByFile(file) {
-                    track = trackInLibrary
-                    
-                } else {
-                    
-                    track = Track(file)
-                    trackReader.loadPrimaryMetadata(for: track)
-                    track.loadSecondaryMetadata()
-                    
-                    if !track.isPlayable {
-                        print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
-                    }
-                }
-                
-                if track.isPlayable {
-                    _ = self.enqueue(track)
-                }
-            }
+            self.addTracks(from: persistentStateOnStartup.tracks)
             
-            if self.tracks.isNonEmpty {
-                Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: 0...self.tracks.lastIndex))
-            }
-            
+//            // This should only be done once, the very first time tracks are added to the library (i.e. on app startup).
+//            for file in persistentStateOnStartup.tracks {
+//
+//                var track: Track
+//
+//                if let trackInLibrary = self.library.findTrackByFile(file) {
+//                    track = trackInLibrary
+//
+//                } else {
+//
+//                    track = Track(file)
+//                    trackReader.loadPrimaryMetadata(for: track)
+//                    track.loadSecondaryMetadata()
+//
+//                    if !track.isPlayable {
+//                        print("\(track.file.path) is not a valid track ! Error: \(String(describing: track.validationError))")
+//                    }
+//                }
+//
+//                if track.isPlayable {
+//                    _ = self.enqueue(track)
+//                }
+//            }
+//
+//            if self.tracks.isNonEmpty {
+//                Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: 0...self.tracks.lastIndex))
+//            }
+//
             Messenger.unsubscribe(self, .library_doneAddingTracks)
         })
     }
@@ -79,161 +83,181 @@ class PlayQueueDelegate: PlayQueueDelegateProtocol, NotificationSubscriber {
     }
     
     func addTracks(from files: [URL]) {
-        addTracks_async(files)
+        trackLoader.loadMetadata(ofType: .primary, from: files, into: self)
+    }
+    
+    func shouldLoad(file: URL) -> Bool {
+        
+        if let trackInLibrary = self.library.findTrackByFile(file) {
+            
+            _ = playQueue.enqueue([trackInLibrary])
+            return false
+        }
+        
+        return true
+        // TODO: Should check if we already have a track for this file,
+        // then simply duplicate it instead of re-reading the file.
+    }
+    
+    func acceptBatch(_ batch: FileMetadataBatch) {
+        
+        let tracks = batch.orderedMetadata.map {(file, metadata) in Track(file, fileMetadata: metadata)}
+        let indices = playQueue.enqueue(tracks)
+        Messenger.publish(PlayQueueTracksAddedNotification(trackIndices: indices))
     }
     
     // Adds files to the playlist asynchronously, emitting event notifications as the work progresses
-    private func addTracks_async(_ files: [URL], _ userAction: Bool = true) {
-        
-        addSession = TrackAddSession<PlayQueueTrackAddResult>(files.count, .defaultOptions)
-        
-        // Move to a background thread to unblock the main thread
-        DispatchQueue.global(qos: .userInteractive).async {
-            
-            // ------------------ ADD --------------------
-            
-            Messenger.publish(.playQueue_startedAddingTracks)
-            
-            self.collectTracks(files, false)
-            self.addSessionTracks()
-            
-            // ------------------ NOTIFY ------------------
-            
-            let results = self.addSession.results
-            
-//            if userAction {
-//                Messenger.publish(.history_itemsAdded, payload: self.addSession.addedItems)
+//    private func addTracks_async(_ files: [URL], _ userAction: Bool = true) {
+//
+//        addSession = TrackAddSession<PlayQueueTrackAddResult>(files.count, .defaultOptions)
+//
+//        // Move to a background thread to unblock the main thread
+//        DispatchQueue.global(qos: .userInteractive).async {
+//
+//            // ------------------ ADD --------------------
+//
+//            Messenger.publish(.playQueue_startedAddingTracks)
+//
+//            self.collectTracks(files, false)
+//            self.addSessionTracks()
+//
+//            // ------------------ NOTIFY ------------------
+//
+//            let results = self.addSession.results
+//
+////            if userAction {
+////                Messenger.publish(.history_itemsAdded, payload: self.addSession.addedItems)
+////            }
+//
+//            Messenger.publish(.playQueue_doneAddingTracks)
+//
+//            // If errors > 0, send AsyncMessage to UI
+//            if self.addSession.errors.isNonEmpty {
+//                Messenger.publish(.playQueue_tracksNotAdded, payload: self.addSession.errors)
 //            }
-            
-            Messenger.publish(.playQueue_doneAddingTracks)
-            
-            // If errors > 0, send AsyncMessage to UI
-            if self.addSession.errors.isNonEmpty {
-                Messenger.publish(.playQueue_tracksNotAdded, payload: self.addSession.errors)
-            }
-            
-            self.addSession = nil
-            
-            // ------------------ UPDATE --------------------
-            
-            // TODO: Here, compute playback context
-            self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {result.track.loadSecondaryMetadata()}},
-                                                waitUntilFinished: false)
-        }
-    }
-    
-    /*
-     Adds a bunch of files synchronously.
-     
-     The autoplayOptions argument encapsulates all autoplay options.
-     
-     The progress argument indicates current progress.
-     */
-    private func collectTracks(_ files: [URL], _ isRecursiveCall: Bool) {
-        
-        for file in files.sorted(by: {$0.path < $1.path}) {
-            
-            // Playlists might contain broken file references
-            if !FileSystemUtils.fileExists(file) {
-                
-                addSession.addError(FileNotFoundError(file))
-                continue
-            }
-            
-            // Always resolve sym links and aliases before reading the file
-            let resolvedFileInfo = FileSystemUtils.resolveTruePath(file)
-            let resolvedFile = resolvedFileInfo.resolvedURL
-            
-            if resolvedFileInfo.isDirectory {
-                
-                // Directory
-                if !isRecursiveCall {addSession.addHistoryItem(resolvedFile)}
-                expandDirectory(resolvedFile)
-                
-            } else {
-                
-                // Single file - playlist or track
-                let fileExtension = resolvedFile.pathExtension.lowercased()
-                
-                if AppConstants.SupportedTypes.playlistExtensions.contains(fileExtension) {
-                    
-                    // Playlist
-                    if !isRecursiveCall {addSession.addHistoryItem(resolvedFile)}
-                    expandPlaylist(resolvedFile)
-                    
-                } else if AppConstants.SupportedTypes.allAudioExtensions.contains(fileExtension) {
-                    
-                    // Track
-                    if !isRecursiveCall {addSession.addHistoryItem(resolvedFile)}
-                    addSession.tracks.append(library.findTrackByFile(resolvedFile) ?? Track(resolvedFile))
-                }
-            }
-        }
-    }
-    
-    // Expands a playlist into individual tracks
-    private func expandPlaylist(_ playlistFile: URL) {
-        
-        if let loadedPlaylist = PlaylistIO.loadPlaylist(playlistFile) {
-            
-            addSession.totalTracks += loadedPlaylist.tracks.count - 1
-            collectTracks(loadedPlaylist.tracks, true)
-        }
-    }
-    
-    // Expands a directory into individual tracks (and subdirectories)
-    private func expandDirectory(_ dir: URL) {
-        
-        if let dirContents = FileSystemUtils.getContentsOfDirectory(dir) {
-            
-            addSession.totalTracks += dirContents.count - 1
-            collectTracks(dirContents, true)
-        }
-    }
-    
-    private func addSessionTracks() {
-        
-        var firstBatchIndex: Int = 0
-        while addSession.tracksProcessed < addSession.tracks.count {
-            
-            let remainingTracks = addSession.tracks.count - addSession.tracksProcessed
-            let lastBatchIndex = firstBatchIndex + min(remainingTracks, concurrentAddOpCount) - 1
-            
-            let batch = firstBatchIndex...lastBatchIndex
-            processBatch(batch)
-            addSession.tracksProcessed += batch.count
-            
-            firstBatchIndex = lastBatchIndex + 1
-        }
-    }
-    
-    private func processBatch(_ batch: AddBatch) {
-        
-        let addSessionTracks = batch.map({addSession.tracks[$0]})
-        
-        // Process all tracks in batch concurrently and wait until the entire batch finishes.
-        trackAddQueue.addOperations(addSessionTracks.compactMap {track in
-            track.hasPrimaryMetadata ? nil : BlockOperation {self.trackReader.loadPrimaryMetadata(for: track)}
-        }, waitUntilFinished: true)
-        
-        for track in addSessionTracks {
-            
-            if track.isPlayable {
-                
-                let index = enqueue(track)
-                let result = PlayQueueTrackAddResult(track: track, index: index)
-                
-                addSession.tracksAdded.increment()
-                addSession.results.append(result)
-
-                let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
-                Messenger.publish(PlayQueueTrackAddedNotification(trackIndex: index, addOperationProgress: progress))
-                
-            } else {
-                addSession.errors.append(track.validationError ?? InvalidTrackError(track.file, "Track is not playable."))
-            }
-        }
-    }
+//
+//            self.addSession = nil
+//
+//            // ------------------ UPDATE --------------------
+//
+//            // TODO: Here, compute playback context
+//            self.trackUpdateQueue.addOperations(results.map {result in BlockOperation {result.track.loadSecondaryMetadata()}},
+//                                                waitUntilFinished: false)
+//        }
+//    }
+//
+//    /*
+//     Adds a bunch of files synchronously.
+//
+//     The autoplayOptions argument encapsulates all autoplay options.
+//
+//     The progress argument indicates current progress.
+//     */
+//    private func collectTracks(_ files: [URL], _ isRecursiveCall: Bool) {
+//
+//        for file in files.sorted(by: {$0.path < $1.path}) {
+//
+//            // Playlists might contain broken file references
+//            if !FileSystemUtils.fileExists(file) {
+//
+//                addSession.addError(FileNotFoundError(file))
+//                continue
+//            }
+//
+//            // Always resolve sym links and aliases before reading the file
+//            let resolvedFileInfo = FileSystemUtils.resolveTruePath(file)
+//            let resolvedFile = resolvedFileInfo.resolvedURL
+//
+//            if resolvedFileInfo.isDirectory {
+//
+//                // Directory
+//                if !isRecursiveCall {addSession.addHistoryItem(resolvedFile)}
+//                expandDirectory(resolvedFile)
+//
+//            } else {
+//
+//                // Single file - playlist or track
+//                let fileExtension = resolvedFile.pathExtension.lowercased()
+//
+//                if AppConstants.SupportedTypes.playlistExtensions.contains(fileExtension) {
+//
+//                    // Playlist
+//                    if !isRecursiveCall {addSession.addHistoryItem(resolvedFile)}
+//                    expandPlaylist(resolvedFile)
+//
+//                } else if AppConstants.SupportedTypes.allAudioExtensions.contains(fileExtension) {
+//
+//                    // Track
+//                    if !isRecursiveCall {addSession.addHistoryItem(resolvedFile)}
+//                    addSession.tracks.append(library.findTrackByFile(resolvedFile) ?? Track(resolvedFile))
+//                }
+//            }
+//        }
+//    }
+//
+//    // Expands a playlist into individual tracks
+//    private func expandPlaylist(_ playlistFile: URL) {
+//
+//        if let loadedPlaylist = PlaylistIO.loadPlaylist(playlistFile) {
+//
+//            addSession.totalTracks += loadedPlaylist.tracks.count - 1
+//            collectTracks(loadedPlaylist.tracks, true)
+//        }
+//    }
+//
+//    // Expands a directory into individual tracks (and subdirectories)
+//    private func expandDirectory(_ dir: URL) {
+//
+//        if let dirContents = FileSystemUtils.getContentsOfDirectory(dir) {
+//
+//            addSession.totalTracks += dirContents.count - 1
+//            collectTracks(dirContents, true)
+//        }
+//    }
+//
+//    private func addSessionTracks() {
+//
+//        var firstBatchIndex: Int = 0
+//        while addSession.tracksProcessed < addSession.tracks.count {
+//
+//            let remainingTracks = addSession.tracks.count - addSession.tracksProcessed
+//            let lastBatchIndex = firstBatchIndex + min(remainingTracks, concurrentAddOpCount) - 1
+//
+//            let batch = firstBatchIndex...lastBatchIndex
+//            processBatch(batch)
+//            addSession.tracksProcessed += batch.count
+//
+//            firstBatchIndex = lastBatchIndex + 1
+//        }
+//    }
+//
+//    private func processBatch(_ batch: AddBatch) {
+//
+//        let addSessionTracks = batch.map({addSession.tracks[$0]})
+//
+//        // Process all tracks in batch concurrently and wait until the entire batch finishes.
+//        trackAddQueue.addOperations(addSessionTracks.compactMap {track in
+//            track.hasPrimaryMetadata ? nil : BlockOperation {self.trackReader.loadPrimaryMetadata(for: track)}
+//        }, waitUntilFinished: true)
+//
+//        for track in addSessionTracks {
+//
+//            if track.isPlayable {
+//
+//                let index = enqueue(track)
+//                let result = PlayQueueTrackAddResult(track: track, index: index)
+//
+//                addSession.tracksAdded.increment()
+//                addSession.results.append(result)
+//
+//                let progress = TrackAddOperationProgress(tracksAdded: addSession.tracksAdded, totalTracks: addSession.totalTracks)
+//                Messenger.publish(PlayQueueTrackAddedNotification(trackIndex: index, addOperationProgress: progress))
+//
+//            } else {
+//                addSession.errors.append(track.validationError ?? InvalidTrackError(track.file, "Track is not playable."))
+//            }
+//        }
+//    }
     
     func enqueue(_ track: Track) -> Int {
         return playQueue.enqueue([track]).first!

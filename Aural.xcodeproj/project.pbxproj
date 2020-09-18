@@ -1715,6 +1715,7 @@
 			children = (
 				3E97967C1F00286200690DA2 /* Track.swift */,
 				3E5083C02511FEA1004A5712 /* TrackReader.swift */,
+				3E5F54322512AC0C00C1310E /* TrackLoader.swift */,
 				3E678624251212930083A278 /* FileReaderProtocol.swift */,
 				3E75929124DE81F300B95E8E /* TrackMetadata.swift */,
 				3ED35D3021EAAB3D00A5904F /* ParserUtils.swift */,
@@ -1722,7 +1723,6 @@
 				3EA83CAC25129931000CB1E0 /* FFmpeg */,
 				3E50ADBC24613F9100B31339 /* Specifications */,
 				3E186FBF21CE2CE400FD5F34 /* AlbumArtCache.swift */,
-				3E5F54322512AC0C00C1310E /* TrackLoader.swift */,
 				3E377A8625134148003689EA /* TrackIOUtils.swift */,
 			);
 			path = TrackIO;
