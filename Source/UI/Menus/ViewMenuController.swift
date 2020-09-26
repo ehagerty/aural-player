@@ -40,7 +40,7 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
     func menuNeedsUpdate(_ menu: NSMenu) {
         
         manageLayoutsMenuItem.enableIf(!WindowLayouts.userDefinedLayouts.isEmpty)
-        toggleChaptersListMenuItem.enableIf(player.chapterCount > 0)
+//        toggleChaptersListMenuItem.enableIf(player.chapterCount > 0)
         
 //        let showingModalComponent: Bool = WindowManager.isShowingModalComponent
 //
@@ -99,9 +99,12 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
         modularInterface.toggleEffects()
     }
     
+    lazy var viz: VisualizerWindowController = VisualizerWindowController()
+    
     // Shows/hides the chapters list window
     @IBAction func toggleChaptersListAction(_ sender: AnyObject) {
 //        WindowManager.toggleChaptersList()
+        viz.showWindow(self)
     }
     
     // TODO: Revisit this

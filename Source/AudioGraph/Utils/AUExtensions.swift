@@ -1,0 +1,123 @@
+import AudioToolbox
+
+let sizeOfDouble: UInt32 = UInt32(MemoryLayout<Double>.size)
+
+extension AudioUnit {
+    
+    var currentDevice: AudioDeviceID {
+        
+        get {
+            
+            var deviceId: AudioDeviceID = 0
+            var sizeOfProp: UInt32 = sizeOfDeviceId
+            _ = AudioUnitGetProperty(self, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceId, &sizeOfProp)
+            
+            return deviceId
+        }
+        
+        set {
+            
+            var deviceId: AudioDeviceID = newValue
+            AudioUnitSetProperty(self, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &deviceId, sizeOfDeviceId)
+        }
+    }
+    
+    func registerRenderCallback(inProc: @escaping AURenderCallback, _ inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitAddRenderNotify(self, inProc, inProcUserData)
+    }
+    
+    var sampleRate: Double {
+        
+        get {
+            
+            var sampleRate: Double = 0
+            var sizeOfProp: UInt32 = sizeOfDouble
+            _ = AudioUnitGetProperty(self, kAudioDevicePropertyActualSampleRate, kAudioUnitScope_Global, 0, &sampleRate, &sizeOfProp)
+            
+            return sampleRate
+        }
+    }
+    
+    var bufferFrameSize: UInt32 {
+        
+        get {
+            
+            var bufferSize: UInt32 = 0
+            var sizeOfProp: UInt32 = sizeOfUInt32
+            _ = AudioUnitGetProperty(self, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &bufferSize, &sizeOfProp)
+            
+            return bufferSize
+        }
+        
+        set {
+            
+            var newBufferSize: UInt32 = newValue
+            AudioUnitSetProperty(self, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &newBufferSize, sizeOfUInt32)
+        }
+    }
+}
+
+extension AudioObjectID {
+    
+    static let systemAudioObject: AudioObjectID = AudioObjectID(kAudioObjectSystemObject)
+    
+    static let hardwareDefaultOutputDevicePropertyAddress: AudioObjectPropertyAddress =
+    AudioObjectPropertyAddress(outputPropertyWithSelector: kAudioHardwarePropertyDefaultOutputDevice)
+    
+    static let hardwareDevicesPropertyAddress: AudioObjectPropertyAddress =
+        AudioObjectPropertyAddress(globalPropertyWithSelector: kAudioHardwarePropertyDevices)
+    
+    var defaultOutputDevice: AudioDeviceID {
+        
+        var curDeviceId: AudioDeviceID = kAudioObjectUnknown
+        var propAddress: AudioObjectPropertyAddress = Self.hardwareDefaultOutputDevicePropertyAddress
+        var sizeOfProp: UInt32 = 0
+        
+        AudioObjectGetPropertyDataSize(self, &propAddress, 0, nil, &sizeOfProp)
+        AudioObjectGetPropertyData(self, &propAddress, 0, nil, &sizeOfProp, &curDeviceId)
+        
+        return curDeviceId
+    }
+    
+    var devices: [AudioDeviceID] {
+        
+        get {
+            
+            var propSize: UInt32 = 0
+            var propAddress: AudioObjectPropertyAddress = Self.hardwareDevicesPropertyAddress
+            
+            AudioObjectGetPropertyDataSize(self, &propAddress, sizeOfPropertyAddress, nil, &propSize)
+            
+            let numDevices = Int(propSize / sizeOfDeviceId)
+            var deviceIds: [AudioDeviceID] = Array(repeating: AudioDeviceID(), count: numDevices)
+            
+            AudioObjectGetPropertyData(self, &propAddress, 0, nil, &propSize, &deviceIds)
+            
+            return deviceIds
+        }
+    }
+    
+    func registerDevicesPropertyListener(_ handler: @escaping () -> Void, queue: DispatchQueue) {
+        
+        var propAddress: AudioObjectPropertyAddress = Self.hardwareDevicesPropertyAddress
+        AudioObjectAddPropertyListenerBlock(self, &propAddress, queue, {_, _ in
+            handler()
+        })
+    }
+}
+
+extension AudioObjectPropertyAddress {
+    
+    init(globalPropertyWithSelector selector: AudioObjectPropertySelector) {
+        self.init(mSelector: selector, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMaster)
+    }
+    
+    init(outputPropertyWithSelector selector: AudioObjectPropertySelector) {
+        self.init(mSelector: selector, mScope: kAudioObjectPropertyScopeOutput, mElement: kAudioObjectPropertyElementMaster)
+    }
+}
+
+let sizeOfPropertyAddress: UInt32 = UInt32(MemoryLayout<AudioObjectPropertyAddress>.size)
+let sizeOfDeviceId: UInt32 = UInt32(MemoryLayout<AudioDeviceID>.size)
+let sizeOfCFStringOptional: UInt32 = UInt32(MemoryLayout<CFString?>.size)
+let sizeOfUInt32: UInt32 = UInt32(MemoryLayout<UInt32>.size)

@@ -8,13 +8,10 @@ import AVFoundation
  */
 public class DeviceManager {
     
-    static var hardwareDefaultOutputDevicePropertyAddress: AudioObjectPropertyAddress =
-        AudioObjectPropertyAddress(outputPropertyWithSelector: kAudioHardwarePropertyDefaultOutputDevice)
-    
-    static let systemAudioObjectId: AudioObjectID = AudioObjectID(kAudioObjectSystemObject)
+    private let systemAudioObjectId: AudioObjectID = .systemAudioObject
     
     // The AudioUnit underlying AVAudioEngine's output node (used to set the output device)
-    let outputAudioUnit: AudioUnit
+    var outputAudioUnit: AudioUnit
     
     let list: DeviceList
     
@@ -45,16 +42,7 @@ public class DeviceManager {
     }
     
     // The AudioDeviceID of the audio output device currently being used by the OS
-    private var systemDeviceId: AudioDeviceID {
-        
-        var curDeviceId: AudioDeviceID = kAudioObjectUnknown
-        var size: UInt32 = 0
-        
-        AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDefaultOutputDevicePropertyAddress, 0, nil, &size)
-        AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDefaultOutputDevicePropertyAddress, 0, nil, &size, &curDeviceId)
-        
-        return curDeviceId
-    }
+    private var systemDeviceId: AudioDeviceID {systemAudioObjectId.defaultOutputDevice}
     
     var outputDevice: AudioDevice {
         
@@ -65,47 +53,18 @@ public class DeviceManager {
     // The variable used to get/set the application's audio output device
     private var outputDeviceId: AudioDeviceID {
         
-        get {
-            
-            var outDeviceID: AudioDeviceID = 0
-            var size: UInt32 = sizeOfDeviceId
-            let error = AudioUnitGetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, &size)
-            
-            return error == 0 ? outDeviceID : systemDeviceId
-        }
+        get {outputAudioUnit.currentDevice}
         
         set(newDeviceId) {
             
-            if outputDeviceId == newDeviceId {return}
-            
             // TODO: Validate that the device still exists ? By doing a lookup in list.map ???
             
-            var outDeviceID: AudioDeviceID = newDeviceId
-            let error = AudioUnitSetProperty(outputAudioUnit, kAudioOutputUnitProperty_CurrentDevice, kAudioUnitScope_Global, 0, &outDeviceID, sizeOfDeviceId)
-            
-            if error > 0
-            {
-                NSLog("Error setting audio output device to: ", newDeviceId, ", errorCode=", error)
+            if outputDeviceId != newDeviceId {
+                outputAudioUnit.currentDevice = newDeviceId
             }
         }
     }
 }
-
-extension AudioObjectPropertyAddress {
-    
-    init(globalPropertyWithSelector selector: AudioObjectPropertySelector) {
-        self.init(mSelector: selector, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMaster)
-    }
-    
-    init(outputPropertyWithSelector selector: AudioObjectPropertySelector) {
-        self.init(mSelector: selector, mScope: kAudioObjectPropertyScopeOutput, mElement: kAudioObjectPropertyElementMaster)
-    }
-}
-
-let sizeOfPropertyAddress: UInt32 = UInt32(MemoryLayout<AudioObjectPropertyAddress>.size)
-let sizeOfDeviceId: UInt32 = UInt32(MemoryLayout<AudioDeviceID>.size)
-let sizeOfCFStringOptional: UInt32 = UInt32(MemoryLayout<CFString?>.size)
-let sizeOfUInt32: UInt32 = UInt32(MemoryLayout<UInt32>.size)
 
 extension Notification.Name {
     

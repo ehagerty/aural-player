@@ -1,10 +1,37 @@
 import Cocoa
 import AVFoundation
 
+func renderCallback(inRefCon: UnsafeMutableRawPointer,
+                    ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
+                    inTimeStamp: UnsafePointer<AudioTimeStamp>,
+                    inBusNumber: UInt32,
+                    inNumberFrames: UInt32,
+                    ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
+    
+    let graph = unsafeBitCast(inRefCon, to: AudioGraph.self)
+    
+    if ioActionFlags.pointee == .unitRenderAction_PostRender, let bufferList = ioData?.pointee, let observer = graph.outputRenderObserver {
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            observer.renderCallback(timeStamp: inTimeStamp.pointee, frameCount: inNumberFrames, audioBuffer: bufferList)
+        }
+    }
+    
+    return noErr
+}
+
 /*
     Wrapper around AVAudioEngine. Manages the AVAudioEngine audio graph.
  */
 class AudioGraph: AudioGraphProtocol {
+    
+    var outputRenderObserver: AudioGraphOutputRenderObserverProtocol?
+    
+    func installOutputTap() {
+        
+        let au = engine.outputNode.audioUnit!
+        AudioUnitAddRenderNotify(au, renderCallback, Unmanaged.passUnretained(self).toOpaque())
+    }
     
     var availableDevices: AudioDeviceList {deviceManager.allDevices}
     
@@ -72,6 +99,8 @@ class AudioGraph: AudioGraphProtocol {
         engine.connect(nodes.last!, to: engine.mainMixerNode, format: nil)
         engine.prepare()
         
+        installOutputTap()
+        
         startEngine()
         
         // Register self as an observer for notifications when the audio output device has changed (e.g. headphones)
@@ -123,8 +152,8 @@ class AudioGraph: AudioGraphProtocol {
         
         // TODO: If newFormat == curFormat, don't reconnect.
         
-        print("\nCurFormat: \(currentFormat.channelLayout?.layoutTag) \(currentFormat.sampleRate)")
-        print("\nNewFormat: \(format.channelLayout?.layoutTag) \(format.sampleRate)")
+//        print("\nCurFormat: \(currentFormat.channelLayout?.layoutTag) \(currentFormat.sampleRate)")
+//        print("\nNewFormat: \(format.channelLayout?.layoutTag) \(format.sampleRate)")
         print(currentFormat.sampleRate == format.sampleRate, currentFormat == format, currentFormat.isEqual(to: format))
         
         if !currentFormat.isEqual(to: format) {

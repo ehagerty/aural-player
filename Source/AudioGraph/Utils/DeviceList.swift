@@ -2,10 +2,7 @@ import AudioToolbox
 
 class DeviceList {
     
-    static var hardwareDevicesPropertyAddress: AudioObjectPropertyAddress =
-        AudioObjectPropertyAddress(globalPropertyWithSelector: kAudioHardwarePropertyDevices)
-    
-    static let systemAudioObjectId: AudioObjectID = AudioObjectID(kAudioObjectSystemObject)
+    private let systemAudioObject: AudioObjectID = .systemAudioObject
     
     // id -> Device
     private var knownDevices: [AudioDeviceID: AudioDevice] = [:]
@@ -25,9 +22,7 @@ class DeviceList {
         rebuildList()
         
         // Devices list change listener
-        AudioObjectAddPropertyListenerBlock(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, DispatchQueue.global(qos: .utility), {_, _ in
-            self.rebuildList()
-        })
+        systemAudioObject.registerDevicesPropertyListener({self.rebuildList()}, queue: DispatchQueue.global(qos: .utility))
     }
     
     private func rebuildList() {
@@ -38,35 +33,27 @@ class DeviceList {
         let now = CFAbsoluteTimeGetCurrent()
         if (now - self.lastRebuildTime) < 0.1 {return}
         
-        var propSize: UInt32 = 0
-        if AudioObjectGetPropertyDataSize(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress,
-                                          sizeOfPropertyAddress, nil, &propSize) != noErr {return}
+        let deviceIds: [AudioDeviceID] = systemAudioObject.devices
         
-        let numDevices = Int(propSize / sizeOfDeviceId)
-        var deviceIds: [AudioDeviceID] = Array(repeating: AudioDeviceID(), count: numDevices)
+        self.lastRebuildTime = now
         
-        if AudioObjectGetPropertyData(Self.systemAudioObjectId, &Self.hardwareDevicesPropertyAddress, 0, nil, &propSize, &deviceIds) == noErr {
+        devices.removeAll()
+        devicesMap.removeAll()
+        
+        for deviceId in deviceIds {
             
-            self.lastRebuildTime = now
-            
-            devices.removeAll()
-            devicesMap.removeAll()
-            
-            for deviceId in deviceIds {
+            if let device = knownDevices[deviceId] ?? AudioDevice(deviceId: deviceId) {
                 
-                if let device = knownDevices[deviceId] ?? AudioDevice(deviceId: deviceId) {
-                    
-                    devices.append(device)
-                    devicesMap[deviceId] = device
-                    
-                    if knownDevices[deviceId] == nil {
-                        knownDevices[deviceId] = device
-                    }
+                devices.append(device)
+                devicesMap[deviceId] = device
+                
+                if knownDevices[deviceId] == nil {
+                    knownDevices[deviceId] = device
                 }
             }
-            
-            Messenger.publish(.deviceManager_deviceListUpdated)
         }
+        
+        Messenger.publish(.deviceManager_deviceListUpdated)
     }
     
     func deviceById(_ id: AudioDeviceID) -> AudioDevice? {

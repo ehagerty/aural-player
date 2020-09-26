@@ -48,3 +48,8 @@ protocol RecorderGraphProtocol {
     // The audio graph node on which a recorder tap can be installed
     var nodeForRecorderTap: AVAudioNode {get}
 }
+
+protocol AudioGraphOutputRenderObserverProtocol {
+    
+    func renderCallback(timeStamp: AudioTimeStamp, frameCount: UInt32, audioBuffer: AudioBufferList)
+}

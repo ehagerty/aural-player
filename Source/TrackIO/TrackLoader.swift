@@ -1,10 +1,14 @@
 import Foundation
 
+typealias FileReadSessionCompletionHandler = ([URL]) -> Void
+
 protocol TrackListProtocol {
     
     func shouldLoad(file: URL) -> Bool
     
     func acceptBatch(_ batch: FileMetadataBatch)
+    
+//    func allFileReadsCompleted(files: [URL])
 }
 
 class FileReadSession {
@@ -20,10 +24,9 @@ class FileReadSession {
     var filesProcessed: Int = 0
     var errors: [DisplayableError] = []
     
-    init(metadataType: MetadataType, files: [URL], trackList: TrackListProtocol) {
+    init(metadataType: MetadataType, trackList: TrackListProtocol) {
         
         self.metadataType = metadataType
-        self.files = files
         self.trackList = trackList
     }
     
@@ -33,6 +36,10 @@ class FileReadSession {
     
     func addError(_ error: DisplayableError) {
         errors.append(error)
+    }
+    
+    func batchCompleted(_ batchFiles: [URL]) {
+        files.append(contentsOf: batchFiles)
     }
 }
 
@@ -123,9 +130,9 @@ class TrackLoader {
     }
     
     // TODO: Allow the caller to specify a "sort order" for the files, eg. by file path ???
-    func loadMetadata(ofType type: MetadataType, from files: [URL], into trackList: TrackListProtocol) {
+    func loadMetadata(ofType type: MetadataType, from files: [URL], into trackList: TrackListProtocol, completionHandler: FileReadSessionCompletionHandler? = nil) {
         
-        session = FileReadSession(metadataType: type, files: files, trackList: trackList)
+        session = FileReadSession(metadataType: type, trackList: trackList)
         batch = FileMetadataBatch(ofSize: concurrentAddOpCount)
         blockOpFunction = blockOp(metadataType: type)
         
@@ -138,10 +145,20 @@ class TrackLoader {
                 self.flushBatch()
             }
             
+            let sessionFiles = self.session.files
+            
             // Cleanup
             self.session = nil
             self.batch = nil
             self.blockOpFunction = nil
+            
+            // Unblock this thread because the track list may perform a time consuming task in response to this callback.
+            if let theCompletionHandler = completionHandler {
+                
+                DispatchQueue.global(qos: .userInteractive).async {
+                    theCompletionHandler(sessionFiles)
+                }
+            }
         }
     }
     
@@ -208,7 +225,10 @@ class TrackLoader {
     func flushBatch() {
         
         queue.addOperations(batch.files.map(blockOpFunction), waitUntilFinished: true)
+        
+        session.batchCompleted(batch.files)
         session.trackList.acceptBatch(batch)
+        
         batch.clear()
     }
 }

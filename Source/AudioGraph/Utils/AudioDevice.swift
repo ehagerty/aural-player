@@ -68,8 +68,6 @@ public class AudioDevice {
         guard let name = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.namePropertyAddress), !name.contains("CADefaultDeviceAggregate"),
             let uid = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.deviceUIDPropertyAddress) else {
             
-            print("\nNil because name=\(getCFStringProperty(deviceId: deviceId, addressPtr: &Self.namePropertyAddress))")
-            
             return nil
         }
         

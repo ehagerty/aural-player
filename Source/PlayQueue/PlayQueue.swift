@@ -9,8 +9,10 @@ class PlayQueue: PlayQueueProtocol, NotificationSubscriber {
     
     var size: Int {tracks.count}
     
+    // TODO: Accelerate to find sum
     var duration: Double {
         tracks.reduce(0.0, {(totalSoFar: Double, track: Track) -> Double in totalSoFar + track.duration})
+//        vDSP_sveD(tracks.map {$0.duration}, 1, &sum, 100) // TODO: Write an extension on Array where Element: FloatingPoint ... func fastSum() -> Element
     }
     
     let library: LibraryProtocol
