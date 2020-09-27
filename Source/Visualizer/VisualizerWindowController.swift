@@ -32,7 +32,8 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
     
     override func awakeFromNib() {
         
-        window?.aspectRatio = NSSize(width: 1, height: 2.0/3.0)
+        window?.isMovableByWindowBackground = true
+        window?.aspectRatio = NSSize(width: 3.0, height: 2.0)
         
         [spectrogram, supernova, discoBall].forEach {$0?.anchorToView(containerBox)}
         
@@ -71,6 +72,19 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
         containerBox.startTracking()
         
         changeType(.spectrogram)
+    }
+    
+    @IBAction func closeWindowAction(_ sender: Any) {
+        window?.close()
+    }
+    
+    @IBAction func fullScreenAction(_ sender: Any) {
+        
+        // TODO: Figure out which screen the window is on (more). And use that screen.
+        
+        if let screenFrame = NSScreen.main?.visibleFrame {
+            window?.setFrame(screenFrame, display: true)
+        }
     }
     
     func windowWillClose(_ notification: Notification) {

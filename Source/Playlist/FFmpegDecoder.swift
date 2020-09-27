@@ -70,10 +70,6 @@ class FFmpegDecoder {
         self.stream = theAudioStream
         self.codec = try FFmpegAudioCodec(fromParameters: stream.avStream.codecpar)
         try codec.open()
-        
-        // Dump some stream / codec info to the log/console as an indication of successfully opening the codec.
-        stream.printInfo()
-        codec.printInfo()
     }
     
     ///

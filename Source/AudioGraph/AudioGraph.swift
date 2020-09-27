@@ -137,7 +137,7 @@ class AudioGraph: AudioGraphProtocol {
         
 //        print("\nCurFormat: \(currentFormat.channelLayout?.layoutTag) \(currentFormat.sampleRate)")
 //        print("\nNewFormat: \(format.channelLayout?.layoutTag) \(format.sampleRate)")
-        print(currentFormat.sampleRate == format.sampleRate, currentFormat == format, currentFormat.isEqual(to: format))
+//        print(currentFormat.sampleRate == format.sampleRate, currentFormat == format, currentFormat.isEqual(to: format))
         
         if !currentFormat.isEqual(to: format) {
             

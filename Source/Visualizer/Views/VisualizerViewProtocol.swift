@@ -17,6 +17,8 @@ protocol VisualizerViewProtocol {
 
 class AuralSKView: SKView {
     
+    override var mouseDownCanMoveWindow: Bool {true}
+    
     override func draw(_ dirtyRect: NSRect) {
         
         if self.scene == nil {
@@ -31,6 +33,8 @@ class AuralSKView: SKView {
 }
 
 class AuralSCNView: SCNView {
+    
+    override var mouseDownCanMoveWindow: Bool {true}
     
     override func draw(_ dirtyRect: NSRect) {
         

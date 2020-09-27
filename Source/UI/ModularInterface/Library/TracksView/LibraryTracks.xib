@@ -20,16 +20,9 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="vH7-ho-Ykd" userLabel="Data Source" customClass="LibraryTracksViewDataSource" customModule="Aural" customModuleProvider="target">
             <connections>
-                <outlet property="albumColumn" destination="wee-8N-HDM" id="xaU-4C-9N2"/>
-                <outlet property="artistColumn" destination="OTb-7o-9qf" id="j56-KA-EUT"/>
-                <outlet property="artistTitleColumn" destination="hXp-zJ-maD" id="mIh-n0-0nd"/>
                 <outlet property="columnsMenu" destination="AHk-0p-NbT" id="Jr8-3b-VSi"/>
-                <outlet property="durationColumn" destination="GC2-d3-5aQ" id="sst-nZ-yih"/>
-                <outlet property="genreColumn" destination="8an-Uo-K3g" id="AF8-MY-n5e"/>
                 <outlet property="headerView" destination="n1T-g7-GdR" id="CgW-mH-fg0"/>
-                <outlet property="indexColumn" destination="uCR-ys-kzY" id="vCo-cq-O4v"/>
                 <outlet property="libraryView" destination="OzC-ZW-pSB" id="5kW-T6-K42"/>
-                <outlet property="titleColumn" destination="U6a-Mj-nss" id="0Dz-aR-aiM"/>
             </connections>
         </customObject>
         <customObject id="fxO-kG-Bir" userLabel="Delegate" customClass="LibraryTracksViewDelegate" customModule="Aural" customModuleProvider="target">
@@ -81,7 +74,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yVc-s6-1Tk">
-                                                        <rect key="frame" x="19" y="79" width="20" height="17"/>
+                                                        <rect key="frame" x="20" y="79" width="20" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="4Gl-zp-3jI"/>
                                                     </imageView>

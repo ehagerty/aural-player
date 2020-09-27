@@ -26,8 +26,8 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hasShadow="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g" customClass="SnappingNonKeyWindow" customModule="Aural" customModuleProvider="target">
+            <windowStyleMask key="styleMask" miniaturizable="YES" resizable="YES" texturedBackground="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="450" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
@@ -36,17 +36,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box boxType="custom" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="j6R-ye-LTm" userLabel="VizContainer" customClass="VisualizerContainer" customModule="Aural" customModuleProvider="target">
+                    <box boxType="custom" borderType="none" borderWidth="0.0" cornerRadius="3" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="j6R-ye-LTm" userLabel="VizContainer" customClass="VisualizerContainer" customModule="Aural" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <view key="contentView" id="0K1-rI-qOl">
                             <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <customView hidden="YES" id="urw-iw-KjM" userLabel="Spectrogram" customClass="Spectrogram" customModule="Visualizer" customModuleProvider="target">
+                                <customView hidden="YES" id="urw-iw-KjM" userLabel="Spectrogram" customClass="Spectrogram" customModule="Aural" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
-                                <customView hidden="YES" id="oy2-qJ-0rY" customClass="Supernova" customModule="Visualizer" customModuleProvider="target">
+                                <customView hidden="YES" id="oy2-qJ-0rY" customClass="Supernova" customModule="Aural" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <userDefinedRuntimeAttributes>
@@ -55,13 +55,13 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </customView>
-                                <customView hidden="YES" id="dn2-8H-Dok" customClass="DiscoBall" customModule="Visualizer" customModuleProvider="target">
+                                <customView hidden="YES" id="dn2-8H-Dok" customClass="DiscoBall" customModule="Aural" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 </customView>
                             </subviews>
                         </view>
-                        <color key="fillColor" red="0.38005165060000001" green="0.77270383880000004" blue="0.1783635683" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="fillColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </box>
                     <box hidden="YES" boxType="custom" borderType="none" borderWidth="0.0" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="XpW-Cc-cL9" userLabel="Options Box">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="100"/>
@@ -173,6 +173,34 @@
                         </constraints>
                         <color key="fillColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </box>
+                    <button toolTip="Quit application" wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6tC-45-CrB" userLabel="Close Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
+                        <rect key="frame" x="6" y="284" width="8" height="8"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Close" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="sFv-EX-egw">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="Close"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="closeWindowAction:" target="-2" id="ypM-Ri-uzL"/>
+                        </connections>
+                    </button>
+                    <button toolTip="Quit application" wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4gL-BM-6Qe" userLabel="Full Screen Button" customClass="TintedImageButton" customModule="Aural" customModuleProvider="target">
+                        <rect key="frame" x="19" y="284" width="9" height="9"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="FullScreen" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="0kj-CG-J6U">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="image" keyPath="baseImage" value="FullScreen"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="fullScreenAction:" target="-2" id="0ds-yh-VHL"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="j6R-ye-LTm" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="2s7-Qr-tzY"/>
@@ -184,7 +212,16 @@
                     <constraint firstAttribute="trailing" secondItem="XpW-Cc-cL9" secondAttribute="trailing" id="nKK-6u-aJi"/>
                 </constraints>
             </view>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                    <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="85.5" y="-43"/>
         </window>
     </objects>
+    <resources>
+        <image name="Close" width="20" height="20"/>
+        <image name="FullScreen" width="15" height="15"/>
+    </resources>
 </document>

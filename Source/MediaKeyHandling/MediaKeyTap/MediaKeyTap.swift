@@ -77,7 +77,12 @@ public class MediaKeyTap {
             try internals.startWatchingMediaKeys()
         } catch let error as EventTapError {
             mediaApplicationWatcher.stop()
-            NSLog(error.description)
+            
+            // Don't log this error when debugging (because it will always be thrown).
+            if ProcessInfo.processInfo.environment["DEBUG_MODE"] == nil {
+                NSLog(error.description)
+            }
+            
         } catch {}
     }
     

@@ -1,7 +1,7 @@
 import Foundation
 import SceneKit
 
-class DiscoBall: SCNView, VisualizerViewProtocol {
+class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     
     let type: VisualizationType = .discoBall
     

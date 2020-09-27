@@ -63,7 +63,8 @@ public class AudioDevice {
     
     init?(deviceId: AudioDeviceID) {
         
-        guard let name = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.namePropertyAddress), !name.contains("CADefaultDeviceAggregate"),
+        guard let name = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.namePropertyAddress),
+            !name.contains("CADefaultDeviceAggregate"),
             let uid = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.deviceUIDPropertyAddress) else {
             
             return nil
