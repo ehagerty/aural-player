@@ -1,6 +1,8 @@
 import Cocoa
 import AVFoundation
 
+let visualizationAnalysisBufferSize: Int = 2048
+
 class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverProtocol, NSWindowDelegate {
     
     override var windowNibName: String? {return "Visualizer"}
@@ -25,7 +27,7 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
     @IBOutlet weak var bandsMenu: NSPopUpButton!
     
     var vizView: VisualizerViewProtocol!
-    private let fft = FFT.instance
+    private let fft: FFT = ObjectGraph.fft
     private var audioGraph: AudioGraphDelegateProtocol = ObjectGraph.audioGraphDelegate
     
     override func awakeFromNib() {
@@ -62,7 +64,7 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
         
         super.showWindow(sender)
         
-        audioGraph.outputDeviceBufferSize = 2048
+        audioGraph.outputDeviceBufferSize = visualizationAnalysisBufferSize
         fft.setUp(sampleRate: Float(audioGraph.outputDeviceSampleRate), bufferSize: audioGraph.outputDeviceBufferSize)
      
         audioGraph.registerRenderObserver(self)
@@ -95,10 +97,14 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
     
     func deviceChanged(newDeviceBufferSize: Int, newDeviceSampleRate: Double) {
         
+        if newDeviceBufferSize != visualizationAnalysisBufferSize {
+            audioGraph.outputDeviceBufferSize = visualizationAnalysisBufferSize
+        }
     }
     
+    // TODO
     func deviceSampleRateChanged(newSampleRate: Double) {
-        
+        NSLog("**** Device SR changed: \(newSampleRate)")
     }
     
     @IBAction func changeTypeAction(_ sender: NSPopUpButton) {
@@ -109,8 +115,6 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
     }
     
     func changeType(_ type: VisualizationType) {
-        
-        if let theVizView = vizView, theVizView.type == type {return}
         
         switch type {
             

@@ -4,6 +4,14 @@ let sizeOfDouble: UInt32 = UInt32(MemoryLayout<Double>.size)
 
 extension AudioUnit {
     
+    func registerRenderCallback(inProc: @escaping AURenderCallback, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitAddRenderNotify(self, inProc, inProcUserData)
+    }
+    
+    func removeRenderCallback(inProc: @escaping AURenderCallback, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitRemoveRenderNotify(self, inProc, inProcUserData)
+    }
+    
     var currentDevice: AudioDeviceID {
         
         get {
@@ -22,12 +30,12 @@ extension AudioUnit {
         }
     }
     
-    func registerRenderCallback(inProc: @escaping AURenderCallback, inProcUserData: UnsafeMutableRawPointer?) {
-        AudioUnitAddRenderNotify(self, inProc, inProcUserData)
+    func registerDeviceChangeCallback(inProc: @escaping AudioUnitPropertyListenerProc, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitAddPropertyListener(self, kAudioOutputUnitProperty_CurrentDevice, inProc, inProcUserData)
     }
     
-    func removeRenderCallback(inProc: @escaping AURenderCallback, inProcUserData: UnsafeMutableRawPointer?) {
-        AudioUnitRemoveRenderNotify(self, inProc, inProcUserData)
+    func removeDeviceChangeCallback(inProc: @escaping AudioUnitPropertyListenerProc, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitRemovePropertyListenerWithUserData(self, kAudioOutputUnitProperty_CurrentDevice, inProc, inProcUserData)
     }
     
     var sampleRate: Double {
@@ -40,6 +48,14 @@ extension AudioUnit {
             
             return sampleRate
         }
+    }
+    
+    func registerSampleRateChangeCallback(inProc: @escaping AudioUnitPropertyListenerProc, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitAddPropertyListener(self, kAudioUnitProperty_SampleRate, inProc, inProcUserData)
+    }
+    
+    func removeSampleRateChangeCallback(inProc: @escaping AudioUnitPropertyListenerProc, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitRemovePropertyListenerWithUserData(self, kAudioUnitProperty_SampleRate, inProc, inProcUserData)
     }
     
     var bufferFrameSize: UInt32 {

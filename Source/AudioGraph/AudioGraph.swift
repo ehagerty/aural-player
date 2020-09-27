@@ -1,46 +1,10 @@
 import Cocoa
 import AVFoundation
 
-fileprivate func renderCallback(inRefCon: UnsafeMutableRawPointer,
-                    ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
-                    inTimeStamp: UnsafePointer<AudioTimeStamp>,
-                    inBusNumber: UInt32,
-                    inNumberFrames: UInt32,
-                    ioData: UnsafeMutablePointer<AudioBufferList>?) -> OSStatus {
-    
-    let graph = unsafeBitCast(inRefCon, to: AudioGraph.self)
-    
-    if ioActionFlags.pointee == .unitRenderAction_PostRender, let bufferList = ioData?.pointee,
-        let observer = graph.renderObserver {
-        
-        DispatchQueue.global(qos: .userInteractive).async {
-            observer.rendered(timeStamp: inTimeStamp.pointee, frameCount: inNumberFrames, audioBuffer: bufferList)
-        }
-    }
-    
-    return noErr
-}
-
 /*
     Wrapper around AVAudioEngine. Manages the AVAudioEngine audio graph.
  */
 class AudioGraph: AudioGraphProtocol {
-    
-    var renderObserver: AudioGraphRenderObserverProtocol?
-    
-    func registerRenderObserver(_ observer: AudioGraphRenderObserverProtocol) {
-        
-        self.renderObserver = observer
-        outputNode.audioUnit?.registerRenderCallback(inProc: renderCallback,
-                                                            inProcUserData:  Unmanaged.passUnretained(self).toOpaque())
-    }
-    
-    func removeRenderObserver(_ observer: AudioGraphRenderObserverProtocol) {
-        
-        self.renderObserver = nil
-        outputNode.audioUnit?.removeRenderCallback(inProc: renderCallback,
-                                                            inProcUserData:  Unmanaged.passUnretained(self).toOpaque())
-    }
     
     var availableDevices: AudioDeviceList {deviceManager.allDevices}
     
@@ -116,7 +80,7 @@ class AudioGraph: AudioGraphProtocol {
         engine.connect(nodes.last!, to: engine.mainMixerNode, format: nil)
         
         // TODO: This should be repeated every time the output device changes !!!
-        deviceManager.maxFramesPerSlice = 2048
+        deviceManager.maxFramesPerSlice = visualizationAnalysisBufferSize
         
         engine.prepare()
         

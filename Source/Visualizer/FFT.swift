@@ -6,8 +6,6 @@ let fftMagnitudeRange: ClosedRange<Float> = 0...1
 
 class FFT {
     
-    static let instance: FFT = FFT()
-    
     init() {}
     
     private var fftSetup: FFTSetup!
@@ -36,7 +34,7 @@ class FFT {
     private let fftRadix: Int32 = Int32(kFFTRadix2)
     private let vDSP_HANN_NORM_Int32: Int32 = Int32(vDSP_HANN_NORM)
     private let fftDirection: FFTDirection = FFTDirection(FFT_FORWARD)
-    private var zeroDBReference: Float = 1
+    private var zeroDBReference: Float = 0.1
     
     private var magnitudes: [Float] = []
     private var normalizedMagnitudes: UnsafeMutablePointer<Float> = UnsafeMutablePointer<Float>.allocate(capacity: 0)
@@ -212,7 +210,7 @@ class FrequencyData {
         
         let tpb: Float = pow(2, 1.0/3.0)
 
-        // NOTE: These bands assume a buffer size of 2048, i.e. 1024 FFT output data points.
+        // NOTE: These bands assume a buffer size of 2048, i.e. 1024 FFT output data points, AND a sample rate of 48KHz.
         
         bands.append(Band(minF: sqrt((20 * 20) / tpb), maxF: sqrt((20 * 20) / tpb) * tpb, minIndex: 0, maxIndex: 0))
         bands.append(Band(minF: sqrt((31.5 * 31.5) / tpb), maxF: sqrt((31.5 * 31.5) / tpb) * tpb, minIndex: 1, maxIndex: 2))

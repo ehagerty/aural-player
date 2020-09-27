@@ -57,6 +57,8 @@ class ObjectGraph {
     
     static var interfaceManager: InterfaceManager!
     
+    static var fft: FFT!
+    
     // Don't let any code invoke this initializer to create instances of ObjectGraph
     private init() {}
     
@@ -163,6 +165,8 @@ class ObjectGraph {
         PlayQueueUIState.initialize(fromPersistentState: appState.ui.playQueue)
         
         interfaceManager = InterfaceManager(appState.ui, preferences.viewPreferences)
+        
+        fft = FFT()
     }
     
     private static let tearDownOpQueue: OperationQueue = {
