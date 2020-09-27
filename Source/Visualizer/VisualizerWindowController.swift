@@ -1,7 +1,9 @@
 import Cocoa
 import AVFoundation
 
-class VisualizerWindowController: NSWindowController, AudioGraphOutputRenderObserverProtocol {
+class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverProtocol, NSWindowDelegate {
+    
+    override var windowNibName: String? {return "Visualizer"}
     
     @IBOutlet weak var containerBox: VisualizerContainer!
     
@@ -24,14 +26,13 @@ class VisualizerWindowController: NSWindowController, AudioGraphOutputRenderObse
     
     var vizView: VisualizerViewProtocol!
     private let fft = FFT.instance
+    private var audioGraph: AudioGraphDelegateProtocol = ObjectGraph.audioGraphDelegate
     
     override func awakeFromNib() {
         
-        containerBox.startTracking()
+        window?.aspectRatio = NSSize(width: 1, height: 2.0/3.0)
         
         [spectrogram, supernova, discoBall].forEach {$0?.anchorToView(containerBox)}
-        
-        changeType(.spectrogram)
         
 //        FrequencyData.numBands = 27
 //        spectrogram.numberOfBands = 27
@@ -55,6 +56,49 @@ class VisualizerWindowController: NSWindowController, AudioGraphOutputRenderObse
         NotificationCenter.default.addObserver(forName: Notification.Name("hideOptions"), object: nil, queue: nil, using: {_ in
             self.optionsBox.hide()
         })
+    }
+    
+    override func showWindow(_ sender: Any?) {
+        
+        super.showWindow(sender)
+        
+        audioGraph.outputDeviceBufferSize = 2048
+        fft.setUp(sampleRate: Float(audioGraph.outputDeviceSampleRate), bufferSize: audioGraph.outputDeviceBufferSize)
+     
+        audioGraph.registerRenderObserver(self)
+        containerBox.startTracking()
+        
+        changeType(.spectrogram)
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        
+        audioGraph.removeRenderObserver(self)
+        containerBox.stopTracking()
+    }
+    
+    func rendered(timeStamp: AudioTimeStamp, frameCount: UInt32, audioBuffer: AudioBufferList) {
+        
+        fft.analyze(audioBuffer)
+        
+        //        if FrequencyData.numBands != 10 {
+        //            NSLog("Bands: \(FrequencyData.bands.map {$0.maxVal})")
+        //        }
+        
+        if let theVizView = vizView {
+            
+            DispatchQueue.main.async {
+                theVizView.update()
+            }
+        }
+    }
+    
+    func deviceChanged(newDeviceBufferSize: Int, newDeviceSampleRate: Double) {
+        
+    }
+    
+    func deviceSampleRateChanged(newSampleRate: Double) {
+        
     }
     
     @IBAction func changeTypeAction(_ sender: NSPopUpButton) {
@@ -103,22 +147,6 @@ class VisualizerWindowController: NSWindowController, AudioGraphOutputRenderObse
             
             FrequencyData.numBands = numBands
             spectrogram.numberOfBands = numBands
-        }
-    }
-    
-    func renderCallback(timeStamp: AudioTimeStamp, frameCount: UInt32, audioBuffer: AudioBufferList) {
-            
-        fft.analyze(audioBuffer)
-        
-//        if FrequencyData.numBands != 10 {
-//            NSLog("Bands: \(FrequencyData.bands.map {$0.maxVal})")
-//        }
-        
-        if let theVizView = vizView {
-            
-            DispatchQueue.main.async {
-                theVizView.update()
-            }
         }
     }
     

@@ -14,6 +14,14 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber, Pe
         set {graph.outputDevice = newValue}
     }
     
+    var outputDeviceBufferSize: Int {
+        
+        get {graph.outputDeviceBufferSize}
+        set {graph.outputDeviceBufferSize = newValue}
+    }
+    
+    var outputDeviceSampleRate: Double {graph.outputDeviceSampleRate}
+    
     var masterUnit: MasterUnitDelegateProtocol
     var eqUnit: EQUnitDelegateProtocol
     var pitchUnit: PitchUnitDelegateProtocol
@@ -129,6 +137,14 @@ class AudioGraphDelegate: AudioGraphDelegateProtocol, NotificationSubscriber, Pe
         graph.balance = graph.balance < 0 && newBalance > 0 ? 0 : newBalance
         
         return balance
+    }
+    
+    func registerRenderObserver(_ observer: AudioGraphRenderObserverProtocol) {
+        graph.registerRenderObserver(observer)
+    }
+    
+    func removeRenderObserver(_ observer: AudioGraphRenderObserverProtocol) {
+        graph.removeRenderObserver(observer)
     }
     
     // MARK: Message handling

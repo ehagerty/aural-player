@@ -22,8 +22,12 @@ extension AudioUnit {
         }
     }
     
-    func registerRenderCallback(inProc: @escaping AURenderCallback, _ inProcUserData: UnsafeMutableRawPointer?) {
+    func registerRenderCallback(inProc: @escaping AURenderCallback, inProcUserData: UnsafeMutableRawPointer?) {
         AudioUnitAddRenderNotify(self, inProc, inProcUserData)
+    }
+    
+    func removeRenderCallback(inProc: @escaping AURenderCallback, inProcUserData: UnsafeMutableRawPointer?) {
+        AudioUnitRemoveRenderNotify(self, inProc, inProcUserData)
     }
     
     var sampleRate: Double {
@@ -53,6 +57,24 @@ extension AudioUnit {
             
             var newBufferSize: UInt32 = newValue
             AudioUnitSetProperty(self, kAudioDevicePropertyBufferFrameSize, kAudioUnitScope_Global, 0, &newBufferSize, sizeOfUInt32)
+        }
+    }
+    
+    var maxFramesPerSlice: UInt32 {
+        
+        get {
+            
+            var maxFrames: UInt32 = 0
+            var sizeOfProp: UInt32 = sizeOfUInt32
+            _ = AudioUnitGetProperty(self, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFrames, &sizeOfProp)
+            
+            return maxFrames
+        }
+        
+        set {
+            
+            var maxFrames: UInt32 = newValue
+            AudioUnitSetProperty(self, kAudioUnitProperty_MaximumFramesPerSlice, kAudioUnitScope_Global, 0, &maxFrames, sizeOfUInt32)
         }
     }
 }

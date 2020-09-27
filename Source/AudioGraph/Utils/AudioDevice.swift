@@ -55,8 +55,6 @@ public class AudioDevice {
     // User-friendly (and persistent) manufacturer name string for this device
     let manufacturer: String?
     
-    // Whether or not this device is capable of output
-    let hasOutput: Bool
     let channelCount: Int
     
     let dataSource: String?
@@ -97,7 +95,6 @@ public class AudioDevice {
         self.manufacturer = getCFStringProperty(deviceId: deviceId, addressPtr: &Self.manufacturerPropertyAddress)
         
         self.channelCount = channelCount
-        self.hasOutput = channelCount > 0
         
         self.dataSource = getCodeProperty(deviceId: deviceId, addressPtr: &Self.dataSourcePropertyAddress)
         self.transportType = getCodeProperty(deviceId: deviceId, addressPtr: &Self.transportTypePropertyAddress)

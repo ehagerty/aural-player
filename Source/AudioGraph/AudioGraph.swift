@@ -1,7 +1,7 @@
 import Cocoa
 import AVFoundation
 
-func renderCallback(inRefCon: UnsafeMutableRawPointer,
+fileprivate func renderCallback(inRefCon: UnsafeMutableRawPointer,
                     ioActionFlags: UnsafeMutablePointer<AudioUnitRenderActionFlags>,
                     inTimeStamp: UnsafePointer<AudioTimeStamp>,
                     inBusNumber: UInt32,
@@ -10,10 +10,11 @@ func renderCallback(inRefCon: UnsafeMutableRawPointer,
     
     let graph = unsafeBitCast(inRefCon, to: AudioGraph.self)
     
-    if ioActionFlags.pointee == .unitRenderAction_PostRender, let bufferList = ioData?.pointee, let observer = graph.outputRenderObserver {
+    if ioActionFlags.pointee == .unitRenderAction_PostRender, let bufferList = ioData?.pointee,
+        let observer = graph.renderObserver {
         
         DispatchQueue.global(qos: .userInteractive).async {
-            observer.renderCallback(timeStamp: inTimeStamp.pointee, frameCount: inNumberFrames, audioBuffer: bufferList)
+            observer.rendered(timeStamp: inTimeStamp.pointee, frameCount: inNumberFrames, audioBuffer: bufferList)
         }
     }
     
@@ -25,12 +26,20 @@ func renderCallback(inRefCon: UnsafeMutableRawPointer,
  */
 class AudioGraph: AudioGraphProtocol {
     
-    var outputRenderObserver: AudioGraphOutputRenderObserverProtocol?
+    var renderObserver: AudioGraphRenderObserverProtocol?
     
-    func installOutputTap() {
+    func registerRenderObserver(_ observer: AudioGraphRenderObserverProtocol) {
         
-        let au = engine.outputNode.audioUnit!
-        AudioUnitAddRenderNotify(au, renderCallback, Unmanaged.passUnretained(self).toOpaque())
+        self.renderObserver = observer
+        outputNode.audioUnit?.registerRenderCallback(inProc: renderCallback,
+                                                            inProcUserData:  Unmanaged.passUnretained(self).toOpaque())
+    }
+    
+    func removeRenderObserver(_ observer: AudioGraphRenderObserverProtocol) {
+        
+        self.renderObserver = nil
+        outputNode.audioUnit?.removeRenderCallback(inProc: renderCallback,
+                                                            inProcUserData:  Unmanaged.passUnretained(self).toOpaque())
     }
     
     var availableDevices: AudioDeviceList {deviceManager.allDevices}
@@ -40,6 +49,14 @@ class AudioGraph: AudioGraphProtocol {
         get {deviceManager.outputDevice}
         set {deviceManager.outputDevice = newValue}
     }
+    
+    var outputDeviceBufferSize: Int {
+        
+        get {deviceManager.outputDeviceBufferSize}
+        set {deviceManager.outputDeviceBufferSize = newValue}
+    }
+    
+    var outputDeviceSampleRate: Double {deviceManager.outputDeviceSampleRate}
     
     private let engine: AVAudioEngine
     internal let outputNode: AVAudioOutputNode
@@ -79,7 +96,7 @@ class AudioGraph: AudioGraphProtocol {
         playerNode.pan = state.balance
         
         nodeForRecorderTap = engine.mainMixerNode
-        self.outputNode = engine.outputNode
+        outputNode = engine.outputNode
         auxMixer = AVAudioMixerNode()
         
         let slaveUnits = [eqUnit, pitchUnit, timeUnit, reverbUnit, delayUnit, filterUnit]
@@ -97,9 +114,11 @@ class AudioGraph: AudioGraphProtocol {
         
         // Connect last node to main mixer
         engine.connect(nodes.last!, to: engine.mainMixerNode, format: nil)
-        engine.prepare()
         
-        installOutputTap()
+        // TODO: This should be repeated every time the output device changes !!!
+        deviceManager.maxFramesPerSlice = 2048
+        
+        engine.prepare()
         
         startEngine()
         

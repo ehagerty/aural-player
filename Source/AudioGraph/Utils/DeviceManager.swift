@@ -64,6 +64,22 @@ public class DeviceManager {
             }
         }
     }
+    
+    var outputDeviceBufferSize: Int {
+        
+        get {Int(outputAudioUnit.bufferFrameSize)}
+        
+        // TODO: Before setting buffer size, check allowed buffer size range, and clamp the value accordingly ???
+        set {outputAudioUnit.bufferFrameSize = UInt32(newValue)}
+    }
+    
+    var outputDeviceSampleRate: Double {outputAudioUnit.sampleRate}
+    
+    var maxFramesPerSlice: Int {
+        
+        get {Int(outputAudioUnit.maxFramesPerSlice)}
+        set {outputAudioUnit.maxFramesPerSlice = UInt32(newValue)}
+    }
 }
 
 extension Notification.Name {
