@@ -1,10 +1,11 @@
 import SpriteKit
 
-class Spectrogram: AuralSKView, VisualizerViewProtocol {
+class Spectrogram: SKView, VisualizerViewProtocol {
     
     let type: VisualizationType = .spectrogram
+    override var mouseDownCanMoveWindow: Bool {true}
     
-    var data: FrequencyData!
+    var data: SpectrogramFFTData = SpectrogramFFTData()
     
     var bars: [SpectrogramBar] = []
     
@@ -22,8 +23,9 @@ class Spectrogram: AuralSKView, VisualizerViewProtocol {
             updateSemaphore.wait()
             defer {updateSemaphore.signal()}
             
-            self.isPaused = true
+            data.numberOfBands = numberOfBands
             
+            // TODO: Be more careful setting/resetting this flag
             SpectrogramBar.numberOfBands = numberOfBands
             spacing = numberOfBands == 10 ? spacing_10Band : spacing_31Band
             
@@ -36,12 +38,12 @@ class Spectrogram: AuralSKView, VisualizerViewProtocol {
                 bars.append(bar)
                 scene?.addChild(bar)
             }
-            
-            self.isPaused = false
         }
     }
     
-    func presentView() {
+    func presentView(with fft: FFT) {
+        
+        data.setUp(fft: fft, numberOfBands: numberOfBands)
         
         if self.scene == nil {
             
@@ -50,21 +52,30 @@ class Spectrogram: AuralSKView, VisualizerViewProtocol {
             scene.backgroundColor = NSColor.black
             presentScene(scene)
             
-            numberOfBands = 10
+            // TODO: This will eventually come from VisualizerUIState.options (i.e. self.options)
+            SpectrogramBar.numberOfBands = numberOfBands
+            spacing = spacing_10Band
+            
+            bars.removeAll()
+            scene.removeAllChildren()
+            
+            for i in 0..<numberOfBands {
+            
+                let bar = SpectrogramBar(position: NSPoint(x: (CGFloat(i) * (SpectrogramBar.barWidth + spacing)) + xMargin, y: yMargin))
+                bars.append(bar)
+                scene.addChild(bar)
+            }
         }
 
-        scene?.alpha = 0
-        scene?.run(SKAction.fadeIn(withDuration: 1))
-        
-        scene?.isPaused = false
-        scene?.isHidden = false
+        isPaused = false
         show()
     }
     
     func dismissView() {
+        
+        bars.forEach {$0.removeAllActions()}
 
-        scene?.isPaused = true
-        scene?.isHidden = true
+        isPaused = true
         hide()
     }
     
@@ -76,13 +87,15 @@ class Spectrogram: AuralSKView, VisualizerViewProtocol {
     
     // TODO: Test this with random mags (with a button to trigger an iteration)
     
-    func update() {
+    func update(with fft: FFT) {
+        
+        data.update(with: fft)
         
         updateSemaphore.wait()
         defer {updateSemaphore.signal()}
         
         for i in bars.indices {
-            bars[i].magnitude = CGFloat(FrequencyData.bands[i].maxVal.clamp(to: fftMagnitudeRange))
+            bars[i].magnitude = CGFloat(data.bands[i].maxVal)
         }
     }
 }

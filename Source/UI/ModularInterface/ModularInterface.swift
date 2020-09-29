@@ -275,7 +275,7 @@ class ModularInterface: InterfaceProtocol {
     }
     
     private func hideVisualizer() {
-        visualizerWindow.hide()
+        visualizerWindowController.close()
     }
     
     private func showVisualizer() {

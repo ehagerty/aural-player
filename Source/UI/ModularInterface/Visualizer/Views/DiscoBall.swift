@@ -5,6 +5,8 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     
     let type: VisualizationType = .discoBall
     
+    var data: BassFFTData = BassFFTData()
+    
     var camera: SCNCamera!
     var cameraNode: SCNNode!
     
@@ -16,7 +18,9 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     
     let textureImage: NSImage = NSImage(named: "DiscoBall")!
     
-    func presentView() {
+    func presentView(with fft: FFT) {
+        
+        data.setUp(for: fft)
         
         if self.scene == nil {
             
@@ -61,12 +65,13 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             }
         }
         
-        scene?.isPaused = false
+        isPlaying = true
         show()
     }
     
     func dismissView() {
-        scene?.isPaused = true
+        
+        isPlaying = false
         hide()
     }
     
@@ -83,27 +88,30 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     
     var startColor: NSColor = .blue
     var endColor: NSColor = .red
-    var rotation: CGFloat = 0
+    var rotationDegrees: CGFloat = 0
     
     // 11 images (11 levels of interpolation)
     var textureCache: [NSImage] = []
     
-    func update() {
+    func update(with fft: FFT) {
+        
+        data.update(with: fft)
         
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.05
         
-        let mag = CGFloat(FrequencyData.peakBassMagnitude.clamp(to: fftMagnitudeRange))
+        let magnitude = CGFloat(data.peakBassMagnitude)
         
-        ball.radius = 1 + (mag / 4.0)
+        ball.radius = 1 + (magnitude / 4.0)
         node.position = SCNVector3(1, 2, 1)
         
-        let interpolationLevel: Int = min(Int(round(mag * 10.0)), 10)
+        let interpolationLevel: Int = min(Int(round(magnitude * 10.0)), 10)
         ball.firstMaterial?.diffuse.contents = textureCache[interpolationLevel]
         
-        if mag > 0.3 {
-            rotation += mag * 5
-            node.rotation = SCNVector4Make(0, 1, 0, rotation * piOver180)
+        if magnitude > 0.3 {
+            
+            rotationDegrees += magnitude * 5
+            node.rotation = SCNVector4Make(0, 1, 0, rotationDegrees * piOver180)
         }
         
         SCNTransaction.commit()

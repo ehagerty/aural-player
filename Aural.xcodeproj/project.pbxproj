@@ -509,6 +509,8 @@
 		3E6C32B724AB1C400011D44C /* BookmarkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6C32A324AB1C110011D44C /* BookmarkState.swift */; };
 		3E6F5B38252356A20053EEAB /* Spectrogram3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F5B36252356A10053EEAB /* Spectrogram3D.swift */; };
 		3E6F5B39252356A20053EEAB /* Spectrogram3DBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F5B37252356A20053EEAB /* Spectrogram3DBar.swift */; };
+		3E6F5B3B25239A6D0053EEAB /* SpectrogramFFTData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F5B3A25239A6D0053EEAB /* SpectrogramFFTData.swift */; };
+		3E6F5B3D2523A3BD0053EEAB /* BassFFTData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6F5B3C2523A3BD0053EEAB /* BassFFTData.swift */; };
 		3E7022B52465CA1E00E64581 /* PlaybackSchedulerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7022B42465CA1E00E64581 /* PlaybackSchedulerProtocol.swift */; };
 		3E722F7B1EFCF4EC00916BF2 /* LibraryTracksViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E722F7A1EFCF4EC00916BF2 /* LibraryTracksViewDataSource.swift */; };
 		3E7266C1247664C7007D6DAA /* PlaybackSequenceIterationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7266C0247664C7007D6DAA /* PlaybackSequenceIterationTests.swift */; };
@@ -1267,6 +1269,8 @@
 		3E6C32A324AB1C110011D44C /* BookmarkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkState.swift; sourceTree = "<group>"; };
 		3E6F5B36252356A10053EEAB /* Spectrogram3D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrogram3D.swift; sourceTree = "<group>"; };
 		3E6F5B37252356A20053EEAB /* Spectrogram3DBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrogram3DBar.swift; sourceTree = "<group>"; };
+		3E6F5B3A25239A6D0053EEAB /* SpectrogramFFTData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramFFTData.swift; sourceTree = "<group>"; };
+		3E6F5B3C2523A3BD0053EEAB /* BassFFTData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BassFFTData.swift; sourceTree = "<group>"; };
 		3E7022B42465CA1E00E64581 /* PlaybackSchedulerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSchedulerProtocol.swift; sourceTree = "<group>"; };
 		3E722F7A1EFCF4EC00916BF2 /* LibraryTracksViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTracksViewDataSource.swift; sourceTree = "<group>"; };
 		3E7266C0247664C7007D6DAA /* PlaybackSequenceIterationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSequenceIterationTests.swift; sourceTree = "<group>"; };
@@ -2456,6 +2460,8 @@
 				3EF18474217C8E8A00D24F39 /* FFT.swift */,
 				3E0EEB07251FAE1B0003EC05 /* VisualizerUtils.swift */,
 				3E0D2DAC251FA97200DA0C53 /* Views */,
+				3E6F5B3A25239A6D0053EEAB /* SpectrogramFFTData.swift */,
+				3E6F5B3C2523A3BD0053EEAB /* BassFFTData.swift */,
 			);
 			path = Visualizer;
 			sourceTree = "<group>";
@@ -4179,6 +4185,7 @@
 				3E6F5B38252356A20053EEAB /* Spectrogram3D.swift in Sources */,
 				3E1D93521F626BF9008AC59E /* Playlist.swift in Sources */,
 				3EB7B51B24DDA5E0004A1D9A /* ffmpeg.c in Sources */,
+				3E6F5B3B25239A6D0053EEAB /* SpectrogramFFTData.swift in Sources */,
 				3EC7E8AF217B300E00F21695 /* EffectsUnitSliderCellProtocol.swift in Sources */,
 				3E00122A1F26A5100059B2D0 /* SearchQuery.swift in Sources */,
 				3E3A357D24EE853900DE643F /* CustomColumnEditorDialogController.swift in Sources */,
@@ -4243,6 +4250,7 @@
 				3EBF7EF521589DC9007869EC /* FavoritesEditorViewController.swift in Sources */,
 				3EC194AA24FD3CCC0064FB75 /* DeviceList.swift in Sources */,
 				3E3D249924E2CEEC00975403 /* FFmpegPacketFrames.swift in Sources */,
+				3E6F5B3D2523A3BD0053EEAB /* BassFFTData.swift in Sources */,
 				3EA2E6522192F22F00FB5BAC /* ReverbView.swift in Sources */,
 				3EB2A7E81F043BBE001DF748 /* TickedSliderCells.swift in Sources */,
 				3EEDFC3624B2487C0025BA02 /* FileSystemBrowserViewController.swift in Sources */,

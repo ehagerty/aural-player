@@ -1,8 +1,11 @@
 import SpriteKit
 
-class Supernova: AuralSKView, VisualizerViewProtocol {
+class Supernova: SKView, VisualizerViewProtocol {
     
     let type: VisualizationType = .supernova
+    override var mouseDownCanMoveWindow: Bool {true}
+    
+    var data: BassFFTData = BassFFTData()
     
     var ring: SKShapeNode!
     private lazy var gradientImage: NSImage = NSImage(named: "Supernova")!
@@ -10,7 +13,9 @@ class Supernova: AuralSKView, VisualizerViewProtocol {
     
     private var glowWidth: CGFloat = 50
     
-    func presentView() {
+    func presentView(with fft: FFT) {
+        
+        data.setUp(for: fft)
         
         if self.scene == nil {
             
@@ -29,7 +34,7 @@ class Supernova: AuralSKView, VisualizerViewProtocol {
             ring.lineWidth = 75
             ring.glowWidth = glowWidth
             
-            ring.alpha = 0
+//            ring.alpha = 0
 
             ring.yScale = 1
             ring.blendMode = .replace
@@ -38,18 +43,16 @@ class Supernova: AuralSKView, VisualizerViewProtocol {
             scene.addChild(ring)
             presentScene(scene)
             
-            ring.run(SKAction.fadeIn(withDuration: 1))
+//            ring.run(SKAction.fadeIn(withDuration: 1))
         }
 
-        scene?.isPaused = false
-        scene?.isHidden = false
+        isPaused = false
         show()
     }
     
     func dismissView() {
 
-        scene?.isPaused = true
-        scene?.isHidden = true
+        isPaused = true
         hide()
     }
     
@@ -65,9 +68,11 @@ class Supernova: AuralSKView, VisualizerViewProtocol {
     let updateActionDuration: TimeInterval = 0.05
     let rotationAngle: CGFloat = -piOver180
     
-    func update() {
+    func update(with fft: FFT) {
         
-        let magnitude = CGFloat(FrequencyData.peakBassMagnitude.clamp(to: fftMagnitudeRange))
+        data.update(with: fft)
+        let magnitude = CGFloat(data.peakBassMagnitude)
+        
         ring.strokeColor = startColor.interpolate(endColor, magnitude)
         
         let scaleAction = SKAction.scale(to: magnitude, duration: updateActionDuration)

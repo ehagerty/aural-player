@@ -6,13 +6,15 @@ protocol VisualizerViewProtocol {
     
     var type: VisualizationType {get}
     
-    func update()
+//    var options: VisualizerViewOptions {get set}
     
-    func setColors(startColor: NSColor, endColor: NSColor)
-    
-    func presentView()
+    func presentView(with fft: FFT)
     
     func dismissView()
+    
+    func update(with fft: FFT)
+    
+    func setColors(startColor: NSColor, endColor: NSColor)
 }
 
 class AuralSKView: SKView {
