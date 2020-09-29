@@ -25,14 +25,16 @@ class Supernova: SKView, VisualizerViewProtocol {
             scene.backgroundColor = NSColor.black
             scene.anchorPoint = CGPoint.zero
             
-            self.ring = SKShapeNode(circleOfRadius: (frame.height / 2) - glowWidth)
+            let radius: CGFloat = (frame.height / 2) - glowWidth
+            
+            self.ring = SKShapeNode(circleOfRadius: radius)
             ring.position = NSPoint(x: frame.width / 2, y: frame.height / 2)
             ring.fillColor = NSColor.black
             
             ring.strokeTexture = gradientTexture
             ring.strokeColor = startColor
-            ring.lineWidth = 75
-            ring.glowWidth = glowWidth
+            ring.lineWidth = 0.75 * radius
+            ring.glowWidth = radius / 2
             
 //            ring.alpha = 0
 
