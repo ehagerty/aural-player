@@ -48,6 +48,10 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
             return createNameCell(outlineView, fsItem)
         }
         
+        if tableColumn?.identifier.rawValue == "fileSystemBrowser_type", let fsItem = item as? FileSystemItem {
+            return createTypeCell(outlineView, fsItem)
+        }
+        
         return nil
     }
     
@@ -58,6 +62,17 @@ class FileSystemBrowserViewDelegate: NSObject, NSOutlineViewDelegate, NSOutlineV
         
         cell.initializeForFile(item)
         cell.lblName.font = mainFont_13
+        
+        return cell
+    }
+    
+    private func createTypeCell(_ outlineView: NSOutlineView, _ item: FileSystemItem) -> FileSystemBrowserItemTypeCell? {
+        
+        guard let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("fileSystemBrowser_type"), owner: nil)
+            as? FileSystemBrowserItemTypeCell else {return nil}
+        
+        cell.initializeForFile(item)
+        cell.textField?.font = mainFont_13
         
         return cell
     }

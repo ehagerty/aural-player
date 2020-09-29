@@ -782,6 +782,8 @@
 		3ED1008D1FBAD54600D48688 /* HistoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED1008C1FBAD54600D48688 /* HistoryProtocol.swift */; };
 		3ED35D2F21E960CB00A5904F /* AudioToolboxParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED35D2E21E960CB00A5904F /* AudioToolboxParser.swift */; };
 		3ED35D3121EAAB3D00A5904F /* ParserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED35D3021EAAB3D00A5904F /* ParserUtils.swift */; };
+		3ED3B3742523B906002FCD37 /* FileSystemBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED3B3732523B906002FCD37 /* FileSystemBrowser.xib */; };
+		3ED3B3762523BC0A002FCD37 /* FileSystemBrowserWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3B3752523BC0A002FCD37 /* FileSystemBrowserWindowController.swift */; };
 		3ED404AA24ACEFA4000BF125 /* RichUI.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED404A924ACEFA4000BF125 /* RichUI.xib */; };
 		3ED404AC24ACF001000BF125 /* RichUIWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */; };
 		3ED4257821E7EB4B00E202AB /* JSONWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4257721E7EB4B00E202AB /* JSONWriter.swift */; };
@@ -843,7 +845,7 @@
 		3EE97B3B245C4E1C0063ADB2 /* AuralColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE97B3A245C4E1C0063ADB2 /* AuralColorPicker.swift */; };
 		3EEB110D24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB110C24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift */; };
 		3EEDFC2B24B225720025BA02 /* UnifiedPlayQueueViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEDFC2A24B225720025BA02 /* UnifiedPlayQueueViewDelegate.swift */; };
-		3EEDFC3024B23FE80025BA02 /* FileSystemBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEDFC2F24B23FE80025BA02 /* FileSystemBrowser.xib */; };
+		3EEDFC3024B23FE80025BA02 /* UnifiedFileSystemBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EEDFC2F24B23FE80025BA02 /* UnifiedFileSystemBrowser.xib */; };
 		3EEDFC3224B241940025BA02 /* FileSystemBrowserViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEDFC3124B241940025BA02 /* FileSystemBrowserViewDelegate.swift */; };
 		3EEDFC3424B242500025BA02 /* FileSystemFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEDFC3324B242500025BA02 /* FileSystemFolder.swift */; };
 		3EEDFC3624B2487C0025BA02 /* FileSystemBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEDFC3524B2487C0025BA02 /* FileSystemBrowserViewController.swift */; };
@@ -1542,6 +1544,10 @@
 		3ED1008C1FBAD54600D48688 /* HistoryProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryProtocol.swift; sourceTree = "<group>"; };
 		3ED35D2E21E960CB00A5904F /* AudioToolboxParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioToolboxParser.swift; sourceTree = "<group>"; };
 		3ED35D3021EAAB3D00A5904F /* ParserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserUtils.swift; sourceTree = "<group>"; };
+		3ED3B3732523B906002FCD37 /* FileSystemBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSystemBrowser.xib; sourceTree = "<group>"; };
+		3ED3B3752523BC0A002FCD37 /* FileSystemBrowserWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemBrowserWindowController.swift; sourceTree = "<group>"; };
+		3ED3B3782523C83E002FCD37 /* Modules.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Modules.md; sourceTree = "<group>"; };
+		3ED3B3792523D1B7002FCD37 /* AudioFormats.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AudioFormats.md; sourceTree = "<group>"; };
 		3ED404A924ACEFA4000BF125 /* RichUI.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichUI.xib; sourceTree = "<group>"; };
 		3ED404AB24ACF001000BF125 /* RichUIWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 1; path = RichUIWindowController.swift; sourceTree = "<group>"; };
 		3ED4257721E7EB4B00E202AB /* JSONWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWriter.swift; sourceTree = "<group>"; };
@@ -1606,7 +1612,7 @@
 		3EE97B3A245C4E1C0063ADB2 /* AuralColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuralColorPicker.swift; sourceTree = "<group>"; };
 		3EEB110C24F4143D00E5BB88 /* EffectsUnitTriStateCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectsUnitTriStateCheckButton.swift; sourceTree = "<group>"; };
 		3EEDFC2A24B225720025BA02 /* UnifiedPlayQueueViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedPlayQueueViewDelegate.swift; sourceTree = "<group>"; };
-		3EEDFC2F24B23FE80025BA02 /* FileSystemBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileSystemBrowser.xib; sourceTree = "<group>"; };
+		3EEDFC2F24B23FE80025BA02 /* UnifiedFileSystemBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnifiedFileSystemBrowser.xib; sourceTree = "<group>"; };
 		3EEDFC3124B241940025BA02 /* FileSystemBrowserViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemBrowserViewDelegate.swift; sourceTree = "<group>"; };
 		3EEDFC3324B242500025BA02 /* FileSystemFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemFolder.swift; sourceTree = "<group>"; };
 		3EEDFC3524B2487C0025BA02 /* FileSystemBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemBrowserViewController.swift; sourceTree = "<group>"; };
@@ -1815,6 +1821,7 @@
 				3E18A58124ED899A0014E850 /* PlayQueue */,
 				3E01BA2F24F7F50800F76DEE /* Sound */,
 				3E50AD9B2461383900B31339 /* Effects */,
+				3ED3B3722523B8CC002FCD37 /* FileSystemBrowser */,
 				3E50ADC42461409200B31339 /* Visualizer */,
 			);
 			path = ModularInterface;
@@ -3052,6 +3059,7 @@
 		3E72FCC41F2C0A780020FD20 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				3ED3B3772523C822002FCD37 /* Reference */,
 				3E33C121242FC501005A062B /* Release Notes.md */,
 			);
 			path = Documentation;
@@ -3422,6 +3430,24 @@
 			path = SearchAndSort;
 			sourceTree = "<group>";
 		};
+		3ED3B3722523B8CC002FCD37 /* FileSystemBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				3ED3B3732523B906002FCD37 /* FileSystemBrowser.xib */,
+				3ED3B3752523BC0A002FCD37 /* FileSystemBrowserWindowController.swift */,
+			);
+			path = FileSystemBrowser;
+			sourceTree = "<group>";
+		};
+		3ED3B3772523C822002FCD37 /* Reference */ = {
+			isa = PBXGroup;
+			children = (
+				3ED3B3782523C83E002FCD37 /* Modules.md */,
+				3ED3B3792523D1B7002FCD37 /* AudioFormats.md */,
+			);
+			path = Reference;
+			sourceTree = "<group>";
+		};
 		3ED404A824ACEF63000BF125 /* RichUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -3528,7 +3554,7 @@
 		3EEDFC2E24B23FC50025BA02 /* FileSystemBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				3EEDFC2F24B23FE80025BA02 /* FileSystemBrowser.xib */,
+				3EEDFC2F24B23FE80025BA02 /* UnifiedFileSystemBrowser.xib */,
 				3EEDFC3524B2487C0025BA02 /* FileSystemBrowserViewController.swift */,
 				3EEDFC3124B241940025BA02 /* FileSystemBrowserViewDelegate.swift */,
 				3E8EB20524BCFD2D0034A45A /* FileSystemBrowserTableViews.swift */,
@@ -3691,7 +3717,7 @@
 				3E066C27216C5FEF00E4FE80 /* PitchPresetsEditor.xib in Resources */,
 				3E2188AC1F0781970085BAB3 /* DetailedTrackInfo.xib in Resources */,
 				3EA19C231FC174A30072929E /* ControlsPreferences.xib in Resources */,
-				3EEDFC3024B23FE80025BA02 /* FileSystemBrowser.xib in Resources */,
+				3EEDFC3024B23FE80025BA02 /* UnifiedFileSystemBrowser.xib in Resources */,
 				3EB7F461217FC4BA00A2CE76 /* AlbumsPlaylistSort.xib in Resources */,
 				3E98CBC5216B0D990025A77E /* MasterPresetsEditor.xib in Resources */,
 				3EE7D729244EDAFE005D76FA /* GeneralColorScheme.xib in Resources */,
@@ -3723,6 +3749,7 @@
 				3EB1701321748DBC00B82D3A /* JumpToTimeEditorDialog.xib in Resources */,
 				3E13DBF62504BE5A00CFC2C8 /* PlayQueueListView.xib in Resources */,
 				3EF5E5C11FBDB637004270A4 /* Genres.xib in Resources */,
+				3ED3B3742523B906002FCD37 /* FileSystemBrowser.xib in Resources */,
 				3E24C79D24EAACF3009C93AF /* NowPlaying.xib in Resources */,
 				3E3F29632159B69900581EFE /* LayoutsEditor.xib in Resources */,
 				3E02739D1FD91B46000F0844 /* StringInputPopover.xib in Resources */,
@@ -4152,6 +4179,7 @@
 				3EE7D730244EDCC2005D76FA /* PlayerColorSchemeViewController.swift in Sources */,
 				3E23D6591F32887E00DBF426 /* RecordingInfo.swift in Sources */,
 				3E6C32A224AB1BF40011D44C /* AudioDeviceState.swift in Sources */,
+				3ED3B3762523BC0A002FCD37 /* FileSystemBrowserWindowController.swift in Sources */,
 				3E0839B2219591AB008D84BA /* ReverbUnit.swift in Sources */,
 				3E46F55C1F2A7A36007CD384 /* CheckRadioButtonCell.swift in Sources */,
 				3E9A90F124DDA7B50027D414 /* FFmpegMetadataDictionary.swift in Sources */,

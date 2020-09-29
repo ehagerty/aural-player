@@ -1309,6 +1309,11 @@ CA
                                     <action selector="toggleVisualizerAction:" target="xzd-WN-BuR" id="oiT-aO-WsL"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title=" File System Browser" image="ToggleChaptersList-Small" keyEquivalent="5" id="c0c-dD-g1o">
+                                <connections>
+                                    <action selector="toggleFileSystemBrowserAction:" target="xzd-WN-BuR" id="yh0-1l-8RS"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="uLJ-xN-xtk"/>
                             <menuItem title="  Player view" indentationLevel="1" id="af4-4E-1QV" userLabel="Player view">
                                 <modifierMask key="keyEquivalentModifierMask"/>

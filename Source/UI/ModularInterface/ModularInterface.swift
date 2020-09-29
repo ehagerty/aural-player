@@ -42,13 +42,21 @@ class ModularInterface: InterfaceProtocol {
         return effectsWindowController.window!
     }()
     
-    // Load these optional windows only if/when needed
     private var visualizerWindowLoaded: Bool = false
     lazy var visualizerWindowController: VisualizerWindowController = VisualizerWindowController()
     lazy var visualizerWindow: NSWindow = {
         
         visualizerWindowLoaded = true
         return visualizerWindowController.window!
+    }()
+    
+//    FileSystemBrowserWindowController
+    private var fileSystemBrowserWindowLoaded: Bool = false
+    lazy var fileSystemBrowserWindowController: FileSystemBrowserWindowController = FileSystemBrowserWindowController()
+    lazy var fileSystemBrowserWindow: NSWindow = {
+        
+        fileSystemBrowserWindowLoaded = true
+        return fileSystemBrowserWindowController.window!
     }()
     
     // Helps with lazy loading of chapters list window
@@ -170,6 +178,8 @@ class ModularInterface: InterfaceProtocol {
         return visualizerWindow.isVisible
     }
     
+    var isShowingFileSystemBrowser: Bool {fileSystemBrowserWindow.isVisible}
+    
     // NOTE - Boolean short-circuiting is important here. Otherwise, the chapters list window will be unnecessarily loaded.
     var isShowingChaptersList: Bool {
         return chaptersListWindowLoaded && chaptersListWindow.isVisible
@@ -283,6 +293,21 @@ class ModularInterface: InterfaceProtocol {
         mainWindow.addChildWindow(visualizerWindow, ordered: NSWindow.OrderingMode.above)
         visualizerWindowController.showWindow(self)
         visualizerWindow.orderFront(self)
+    }
+    
+    func toggleFileSystemBrowser() {
+        isShowingFileSystemBrowser ? hideFileSystemBrowser() : showFileSystemBrowser()
+    }
+    
+    func showFileSystemBrowser() {
+        
+        mainWindow.addChildWindow(fileSystemBrowserWindow, ordered: NSWindow.OrderingMode.above)
+        fileSystemBrowserWindowController.showWindow(self)
+        fileSystemBrowserWindow.orderFront(self)
+    }
+    
+    func hideFileSystemBrowser() {
+        fileSystemBrowserWindowController.close()
     }
     
 //    func addChildWindow(_ window: NSWindow) {

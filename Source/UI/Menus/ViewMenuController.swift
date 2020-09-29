@@ -109,6 +109,10 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
         modularInterface.toggleVisualizer()
     }
     
+    @IBAction func toggleFileSystemBrowserAction(_ sender: AnyObject) {
+        modularInterface.toggleFileSystemBrowser()
+    }
+    
     // TODO: Revisit this
     @IBAction func alwaysOnTopAction(_ sender: NSMenuItem) {
 //        WindowManager.toggleAlwaysOnTop()

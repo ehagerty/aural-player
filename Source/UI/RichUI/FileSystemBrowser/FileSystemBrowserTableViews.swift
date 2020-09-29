@@ -37,3 +37,19 @@ class FileSystemBrowserItemNameCell: NSTableCellView {
         }
     }
 }
+
+class FileSystemBrowserItemTypeCell: NSTableCellView {
+ 
+    func initializeForFile(_ file: FileSystemItem) {
+        
+        if file.isDirectory {
+            textField?.stringValue = "Folder"
+            
+        } else if file.isTrack {
+            textField?.stringValue = "Track"
+            
+        } else if file.isPlaylist {
+            textField?.stringValue = "Playlist"
+        }
+    }
+}
