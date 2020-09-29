@@ -43,21 +43,6 @@ extension FloatingPoint {
     }
 }
 
-extension NSImage {
-    
-    convenience init(gradientColors: [NSColor], imageSize: NSSize) {
-        
-        let gradient = NSGradient(colors: gradientColors)!
-        let rect = NSRect(origin: CGPoint.zero, size: imageSize)
-        self.init(size: rect.size)
-        
-        let path = NSBezierPath(rect: rect)
-        self.lockFocus()
-        gradient.draw(in: path, angle: 90.0)
-        self.unlockFocus()
-    }
-}
-
 extension SKTexture {
     
     convenience init(size: CGSize, color1: CIColor, color2: CIColor) {
@@ -81,6 +66,18 @@ extension SKTexture {
 }
 
 extension NSImage {
+    
+    convenience init(gradientColors: [NSColor], imageSize: NSSize) {
+        
+        let gradient = NSGradient(colors: gradientColors)!
+        let rect = NSRect(origin: CGPoint.zero, size: imageSize)
+        self.init(size: rect.size)
+        
+        let path = NSBezierPath(rect: rect)
+        self.lockFocus()
+        gradient.draw(in: path, angle: 90.0)
+        self.unlockFocus()
+    }
     
     func tinting(_ color: NSColor) -> NSImage {
 

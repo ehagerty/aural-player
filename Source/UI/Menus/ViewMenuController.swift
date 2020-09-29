@@ -99,12 +99,14 @@ class ViewMenuController: NSObject, NSMenuDelegate, StringInputReceiver {
         modularInterface.toggleEffects()
     }
     
-    lazy var viz: VisualizerWindowController = VisualizerWindowController()
-    
     // Shows/hides the chapters list window
     @IBAction func toggleChaptersListAction(_ sender: AnyObject) {
 //        WindowManager.toggleChaptersList()
-        viz.showWindow(self)
+        modularInterface.toggleChaptersList()
+    }
+    
+    @IBAction func toggleVisualizerAction(_ sender: AnyObject) {
+        modularInterface.toggleVisualizer()
     }
     
     // TODO: Revisit this

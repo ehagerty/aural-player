@@ -42,6 +42,15 @@ class ModularInterface: InterfaceProtocol {
         return effectsWindowController.window!
     }()
     
+    // Load these optional windows only if/when needed
+    private var visualizerWindowLoaded: Bool = false
+    lazy var visualizerWindowController: VisualizerWindowController = VisualizerWindowController()
+    lazy var visualizerWindow: NSWindow = {
+        
+        visualizerWindowLoaded = true
+        return visualizerWindowController.window!
+    }()
+    
     // Helps with lazy loading of chapters list window
     private var chaptersListWindowLoaded: Bool = false
     
@@ -157,6 +166,10 @@ class ModularInterface: InterfaceProtocol {
         return playQueueWindow.isVisible
     }
     
+    var isShowingVisualizer: Bool {
+        return visualizerWindow.isVisible
+    }
+    
     // NOTE - Boolean short-circuiting is important here. Otherwise, the chapters list window will be unnecessarily loaded.
     var isShowingChaptersList: Bool {
         return chaptersListWindowLoaded && chaptersListWindow.isVisible
@@ -255,6 +268,21 @@ class ModularInterface: InterfaceProtocol {
         if chaptersListWindowLoaded {
             chaptersListWindow.setIsVisible(false)
         }
+    }
+    
+    func toggleVisualizer() {
+        isShowingVisualizer ? hideVisualizer() : showVisualizer()
+    }
+    
+    private func hideVisualizer() {
+        visualizerWindow.hide()
+    }
+    
+    private func showVisualizer() {
+
+        mainWindow.addChildWindow(visualizerWindow, ordered: NSWindow.OrderingMode.above)
+        visualizerWindowController.showWindow(self)
+        visualizerWindow.orderFront(self)
     }
     
 //    func addChildWindow(_ window: NSWindow) {
