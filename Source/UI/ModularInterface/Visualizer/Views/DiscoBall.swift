@@ -67,22 +67,22 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             
             discoLightNode = SCNNode()
             discoLightNode.light = discoLight
-            discoLightNode.position = SCNVector3(-9.5, 1, -5)
+            discoLightNode.position = SCNVector3(-9, 0.5, -5)
             
             scene!.rootNode.addChildNode(discoLightNode)
             
-//            discoLight2 = SCNLight()
-//            discoLight2.type = .omni
-//            discoLight2.color = startColor
-//            discoLight2.intensity = 1000
-//
+            discoLight2 = SCNLight()
+            discoLight2.type = .omni
+            discoLight2.color = startColor
+            discoLight2.intensity = 1000
+
 //            cameraNode.light = discoLight2
-//
-//            discoLightNode2 = SCNNode()
-//            discoLightNode2.light = discoLight
-//            discoLightNode2.position = SCNVector3(9.5, 1, -5)
-//
-//            scene!.rootNode.addChildNode(discoLightNode2)
+
+            discoLightNode2 = SCNNode()
+            discoLightNode2.light = discoLight2
+            discoLightNode2.position = SCNVector3(9, 0.5, -5)
+
+            scene!.rootNode.addChildNode(discoLightNode2)
             
             ball = SCNSphere(radius: 1)
             node = SCNNode(geometry: ball)
@@ -161,8 +161,20 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
         ball.firstMaterial?.diffuse.contents = textureCache[interpolationLevel]
         
         let discoLightColor = startColor.interpolate(endColor, magnitude)
-        discoLight.color = discoLightColor
-//        discoLight2.color = discoLightColor
+        
+        if magnitude > 0.7 {
+            
+            discoLight.color = discoLightColor
+            discoLight2.color = discoLightColor
+            
+            discoLight.intensity = 1000
+            discoLight2.intensity = 1000
+            
+        } else {
+            
+            discoLight2.intensity = 0
+            discoLight.intensity = 0
+        }
         
         if magnitude >= minMagnitudeForRotation {
             
