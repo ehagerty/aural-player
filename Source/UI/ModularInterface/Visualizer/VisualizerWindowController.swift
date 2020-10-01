@@ -33,8 +33,6 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
     
     override func awakeFromNib() {
         
-        print("\nWindow is: \(window != nil)")
-        
         window?.delegate = self
         window?.isMovableByWindowBackground = true
         window?.aspectRatio = NSSize(width: 3.0, height: 2.0)
@@ -75,9 +73,37 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
         fft.setUp(sampleRate: Float(audioGraph.outputDeviceSampleRate), bufferSize: audioGraph.outputDeviceBufferSize)
      
         containerBox.startTracking()
-        changeType(.spectrogram)
+        changeType(VisualizerUIState.type)
         
         audioGraph.registerRenderObserver(self)
+    }
+    
+    @IBAction func changeTypeAction(_ sender: NSPopUpButton) {
+        
+        if let vizType = sender.selectedItem?.representedObject as? VisualizationType {
+            changeType(vizType)
+        }
+    }
+    
+    func changeType(_ type: VisualizationType) {
+        
+        vizView = nil
+        allViews.forEach {$0.dismissView()}
+        
+        VisualizerUIState.type = type
+        
+        switch type {
+            
+        case .spectrogram:      spectrogram.presentView(with: fft)
+                                vizView = spectrogram
+            
+        case .supernova:        supernova.presentView(with: fft)
+                                vizView = supernova
+            
+        case .discoBall:        discoBall.presentView(with: fft)
+                                vizView = discoBall
+            
+        }
     }
     
     @IBAction func fullScreenAction(_ sender: Any) {
@@ -102,17 +128,15 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
 
         containerBox.stopTracking()
         optionsBox.hide()
+        
+        allViews.forEach {$0.dismissView()}
     }
     
     func rendered(timeStamp: AudioTimeStamp, frameCount: UInt32, audioBuffer: AudioBufferList) {
         
-        fft.analyze(audioBuffer)
-        
-        //        if FrequencyData.numBands != 10 {
-        //            NSLog("Bands: \(FrequencyData.bands.map {$0.maxVal})")
-        //        }
-        
         if let theVizView = vizView {
+            
+            fft.analyze(audioBuffer)
             
             DispatchQueue.main.async {
                 theVizView.update(with: self.fft)
@@ -130,33 +154,6 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
     // TODO
     func deviceSampleRateChanged(newSampleRate: Double) {
         NSLog("**** Device SR changed: \(newSampleRate)")
-    }
-    
-    @IBAction func changeTypeAction(_ sender: NSPopUpButton) {
-        
-        if let vizType = sender.selectedItem?.representedObject as? VisualizationType {
-            changeType(vizType)
-        }
-    }
-    
-    func changeType(_ type: VisualizationType) {
-        
-        allViews.forEach {$0.dismissView()}
-        
-        switch type {
-            
-        case .spectrogram:      vizView = spectrogram
-            
-        case .supernova:        vizView = supernova
-            
-        case .discoBall:        vizView = discoBall
-            
-        }
-        
-        vizView.presentView(with: fft)
-        
-        VisualizerUIState.type = type
-//        VisualizerUIState.options = vizView.options
     }
     
     @IBAction func changeNumberOfBandsAction(_ sender: NSPopUpButton) {

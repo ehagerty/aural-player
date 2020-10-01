@@ -25,7 +25,7 @@ class Supernova: SKView, VisualizerViewProtocol {
             scene.backgroundColor = NSColor.black
             scene.anchorPoint = CGPoint.zero
             
-            let radius: CGFloat = (frame.height / 2) - glowWidth
+            let radius: CGFloat = 4 * frame.height / 13
             
             self.ring = SKShapeNode(circleOfRadius: radius)
             ring.position = NSPoint(x: frame.width / 2, y: frame.height / 2)
@@ -36,18 +36,14 @@ class Supernova: SKView, VisualizerViewProtocol {
             ring.lineWidth = 0.75 * radius
             ring.glowWidth = radius / 2
             
-//            ring.alpha = 0
-
             ring.yScale = 1
             ring.blendMode = .replace
             ring.isAntialiased = true
             
             scene.addChild(ring)
             presentScene(scene)
-            
-//            ring.run(SKAction.fadeIn(withDuration: 1))
         }
-
+        
         isPaused = false
         show()
     }

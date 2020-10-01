@@ -10,8 +10,18 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     var camera: SCNCamera!
     var cameraNode: SCNNode!
     
+    var ambientLightNode: SCNNode!
+    var ambientLight: SCNLight!
+    
+    var discoLightNode: SCNNode!
+    var discoLight: SCNLight!
+    
+    var discoLightNode2: SCNNode!
+    var discoLight2: SCNLight!
+    
     var ball: SCNSphere!
     var node: SCNNode!
+    let nodePosition: SCNVector3 = SCNVector3(0, 2, 1)
     
     var floorNode: SCNNode!
     var floor: SCNFloor!
@@ -31,16 +41,53 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             cameraNode = SCNNode()
             cameraNode.camera = camera
 
-            cameraNode.position = SCNVector3(1, 4.25, 3.5)
+            cameraNode.position = SCNVector3(0, 4.25, 3.5)
             cameraNode.eulerAngles = SCNVector3Make(-(piOver180 * 45), 0, 0)
 
             scene!.rootNode.addChildNode(cameraNode)
             
+            ambientLight = SCNLight()
+            ambientLight.type = .ambient
+            ambientLight.color = NSColor.white
+
+            ambientLightNode = SCNNode()
+            ambientLightNode.light = ambientLight
+            
+            scene!.rootNode.addChildNode(ambientLightNode)
+            
+            // MARK: Disco lights ----------------------------------------------------------------------
+            
+            // Below ball
+            //            discoLightNode.position = SCNVector3(-0.1, 5, -2)
+            
+            discoLight = SCNLight()
+            discoLight.type = .omni
+            discoLight.color = startColor
+            discoLight.intensity = 1000
+            
+            discoLightNode = SCNNode()
+            discoLightNode.light = discoLight
+            discoLightNode.position = SCNVector3(-9.5, 1, -5)
+            
+            scene!.rootNode.addChildNode(discoLightNode)
+            
+//            discoLight2 = SCNLight()
+//            discoLight2.type = .omni
+//            discoLight2.color = startColor
+//            discoLight2.intensity = 1000
+//
+//            cameraNode.light = discoLight2
+//
+//            discoLightNode2 = SCNNode()
+//            discoLightNode2.light = discoLight
+//            discoLightNode2.position = SCNVector3(9.5, 1, -5)
+//
+//            scene!.rootNode.addChildNode(discoLightNode2)
+            
             ball = SCNSphere(radius: 1)
             node = SCNNode(geometry: ball)
-            node.opacity = 0
             
-            node.position = SCNVector3(1, 2, 1)
+            node.position = nodePosition
             ball.firstMaterial?.diffuse.contents = textureImage.tinting(startColor)
             ball.firstMaterial?.diffuse.wrapS = .clamp
             ball.firstMaterial?.diffuse.wrapT = .clamp
@@ -56,7 +103,7 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             
             antialiasingMode = .multisampling4X
             isJitteringEnabled = true
-            allowsCameraControl = true
+            allowsCameraControl = false
             autoenablesDefaultLighting = false
             showsStatistics = false
             
@@ -82,35 +129,44 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
         }
     }
     
-    override func viewDidUnhide() {
-        node.runAction(SCNAction.fadeIn(duration: 1))
-    }
-    
     var startColor: NSColor = .blue
     var endColor: NSColor = .red
+    
+    let animationDuration: TimeInterval = 0.05
+    
+    let maxRadiusIncreaseFactor: CGFloat = 0.25
+    
+    let minMagnitudeForRotation: CGFloat = 0.3
     var rotationDegrees: CGFloat = 0
+    let maxRotationDegrees: CGFloat = 2.5
     
     // 11 images (11 levels of interpolation)
     var textureCache: [NSImage] = []
     
     func update(with fft: FFT) {
         
+//        if ball == nil {return}
+        
         data.update(with: fft)
         
         SCNTransaction.begin()
-        SCNTransaction.animationDuration = 0.05
+        SCNTransaction.animationDuration = animationDuration
         
         let magnitude = CGFloat(data.peakBassMagnitude)
         
-        ball.radius = 1 + (magnitude / 4.0)
-        node.position = SCNVector3(1, 2, 1)
+        ball.radius = 1 + (magnitude * maxRadiusIncreaseFactor)
+        node.position = nodePosition
         
         let interpolationLevel: Int = min(Int(round(magnitude * 10.0)), 10)
         ball.firstMaterial?.diffuse.contents = textureCache[interpolationLevel]
         
-        if magnitude > 0.3 {
+        let discoLightColor = startColor.interpolate(endColor, magnitude)
+        discoLight.color = discoLightColor
+//        discoLight2.color = discoLightColor
+        
+        if magnitude >= minMagnitudeForRotation {
             
-            rotationDegrees += magnitude * 5
+            rotationDegrees += magnitude * maxRotationDegrees
             node.rotation = SCNVector4Make(0, 1, 0, rotationDegrees * piOver180)
         }
         
@@ -122,7 +178,7 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
         self.startColor = startColor
         self.endColor = endColor
         
-        if !self.isHidden {
+        if self.isShown {
             updateTextureCache()
         }
     }

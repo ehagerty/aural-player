@@ -149,7 +149,7 @@ class ModularInterface: InterfaceProtocol {
             
         default:
             
-            print("\nOther window: \(id)")
+//            print("\nOther window: \(id)")
             return nil
         }
     }
