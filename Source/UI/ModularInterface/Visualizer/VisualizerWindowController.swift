@@ -102,7 +102,6 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
             
         case .discoBall:        discoBall.presentView(with: fft)
                                 vizView = discoBall
-            
         }
     }
     

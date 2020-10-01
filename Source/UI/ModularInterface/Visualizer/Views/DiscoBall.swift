@@ -19,6 +19,9 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     var discoLightNode2: SCNNode!
     var discoLight2: SCNLight!
     
+    var discoLightNode3: SCNNode!
+    var discoLight3: SCNLight!
+    
     var ball: SCNSphere!
     var node: SCNNode!
     let nodePosition: SCNVector3 = SCNVector3(0, 2, 1)
@@ -41,7 +44,7 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             cameraNode = SCNNode()
             cameraNode.camera = camera
 
-            cameraNode.position = SCNVector3(0, 4.25, 3.5)
+            cameraNode.position = SCNVector3(0, 5, 4.5)
             cameraNode.eulerAngles = SCNVector3Make(-(piOver180 * 45), 0, 0)
 
             scene!.rootNode.addChildNode(cameraNode)
@@ -67,7 +70,7 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             
             discoLightNode = SCNNode()
             discoLightNode.light = discoLight
-            discoLightNode.position = SCNVector3(-9, 0.5, -5)
+            discoLightNode.position = SCNVector3(-19.5, 5, -15)
             
             scene!.rootNode.addChildNode(discoLightNode)
             
@@ -76,13 +79,22 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             discoLight2.color = startColor
             discoLight2.intensity = 1000
 
-//            cameraNode.light = discoLight2
-
             discoLightNode2 = SCNNode()
             discoLightNode2.light = discoLight2
-            discoLightNode2.position = SCNVector3(9, 0.5, -5)
+            discoLightNode2.position = SCNVector3(19.5, 5, -15)
 
             scene!.rootNode.addChildNode(discoLightNode2)
+            
+            discoLight3 = SCNLight()
+            discoLight3.type = .omni
+            discoLight3.color = startColor
+            discoLight3.intensity = 1000
+
+            discoLightNode3 = SCNNode()
+            discoLightNode3.light = discoLight3
+            discoLightNode3.position = SCNVector3(-0.1, 5, 2.5)
+
+            scene!.rootNode.addChildNode(discoLightNode3)
             
             ball = SCNSphere(radius: 1)
             node = SCNNode(geometry: ball)
@@ -145,7 +157,7 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
     
     func update(with fft: FFT) {
         
-//        if ball == nil {return}
+        if ball == nil {return}
         
         data.update(with: fft)
         
@@ -175,6 +187,8 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             discoLight2.intensity = 0
             discoLight.intensity = 0
         }
+        
+        discoLight3.color = discoLightColor
         
         if magnitude >= minMagnitudeForRotation {
             
