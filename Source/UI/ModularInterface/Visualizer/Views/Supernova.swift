@@ -7,7 +7,7 @@ class Supernova: SKView, VisualizerViewProtocol {
     
     var data: BassFFTData = BassFFTData()
     
-    var ring: SKShapeNode!
+    var star: SKShapeNode!
     private lazy var gradientImage: NSImage = NSImage(named: "Supernova")!
     private lazy var gradientTexture = SKTexture(image: gradientImage)
     
@@ -27,20 +27,20 @@ class Supernova: SKView, VisualizerViewProtocol {
             
             let radius: CGFloat = 4 * frame.height / 13
             
-            self.ring = SKShapeNode(circleOfRadius: radius)
-            ring.position = NSPoint(x: frame.width / 2, y: frame.height / 2)
-            ring.fillColor = NSColor.black
+            self.star = SKShapeNode(circleOfRadius: radius)
+            star.position = NSPoint(x: frame.width / 2, y: frame.height / 2)
+            star.fillColor = NSColor.black
             
-            ring.strokeTexture = gradientTexture
-            ring.strokeColor = startColor
-            ring.lineWidth = 0.75 * radius
-            ring.glowWidth = radius / 2
+            star.strokeTexture = gradientTexture
+            star.strokeColor = startColor
+            star.lineWidth = 0.75 * radius
+            star.glowWidth = radius / 2
             
-            ring.yScale = 1
-            ring.blendMode = .replace
-            ring.isAntialiased = true
+            star.yScale = 1
+            star.blendMode = .replace
+            star.isAntialiased = true
             
-            scene.addChild(ring)
+            scene.addChild(star)
             presentScene(scene)
         }
         
@@ -50,6 +50,9 @@ class Supernova: SKView, VisualizerViewProtocol {
     
     func dismissView() {
 
+        scene?.removeAllActions()
+        star?.removeAllActions()
+        
         isPaused = true
         hide()
     }
@@ -64,6 +67,8 @@ class Supernova: SKView, VisualizerViewProtocol {
     }
     
     let updateActionDuration: TimeInterval = 0.05
+    
+    // 1 degree clockwise
     let rotationAngle: CGFloat = -piOver180
     
     func update(with fft: FFT) {
@@ -71,11 +76,11 @@ class Supernova: SKView, VisualizerViewProtocol {
         data.update(with: fft)
         let magnitude = CGFloat(data.peakBassMagnitude)
         
-        ring.strokeColor = startColor.interpolate(endColor, magnitude)
+        star.strokeColor = startColor.interpolate(endColor, magnitude)
         
         let scaleAction = SKAction.scale(to: magnitude, duration: updateActionDuration)
         let rotateAction = SKAction.rotate(byAngle: rotationAngle, duration: updateActionDuration)
         
-        ring.run(SKAction.sequence([scaleAction, rotateAction]))
+        star.run(SKAction.sequence([scaleAction, rotateAction]))
     }
 }

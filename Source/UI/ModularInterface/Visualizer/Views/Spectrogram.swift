@@ -73,6 +73,7 @@ class Spectrogram: SKView, VisualizerViewProtocol {
     
     func dismissView() {
         
+        scene?.removeAllActions()
         bars.forEach {$0.removeAllActions()}
 
         isPaused = true

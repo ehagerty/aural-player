@@ -36,8 +36,12 @@ class SpectrogramBar: SKSpriteNode {
         
         didSet {
             
-            let partialTexture = SKTexture(rect: NSRect(x: 0, y: 0, width: 1, height: max(Self.minHeight, magnitude)), in: Self.gradientTexture)
-            run(SKAction.setTexture(partialTexture, resize: true))
+            let partialTexture = SKTexture(rect: NSRect(x: 0, y: 0, width: 1, height: max(Self.minHeight, magnitude)),
+                                           in: Self.gradientTexture)
+            let textureSize = partialTexture.size()
+            
+            run(SKAction.setTexture(partialTexture))
+            run(SKAction.resize(toWidth: textureSize.width, height: textureSize.height, duration: 0.05))
         }
     }
     

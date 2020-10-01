@@ -122,6 +122,9 @@ class DiscoBall: AuralSCNView, VisualizerViewProtocol {
             for level in 0...10 {
                 textureCache.append(textureImage.tinting(startColor.interpolate(endColor, CGFloat(level) * 0.1)))
             }
+            
+        } else {
+            updateTextureCache()
         }
         
         isPlaying = true

@@ -122,6 +122,9 @@ class VisualizerWindowController: NSWindowController, AudioGraphRenderObserverPr
         
         super.close()
         
+        vizView = nil
+        allViews.forEach {$0.dismissView()}
+        
         audioGraph.removeRenderObserver(self)
         fft.deallocate()
 
