@@ -8,6 +8,8 @@ Since I do not have access to M1 hardware, and my hardware is unable to run macO
 
 I leave it as an exercise for those interested to get Aural Player ready to run on M1 hardware. This will require building universal ffmpeg shared libraries (dylibs) that are capable of running on both x86_64 and arm64 architectures.
 
+For building ffmpeg, use this as a starting point: [build script and instructions.](https://github.com/maculateConception/aural-player/tree/master/Resources/ffmpeg)
+
 ## Table of Contents
   * [Overview](#overview)
   * [Summary of features](#summary-of-features)
