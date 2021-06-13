@@ -1,8 +1,10 @@
-Pre-requisites (need to be installed on this system to build FFmpeg):
+Pre-requisites (need to be installed on this system to build universal FFmpeg binaries) :
 
-1 - Homebrew (Download instructions here: https://brew.sh/)
-2 - nasm - assembler for x86 (Run "brew install nasm" ... after installing Homebrew)
-3 - clang - C compiler (Run "xcode-select --install")
+1 - Xcode 12 or a later version
+2 - Homebrew (Download instructions here: https://brew.sh/)
+3 - nasm - assembler for x86 (Run "brew install nasm" ... after installing Homebrew)
+4 - clang - C compiler (Run "xcode-select --install")
+5 - pkg-config (Run "brew install pkg-config")
 
 Instructions to build FFmpeg shared libaries (.dylib) from source.
 
