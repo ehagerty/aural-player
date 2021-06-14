@@ -2,14 +2,20 @@
 
 # Pre-requisites (need to be installed on this system to build universal FFmpeg binaries) :
 #
-# 1 - Xcode 12 or a later version
+# 1 - Xcode 12.2 or a later version. SDK version must be 11.0 or greater.
 # 2 - Homebrew (Download instructions here: https://brew.sh/)
 # 3 - nasm - assembler for x86 (Run "brew install nasm" ... after installing Homebrew)
 # 4 - clang - C compiler (Run "xcode-select --install")
 # 5 - pkg-config (Run "brew install pkg-config")
 
 # The name of the FFmpeg source directory (once the archive has been uncompressed)
-export sourceDirectoryName="ffmpeg-4.3.1"
+export sourceDirectoryName="ffmpeg-4.4"
+
+# Deployment target for Aural Player.
+export minMacOSVersion="10.12"
+
+# Points to the latest MacOS SDK installed.
+export sdk="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
 
 function buildFFmpeg {
 
@@ -45,9 +51,9 @@ function configureAndMake {
 
     ./configure \
     --cc=/usr/bin/clang \
-    --extra-ldexeflags="${archInFlags}-mmacosx-version-min=10.12" \
-    --extra-ldflags="${archInFlags}-mmacosx-version-min=10.12" \
-    --extra-cflags="${archInFlags}-mmacosx-version-min=10.12" \
+    --extra-ldexeflags="${archInFlags}-mmacosx-version-min=${minMacOSVersion} -isysroot ${sdk}" \
+    --extra-ldflags="${archInFlags}-mmacosx-version-min=${minMacOSVersion} -isysroot ${sdk}" \
+    --extra-cflags="${archInFlags}-mmacosx-version-min=${minMacOSVersion} -isysroot ${sdk}" \
     ${crossCompileAndArch} \
     --enable-gpl \
     --enable-version3 \
